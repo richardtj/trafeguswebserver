@@ -19,9 +19,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "esta_estatus")
+@Table(name = "esta_estatus", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EstaEstatus.findAll", query = "SELECT e FROM EstaEstatus e")})
+    @NamedQuery(name = "EstaEstatus.findAll", query = "SELECT e FROM EstaEstatus e"),
+    @NamedQuery(name = "EstaEstatus.findByEstaCodigo", query = "SELECT e FROM EstaEstatus e WHERE e.estaCodigo = :estaCodigo"),
+    @NamedQuery(name = "EstaEstatus.findByEstaDescricao", query = "SELECT e FROM EstaEstatus e WHERE e.estaDescricao = :estaDescricao")})
 public class EstaEstatus implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

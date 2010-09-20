@@ -20,9 +20,25 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_veiculo_sem_viagem")
+@Table(name = "view_veiculo_sem_viagem", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewVeiculoSemViagem.findAll", query = "SELECT v FROM ViewVeiculoSemViagem v")})
+    @NamedQuery(name = "ViewVeiculoSemViagem.findAll", query = "SELECT v FROM ViewVeiculoSemViagem v"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByIdentificador", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.identificador = :identificador"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByErasCodigo", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.erasCodigo = :erasCodigo"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByVeicOrasCodigo", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.veicOrasCodigo = :veicOrasCodigo"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByTermCodigo", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.termCodigo = :termCodigo"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByTermNumeroTerminal", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.termNumeroTerminal = :termNumeroTerminal"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByTecnDescricao", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.tecnDescricao = :tecnDescricao"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByVtecTipoComunicacao", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.vtecTipoComunicacao = :vtecTipoComunicacao"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByUposDataCompBordo", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.uposDataCompBordo = :uposDataCompBordo"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByUposDescricaoSistema", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.uposDescricaoSistema = :uposDescricaoSistema"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByTransportador", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.transportador = :transportador"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByCodtransportador", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.codtransportador = :codtransportador"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByIgnicao", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.ignicao = :ignicao"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByVtecTempoSatelitalPadrao", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.vtecTempoSatelitalPadrao = :vtecTempoSatelitalPadrao"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByVtecTempoGprsPadrao", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.vtecTempoGprsPadrao = :vtecTempoGprsPadrao"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByTipoOperacao", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.tipoOperacao = :tipoOperacao"),
+    @NamedQuery(name = "ViewVeiculoSemViagem.findByObservacao", query = "SELECT v FROM ViewVeiculoSemViagem v WHERE v.observacao = :observacao")})
 public class ViewVeiculoSemViagem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "identificador", length = 2147483647)

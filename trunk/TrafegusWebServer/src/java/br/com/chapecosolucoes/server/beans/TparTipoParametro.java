@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,9 +22,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "tpar_tipo_parametro")
+@Table(name = "tpar_tipo_parametro", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TparTipoParametro.findAll", query = "SELECT t FROM TparTipoParametro t")})
+    @NamedQuery(name = "TparTipoParametro.findAll", query = "SELECT t FROM TparTipoParametro t"),
+    @NamedQuery(name = "TparTipoParametro.findByTparCodigo", query = "SELECT t FROM TparTipoParametro t WHERE t.tparCodigo = :tparCodigo"),
+    @NamedQuery(name = "TparTipoParametro.findByTparDescricao", query = "SELECT t FROM TparTipoParametro t WHERE t.tparDescricao = :tparDescricao")})
 public class TparTipoParametro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,10 +35,10 @@ public class TparTipoParametro implements Serializable {
     private Integer tparCodigo;
     @Column(name = "tpar_descricao", length = 50)
     private String tparDescricao;
-    @OneToMany(mappedBy = "tparTipoParametro")
-    private Collection<PaipPgAssociaItemParam> paipPgAssociaItemParamCollection;
-    @OneToMany(mappedBy = "tparTipoParametro")
-    private Collection<PipaPgItemParametro> pipaPgItemParametroCollection;
+    @OneToMany(mappedBy = "tparTipoParametro", fetch = FetchType.EAGER)
+    private List<PaipPgAssociaItemParam> paipPgAssociaItemParamList;
+    @OneToMany(mappedBy = "tparTipoParametro", fetch = FetchType.EAGER)
+    private List<PipaPgItemParametro> pipaPgItemParametroList;
 
     public TparTipoParametro() {
     }
@@ -60,20 +63,20 @@ public class TparTipoParametro implements Serializable {
         this.tparDescricao = tparDescricao;
     }
 
-    public Collection<PaipPgAssociaItemParam> getPaipPgAssociaItemParamCollection() {
-        return paipPgAssociaItemParamCollection;
+    public List<PaipPgAssociaItemParam> getPaipPgAssociaItemParamList() {
+        return paipPgAssociaItemParamList;
     }
 
-    public void setPaipPgAssociaItemParamCollection(Collection<PaipPgAssociaItemParam> paipPgAssociaItemParamCollection) {
-        this.paipPgAssociaItemParamCollection = paipPgAssociaItemParamCollection;
+    public void setPaipPgAssociaItemParamList(List<PaipPgAssociaItemParam> paipPgAssociaItemParamList) {
+        this.paipPgAssociaItemParamList = paipPgAssociaItemParamList;
     }
 
-    public Collection<PipaPgItemParametro> getPipaPgItemParametroCollection() {
-        return pipaPgItemParametroCollection;
+    public List<PipaPgItemParametro> getPipaPgItemParametroList() {
+        return pipaPgItemParametroList;
     }
 
-    public void setPipaPgItemParametroCollection(Collection<PipaPgItemParametro> pipaPgItemParametroCollection) {
-        this.pipaPgItemParametroCollection = pipaPgItemParametroCollection;
+    public void setPipaPgItemParametroList(List<PipaPgItemParametro> pipaPgItemParametroList) {
+        this.pipaPgItemParametroList = pipaPgItemParametroList;
     }
 
     @Override

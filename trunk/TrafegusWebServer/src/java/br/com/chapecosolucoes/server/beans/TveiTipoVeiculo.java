@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,9 +21,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "tvei_tipo_veiculo")
+@Table(name = "tvei_tipo_veiculo", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TveiTipoVeiculo.findAll", query = "SELECT t FROM TveiTipoVeiculo t")})
+    @NamedQuery(name = "TveiTipoVeiculo.findAll", query = "SELECT t FROM TveiTipoVeiculo t"),
+    @NamedQuery(name = "TveiTipoVeiculo.findByTveiCodigo", query = "SELECT t FROM TveiTipoVeiculo t WHERE t.tveiCodigo = :tveiCodigo"),
+    @NamedQuery(name = "TveiTipoVeiculo.findByTveiDescricao", query = "SELECT t FROM TveiTipoVeiculo t WHERE t.tveiDescricao = :tveiDescricao")})
 public class TveiTipoVeiculo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,7 +35,7 @@ public class TveiTipoVeiculo implements Serializable {
     @Column(name = "tvei_descricao", length = 50)
     private String tveiDescricao;
     @OneToMany(mappedBy = "tveiTipoVeiculo")
-    private Collection<VeicVeiculo> veicVeiculoCollection;
+    private List<VeicVeiculo> veicVeiculoList;
 
     public TveiTipoVeiculo() {
     }
@@ -58,12 +60,12 @@ public class TveiTipoVeiculo implements Serializable {
         this.tveiDescricao = tveiDescricao;
     }
 
-    public Collection<VeicVeiculo> getVeicVeiculoCollection() {
-        return veicVeiculoCollection;
+    public List<VeicVeiculo> getVeicVeiculoList() {
+        return veicVeiculoList;
     }
 
-    public void setVeicVeiculoCollection(Collection<VeicVeiculo> veicVeiculoCollection) {
-        this.veicVeiculoCollection = veicVeiculoCollection;
+    public void setVeicVeiculoList(List<VeicVeiculo> veicVeiculoList) {
+        this.veicVeiculoList = veicVeiculoList;
     }
 
     @Override

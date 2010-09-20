@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,9 +26,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "ppad_periferico_padrao")
+@Table(name = "ppad_periferico_padrao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PpadPerifericoPadrao.findAll", query = "SELECT p FROM PpadPerifericoPadrao p")})
+    @NamedQuery(name = "PpadPerifericoPadrao.findAll", query = "SELECT p FROM PpadPerifericoPadrao p"),
+    @NamedQuery(name = "PpadPerifericoPadrao.findByPpadCodigo", query = "SELECT p FROM PpadPerifericoPadrao p WHERE p.ppadCodigo = :ppadCodigo"),
+    @NamedQuery(name = "PpadPerifericoPadrao.findByPpadDescricao", query = "SELECT p FROM PpadPerifericoPadrao p WHERE p.ppadDescricao = :ppadDescricao"),
+    @NamedQuery(name = "PpadPerifericoPadrao.findByPpadDataCadastro", query = "SELECT p FROM PpadPerifericoPadrao p WHERE p.ppadDataCadastro = :ppadDataCadastro"),
+    @NamedQuery(name = "PpadPerifericoPadrao.findByPpadCodigoGr", query = "SELECT p FROM PpadPerifericoPadrao p WHERE p.ppadCodigoGr = :ppadCodigoGr"),
+    @NamedQuery(name = "PpadPerifericoPadrao.findByPpadImportado", query = "SELECT p FROM PpadPerifericoPadrao p WHERE p.ppadImportado = :ppadImportado")})
 public class PpadPerifericoPadrao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,17 +49,11 @@ public class PpadPerifericoPadrao implements Serializable {
     private Integer ppadCodigoGr;
     @Column(name = "ppad_importado")
     private Character ppadImportado;
-    @OneToMany(mappedBy = "ppadPerifericoPadrao")
-    private Collection<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoCollection;
-    @OneToMany(mappedBy = "ppadPerifericoPadrao")
-    private Collection<PitePgItem> pitePgItemCollection;
     @JoinColumn(name = "ppad_tper_codigo", referencedColumnName = "tper_codigo")
     @ManyToOne
     private TperTipoPeriferico tperTipoPeriferico;
     @OneToMany(mappedBy = "ppadPerifericoPadrao")
-    private Collection<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalCollection;
-    @OneToMany(mappedBy = "ppadPerifericoPadrao")
-    private Collection<PvtePerifericVersaoTecnolo> pvtePerifericVersaoTecnoloCollection;
+    private List<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoList;
 
     public PpadPerifericoPadrao() {
     }
@@ -103,22 +102,6 @@ public class PpadPerifericoPadrao implements Serializable {
         this.ppadImportado = ppadImportado;
     }
 
-    public Collection<EppaEventoPerifericoPadrao> getEppaEventoPerifericoPadraoCollection() {
-        return eppaEventoPerifericoPadraoCollection;
-    }
-
-    public void setEppaEventoPerifericoPadraoCollection(Collection<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoCollection) {
-        this.eppaEventoPerifericoPadraoCollection = eppaEventoPerifericoPadraoCollection;
-    }
-
-    public Collection<PitePgItem> getPitePgItemCollection() {
-        return pitePgItemCollection;
-    }
-
-    public void setPitePgItemCollection(Collection<PitePgItem> pitePgItemCollection) {
-        this.pitePgItemCollection = pitePgItemCollection;
-    }
-
     public TperTipoPeriferico getTperTipoPeriferico() {
         return tperTipoPeriferico;
     }
@@ -127,20 +110,12 @@ public class PpadPerifericoPadrao implements Serializable {
         this.tperTipoPeriferico = tperTipoPeriferico;
     }
 
-    public Collection<PpinPerifericoPadraoInstal> getPpinPerifericoPadraoInstalCollection() {
-        return ppinPerifericoPadraoInstalCollection;
+    public List<EppaEventoPerifericoPadrao> getEppaEventoPerifericoPadraoList() {
+        return eppaEventoPerifericoPadraoList;
     }
 
-    public void setPpinPerifericoPadraoInstalCollection(Collection<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalCollection) {
-        this.ppinPerifericoPadraoInstalCollection = ppinPerifericoPadraoInstalCollection;
-    }
-
-    public Collection<PvtePerifericVersaoTecnolo> getPvtePerifericVersaoTecnoloCollection() {
-        return pvtePerifericVersaoTecnoloCollection;
-    }
-
-    public void setPvtePerifericVersaoTecnoloCollection(Collection<PvtePerifericVersaoTecnolo> pvtePerifericVersaoTecnoloCollection) {
-        this.pvtePerifericVersaoTecnoloCollection = pvtePerifericVersaoTecnoloCollection;
+    public void setEppaEventoPerifericoPadraoList(List<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoList) {
+        this.eppaEventoPerifericoPadraoList = eppaEventoPerifericoPadraoList;
     }
 
     @Override

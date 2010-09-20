@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,9 +21,12 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "tlev_tipo_local_evento")
+@Table(name = "tlev_tipo_local_evento", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TlevTipoLocalEvento.findAll", query = "SELECT t FROM TlevTipoLocalEvento t")})
+    @NamedQuery(name = "TlevTipoLocalEvento.findAll", query = "SELECT t FROM TlevTipoLocalEvento t"),
+    @NamedQuery(name = "TlevTipoLocalEvento.findByTlevCodigo", query = "SELECT t FROM TlevTipoLocalEvento t WHERE t.tlevCodigo = :tlevCodigo"),
+    @NamedQuery(name = "TlevTipoLocalEvento.findByTlevDescricao", query = "SELECT t FROM TlevTipoLocalEvento t WHERE t.tlevDescricao = :tlevDescricao"),
+    @NamedQuery(name = "TlevTipoLocalEvento.findByTlevSequencia", query = "SELECT t FROM TlevTipoLocalEvento t WHERE t.tlevSequencia = :tlevSequencia")})
 public class TlevTipoLocalEvento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,7 +38,7 @@ public class TlevTipoLocalEvento implements Serializable {
     @Column(name = "tlev_sequencia")
     private Integer tlevSequencia;
     @OneToMany(mappedBy = "tlevTipoLocalEvento")
-    private Collection<VlevViagemLocalEvento> vlevViagemLocalEventoCollection;
+    private List<VlevViagemLocalEvento> vlevViagemLocalEventoList;
 
     public TlevTipoLocalEvento() {
     }
@@ -68,12 +71,12 @@ public class TlevTipoLocalEvento implements Serializable {
         this.tlevSequencia = tlevSequencia;
     }
 
-    public Collection<VlevViagemLocalEvento> getVlevViagemLocalEventoCollection() {
-        return vlevViagemLocalEventoCollection;
+    public List<VlevViagemLocalEvento> getVlevViagemLocalEventoList() {
+        return vlevViagemLocalEventoList;
     }
 
-    public void setVlevViagemLocalEventoCollection(Collection<VlevViagemLocalEvento> vlevViagemLocalEventoCollection) {
-        this.vlevViagemLocalEventoCollection = vlevViagemLocalEventoCollection;
+    public void setVlevViagemLocalEventoList(List<VlevViagemLocalEvento> vlevViagemLocalEventoList) {
+        this.vlevViagemLocalEventoList = vlevViagemLocalEventoList;
     }
 
     @Override

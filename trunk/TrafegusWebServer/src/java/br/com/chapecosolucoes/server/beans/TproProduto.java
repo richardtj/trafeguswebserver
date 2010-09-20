@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,9 +24,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "tpro_produto")
+@Table(name = "tpro_produto", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TproProduto.findAll", query = "SELECT t FROM TproProduto t")})
+    @NamedQuery(name = "TproProduto.findAll", query = "SELECT t FROM TproProduto t"),
+    @NamedQuery(name = "TproProduto.findByTproCodigo", query = "SELECT t FROM TproProduto t WHERE t.tproCodigo = :tproCodigo"),
+    @NamedQuery(name = "TproProduto.findByTproDescricao", query = "SELECT t FROM TproProduto t WHERE t.tproDescricao = :tproDescricao"),
+    @NamedQuery(name = "TproProduto.findByTproDataCadastro", query = "SELECT t FROM TproProduto t WHERE t.tproDataCadastro = :tproDataCadastro"),
+    @NamedQuery(name = "TproProduto.findByTproCodigoGr", query = "SELECT t FROM TproProduto t WHERE t.tproCodigoGr = :tproCodigoGr"),
+    @NamedQuery(name = "TproProduto.findByTproImportado", query = "SELECT t FROM TproProduto t WHERE t.tproImportado = :tproImportado")})
 public class TproProduto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,11 +48,7 @@ public class TproProduto implements Serializable {
     @Column(name = "tpro_importado")
     private Character tproImportado;
     @OneToMany(mappedBy = "tproProduto")
-    private Collection<HpprHistoricoPesquisaProd> hpprHistoricoPesquisaProdCollection;
-    @OneToMany(mappedBy = "tproProduto")
-    private Collection<ProdProduto> prodProdutoCollection;
-    @OneToMany(mappedBy = "tproProduto")
-    private Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection;
+    private List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList;
 
     public TproProduto() {
     }
@@ -96,28 +97,12 @@ public class TproProduto implements Serializable {
         this.tproImportado = tproImportado;
     }
 
-    public Collection<HpprHistoricoPesquisaProd> getHpprHistoricoPesquisaProdCollection() {
-        return hpprHistoricoPesquisaProdCollection;
+    public List<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorList() {
+        return hpmoHistoricoPesquisaMotorList;
     }
 
-    public void setHpprHistoricoPesquisaProdCollection(Collection<HpprHistoricoPesquisaProd> hpprHistoricoPesquisaProdCollection) {
-        this.hpprHistoricoPesquisaProdCollection = hpprHistoricoPesquisaProdCollection;
-    }
-
-    public Collection<ProdProduto> getProdProdutoCollection() {
-        return prodProdutoCollection;
-    }
-
-    public void setProdProdutoCollection(Collection<ProdProduto> prodProdutoCollection) {
-        this.prodProdutoCollection = prodProdutoCollection;
-    }
-
-    public Collection<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorCollection() {
-        return hpmoHistoricoPesquisaMotorCollection;
-    }
-
-    public void setHpmoHistoricoPesquisaMotorCollection(Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection) {
-        this.hpmoHistoricoPesquisaMotorCollection = hpmoHistoricoPesquisaMotorCollection;
+    public void setHpmoHistoricoPesquisaMotorList(List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList) {
+        this.hpmoHistoricoPesquisaMotorList = hpmoHistoricoPesquisaMotorList;
     }
 
     @Override

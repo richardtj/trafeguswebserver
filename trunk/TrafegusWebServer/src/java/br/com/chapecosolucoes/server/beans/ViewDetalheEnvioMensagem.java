@@ -20,9 +20,20 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_detalhe_envio_mensagem")
+@Table(name = "view_detalhe_envio_mensagem", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewDetalheEnvioMensagem.findAll", query = "SELECT v FROM ViewDetalheEnvioMensagem v")})
+    @NamedQuery(name = "ViewDetalheEnvioMensagem.findAll", query = "SELECT v FROM ViewDetalheEnvioMensagem v"),
+    @NamedQuery(name = "ViewDetalheEnvioMensagem.findByEnviCodigo", query = "SELECT v FROM ViewDetalheEnvioMensagem v WHERE v.enviCodigo = :enviCodigo"),
+    @NamedQuery(name = "ViewDetalheEnvioMensagem.findByTermCodigo", query = "SELECT v FROM ViewDetalheEnvioMensagem v WHERE v.termCodigo = :termCodigo"),
+    @NamedQuery(name = "ViewDetalheEnvioMensagem.findByTermNumeroTerminal", query = "SELECT v FROM ViewDetalheEnvioMensagem v WHERE v.termNumeroTerminal = :termNumeroTerminal"),
+    @NamedQuery(name = "ViewDetalheEnvioMensagem.findByEnviDataCadastro", query = "SELECT v FROM ViewDetalheEnvioMensagem v WHERE v.enviDataCadastro = :enviDataCadastro"),
+    @NamedQuery(name = "ViewDetalheEnvioMensagem.findByEnviEstatus", query = "SELECT v FROM ViewDetalheEnvioMensagem v WHERE v.enviEstatus = :enviEstatus"),
+    @NamedQuery(name = "ViewDetalheEnvioMensagem.findByEnviDescricaoEstatus", query = "SELECT v FROM ViewDetalheEnvioMensagem v WHERE v.enviDescricaoEstatus = :enviDescricaoEstatus"),
+    @NamedQuery(name = "ViewDetalheEnvioMensagem.findByTexto", query = "SELECT v FROM ViewDetalheEnvioMensagem v WHERE v.texto = :texto"),
+    @NamedQuery(name = "ViewDetalheEnvioMensagem.findByTipoenvio", query = "SELECT v FROM ViewDetalheEnvioMensagem v WHERE v.tipoenvio = :tipoenvio"),
+    @NamedQuery(name = "ViewDetalheEnvioMensagem.findByErasCodigo", query = "SELECT v FROM ViewDetalheEnvioMensagem v WHERE v.erasCodigo = :erasCodigo"),
+    @NamedQuery(name = "ViewDetalheEnvioMensagem.findByIdentificador", query = "SELECT v FROM ViewDetalheEnvioMensagem v WHERE v.identificador = :identificador"),
+    @NamedQuery(name = "ViewDetalheEnvioMensagem.findByOrasCodigo", query = "SELECT v FROM ViewDetalheEnvioMensagem v WHERE v.orasCodigo = :orasCodigo")})
 public class ViewDetalheEnvioMensagem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "envi_codigo")

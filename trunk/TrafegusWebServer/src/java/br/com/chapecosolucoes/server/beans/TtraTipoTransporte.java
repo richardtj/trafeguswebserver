@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,9 +21,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "ttra_tipo_transporte")
+@Table(name = "ttra_tipo_transporte", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TtraTipoTransporte.findAll", query = "SELECT t FROM TtraTipoTransporte t")})
+    @NamedQuery(name = "TtraTipoTransporte.findAll", query = "SELECT t FROM TtraTipoTransporte t"),
+    @NamedQuery(name = "TtraTipoTransporte.findByTtraCodigo", query = "SELECT t FROM TtraTipoTransporte t WHERE t.ttraCodigo = :ttraCodigo"),
+    @NamedQuery(name = "TtraTipoTransporte.findByTtraDescricao", query = "SELECT t FROM TtraTipoTransporte t WHERE t.ttraDescricao = :ttraDescricao")})
 public class TtraTipoTransporte implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,9 +35,7 @@ public class TtraTipoTransporte implements Serializable {
     @Column(name = "ttra_descricao", length = 50)
     private String ttraDescricao;
     @OneToMany(mappedBy = "ttraTipoTransporte")
-    private Collection<ViagViagem> viagViagemCollection;
-    @OneToMany(mappedBy = "ttraTipoTransporte")
-    private Collection<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolCollection;
+    private List<ViagViagem> viagViagemList;
 
     public TtraTipoTransporte() {
     }
@@ -60,20 +60,12 @@ public class TtraTipoTransporte implements Serializable {
         this.ttraDescricao = ttraDescricao;
     }
 
-    public Collection<ViagViagem> getViagViagemCollection() {
-        return viagViagemCollection;
+    public List<ViagViagem> getViagViagemList() {
+        return viagViagemList;
     }
 
-    public void setViagViagemCollection(Collection<ViagViagem> viagViagemCollection) {
-        this.viagViagemCollection = viagViagemCollection;
-    }
-
-    public Collection<SvteSeguradoraVersaoTecnol> getSvteSeguradoraVersaoTecnolCollection() {
-        return svteSeguradoraVersaoTecnolCollection;
-    }
-
-    public void setSvteSeguradoraVersaoTecnolCollection(Collection<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolCollection) {
-        this.svteSeguradoraVersaoTecnolCollection = svteSeguradoraVersaoTecnolCollection;
+    public void setViagViagemList(List<ViagViagem> viagViagemList) {
+        this.viagViagemList = viagViagemList;
     }
 
     @Override

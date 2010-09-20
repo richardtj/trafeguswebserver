@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,25 +25,26 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "vcav_veiculo_cavalo")
+@Table(name = "vcav_veiculo_cavalo", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VcavVeiculoCavalo.findAll", query = "SELECT v FROM VcavVeiculoCavalo v")})
+    @NamedQuery(name = "VcavVeiculoCavalo.findAll", query = "SELECT v FROM VcavVeiculoCavalo v"),
+    @NamedQuery(name = "VcavVeiculoCavalo.findByVcavVeicOrasCodigo", query = "SELECT v FROM VcavVeiculoCavalo v WHERE v.vcavVeicOrasCodigo = :vcavVeicOrasCodigo")})
 public class VcavVeiculoCavalo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "vcav_veic_oras_codigo", nullable = false)
     private Integer vcavVeicOrasCodigo;
-    @OneToMany(mappedBy = "vcavVeiculoCavalo")
-    private Collection<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaCollection;
+    @OneToMany(mappedBy = "vcavVeiculoCavalo", fetch = FetchType.EAGER)
+    private List<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaList;
     @JoinColumn(name = "vcav_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vcav_tope_codigo", referencedColumnName = "tope_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TopeTipoOperacao topeTipoOperacao;
     @JoinColumn(name = "vcav_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
 
     public VcavVeiculoCavalo() {
@@ -60,12 +62,12 @@ public class VcavVeiculoCavalo implements Serializable {
         this.vcavVeicOrasCodigo = vcavVeicOrasCodigo;
     }
 
-    public Collection<VccaVeiculoCavaloCarreta> getVccaVeiculoCavaloCarretaCollection() {
-        return vccaVeiculoCavaloCarretaCollection;
+    public List<VccaVeiculoCavaloCarreta> getVccaVeiculoCavaloCarretaList() {
+        return vccaVeiculoCavaloCarretaList;
     }
 
-    public void setVccaVeiculoCavaloCarretaCollection(Collection<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaCollection) {
-        this.vccaVeiculoCavaloCarretaCollection = vccaVeiculoCavaloCarretaCollection;
+    public void setVccaVeiculoCavaloCarretaList(List<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaList) {
+        this.vccaVeiculoCavaloCarretaList = vccaVeiculoCavaloCarretaList;
     }
 
     public VeicVeiculo getVeicVeiculo() {

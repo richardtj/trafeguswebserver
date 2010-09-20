@@ -17,9 +17,26 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_dados_veiculo")
+@Table(name = "view_dados_veiculo", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewDadosVeiculo.findAll", query = "SELECT v FROM ViewDadosVeiculo v")})
+    @NamedQuery(name = "ViewDadosVeiculo.findAll", query = "SELECT v FROM ViewDadosVeiculo v"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByOrasCodigo", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.orasCodigo = :orasCodigo"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByIdentificador", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.identificador = :identificador"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByTermCodigo", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.termCodigo = :termCodigo"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByTermNumeroTerminal", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.termNumeroTerminal = :termNumeroTerminal"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByErasCodigo", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.erasCodigo = :erasCodigo"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByTecnDescricao", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.tecnDescricao = :tecnDescricao"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByVtecVersao", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.vtecVersao = :vtecVersao"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByMvecDescricao", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.mvecDescricao = :mvecDescricao"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByMveiDescricao", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.mveiDescricao = :mveiDescricao"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByVeicAnoFabricacao", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.veicAnoFabricacao = :veicAnoFabricacao"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByVeicAnoModelo", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.veicAnoModelo = :veicAnoModelo"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByVeicCor", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.veicCor = :veicCor"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByVeicOrasCodigo", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.veicOrasCodigo = :veicOrasCodigo"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByVeicTelefone", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.veicTelefone = :veicTelefone"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByVeicPessOrasCodigoPropri", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.veicPessOrasCodigoPropri = :veicPessOrasCodigoPropri"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByTermAtivo", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.termAtivo = :termAtivo"),
+    @NamedQuery(name = "ViewDadosVeiculo.findByOperacao", query = "SELECT v FROM ViewDadosVeiculo v WHERE v.operacao = :operacao")})
 public class ViewDadosVeiculo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "oras_codigo")

@@ -19,9 +19,13 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "svex_sistema_vinculo_externo")
+@Table(name = "svex_sistema_vinculo_externo", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "SvexSistemaVinculoExterno.findAll", query = "SELECT s FROM SvexSistemaVinculoExterno s")})
+    @NamedQuery(name = "SvexSistemaVinculoExterno.findAll", query = "SELECT s FROM SvexSistemaVinculoExterno s"),
+    @NamedQuery(name = "SvexSistemaVinculoExterno.findBySvexCodigo", query = "SELECT s FROM SvexSistemaVinculoExterno s WHERE s.svexCodigo = :svexCodigo"),
+    @NamedQuery(name = "SvexSistemaVinculoExterno.findBySvexIdObjeto", query = "SELECT s FROM SvexSistemaVinculoExterno s WHERE s.svexIdObjeto = :svexIdObjeto"),
+    @NamedQuery(name = "SvexSistemaVinculoExterno.findBySvexCodigoPk", query = "SELECT s FROM SvexSistemaVinculoExterno s WHERE s.svexCodigoPk = :svexCodigoPk"),
+    @NamedQuery(name = "SvexSistemaVinculoExterno.findBySvexCodigoExterno", query = "SELECT s FROM SvexSistemaVinculoExterno s WHERE s.svexCodigoExterno = :svexCodigoExterno")})
 public class SvexSistemaVinculoExterno implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

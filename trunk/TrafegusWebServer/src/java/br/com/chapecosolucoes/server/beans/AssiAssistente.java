@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,9 +25,15 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "assi_assistente")
+@Table(name = "assi_assistente", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "AssiAssistente.findAll", query = "SELECT a FROM AssiAssistente a")})
+    @NamedQuery(name = "AssiAssistente.findAll", query = "SELECT a FROM AssiAssistente a"),
+    @NamedQuery(name = "AssiAssistente.findByAssiCodigo", query = "SELECT a FROM AssiAssistente a WHERE a.assiCodigo = :assiCodigo"),
+    @NamedQuery(name = "AssiAssistente.findByAssiDescricao", query = "SELECT a FROM AssiAssistente a WHERE a.assiDescricao = :assiDescricao"),
+    @NamedQuery(name = "AssiAssistente.findByAssiDono", query = "SELECT a FROM AssiAssistente a WHERE a.assiDono = :assiDono"),
+    @NamedQuery(name = "AssiAssistente.findByAssiDataCadastro", query = "SELECT a FROM AssiAssistente a WHERE a.assiDataCadastro = :assiDataCadastro"),
+    @NamedQuery(name = "AssiAssistente.findByAssiCodigoGr", query = "SELECT a FROM AssiAssistente a WHERE a.assiCodigoGr = :assiCodigoGr"),
+    @NamedQuery(name = "AssiAssistente.findByAssiImportado", query = "SELECT a FROM AssiAssistente a WHERE a.assiImportado = :assiImportado")})
 public class AssiAssistente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,8 +51,8 @@ public class AssiAssistente implements Serializable {
     private Integer assiCodigoGr;
     @Column(name = "assi_importado")
     private Character assiImportado;
-    @OneToMany(mappedBy = "assiAssistente")
-    private Collection<AssdAssistenteDetalhe> assdAssistenteDetalheCollection;
+    @OneToMany(mappedBy = "assiAssistente", fetch = FetchType.EAGER)
+    private List<AssdAssistenteDetalhe> assdAssistenteDetalheList;
 
     public AssiAssistente() {
     }
@@ -102,12 +109,12 @@ public class AssiAssistente implements Serializable {
         this.assiImportado = assiImportado;
     }
 
-    public Collection<AssdAssistenteDetalhe> getAssdAssistenteDetalheCollection() {
-        return assdAssistenteDetalheCollection;
+    public List<AssdAssistenteDetalhe> getAssdAssistenteDetalheList() {
+        return assdAssistenteDetalheList;
     }
 
-    public void setAssdAssistenteDetalheCollection(Collection<AssdAssistenteDetalhe> assdAssistenteDetalheCollection) {
-        this.assdAssistenteDetalheCollection = assdAssistenteDetalheCollection;
+    public void setAssdAssistenteDetalheList(List<AssdAssistenteDetalhe> assdAssistenteDetalheList) {
+        this.assdAssistenteDetalheList = assdAssistenteDetalheList;
     }
 
     @Override

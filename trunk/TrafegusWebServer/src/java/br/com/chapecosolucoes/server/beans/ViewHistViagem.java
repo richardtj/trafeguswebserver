@@ -20,9 +20,19 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_hist_viagem")
+@Table(name = "view_hist_viagem", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewHistViagem.findAll", query = "SELECT v FROM ViewHistViagem v")})
+    @NamedQuery(name = "ViewHistViagem.findAll", query = "SELECT v FROM ViewHistViagem v"),
+    @NamedQuery(name = "ViewHistViagem.findByViagCodigo", query = "SELECT v FROM ViewHistViagem v WHERE v.viagCodigo = :viagCodigo"),
+    @NamedQuery(name = "ViewHistViagem.findByIdentificador", query = "SELECT v FROM ViewHistViagem v WHERE v.identificador = :identificador"),
+    @NamedQuery(name = "ViewHistViagem.findByTermNumeroTerminal", query = "SELECT v FROM ViewHistViagem v WHERE v.termNumeroTerminal = :termNumeroTerminal"),
+    @NamedQuery(name = "ViewHistViagem.findByViagDataInicio", query = "SELECT v FROM ViewHistViagem v WHERE v.viagDataInicio = :viagDataInicio"),
+    @NamedQuery(name = "ViewHistViagem.findByViagDataFim", query = "SELECT v FROM ViewHistViagem v WHERE v.viagDataFim = :viagDataFim"),
+    @NamedQuery(name = "ViewHistViagem.findByTransportador", query = "SELECT v FROM ViewHistViagem v WHERE v.transportador = :transportador"),
+    @NamedQuery(name = "ViewHistViagem.findByEmbarcador", query = "SELECT v FROM ViewHistViagem v WHERE v.embarcador = :embarcador"),
+    @NamedQuery(name = "ViewHistViagem.findByViagEmbaPjurPessOrasCodigo", query = "SELECT v FROM ViewHistViagem v WHERE v.viagEmbaPjurPessOrasCodigo = :viagEmbaPjurPessOrasCodigo"),
+    @NamedQuery(name = "ViewHistViagem.findByViagTranPessOrasCodigo", query = "SELECT v FROM ViewHistViagem v WHERE v.viagTranPessOrasCodigo = :viagTranPessOrasCodigo"),
+    @NamedQuery(name = "ViewHistViagem.findByTermCodigo", query = "SELECT v FROM ViewHistViagem v WHERE v.termCodigo = :termCodigo")})
 public class ViewHistViagem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "viag_codigo")

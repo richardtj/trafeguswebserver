@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "orob_objeto_rastreado_obs")
+@Table(name = "orob_objeto_rastreado_obs", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "OrobObjetoRastreadoObs.findAll", query = "SELECT o FROM OrobObjetoRastreadoObs o")})
+    @NamedQuery(name = "OrobObjetoRastreadoObs.findAll", query = "SELECT o FROM OrobObjetoRastreadoObs o"),
+    @NamedQuery(name = "OrobObjetoRastreadoObs.findByOrobCodigo", query = "SELECT o FROM OrobObjetoRastreadoObs o WHERE o.orobCodigo = :orobCodigo"),
+    @NamedQuery(name = "OrobObjetoRastreadoObs.findByOrobObservacao", query = "SELECT o FROM OrobObjetoRastreadoObs o WHERE o.orobObservacao = :orobObservacao"),
+    @NamedQuery(name = "OrobObjetoRastreadoObs.findByOrobDataCadastro", query = "SELECT o FROM OrobObjetoRastreadoObs o WHERE o.orobDataCadastro = :orobDataCadastro"),
+    @NamedQuery(name = "OrobObjetoRastreadoObs.findByOrobCodigoGr", query = "SELECT o FROM OrobObjetoRastreadoObs o WHERE o.orobCodigoGr = :orobCodigoGr"),
+    @NamedQuery(name = "OrobObjetoRastreadoObs.findByOrobImportado", query = "SELECT o FROM OrobObjetoRastreadoObs o WHERE o.orobImportado = :orobImportado")})
 public class OrobObjetoRastreadoObs implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,10 +49,10 @@ public class OrobObjetoRastreadoObs implements Serializable {
     @Column(name = "orob_importado")
     private Character orobImportado;
     @JoinColumn(name = "orob_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "orob_oras_codigo", referencedColumnName = "oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
 
     public OrobObjetoRastreadoObs() {

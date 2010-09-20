@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -23,23 +24,24 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "segu_seguradora")
+@Table(name = "segu_seguradora", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "SeguSeguradora.findAll", query = "SELECT s FROM SeguSeguradora s")})
+    @NamedQuery(name = "SeguSeguradora.findAll", query = "SELECT s FROM SeguSeguradora s"),
+    @NamedQuery(name = "SeguSeguradora.findBySeguPjurPessOrasCodigo", query = "SELECT s FROM SeguSeguradora s WHERE s.seguPjurPessOrasCodigo = :seguPjurPessOrasCodigo")})
 public class SeguSeguradora implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "segu_pjur_pess_oras_codigo", nullable = false)
     private Integer seguPjurPessOrasCodigo;
-    @OneToMany(mappedBy = "seguSeguradora")
-    private Collection<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenCollection;
-    @OneToMany(mappedBy = "seguSeguradora")
-    private Collection<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenCollection;
-    @OneToMany(mappedBy = "seguSeguradora")
-    private Collection<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolCollection;
+    @OneToMany(mappedBy = "seguSeguradora", fetch = FetchType.EAGER)
+    private List<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenList;
+    @OneToMany(mappedBy = "seguSeguradora", fetch = FetchType.EAGER)
+    private List<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenList;
+    @OneToMany(mappedBy = "seguSeguradora", fetch = FetchType.EAGER)
+    private List<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolList;
     @JoinColumn(name = "segu_pjur_pess_oras_codigo", referencedColumnName = "pjur_pess_oras_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private PjurPessoaJuridica pjurPessoaJuridica;
 
     public SeguSeguradora() {
@@ -57,28 +59,28 @@ public class SeguSeguradora implements Serializable {
         this.seguPjurPessOrasCodigo = seguPjurPessOrasCodigo;
     }
 
-    public Collection<EspgEmbarcSegurPlanoGeren> getEspgEmbarcSegurPlanoGerenCollection() {
-        return espgEmbarcSegurPlanoGerenCollection;
+    public List<EspgEmbarcSegurPlanoGeren> getEspgEmbarcSegurPlanoGerenList() {
+        return espgEmbarcSegurPlanoGerenList;
     }
 
-    public void setEspgEmbarcSegurPlanoGerenCollection(Collection<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenCollection) {
-        this.espgEmbarcSegurPlanoGerenCollection = espgEmbarcSegurPlanoGerenCollection;
+    public void setEspgEmbarcSegurPlanoGerenList(List<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenList) {
+        this.espgEmbarcSegurPlanoGerenList = espgEmbarcSegurPlanoGerenList;
     }
 
-    public Collection<TspgTranspSegurPlanoGeren> getTspgTranspSegurPlanoGerenCollection() {
-        return tspgTranspSegurPlanoGerenCollection;
+    public List<TspgTranspSegurPlanoGeren> getTspgTranspSegurPlanoGerenList() {
+        return tspgTranspSegurPlanoGerenList;
     }
 
-    public void setTspgTranspSegurPlanoGerenCollection(Collection<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenCollection) {
-        this.tspgTranspSegurPlanoGerenCollection = tspgTranspSegurPlanoGerenCollection;
+    public void setTspgTranspSegurPlanoGerenList(List<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenList) {
+        this.tspgTranspSegurPlanoGerenList = tspgTranspSegurPlanoGerenList;
     }
 
-    public Collection<SvteSeguradoraVersaoTecnol> getSvteSeguradoraVersaoTecnolCollection() {
-        return svteSeguradoraVersaoTecnolCollection;
+    public List<SvteSeguradoraVersaoTecnol> getSvteSeguradoraVersaoTecnolList() {
+        return svteSeguradoraVersaoTecnolList;
     }
 
-    public void setSvteSeguradoraVersaoTecnolCollection(Collection<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolCollection) {
-        this.svteSeguradoraVersaoTecnolCollection = svteSeguradoraVersaoTecnolCollection;
+    public void setSvteSeguradoraVersaoTecnolList(List<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolList) {
+        this.svteSeguradoraVersaoTecnolList = svteSeguradoraVersaoTecnolList;
     }
 
     public PjurPessoaJuridica getPjurPessoaJuridica() {

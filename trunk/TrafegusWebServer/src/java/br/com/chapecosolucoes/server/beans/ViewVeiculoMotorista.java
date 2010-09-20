@@ -20,9 +20,31 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_veiculo_motorista")
+@Table(name = "view_veiculo_motorista", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewVeiculoMotorista.findAll", query = "SELECT v FROM ViewVeiculoMotorista v")})
+    @NamedQuery(name = "ViewVeiculoMotorista.findAll", query = "SELECT v FROM ViewVeiculoMotorista v"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByVeicOrasCodigo", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.veicOrasCodigo = :veicOrasCodigo"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByPessNome", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.pessNome = :pessNome"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByPessNumero", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.pessNumero = :pessNumero"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByMotCategoriaCnh", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.motCategoriaCnh = :motCategoriaCnh"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByMotNumeroCnh", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.motNumeroCnh = :motNumeroCnh"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByMotSenha", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.motSenha = :motSenha"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByMotTreinado", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.motTreinado = :motTreinado"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByMotUltimoTreinamento", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.motUltimoTreinamento = :motUltimoTreinamento"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByMotValidadeCnh", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.motValidadeCnh = :motValidadeCnh"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByMotValidadePesquisa", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.motValidadePesquisa = :motValidadePesquisa"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByPfisCpf", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.pfisCpf = :pfisCpf"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByPfisDataNascimento", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.pfisDataNascimento = :pfisDataNascimento"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByPfisRg", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.pfisRg = :pfisRg"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByPfisSexo", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.pfisSexo = :pfisSexo"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByLogrCep", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.logrCep = :logrCep"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByLogrComplemento", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.logrComplemento = :logrComplemento"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByEndereco", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.endereco = :endereco"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByBairro", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.bairro = :bairro"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByCidade", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.cidade = :cidade"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByEstado", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.estado = :estado"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByEstaSigla", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.estaSigla = :estaSigla"),
+    @NamedQuery(name = "ViewVeiculoMotorista.findByPais", query = "SELECT v FROM ViewVeiculoMotorista v WHERE v.pais = :pais")})
 public class ViewVeiculoMotorista implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "veic_oras_codigo")

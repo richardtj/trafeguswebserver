@@ -21,9 +21,23 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_integ_motora_ws_cronos")
+@Table(name = "view_integ_motora_ws_cronos", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewIntegMotoraWsCronos.findAll", query = "SELECT v FROM ViewIntegMotoraWsCronos v")})
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findAll", query = "SELECT v FROM ViewIntegMotoraWsCronos v"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByPackId", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.packId = :packId"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByIntegrator", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.integrator = :integrator"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByAccount", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.account = :account"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByNome", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.nome = :nome"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByCnh", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.cnh = :cnh"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByValidadeCnh", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.validadeCnh = :validadeCnh"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByCpf", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.cpf = :cpf"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByRg", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.rg = :rg"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByCidade", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.cidade = :cidade"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByUf", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.uf = :uf"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByRua", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.rua = :rua"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByNumero", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.numero = :numero"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByBairro", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.bairro = :bairro"),
+    @NamedQuery(name = "ViewIntegMotoraWsCronos.findByCep", query = "SELECT v FROM ViewIntegMotoraWsCronos v WHERE v.cep = :cep")})
 public class ViewIntegMotoraWsCronos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "PackId")

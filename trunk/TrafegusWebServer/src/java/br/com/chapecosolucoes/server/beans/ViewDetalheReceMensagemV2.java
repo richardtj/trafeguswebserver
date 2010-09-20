@@ -20,9 +20,25 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_detalhe_rece_mensagem_v2")
+@Table(name = "view_detalhe_rece_mensagem_v2", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewDetalheReceMensagemV2.findAll", query = "SELECT v FROM ViewDetalheReceMensagemV2 v")})
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findAll", query = "SELECT v FROM ViewDetalheReceMensagemV2 v"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByReceCodigo", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.receCodigo = :receCodigo"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByErasCodigo", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.erasCodigo = :erasCodigo"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByTermCodigo", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.termCodigo = :termCodigo"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByIdentificador", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.identificador = :identificador"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByTermNumeroTerminal", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.termNumeroTerminal = :termNumeroTerminal"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByReceDataComputadorBordo", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.receDataComputadorBordo = :receDataComputadorBordo"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByUsuaPfisPessOrasCodigo", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.usuaPfisPessOrasCodigo = :usuaPfisPessOrasCodigo"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByRposDescricaoSistema", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.rposDescricaoSistema = :rposDescricaoSistema"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByTransportador", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.transportador = :transportador"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByRmacNumero", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.rmacNumero = :rmacNumero"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByTecnDescricao", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.tecnDescricao = :tecnDescricao"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByUsuaDataLeitura", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.usuaDataLeitura = :usuaDataLeitura"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByUsuario", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.usuario = :usuario"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByTexto", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.texto = :texto"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByTipo", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.tipo = :tipo"),
+    @NamedQuery(name = "ViewDetalheReceMensagemV2.findByRmacMascara", query = "SELECT v FROM ViewDetalheReceMensagemV2 v WHERE v.rmacMascara = :rmacMascara")})
 public class ViewDetalheReceMensagemV2 implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "rece_codigo")

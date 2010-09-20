@@ -6,7 +6,6 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -17,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,9 +26,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "oras_objeto_rastreado")
+@Table(name = "oras_objeto_rastreado", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "OrasObjetoRastreado.findAll", query = "SELECT o FROM OrasObjetoRastreado o")})
+    @NamedQuery(name = "OrasObjetoRastreado.findAll", query = "SELECT o FROM OrasObjetoRastreado o"),
+    @NamedQuery(name = "OrasObjetoRastreado.findByOrasCodigo", query = "SELECT o FROM OrasObjetoRastreado o WHERE o.orasCodigo = :orasCodigo"),
+    @NamedQuery(name = "OrasObjetoRastreado.findByOrasDataCadastro", query = "SELECT o FROM OrasObjetoRastreado o WHERE o.orasDataCadastro = :orasDataCadastro"),
+    @NamedQuery(name = "OrasObjetoRastreado.findByOrasCodigoGr", query = "SELECT o FROM OrasObjetoRastreado o WHERE o.orasCodigoGr = :orasCodigoGr"),
+    @NamedQuery(name = "OrasObjetoRastreado.findByOrasImportado", query = "SELECT o FROM OrasObjetoRastreado o WHERE o.orasImportado = :orasImportado")})
 public class OrasObjetoRastreado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,28 +46,14 @@ public class OrasObjetoRastreado implements Serializable {
     private Integer orasCodigoGr;
     @Column(name = "oras_importado")
     private Character orasImportado;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado")
-    private PessPessoa pessPessoa;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado")
-    private ContContainer contContainer;
-    @OneToMany(mappedBy = "orasObjetoRastreado")
-    private Collection<OrobObjetoRastreadoObs> orobObjetoRastreadoObsCollection;
-    @OneToMany(mappedBy = "orasObjetoRastreado")
-    private Collection<TermTerminal> termTerminalCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado")
-    private VeicVeiculo veicVeiculo;
-    @OneToMany(mappedBy = "orasObjetoRastreado")
-    private Collection<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgCollection;
     @JoinColumn(name = "oras_pgpg_codigo", referencedColumnName = "pgpg_codigo")
     @ManyToOne
     private PgpgPg pgpgPg;
     @JoinColumn(name = "oras_eobj_codigo", referencedColumnName = "eobj_codigo")
     @ManyToOne
     private EobjEstatusObjeto eobjEstatusObjeto;
-    @OneToMany(mappedBy = "orasObjetoRastreado")
-    private Collection<OrteObjetoRastreadoTermina> orteObjetoRastreadoTerminaCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado")
-    private MaloMalote maloMalote;
+    private PessPessoa pessPessoa;
 
     public OrasObjetoRastreado() {
     }
@@ -106,54 +94,6 @@ public class OrasObjetoRastreado implements Serializable {
         this.orasImportado = orasImportado;
     }
 
-    public PessPessoa getPessPessoa() {
-        return pessPessoa;
-    }
-
-    public void setPessPessoa(PessPessoa pessPessoa) {
-        this.pessPessoa = pessPessoa;
-    }
-
-    public ContContainer getContContainer() {
-        return contContainer;
-    }
-
-    public void setContContainer(ContContainer contContainer) {
-        this.contContainer = contContainer;
-    }
-
-    public Collection<OrobObjetoRastreadoObs> getOrobObjetoRastreadoObsCollection() {
-        return orobObjetoRastreadoObsCollection;
-    }
-
-    public void setOrobObjetoRastreadoObsCollection(Collection<OrobObjetoRastreadoObs> orobObjetoRastreadoObsCollection) {
-        this.orobObjetoRastreadoObsCollection = orobObjetoRastreadoObsCollection;
-    }
-
-    public Collection<TermTerminal> getTermTerminalCollection() {
-        return termTerminalCollection;
-    }
-
-    public void setTermTerminalCollection(Collection<TermTerminal> termTerminalCollection) {
-        this.termTerminalCollection = termTerminalCollection;
-    }
-
-    public VeicVeiculo getVeicVeiculo() {
-        return veicVeiculo;
-    }
-
-    public void setVeicVeiculo(VeicVeiculo veicVeiculo) {
-        this.veicVeiculo = veicVeiculo;
-    }
-
-    public Collection<HtpgHistoricoTrocaPg> getHtpgHistoricoTrocaPgCollection() {
-        return htpgHistoricoTrocaPgCollection;
-    }
-
-    public void setHtpgHistoricoTrocaPgCollection(Collection<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgCollection) {
-        this.htpgHistoricoTrocaPgCollection = htpgHistoricoTrocaPgCollection;
-    }
-
     public PgpgPg getPgpgPg() {
         return pgpgPg;
     }
@@ -170,20 +110,12 @@ public class OrasObjetoRastreado implements Serializable {
         this.eobjEstatusObjeto = eobjEstatusObjeto;
     }
 
-    public Collection<OrteObjetoRastreadoTermina> getOrteObjetoRastreadoTerminaCollection() {
-        return orteObjetoRastreadoTerminaCollection;
+    public PessPessoa getPessPessoa() {
+        return pessPessoa;
     }
 
-    public void setOrteObjetoRastreadoTerminaCollection(Collection<OrteObjetoRastreadoTermina> orteObjetoRastreadoTerminaCollection) {
-        this.orteObjetoRastreadoTerminaCollection = orteObjetoRastreadoTerminaCollection;
-    }
-
-    public MaloMalote getMaloMalote() {
-        return maloMalote;
-    }
-
-    public void setMaloMalote(MaloMalote maloMalote) {
-        this.maloMalote = maloMalote;
+    public void setPessPessoa(PessPessoa pessPessoa) {
+        this.pessPessoa = pessPessoa;
     }
 
     @Override

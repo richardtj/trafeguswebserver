@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +27,16 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "hpmo_historico_pesquisa_motor")
+@Table(name = "hpmo_historico_pesquisa_motor", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findAll", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h")})
+    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findAll", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h"),
+    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoCodigo", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoCodigo = :hpmoCodigo"),
+    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoPrazoValidade", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoPrazoValidade = :hpmoPrazoValidade"),
+    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoDataCadastro", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoDataCadastro = :hpmoDataCadastro"),
+    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoCodigoGr", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoCodigoGr = :hpmoCodigoGr"),
+    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoImportado", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoImportado = :hpmoImportado"),
+    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoMensagem", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoMensagem = :hpmoMensagem"),
+    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoValorMaximo", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoValorMaximo = :hpmoValorMaximo")})
 public class HpmoHistoricoPesquisaMotor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,8 +57,6 @@ public class HpmoHistoricoPesquisaMotor implements Serializable {
     private String hpmoMensagem;
     @Column(name = "hpmo_valor_maximo", precision = 15, scale = 2)
     private BigDecimal hpmoValorMaximo;
-    @OneToMany(mappedBy = "hpmoHistoricoPesquisaMotor")
-    private Collection<HpprHistoricoPesquisaProd> hpprHistoricoPesquisaProdCollection;
     @JoinColumn(name = "hpmo_veic_oras_codigo", referencedColumnName = "veic_oras_codigo")
     @ManyToOne
     private VeicVeiculo veicVeiculo;
@@ -65,7 +70,7 @@ public class HpmoHistoricoPesquisaMotor implements Serializable {
     @ManyToOne
     private EpmoEstatusPesquisaMotoris epmoEstatusPesquisaMotoris;
     @OneToMany(mappedBy = "hpmoHistoricoPesquisaMotor")
-    private Collection<ViagViagem> viagViagemCollection;
+    private List<ViagViagem> viagViagemList;
 
     public HpmoHistoricoPesquisaMotor() {
     }
@@ -130,14 +135,6 @@ public class HpmoHistoricoPesquisaMotor implements Serializable {
         this.hpmoValorMaximo = hpmoValorMaximo;
     }
 
-    public Collection<HpprHistoricoPesquisaProd> getHpprHistoricoPesquisaProdCollection() {
-        return hpprHistoricoPesquisaProdCollection;
-    }
-
-    public void setHpprHistoricoPesquisaProdCollection(Collection<HpprHistoricoPesquisaProd> hpprHistoricoPesquisaProdCollection) {
-        this.hpprHistoricoPesquisaProdCollection = hpprHistoricoPesquisaProdCollection;
-    }
-
     public VeicVeiculo getVeicVeiculo() {
         return veicVeiculo;
     }
@@ -170,12 +167,12 @@ public class HpmoHistoricoPesquisaMotor implements Serializable {
         this.epmoEstatusPesquisaMotoris = epmoEstatusPesquisaMotoris;
     }
 
-    public Collection<ViagViagem> getViagViagemCollection() {
-        return viagViagemCollection;
+    public List<ViagViagem> getViagViagemList() {
+        return viagViagemList;
     }
 
-    public void setViagViagemCollection(Collection<ViagViagem> viagViagemCollection) {
-        this.viagViagemCollection = viagViagemCollection;
+    public void setViagViagemList(List<ViagViagem> viagViagemList) {
+        this.viagViagemList = viagViagemList;
     }
 
     @Override

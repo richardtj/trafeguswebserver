@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,9 +23,10 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "vmot_veiculo_moto")
+@Table(name = "vmot_veiculo_moto", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VmotVeiculoMoto.findAll", query = "SELECT v FROM VmotVeiculoMoto v")})
+    @NamedQuery(name = "VmotVeiculoMoto.findAll", query = "SELECT v FROM VmotVeiculoMoto v"),
+    @NamedQuery(name = "VmotVeiculoMoto.findByVmotVeicOrasCodigo", query = "SELECT v FROM VmotVeiculoMoto v WHERE v.vmotVeicOrasCodigo = :vmotVeicOrasCodigo")})
 public class VmotVeiculoMoto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,13 +34,13 @@ public class VmotVeiculoMoto implements Serializable {
     @Column(name = "vmot_veic_oras_codigo", nullable = false)
     private Integer vmotVeicOrasCodigo;
     @JoinColumn(name = "vmot_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vmot_tope_codigo", referencedColumnName = "tope_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TopeTipoOperacao topeTipoOperacao;
     @JoinColumn(name = "vmot_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
 
     public VmotVeiculoMoto() {

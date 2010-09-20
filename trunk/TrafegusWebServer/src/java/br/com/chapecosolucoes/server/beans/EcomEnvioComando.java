@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,22 +25,23 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "ecom_envio_comando")
+@Table(name = "ecom_envio_comando", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EcomEnvioComando.findAll", query = "SELECT e FROM EcomEnvioComando e")})
+    @NamedQuery(name = "EcomEnvioComando.findAll", query = "SELECT e FROM EcomEnvioComando e"),
+    @NamedQuery(name = "EcomEnvioComando.findByEcomEnviCodigo", query = "SELECT e FROM EcomEnvioComando e WHERE e.ecomEnviCodigo = :ecomEnviCodigo")})
 public class EcomEnvioComando implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "ecom_envi_codigo", nullable = false)
     private Integer ecomEnviCodigo;
-    @OneToMany(mappedBy = "ecomEnvioComando")
-    private Collection<PcenParametroComandoEnvio> pcenParametroComandoEnvioCollection;
+    @OneToMany(mappedBy = "ecomEnvioComando", fetch = FetchType.EAGER)
+    private List<PcenParametroComandoEnvio> pcenParametroComandoEnvioList;
     @JoinColumn(name = "ecom_envi_codigo", referencedColumnName = "envi_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private EnviEnvio enviEnvio;
     @JoinColumn(name = "ecom_cpad_codigo", referencedColumnName = "cpad_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private CpadComandoPadrao cpadComandoPadrao;
 
     public EcomEnvioComando() {
@@ -57,12 +59,12 @@ public class EcomEnvioComando implements Serializable {
         this.ecomEnviCodigo = ecomEnviCodigo;
     }
 
-    public Collection<PcenParametroComandoEnvio> getPcenParametroComandoEnvioCollection() {
-        return pcenParametroComandoEnvioCollection;
+    public List<PcenParametroComandoEnvio> getPcenParametroComandoEnvioList() {
+        return pcenParametroComandoEnvioList;
     }
 
-    public void setPcenParametroComandoEnvioCollection(Collection<PcenParametroComandoEnvio> pcenParametroComandoEnvioCollection) {
-        this.pcenParametroComandoEnvioCollection = pcenParametroComandoEnvioCollection;
+    public void setPcenParametroComandoEnvioList(List<PcenParametroComandoEnvio> pcenParametroComandoEnvioList) {
+        this.pcenParametroComandoEnvioList = pcenParametroComandoEnvioList;
     }
 
     public EnviEnvio getEnviEnvio() {

@@ -20,9 +20,15 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_terminal_nao_acossiado")
+@Table(name = "view_terminal_nao_acossiado", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewTerminalNaoAcossiado.findAll", query = "SELECT v FROM ViewTerminalNaoAcossiado v")})
+    @NamedQuery(name = "ViewTerminalNaoAcossiado.findAll", query = "SELECT v FROM ViewTerminalNaoAcossiado v"),
+    @NamedQuery(name = "ViewTerminalNaoAcossiado.findByTermCodigo", query = "SELECT v FROM ViewTerminalNaoAcossiado v WHERE v.termCodigo = :termCodigo"),
+    @NamedQuery(name = "ViewTerminalNaoAcossiado.findByTermNumeroTerminal", query = "SELECT v FROM ViewTerminalNaoAcossiado v WHERE v.termNumeroTerminal = :termNumeroTerminal"),
+    @NamedQuery(name = "ViewTerminalNaoAcossiado.findByReceDataComputadorBordo", query = "SELECT v FROM ViewTerminalNaoAcossiado v WHERE v.receDataComputadorBordo = :receDataComputadorBordo"),
+    @NamedQuery(name = "ViewTerminalNaoAcossiado.findByUposDescricaoSistema", query = "SELECT v FROM ViewTerminalNaoAcossiado v WHERE v.uposDescricaoSistema = :uposDescricaoSistema"),
+    @NamedQuery(name = "ViewTerminalNaoAcossiado.findByTecnDescricao", query = "SELECT v FROM ViewTerminalNaoAcossiado v WHERE v.tecnDescricao = :tecnDescricao"),
+    @NamedQuery(name = "ViewTerminalNaoAcossiado.findByVtecDescricao", query = "SELECT v FROM ViewTerminalNaoAcossiado v WHERE v.vtecDescricao = :vtecDescricao")})
 public class ViewTerminalNaoAcossiado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "term_codigo")

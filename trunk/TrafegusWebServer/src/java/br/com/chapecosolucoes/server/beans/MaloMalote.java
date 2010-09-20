@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,9 +23,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "malo_malote")
+@Table(name = "malo_malote", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "MaloMalote.findAll", query = "SELECT m FROM MaloMalote m")})
+    @NamedQuery(name = "MaloMalote.findAll", query = "SELECT m FROM MaloMalote m"),
+    @NamedQuery(name = "MaloMalote.findByMaloOrasCodigo", query = "SELECT m FROM MaloMalote m WHERE m.maloOrasCodigo = :maloOrasCodigo"),
+    @NamedQuery(name = "MaloMalote.findByMaloIdentificador", query = "SELECT m FROM MaloMalote m WHERE m.maloIdentificador = :maloIdentificador")})
 public class MaloMalote implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -34,10 +37,10 @@ public class MaloMalote implements Serializable {
     @Column(name = "malo_identificador", length = 30)
     private String maloIdentificador;
     @JoinColumn(name = "malo_oras_codigo", referencedColumnName = "oras_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
     @JoinColumn(name = "malo_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
 
     public MaloMalote() {

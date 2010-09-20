@@ -19,9 +19,16 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "ecli_estatus_cliente")
+@Table(name = "ecli_estatus_cliente", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EcliEstatusCliente.findAll", query = "SELECT e FROM EcliEstatusCliente e")})
+    @NamedQuery(name = "EcliEstatusCliente.findAll", query = "SELECT e FROM EcliEstatusCliente e"),
+    @NamedQuery(name = "EcliEstatusCliente.findByEcliCodigo", query = "SELECT e FROM EcliEstatusCliente e WHERE e.ecliCodigo = :ecliCodigo"),
+    @NamedQuery(name = "EcliEstatusCliente.findByEcliScriCodigo", query = "SELECT e FROM EcliEstatusCliente e WHERE e.ecliScriCodigo = :ecliScriCodigo"),
+    @NamedQuery(name = "EcliEstatusCliente.findByEcliScriVersaoAtualizada", query = "SELECT e FROM EcliEstatusCliente e WHERE e.ecliScriVersaoAtualizada = :ecliScriVersaoAtualizada"),
+    @NamedQuery(name = "EcliEstatusCliente.findByEcliErros", query = "SELECT e FROM EcliEstatusCliente e WHERE e.ecliErros = :ecliErros"),
+    @NamedQuery(name = "EcliEstatusCliente.findByEcliEstatus", query = "SELECT e FROM EcliEstatusCliente e WHERE e.ecliEstatus = :ecliEstatus"),
+    @NamedQuery(name = "EcliEstatusCliente.findByEcliEstaCodigo", query = "SELECT e FROM EcliEstatusCliente e WHERE e.ecliEstaCodigo = :ecliEstaCodigo"),
+    @NamedQuery(name = "EcliEstatusCliente.findByEcliEstaEstatus", query = "SELECT e FROM EcliEstatusCliente e WHERE e.ecliEstaEstatus = :ecliEstaEstatus")})
 public class EcliEstatusCliente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

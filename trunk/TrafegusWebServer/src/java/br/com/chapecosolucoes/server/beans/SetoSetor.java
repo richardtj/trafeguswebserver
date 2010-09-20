@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,9 +24,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "seto_setor")
+@Table(name = "seto_setor", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "SetoSetor.findAll", query = "SELECT s FROM SetoSetor s")})
+    @NamedQuery(name = "SetoSetor.findAll", query = "SELECT s FROM SetoSetor s"),
+    @NamedQuery(name = "SetoSetor.findBySetoCodigo", query = "SELECT s FROM SetoSetor s WHERE s.setoCodigo = :setoCodigo"),
+    @NamedQuery(name = "SetoSetor.findBySetoDescricao", query = "SELECT s FROM SetoSetor s WHERE s.setoDescricao = :setoDescricao"),
+    @NamedQuery(name = "SetoSetor.findBySetoDataCadastro", query = "SELECT s FROM SetoSetor s WHERE s.setoDataCadastro = :setoDataCadastro"),
+    @NamedQuery(name = "SetoSetor.findBySetoCodigoGr", query = "SELECT s FROM SetoSetor s WHERE s.setoCodigoGr = :setoCodigoGr"),
+    @NamedQuery(name = "SetoSetor.findBySetoImportado", query = "SELECT s FROM SetoSetor s WHERE s.setoImportado = :setoImportado")})
 public class SetoSetor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,7 +48,7 @@ public class SetoSetor implements Serializable {
     @Column(name = "seto_importado")
     private Character setoImportado;
     @OneToMany(mappedBy = "setoSetor")
-    private Collection<UsuaUsuario> usuaUsuarioCollection;
+    private List<UsuaUsuario> usuaUsuarioList;
 
     public SetoSetor() {
     }
@@ -92,12 +97,12 @@ public class SetoSetor implements Serializable {
         this.setoImportado = setoImportado;
     }
 
-    public Collection<UsuaUsuario> getUsuaUsuarioCollection() {
-        return usuaUsuarioCollection;
+    public List<UsuaUsuario> getUsuaUsuarioList() {
+        return usuaUsuarioList;
     }
 
-    public void setUsuaUsuarioCollection(Collection<UsuaUsuario> usuaUsuarioCollection) {
-        this.usuaUsuarioCollection = usuaUsuarioCollection;
+    public void setUsuaUsuarioList(List<UsuaUsuario> usuaUsuarioList) {
+        this.usuaUsuarioList = usuaUsuarioList;
     }
 
     @Override

@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,19 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "assd_assistente_detalhe")
+@Table(name = "assd_assistente_detalhe", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "AssdAssistenteDetalhe.findAll", query = "SELECT a FROM AssdAssistenteDetalhe a")})
+    @NamedQuery(name = "AssdAssistenteDetalhe.findAll", query = "SELECT a FROM AssdAssistenteDetalhe a"),
+    @NamedQuery(name = "AssdAssistenteDetalhe.findByAssdCodigo", query = "SELECT a FROM AssdAssistenteDetalhe a WHERE a.assdCodigo = :assdCodigo"),
+    @NamedQuery(name = "AssdAssistenteDetalhe.findByAssdDescricaoEtapa", query = "SELECT a FROM AssdAssistenteDetalhe a WHERE a.assdDescricaoEtapa = :assdDescricaoEtapa"),
+    @NamedQuery(name = "AssdAssistenteDetalhe.findByAssdSequencia", query = "SELECT a FROM AssdAssistenteDetalhe a WHERE a.assdSequencia = :assdSequencia"),
+    @NamedQuery(name = "AssdAssistenteDetalhe.findByAssdNivel", query = "SELECT a FROM AssdAssistenteDetalhe a WHERE a.assdNivel = :assdNivel"),
+    @NamedQuery(name = "AssdAssistenteDetalhe.findByAssdCodigoTabelaFramework", query = "SELECT a FROM AssdAssistenteDetalhe a WHERE a.assdCodigoTabelaFramework = :assdCodigoTabelaFramework"),
+    @NamedQuery(name = "AssdAssistenteDetalhe.findByAssdObrigatorio", query = "SELECT a FROM AssdAssistenteDetalhe a WHERE a.assdObrigatorio = :assdObrigatorio"),
+    @NamedQuery(name = "AssdAssistenteDetalhe.findByAssdObservacao", query = "SELECT a FROM AssdAssistenteDetalhe a WHERE a.assdObservacao = :assdObservacao"),
+    @NamedQuery(name = "AssdAssistenteDetalhe.findByAssdDataCadastro", query = "SELECT a FROM AssdAssistenteDetalhe a WHERE a.assdDataCadastro = :assdDataCadastro"),
+    @NamedQuery(name = "AssdAssistenteDetalhe.findByAssdCodigoGr", query = "SELECT a FROM AssdAssistenteDetalhe a WHERE a.assdCodigoGr = :assdCodigoGr"),
+    @NamedQuery(name = "AssdAssistenteDetalhe.findByAssdImportado", query = "SELECT a FROM AssdAssistenteDetalhe a WHERE a.assdImportado = :assdImportado")})
 public class AssdAssistenteDetalhe implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,7 +64,7 @@ public class AssdAssistenteDetalhe implements Serializable {
     @Column(name = "assd_importado")
     private Character assdImportado;
     @JoinColumn(name = "assd_assi_codigo", referencedColumnName = "assi_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private AssiAssistente assiAssistente;
 
     public AssdAssistenteDetalhe() {

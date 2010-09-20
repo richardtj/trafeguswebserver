@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,9 +25,20 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "cona_contato")
+@Table(name = "cona_contato", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ConaContato.findAll", query = "SELECT c FROM ConaContato c")})
+    @NamedQuery(name = "ConaContato.findAll", query = "SELECT c FROM ConaContato c"),
+    @NamedQuery(name = "ConaContato.findByConaCodigo", query = "SELECT c FROM ConaContato c WHERE c.conaCodigo = :conaCodigo"),
+    @NamedQuery(name = "ConaContato.findByConaDataCadastro", query = "SELECT c FROM ConaContato c WHERE c.conaDataCadastro = :conaDataCadastro"),
+    @NamedQuery(name = "ConaContato.findByConaCodigoGr", query = "SELECT c FROM ConaContato c WHERE c.conaCodigoGr = :conaCodigoGr"),
+    @NamedQuery(name = "ConaContato.findByConaImportado", query = "SELECT c FROM ConaContato c WHERE c.conaImportado = :conaImportado"),
+    @NamedQuery(name = "ConaContato.findByConaTelefone1", query = "SELECT c FROM ConaContato c WHERE c.conaTelefone1 = :conaTelefone1"),
+    @NamedQuery(name = "ConaContato.findByConaTelefone2", query = "SELECT c FROM ConaContato c WHERE c.conaTelefone2 = :conaTelefone2"),
+    @NamedQuery(name = "ConaContato.findByConaTelefone3", query = "SELECT c FROM ConaContato c WHERE c.conaTelefone3 = :conaTelefone3"),
+    @NamedQuery(name = "ConaContato.findByConaEmail", query = "SELECT c FROM ConaContato c WHERE c.conaEmail = :conaEmail"),
+    @NamedQuery(name = "ConaContato.findByConaObservacao", query = "SELECT c FROM ConaContato c WHERE c.conaObservacao = :conaObservacao"),
+    @NamedQuery(name = "ConaContato.findByConaRadio", query = "SELECT c FROM ConaContato c WHERE c.conaRadio = :conaRadio"),
+    @NamedQuery(name = "ConaContato.findByConaTexto", query = "SELECT c FROM ConaContato c WHERE c.conaTexto = :conaTexto")})
 public class ConaContato implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,10 +66,10 @@ public class ConaContato implements Serializable {
     private String conaRadio;
     @Column(name = "cona_texto", length = 100)
     private String conaTexto;
-    @OneToMany(mappedBy = "conaContato")
-    private Collection<RconReferenciaContato> rconReferenciaContatoCollection;
-    @OneToMany(mappedBy = "conaContato")
-    private Collection<PconPessoaContato> pconPessoaContatoCollection;
+    @OneToMany(mappedBy = "conaContato", fetch = FetchType.EAGER)
+    private List<RconReferenciaContato> rconReferenciaContatoList;
+    @OneToMany(mappedBy = "conaContato", fetch = FetchType.EAGER)
+    private List<PconPessoaContato> pconPessoaContatoList;
 
     public ConaContato() {
     }
@@ -154,20 +166,20 @@ public class ConaContato implements Serializable {
         this.conaTexto = conaTexto;
     }
 
-    public Collection<RconReferenciaContato> getRconReferenciaContatoCollection() {
-        return rconReferenciaContatoCollection;
+    public List<RconReferenciaContato> getRconReferenciaContatoList() {
+        return rconReferenciaContatoList;
     }
 
-    public void setRconReferenciaContatoCollection(Collection<RconReferenciaContato> rconReferenciaContatoCollection) {
-        this.rconReferenciaContatoCollection = rconReferenciaContatoCollection;
+    public void setRconReferenciaContatoList(List<RconReferenciaContato> rconReferenciaContatoList) {
+        this.rconReferenciaContatoList = rconReferenciaContatoList;
     }
 
-    public Collection<PconPessoaContato> getPconPessoaContatoCollection() {
-        return pconPessoaContatoCollection;
+    public List<PconPessoaContato> getPconPessoaContatoList() {
+        return pconPessoaContatoList;
     }
 
-    public void setPconPessoaContatoCollection(Collection<PconPessoaContato> pconPessoaContatoCollection) {
-        this.pconPessoaContatoCollection = pconPessoaContatoCollection;
+    public void setPconPessoaContatoList(List<PconPessoaContato> pconPessoaContatoList) {
+        this.pconPessoaContatoList = pconPessoaContatoList;
     }
 
     @Override

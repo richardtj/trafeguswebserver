@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,9 +24,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "tope_tipo_operacao")
+@Table(name = "tope_tipo_operacao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TopeTipoOperacao.findAll", query = "SELECT t FROM TopeTipoOperacao t")})
+    @NamedQuery(name = "TopeTipoOperacao.findAll", query = "SELECT t FROM TopeTipoOperacao t"),
+    @NamedQuery(name = "TopeTipoOperacao.findByTopeCodigo", query = "SELECT t FROM TopeTipoOperacao t WHERE t.topeCodigo = :topeCodigo"),
+    @NamedQuery(name = "TopeTipoOperacao.findByTopeDescricao", query = "SELECT t FROM TopeTipoOperacao t WHERE t.topeDescricao = :topeDescricao"),
+    @NamedQuery(name = "TopeTipoOperacao.findByTopeDataCadastro", query = "SELECT t FROM TopeTipoOperacao t WHERE t.topeDataCadastro = :topeDataCadastro"),
+    @NamedQuery(name = "TopeTipoOperacao.findByTopeCodigoGr", query = "SELECT t FROM TopeTipoOperacao t WHERE t.topeCodigoGr = :topeCodigoGr"),
+    @NamedQuery(name = "TopeTipoOperacao.findByTopeImportado", query = "SELECT t FROM TopeTipoOperacao t WHERE t.topeImportado = :topeImportado")})
 public class TopeTipoOperacao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,17 +48,7 @@ public class TopeTipoOperacao implements Serializable {
     @Column(name = "tope_importado")
     private Character topeImportado;
     @OneToMany(mappedBy = "topeTipoOperacao")
-    private Collection<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaCollection;
-    @OneToMany(mappedBy = "topeTipoOperacao")
-    private Collection<VmotVeiculoMoto> vmotVeiculoMotoCollection;
-    @OneToMany(mappedBy = "topeTipoOperacao")
-    private Collection<VcavVeiculoCavalo> vcavVeiculoCavaloCollection;
-    @OneToMany(mappedBy = "topeTipoOperacao")
-    private Collection<VtruVeiculoTruck> vtruVeiculoTruckCollection;
-    @OneToMany(mappedBy = "topeTipoOperacao")
-    private Collection<ViagViagem> viagViagemCollection;
-    @OneToMany(mappedBy = "topeTipoOperacao")
-    private Collection<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseCollection;
+    private List<ViagViagem> viagViagemList;
 
     public TopeTipoOperacao() {
     }
@@ -102,52 +97,12 @@ public class TopeTipoOperacao implements Serializable {
         this.topeImportado = topeImportado;
     }
 
-    public Collection<VucaVeiculoUtilitarioCarga> getVucaVeiculoUtilitarioCargaCollection() {
-        return vucaVeiculoUtilitarioCargaCollection;
+    public List<ViagViagem> getViagViagemList() {
+        return viagViagemList;
     }
 
-    public void setVucaVeiculoUtilitarioCargaCollection(Collection<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaCollection) {
-        this.vucaVeiculoUtilitarioCargaCollection = vucaVeiculoUtilitarioCargaCollection;
-    }
-
-    public Collection<VmotVeiculoMoto> getVmotVeiculoMotoCollection() {
-        return vmotVeiculoMotoCollection;
-    }
-
-    public void setVmotVeiculoMotoCollection(Collection<VmotVeiculoMoto> vmotVeiculoMotoCollection) {
-        this.vmotVeiculoMotoCollection = vmotVeiculoMotoCollection;
-    }
-
-    public Collection<VcavVeiculoCavalo> getVcavVeiculoCavaloCollection() {
-        return vcavVeiculoCavaloCollection;
-    }
-
-    public void setVcavVeiculoCavaloCollection(Collection<VcavVeiculoCavalo> vcavVeiculoCavaloCollection) {
-        this.vcavVeiculoCavaloCollection = vcavVeiculoCavaloCollection;
-    }
-
-    public Collection<VtruVeiculoTruck> getVtruVeiculoTruckCollection() {
-        return vtruVeiculoTruckCollection;
-    }
-
-    public void setVtruVeiculoTruckCollection(Collection<VtruVeiculoTruck> vtruVeiculoTruckCollection) {
-        this.vtruVeiculoTruckCollection = vtruVeiculoTruckCollection;
-    }
-
-    public Collection<ViagViagem> getViagViagemCollection() {
-        return viagViagemCollection;
-    }
-
-    public void setViagViagemCollection(Collection<ViagViagem> viagViagemCollection) {
-        this.viagViagemCollection = viagViagemCollection;
-    }
-
-    public Collection<VupaVeiculoUtilitarioPasse> getVupaVeiculoUtilitarioPasseCollection() {
-        return vupaVeiculoUtilitarioPasseCollection;
-    }
-
-    public void setVupaVeiculoUtilitarioPasseCollection(Collection<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseCollection) {
-        this.vupaVeiculoUtilitarioPasseCollection = vupaVeiculoUtilitarioPasseCollection;
+    public void setViagViagemList(List<ViagViagem> viagViagemList) {
+        this.viagViagemList = viagViagemList;
     }
 
     @Override

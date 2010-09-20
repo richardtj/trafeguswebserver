@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,9 +25,15 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "leme_lista_envio_mensagem")
+@Table(name = "leme_lista_envio_mensagem", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "LemeListaEnvioMensagem.findAll", query = "SELECT l FROM LemeListaEnvioMensagem l")})
+    @NamedQuery(name = "LemeListaEnvioMensagem.findAll", query = "SELECT l FROM LemeListaEnvioMensagem l"),
+    @NamedQuery(name = "LemeListaEnvioMensagem.findByLemeCodigo", query = "SELECT l FROM LemeListaEnvioMensagem l WHERE l.lemeCodigo = :lemeCodigo"),
+    @NamedQuery(name = "LemeListaEnvioMensagem.findByLemeDescricao", query = "SELECT l FROM LemeListaEnvioMensagem l WHERE l.lemeDescricao = :lemeDescricao"),
+    @NamedQuery(name = "LemeListaEnvioMensagem.findByLemeAssuntoEmail", query = "SELECT l FROM LemeListaEnvioMensagem l WHERE l.lemeAssuntoEmail = :lemeAssuntoEmail"),
+    @NamedQuery(name = "LemeListaEnvioMensagem.findByLemeTextoEmail", query = "SELECT l FROM LemeListaEnvioMensagem l WHERE l.lemeTextoEmail = :lemeTextoEmail"),
+    @NamedQuery(name = "LemeListaEnvioMensagem.findByLemeTextoSms", query = "SELECT l FROM LemeListaEnvioMensagem l WHERE l.lemeTextoSms = :lemeTextoSms"),
+    @NamedQuery(name = "LemeListaEnvioMensagem.findByLemeDataCadastro", query = "SELECT l FROM LemeListaEnvioMensagem l WHERE l.lemeDataCadastro = :lemeDataCadastro")})
 public class LemeListaEnvioMensagem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,10 +51,10 @@ public class LemeListaEnvioMensagem implements Serializable {
     @Column(name = "leme_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lemeDataCadastro;
-    @OneToMany(mappedBy = "lemeListaEnvioMensagem")
-    private Collection<SemeServicoEnvioMensagem> semeServicoEnvioMensagemCollection;
-    @OneToMany(mappedBy = "lemeListaEnvioMensagem")
-    private Collection<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoCollection;
+    @OneToMany(mappedBy = "lemeListaEnvioMensagem", fetch = FetchType.EAGER)
+    private List<SemeServicoEnvioMensagem> semeServicoEnvioMensagemList;
+    @OneToMany(mappedBy = "lemeListaEnvioMensagem", fetch = FetchType.EAGER)
+    private List<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoList;
 
     public LemeListaEnvioMensagem() {
     }
@@ -104,20 +111,20 @@ public class LemeListaEnvioMensagem implements Serializable {
         this.lemeDataCadastro = lemeDataCadastro;
     }
 
-    public Collection<SemeServicoEnvioMensagem> getSemeServicoEnvioMensagemCollection() {
-        return semeServicoEnvioMensagemCollection;
+    public List<SemeServicoEnvioMensagem> getSemeServicoEnvioMensagemList() {
+        return semeServicoEnvioMensagemList;
     }
 
-    public void setSemeServicoEnvioMensagemCollection(Collection<SemeServicoEnvioMensagem> semeServicoEnvioMensagemCollection) {
-        this.semeServicoEnvioMensagemCollection = semeServicoEnvioMensagemCollection;
+    public void setSemeServicoEnvioMensagemList(List<SemeServicoEnvioMensagem> semeServicoEnvioMensagemList) {
+        this.semeServicoEnvioMensagemList = semeServicoEnvioMensagemList;
     }
 
-    public Collection<LemcListaEnvioMsgContato> getLemcListaEnvioMsgContatoCollection() {
-        return lemcListaEnvioMsgContatoCollection;
+    public List<LemcListaEnvioMsgContato> getLemcListaEnvioMsgContatoList() {
+        return lemcListaEnvioMsgContatoList;
     }
 
-    public void setLemcListaEnvioMsgContatoCollection(Collection<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoCollection) {
-        this.lemcListaEnvioMsgContatoCollection = lemcListaEnvioMsgContatoCollection;
+    public void setLemcListaEnvioMsgContatoList(List<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoList) {
+        this.lemcListaEnvioMsgContatoList = lemcListaEnvioMsgContatoList;
     }
 
     @Override

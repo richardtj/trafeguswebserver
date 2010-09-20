@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "ulsi_ultimo_log_servico_integ")
+@Table(name = "ulsi_ultimo_log_servico_integ", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "UlsiUltimoLogServicoInteg.findAll", query = "SELECT u FROM UlsiUltimoLogServicoInteg u")})
+    @NamedQuery(name = "UlsiUltimoLogServicoInteg.findAll", query = "SELECT u FROM UlsiUltimoLogServicoInteg u"),
+    @NamedQuery(name = "UlsiUltimoLogServicoInteg.findByUlsiLsinCodigo", query = "SELECT u FROM UlsiUltimoLogServicoInteg u WHERE u.ulsiLsinCodigo = :ulsiLsinCodigo"),
+    @NamedQuery(name = "UlsiUltimoLogServicoInteg.findByUlsiMintDescricao", query = "SELECT u FROM UlsiUltimoLogServicoInteg u WHERE u.ulsiMintDescricao = :ulsiMintDescricao"),
+    @NamedQuery(name = "UlsiUltimoLogServicoInteg.findByUlsiDataInicio", query = "SELECT u FROM UlsiUltimoLogServicoInteg u WHERE u.ulsiDataInicio = :ulsiDataInicio"),
+    @NamedQuery(name = "UlsiUltimoLogServicoInteg.findByUlsiDataFim", query = "SELECT u FROM UlsiUltimoLogServicoInteg u WHERE u.ulsiDataFim = :ulsiDataFim"),
+    @NamedQuery(name = "UlsiUltimoLogServicoInteg.findByUlsiEstatus", query = "SELECT u FROM UlsiUltimoLogServicoInteg u WHERE u.ulsiEstatus = :ulsiEstatus")})
 public class UlsiUltimoLogServicoInteg implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,10 +51,10 @@ public class UlsiUltimoLogServicoInteg implements Serializable {
     @Column(name = "ulsi_estatus", length = 10)
     private String ulsiEstatus;
     @JoinColumn(name = "ulsi_ssis_codigo", referencedColumnName = "ssis_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private SsisServicoSistema ssisServicoSistema;
     @JoinColumn(name = "ulsi_ctec_codigo", referencedColumnName = "ctec_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private CtecContaTecnologia ctecContaTecnologia;
 
     public UlsiUltimoLogServicoInteg() {

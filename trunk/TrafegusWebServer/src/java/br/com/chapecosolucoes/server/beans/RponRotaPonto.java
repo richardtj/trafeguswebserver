@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,9 +26,17 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "rpon_rota_ponto")
+@Table(name = "rpon_rota_ponto", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "RponRotaPonto.findAll", query = "SELECT r FROM RponRotaPonto r")})
+    @NamedQuery(name = "RponRotaPonto.findAll", query = "SELECT r FROM RponRotaPonto r"),
+    @NamedQuery(name = "RponRotaPonto.findByRponCodigo", query = "SELECT r FROM RponRotaPonto r WHERE r.rponCodigo = :rponCodigo"),
+    @NamedQuery(name = "RponRotaPonto.findByRponSequencia", query = "SELECT r FROM RponRotaPonto r WHERE r.rponSequencia = :rponSequencia"),
+    @NamedQuery(name = "RponRotaPonto.findByRponDescricao", query = "SELECT r FROM RponRotaPonto r WHERE r.rponDescricao = :rponDescricao"),
+    @NamedQuery(name = "RponRotaPonto.findByRponLatitude", query = "SELECT r FROM RponRotaPonto r WHERE r.rponLatitude = :rponLatitude"),
+    @NamedQuery(name = "RponRotaPonto.findByRponLongitude", query = "SELECT r FROM RponRotaPonto r WHERE r.rponLongitude = :rponLongitude"),
+    @NamedQuery(name = "RponRotaPonto.findByRponDataCadastro", query = "SELECT r FROM RponRotaPonto r WHERE r.rponDataCadastro = :rponDataCadastro"),
+    @NamedQuery(name = "RponRotaPonto.findByRponCodigoGr", query = "SELECT r FROM RponRotaPonto r WHERE r.rponCodigoGr = :rponCodigoGr"),
+    @NamedQuery(name = "RponRotaPonto.findByRponImportado", query = "SELECT r FROM RponRotaPonto r WHERE r.rponImportado = :rponImportado")})
 public class RponRotaPonto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,13 +59,13 @@ public class RponRotaPonto implements Serializable {
     @Column(name = "rpon_importado")
     private Character rponImportado;
     @JoinColumn(name = "rpon_tpar_codigo", referencedColumnName = "tpar_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TparTipoParada tparTipoParada;
     @JoinColumn(name = "rpon_rota_codigo", referencedColumnName = "rota_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private RotaRota rotaRota;
     @JoinColumn(name = "rpon_refe_codigo", referencedColumnName = "refe_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private RefeReferencia refeReferencia;
 
     public RponRotaPonto() {

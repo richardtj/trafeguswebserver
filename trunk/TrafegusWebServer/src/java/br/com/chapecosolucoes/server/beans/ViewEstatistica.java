@@ -21,9 +21,16 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_estatistica")
+@Table(name = "view_estatistica", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewEstatistica.findAll", query = "SELECT v FROM ViewEstatistica v")})
+    @NamedQuery(name = "ViewEstatistica.findAll", query = "SELECT v FROM ViewEstatistica v"),
+    @NamedQuery(name = "ViewEstatistica.findByProcesso", query = "SELECT v FROM ViewEstatistica v WHERE v.processo = :processo"),
+    @NamedQuery(name = "ViewEstatistica.findByBanco", query = "SELECT v FROM ViewEstatistica v WHERE v.banco = :banco"),
+    @NamedQuery(name = "ViewEstatistica.findByTabela", query = "SELECT v FROM ViewEstatistica v WHERE v.tabela = :tabela"),
+    @NamedQuery(name = "ViewEstatistica.findByModo", query = "SELECT v FROM ViewEstatistica v WHERE v.modo = :modo"),
+    @NamedQuery(name = "ViewEstatistica.findByStatus", query = "SELECT v FROM ViewEstatistica v WHERE v.status = :status"),
+    @NamedQuery(name = "ViewEstatistica.findByCurrentQuery", query = "SELECT v FROM ViewEstatistica v WHERE v.currentQuery = :currentQuery"),
+    @NamedQuery(name = "ViewEstatistica.findByInicio", query = "SELECT v FROM ViewEstatistica v WHERE v.inicio = :inicio")})
 public class ViewEstatistica implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "processo")

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,9 +23,10 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "vtru_veiculo_truck")
+@Table(name = "vtru_veiculo_truck", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VtruVeiculoTruck.findAll", query = "SELECT v FROM VtruVeiculoTruck v")})
+    @NamedQuery(name = "VtruVeiculoTruck.findAll", query = "SELECT v FROM VtruVeiculoTruck v"),
+    @NamedQuery(name = "VtruVeiculoTruck.findByVtruVeicOrasCodigo", query = "SELECT v FROM VtruVeiculoTruck v WHERE v.vtruVeicOrasCodigo = :vtruVeicOrasCodigo")})
 public class VtruVeiculoTruck implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,16 +34,16 @@ public class VtruVeiculoTruck implements Serializable {
     @Column(name = "vtru_veic_oras_codigo", nullable = false)
     private Integer vtruVeicOrasCodigo;
     @JoinColumn(name = "vtru_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vtru_tope_codigo", referencedColumnName = "tope_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TopeTipoOperacao topeTipoOperacao;
     @JoinColumn(name = "vtru_evca_codigo", referencedColumnName = "evca_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EvcaEstatusVeiculoCarga evcaEstatusVeiculoCarga;
     @JoinColumn(name = "vtru_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
 
     public VtruVeiculoTruck() {

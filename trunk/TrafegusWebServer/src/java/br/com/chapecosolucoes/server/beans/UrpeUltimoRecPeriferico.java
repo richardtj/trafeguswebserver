@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,10 +26,16 @@ import javax.persistence.UniqueConstraint;
  * @author Emerson
  */
 @Entity
-@Table(name = "urpe_ultimo_rec_periferico", uniqueConstraints = {
+@Table(name = "urpe_ultimo_rec_periferico", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"urpe_vtec_codigo", "urpe_term_numero_terminal", "urpe_eppa_codigo"})})
 @NamedQueries({
-    @NamedQuery(name = "UrpeUltimoRecPeriferico.findAll", query = "SELECT u FROM UrpeUltimoRecPeriferico u")})
+    @NamedQuery(name = "UrpeUltimoRecPeriferico.findAll", query = "SELECT u FROM UrpeUltimoRecPeriferico u"),
+    @NamedQuery(name = "UrpeUltimoRecPeriferico.findByUrpeCodigo", query = "SELECT u FROM UrpeUltimoRecPeriferico u WHERE u.urpeCodigo = :urpeCodigo"),
+    @NamedQuery(name = "UrpeUltimoRecPeriferico.findByUrpeTermNumeroTerminal", query = "SELECT u FROM UrpeUltimoRecPeriferico u WHERE u.urpeTermNumeroTerminal = :urpeTermNumeroTerminal"),
+    @NamedQuery(name = "UrpeUltimoRecPeriferico.findByUrpeValor", query = "SELECT u FROM UrpeUltimoRecPeriferico u WHERE u.urpeValor = :urpeValor"),
+    @NamedQuery(name = "UrpeUltimoRecPeriferico.findByUrpeDataCadastro", query = "SELECT u FROM UrpeUltimoRecPeriferico u WHERE u.urpeDataCadastro = :urpeDataCadastro"),
+    @NamedQuery(name = "UrpeUltimoRecPeriferico.findByUrpeCodigoGr", query = "SELECT u FROM UrpeUltimoRecPeriferico u WHERE u.urpeCodigoGr = :urpeCodigoGr"),
+    @NamedQuery(name = "UrpeUltimoRecPeriferico.findByUrpeImportado", query = "SELECT u FROM UrpeUltimoRecPeriferico u WHERE u.urpeImportado = :urpeImportado")})
 public class UrpeUltimoRecPeriferico implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,10 +54,10 @@ public class UrpeUltimoRecPeriferico implements Serializable {
     @Column(name = "urpe_importado")
     private Character urpeImportado;
     @JoinColumn(name = "urpe_vtec_codigo", referencedColumnName = "vtec_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private VtecVersaoTecnologia vtecVersaoTecnologia;
     @JoinColumn(name = "urpe_eppa_codigo", referencedColumnName = "eppa_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EppaEventoPerifericoPadrao eppaEventoPerifericoPadrao;
 
     public UrpeUltimoRecPeriferico() {

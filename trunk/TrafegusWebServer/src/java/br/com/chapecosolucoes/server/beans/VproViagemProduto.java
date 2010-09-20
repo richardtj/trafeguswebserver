@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,9 +26,15 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "vpro_viagem_produto")
+@Table(name = "vpro_viagem_produto", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VproViagemProduto.findAll", query = "SELECT v FROM VproViagemProduto v")})
+    @NamedQuery(name = "VproViagemProduto.findAll", query = "SELECT v FROM VproViagemProduto v"),
+    @NamedQuery(name = "VproViagemProduto.findByVproCodigo", query = "SELECT v FROM VproViagemProduto v WHERE v.vproCodigo = :vproCodigo"),
+    @NamedQuery(name = "VproViagemProduto.findByVproQuantidade", query = "SELECT v FROM VproViagemProduto v WHERE v.vproQuantidade = :vproQuantidade"),
+    @NamedQuery(name = "VproViagemProduto.findByVproValorUnitario", query = "SELECT v FROM VproViagemProduto v WHERE v.vproValorUnitario = :vproValorUnitario"),
+    @NamedQuery(name = "VproViagemProduto.findByVproDataCadastro", query = "SELECT v FROM VproViagemProduto v WHERE v.vproDataCadastro = :vproDataCadastro"),
+    @NamedQuery(name = "VproViagemProduto.findByVproCodigoGr", query = "SELECT v FROM VproViagemProduto v WHERE v.vproCodigoGr = :vproCodigoGr"),
+    @NamedQuery(name = "VproViagemProduto.findByVproImportado", query = "SELECT v FROM VproViagemProduto v WHERE v.vproImportado = :vproImportado")})
 public class VproViagemProduto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,10 +53,10 @@ public class VproViagemProduto implements Serializable {
     @Column(name = "vpro_importado")
     private Character vproImportado;
     @JoinColumn(name = "vpro_vnfi_codigo", referencedColumnName = "vnfi_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private VnfiViagemNotaFiscal vnfiViagemNotaFiscal;
     @JoinColumn(name = "vpro_prod_codigo", referencedColumnName = "prod_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ProdProduto prodProduto;
 
     public VproViagemProduto() {

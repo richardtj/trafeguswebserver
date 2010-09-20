@@ -21,9 +21,20 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_integ_viagem_ws")
+@Table(name = "view_integ_viagem_ws", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewIntegViagemWs.findAll", query = "SELECT v FROM ViewIntegViagemWs v")})
+    @NamedQuery(name = "ViewIntegViagemWs.findAll", query = "SELECT v FROM ViewIntegViagemWs v"),
+    @NamedQuery(name = "ViewIntegViagemWs.findByPackId", query = "SELECT v FROM ViewIntegViagemWs v WHERE v.packId = :packId"),
+    @NamedQuery(name = "ViewIntegViagemWs.findByVehiclePlate", query = "SELECT v FROM ViewIntegViagemWs v WHERE v.vehiclePlate = :vehiclePlate"),
+    @NamedQuery(name = "ViewIntegViagemWs.findBySerialNumber", query = "SELECT v FROM ViewIntegViagemWs v WHERE v.serialNumber = :serialNumber"),
+    @NamedQuery(name = "ViewIntegViagemWs.findByCodEquipamento", query = "SELECT v FROM ViewIntegViagemWs v WHERE v.codEquipamento = :codEquipamento"),
+    @NamedQuery(name = "ViewIntegViagemWs.findByTripId", query = "SELECT v FROM ViewIntegViagemWs v WHERE v.tripId = :tripId"),
+    @NamedQuery(name = "ViewIntegViagemWs.findByDepartureLandmark", query = "SELECT v FROM ViewIntegViagemWs v WHERE v.departureLandmark = :departureLandmark"),
+    @NamedQuery(name = "ViewIntegViagemWs.findByArrivalLandmark", query = "SELECT v FROM ViewIntegViagemWs v WHERE v.arrivalLandmark = :arrivalLandmark"),
+    @NamedQuery(name = "ViewIntegViagemWs.findByDateTimeStart", query = "SELECT v FROM ViewIntegViagemWs v WHERE v.dateTimeStart = :dateTimeStart"),
+    @NamedQuery(name = "ViewIntegViagemWs.findByDateTimeEnd", query = "SELECT v FROM ViewIntegViagemWs v WHERE v.dateTimeEnd = :dateTimeEnd"),
+    @NamedQuery(name = "ViewIntegViagemWs.findByDateTimePreStart", query = "SELECT v FROM ViewIntegViagemWs v WHERE v.dateTimePreStart = :dateTimePreStart"),
+    @NamedQuery(name = "ViewIntegViagemWs.findByDateTimePreEnd", query = "SELECT v FROM ViewIntegViagemWs v WHERE v.dateTimePreEnd = :dateTimePreEnd")})
 public class ViewIntegViagemWs implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "PackId")

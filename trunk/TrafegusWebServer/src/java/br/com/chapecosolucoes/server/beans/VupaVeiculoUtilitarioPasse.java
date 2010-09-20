@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,9 +23,10 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "vupa_veiculo_utilitario_passe")
+@Table(name = "vupa_veiculo_utilitario_passe", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VupaVeiculoUtilitarioPasse.findAll", query = "SELECT v FROM VupaVeiculoUtilitarioPasse v")})
+    @NamedQuery(name = "VupaVeiculoUtilitarioPasse.findAll", query = "SELECT v FROM VupaVeiculoUtilitarioPasse v"),
+    @NamedQuery(name = "VupaVeiculoUtilitarioPasse.findByVupaVeicOrasCodigo", query = "SELECT v FROM VupaVeiculoUtilitarioPasse v WHERE v.vupaVeicOrasCodigo = :vupaVeicOrasCodigo")})
 public class VupaVeiculoUtilitarioPasse implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,13 +34,13 @@ public class VupaVeiculoUtilitarioPasse implements Serializable {
     @Column(name = "vupa_veic_oras_codigo", nullable = false)
     private Integer vupaVeicOrasCodigo;
     @JoinColumn(name = "vupa_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vupa_tope_codigo", referencedColumnName = "tope_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TopeTipoOperacao topeTipoOperacao;
     @JoinColumn(name = "vupa_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
 
     public VupaVeiculoUtilitarioPasse() {

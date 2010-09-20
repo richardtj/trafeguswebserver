@@ -17,9 +17,15 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_integ_cad_veiculo_ws_v2_cronos")
+@Table(name = "view_integ_cad_veiculo_ws_v2_cronos", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewIntegCadVeiculoWsV2Cronos.findAll", query = "SELECT v FROM ViewIntegCadVeiculoWsV2Cronos v")})
+    @NamedQuery(name = "ViewIntegCadVeiculoWsV2Cronos.findAll", query = "SELECT v FROM ViewIntegCadVeiculoWsV2Cronos v"),
+    @NamedQuery(name = "ViewIntegCadVeiculoWsV2Cronos.findByPackID", query = "SELECT v FROM ViewIntegCadVeiculoWsV2Cronos v WHERE v.packID = :packID"),
+    @NamedQuery(name = "ViewIntegCadVeiculoWsV2Cronos.findByVehiclePlate", query = "SELECT v FROM ViewIntegCadVeiculoWsV2Cronos v WHERE v.vehiclePlate = :vehiclePlate"),
+    @NamedQuery(name = "ViewIntegCadVeiculoWsV2Cronos.findBySerialNumber", query = "SELECT v FROM ViewIntegCadVeiculoWsV2Cronos v WHERE v.serialNumber = :serialNumber"),
+    @NamedQuery(name = "ViewIntegCadVeiculoWsV2Cronos.findByCodEquipamento", query = "SELECT v FROM ViewIntegCadVeiculoWsV2Cronos v WHERE v.codEquipamento = :codEquipamento"),
+    @NamedQuery(name = "ViewIntegCadVeiculoWsV2Cronos.findByAccount", query = "SELECT v FROM ViewIntegCadVeiculoWsV2Cronos v WHERE v.account = :account"),
+    @NamedQuery(name = "ViewIntegCadVeiculoWsV2Cronos.findByIntegrator", query = "SELECT v FROM ViewIntegCadVeiculoWsV2Cronos v WHERE v.integrator = :integrator")})
 public class ViewIntegCadVeiculoWsV2Cronos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "PackID")

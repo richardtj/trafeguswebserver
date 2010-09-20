@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,9 +22,12 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "lemc_lista_envio_msg_contato")
+@Table(name = "lemc_lista_envio_msg_contato", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "LemcListaEnvioMsgContato.findAll", query = "SELECT l FROM LemcListaEnvioMsgContato l")})
+    @NamedQuery(name = "LemcListaEnvioMsgContato.findAll", query = "SELECT l FROM LemcListaEnvioMsgContato l"),
+    @NamedQuery(name = "LemcListaEnvioMsgContato.findByLemcCodigo", query = "SELECT l FROM LemcListaEnvioMsgContato l WHERE l.lemcCodigo = :lemcCodigo"),
+    @NamedQuery(name = "LemcListaEnvioMsgContato.findByLemcDescricaoContato", query = "SELECT l FROM LemcListaEnvioMsgContato l WHERE l.lemcDescricaoContato = :lemcDescricaoContato"),
+    @NamedQuery(name = "LemcListaEnvioMsgContato.findByLemcDestinatario", query = "SELECT l FROM LemcListaEnvioMsgContato l WHERE l.lemcDestinatario = :lemcDestinatario")})
 public class LemcListaEnvioMsgContato implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,10 +39,10 @@ public class LemcListaEnvioMsgContato implements Serializable {
     @Column(name = "lemc_destinatario", length = 100)
     private String lemcDestinatario;
     @JoinColumn(name = "lemc_tenv_codigo", referencedColumnName = "tenv_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TenvTipoEnvio tenvTipoEnvio;
     @JoinColumn(name = "leme_codigo", referencedColumnName = "leme_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private LemeListaEnvioMensagem lemeListaEnvioMensagem;
 
     public LemcListaEnvioMsgContato() {

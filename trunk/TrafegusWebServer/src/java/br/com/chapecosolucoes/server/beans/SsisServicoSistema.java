@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,9 +22,12 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "ssis_servico_sistema")
+@Table(name = "ssis_servico_sistema", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "SsisServicoSistema.findAll", query = "SELECT s FROM SsisServicoSistema s")})
+    @NamedQuery(name = "SsisServicoSistema.findAll", query = "SELECT s FROM SsisServicoSistema s"),
+    @NamedQuery(name = "SsisServicoSistema.findBySsisCodigo", query = "SELECT s FROM SsisServicoSistema s WHERE s.ssisCodigo = :ssisCodigo"),
+    @NamedQuery(name = "SsisServicoSistema.findBySsisDescricao", query = "SELECT s FROM SsisServicoSistema s WHERE s.ssisDescricao = :ssisDescricao"),
+    @NamedQuery(name = "SsisServicoSistema.findBySsisTolerancia", query = "SELECT s FROM SsisServicoSistema s WHERE s.ssisTolerancia = :ssisTolerancia")})
 public class SsisServicoSistema implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -34,12 +38,12 @@ public class SsisServicoSistema implements Serializable {
     private String ssisDescricao;
     @Column(name = "ssis_tolerancia")
     private Integer ssisTolerancia;
-    @OneToMany(mappedBy = "ssisServicoSistema")
-    private Collection<UlsiUltimoLogServicoInteg> ulsiUltimoLogServicoIntegCollection;
-    @OneToMany(mappedBy = "ssisServicoSistema")
-    private Collection<SinsServicoInstancia> sinsServicoInstanciaCollection;
-    @OneToMany(mappedBy = "ssisServicoSistema")
-    private Collection<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfCollection;
+    @OneToMany(mappedBy = "ssisServicoSistema", fetch = FetchType.EAGER)
+    private List<UlsiUltimoLogServicoInteg> ulsiUltimoLogServicoIntegList;
+    @OneToMany(mappedBy = "ssisServicoSistema", fetch = FetchType.EAGER)
+    private List<SinsServicoInstancia> sinsServicoInstanciaList;
+    @OneToMany(mappedBy = "ssisServicoSistema", fetch = FetchType.EAGER)
+    private List<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfList;
 
     public SsisServicoSistema() {
     }
@@ -72,28 +76,28 @@ public class SsisServicoSistema implements Serializable {
         this.ssisTolerancia = ssisTolerancia;
     }
 
-    public Collection<UlsiUltimoLogServicoInteg> getUlsiUltimoLogServicoIntegCollection() {
-        return ulsiUltimoLogServicoIntegCollection;
+    public List<UlsiUltimoLogServicoInteg> getUlsiUltimoLogServicoIntegList() {
+        return ulsiUltimoLogServicoIntegList;
     }
 
-    public void setUlsiUltimoLogServicoIntegCollection(Collection<UlsiUltimoLogServicoInteg> ulsiUltimoLogServicoIntegCollection) {
-        this.ulsiUltimoLogServicoIntegCollection = ulsiUltimoLogServicoIntegCollection;
+    public void setUlsiUltimoLogServicoIntegList(List<UlsiUltimoLogServicoInteg> ulsiUltimoLogServicoIntegList) {
+        this.ulsiUltimoLogServicoIntegList = ulsiUltimoLogServicoIntegList;
     }
 
-    public Collection<SinsServicoInstancia> getSinsServicoInstanciaCollection() {
-        return sinsServicoInstanciaCollection;
+    public List<SinsServicoInstancia> getSinsServicoInstanciaList() {
+        return sinsServicoInstanciaList;
     }
 
-    public void setSinsServicoInstanciaCollection(Collection<SinsServicoInstancia> sinsServicoInstanciaCollection) {
-        this.sinsServicoInstanciaCollection = sinsServicoInstanciaCollection;
+    public void setSinsServicoInstanciaList(List<SinsServicoInstancia> sinsServicoInstanciaList) {
+        this.sinsServicoInstanciaList = sinsServicoInstanciaList;
     }
 
-    public Collection<SicoServicoIntegracaoConf> getSicoServicoIntegracaoConfCollection() {
-        return sicoServicoIntegracaoConfCollection;
+    public List<SicoServicoIntegracaoConf> getSicoServicoIntegracaoConfList() {
+        return sicoServicoIntegracaoConfList;
     }
 
-    public void setSicoServicoIntegracaoConfCollection(Collection<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfCollection) {
-        this.sicoServicoIntegracaoConfCollection = sicoServicoIntegracaoConfCollection;
+    public void setSicoServicoIntegracaoConfList(List<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfList) {
+        this.sicoServicoIntegracaoConfList = sicoServicoIntegracaoConfList;
     }
 
     @Override

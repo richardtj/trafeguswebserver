@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,9 +21,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "tper_tipo_periferico")
+@Table(name = "tper_tipo_periferico", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TperTipoPeriferico.findAll", query = "SELECT t FROM TperTipoPeriferico t")})
+    @NamedQuery(name = "TperTipoPeriferico.findAll", query = "SELECT t FROM TperTipoPeriferico t"),
+    @NamedQuery(name = "TperTipoPeriferico.findByTperCodigo", query = "SELECT t FROM TperTipoPeriferico t WHERE t.tperCodigo = :tperCodigo"),
+    @NamedQuery(name = "TperTipoPeriferico.findByTperDescricao", query = "SELECT t FROM TperTipoPeriferico t WHERE t.tperDescricao = :tperDescricao")})
 public class TperTipoPeriferico implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,7 +35,7 @@ public class TperTipoPeriferico implements Serializable {
     @Column(name = "tper_descricao", length = 50)
     private String tperDescricao;
     @OneToMany(mappedBy = "tperTipoPeriferico")
-    private Collection<PpadPerifericoPadrao> ppadPerifericoPadraoCollection;
+    private List<PpadPerifericoPadrao> ppadPerifericoPadraoList;
 
     public TperTipoPeriferico() {
     }
@@ -58,12 +60,12 @@ public class TperTipoPeriferico implements Serializable {
         this.tperDescricao = tperDescricao;
     }
 
-    public Collection<PpadPerifericoPadrao> getPpadPerifericoPadraoCollection() {
-        return ppadPerifericoPadraoCollection;
+    public List<PpadPerifericoPadrao> getPpadPerifericoPadraoList() {
+        return ppadPerifericoPadraoList;
     }
 
-    public void setPpadPerifericoPadraoCollection(Collection<PpadPerifericoPadrao> ppadPerifericoPadraoCollection) {
-        this.ppadPerifericoPadraoCollection = ppadPerifericoPadraoCollection;
+    public void setPpadPerifericoPadraoList(List<PpadPerifericoPadrao> ppadPerifericoPadraoList) {
+        this.ppadPerifericoPadraoList = ppadPerifericoPadraoList;
     }
 
     @Override

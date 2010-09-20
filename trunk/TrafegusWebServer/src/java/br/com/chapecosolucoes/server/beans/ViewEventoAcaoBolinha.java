@@ -20,9 +20,19 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_evento_acao_bolinha")
+@Table(name = "view_evento_acao_bolinha", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewEventoAcaoBolinha.findAll", query = "SELECT v FROM ViewEventoAcaoBolinha v")})
+    @NamedQuery(name = "ViewEventoAcaoBolinha.findAll", query = "SELECT v FROM ViewEventoAcaoBolinha v"),
+    @NamedQuery(name = "ViewEventoAcaoBolinha.findByErasCodigo", query = "SELECT v FROM ViewEventoAcaoBolinha v WHERE v.erasCodigo = :erasCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoBolinha.findByIdentificador", query = "SELECT v FROM ViewEventoAcaoBolinha v WHERE v.identificador = :identificador"),
+    @NamedQuery(name = "ViewEventoAcaoBolinha.findByTermNumeroTerminal", query = "SELECT v FROM ViewEventoAcaoBolinha v WHERE v.termNumeroTerminal = :termNumeroTerminal"),
+    @NamedQuery(name = "ViewEventoAcaoBolinha.findByEsisCodigo", query = "SELECT v FROM ViewEventoAcaoBolinha v WHERE v.esisCodigo = :esisCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoBolinha.findByEsisTermCodigo", query = "SELECT v FROM ViewEventoAcaoBolinha v WHERE v.esisTermCodigo = :esisTermCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoBolinha.findByEsisDescricao", query = "SELECT v FROM ViewEventoAcaoBolinha v WHERE v.esisDescricao = :esisDescricao"),
+    @NamedQuery(name = "ViewEventoAcaoBolinha.findByPgaiCodigo", query = "SELECT v FROM ViewEventoAcaoBolinha v WHERE v.pgaiCodigo = :pgaiCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoBolinha.findByOrasCodigo", query = "SELECT v FROM ViewEventoAcaoBolinha v WHERE v.orasCodigo = :orasCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoBolinha.findByAbolCor", query = "SELECT v FROM ViewEventoAcaoBolinha v WHERE v.abolCor = :abolCor"),
+    @NamedQuery(name = "ViewEventoAcaoBolinha.findByEsisDataInicio", query = "SELECT v FROM ViewEventoAcaoBolinha v WHERE v.esisDataInicio = :esisDataInicio")})
 public class ViewEventoAcaoBolinha implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "eras_codigo")

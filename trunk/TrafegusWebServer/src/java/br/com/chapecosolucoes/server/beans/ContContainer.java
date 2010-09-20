@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "cont_container")
+@Table(name = "cont_container", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ContContainer.findAll", query = "SELECT c FROM ContContainer c")})
+    @NamedQuery(name = "ContContainer.findAll", query = "SELECT c FROM ContContainer c"),
+    @NamedQuery(name = "ContContainer.findByContOrasCodigo", query = "SELECT c FROM ContContainer c WHERE c.contOrasCodigo = :contOrasCodigo"),
+    @NamedQuery(name = "ContContainer.findByContIdentificador", query = "SELECT c FROM ContContainer c WHERE c.contIdentificador = :contIdentificador")})
 public class ContContainer implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,13 +39,13 @@ public class ContContainer implements Serializable {
     @Column(name = "cont_identificador", length = 30)
     private String contIdentificador;
     @JoinColumn(name = "cont_oras_codigo", referencedColumnName = "oras_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
     @JoinColumn(name = "cont_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
-    @OneToMany(mappedBy = "contContainer")
-    private Collection<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaCollection;
+    @OneToMany(mappedBy = "contContainer", fetch = FetchType.EAGER)
+    private List<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaList;
 
     public ContContainer() {
     }
@@ -83,12 +86,12 @@ public class ContContainer implements Serializable {
         this.erasEstacaoRastreamento = erasEstacaoRastreamento;
     }
 
-    public Collection<VccaVeiculoCavaloCarreta> getVccaVeiculoCavaloCarretaCollection() {
-        return vccaVeiculoCavaloCarretaCollection;
+    public List<VccaVeiculoCavaloCarreta> getVccaVeiculoCavaloCarretaList() {
+        return vccaVeiculoCavaloCarretaList;
     }
 
-    public void setVccaVeiculoCavaloCarretaCollection(Collection<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaCollection) {
-        this.vccaVeiculoCavaloCarretaCollection = vccaVeiculoCavaloCarretaCollection;
+    public void setVccaVeiculoCavaloCarretaList(List<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaList) {
+        this.vccaVeiculoCavaloCarretaList = vccaVeiculoCavaloCarretaList;
     }
 
     @Override

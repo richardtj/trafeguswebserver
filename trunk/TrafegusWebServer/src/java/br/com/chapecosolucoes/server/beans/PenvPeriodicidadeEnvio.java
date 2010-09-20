@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,9 +22,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "penv_periodicidade_envio")
+@Table(name = "penv_periodicidade_envio", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PenvPeriodicidadeEnvio.findAll", query = "SELECT p FROM PenvPeriodicidadeEnvio p")})
+    @NamedQuery(name = "PenvPeriodicidadeEnvio.findAll", query = "SELECT p FROM PenvPeriodicidadeEnvio p"),
+    @NamedQuery(name = "PenvPeriodicidadeEnvio.findByPenvCodigo", query = "SELECT p FROM PenvPeriodicidadeEnvio p WHERE p.penvCodigo = :penvCodigo"),
+    @NamedQuery(name = "PenvPeriodicidadeEnvio.findByPenvDescricao", query = "SELECT p FROM PenvPeriodicidadeEnvio p WHERE p.penvDescricao = :penvDescricao")})
 public class PenvPeriodicidadeEnvio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,8 +35,8 @@ public class PenvPeriodicidadeEnvio implements Serializable {
     private Integer penvCodigo;
     @Column(name = "penv_descricao", length = 50)
     private String penvDescricao;
-    @OneToMany(mappedBy = "penvPeriodicidadeEnvio")
-    private Collection<SemeServicoEnvioMensagem> semeServicoEnvioMensagemCollection;
+    @OneToMany(mappedBy = "penvPeriodicidadeEnvio", fetch = FetchType.EAGER)
+    private List<SemeServicoEnvioMensagem> semeServicoEnvioMensagemList;
 
     public PenvPeriodicidadeEnvio() {
     }
@@ -58,12 +61,12 @@ public class PenvPeriodicidadeEnvio implements Serializable {
         this.penvDescricao = penvDescricao;
     }
 
-    public Collection<SemeServicoEnvioMensagem> getSemeServicoEnvioMensagemCollection() {
-        return semeServicoEnvioMensagemCollection;
+    public List<SemeServicoEnvioMensagem> getSemeServicoEnvioMensagemList() {
+        return semeServicoEnvioMensagemList;
     }
 
-    public void setSemeServicoEnvioMensagemCollection(Collection<SemeServicoEnvioMensagem> semeServicoEnvioMensagemCollection) {
-        this.semeServicoEnvioMensagemCollection = semeServicoEnvioMensagemCollection;
+    public void setSemeServicoEnvioMensagemList(List<SemeServicoEnvioMensagem> semeServicoEnvioMensagemList) {
+        this.semeServicoEnvioMensagemList = semeServicoEnvioMensagemList;
     }
 
     @Override

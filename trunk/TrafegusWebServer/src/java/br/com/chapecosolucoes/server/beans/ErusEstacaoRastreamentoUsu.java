@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,10 +26,14 @@ import javax.persistence.UniqueConstraint;
  * @author Emerson
  */
 @Entity
-@Table(name = "erus_estacao_rastreamento_usu", uniqueConstraints = {
+@Table(name = "erus_estacao_rastreamento_usu", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"erus_eras_codigo", "erus_usua_pfis_pess_oras_codigo"})})
 @NamedQueries({
-    @NamedQuery(name = "ErusEstacaoRastreamentoUsu.findAll", query = "SELECT e FROM ErusEstacaoRastreamentoUsu e")})
+    @NamedQuery(name = "ErusEstacaoRastreamentoUsu.findAll", query = "SELECT e FROM ErusEstacaoRastreamentoUsu e"),
+    @NamedQuery(name = "ErusEstacaoRastreamentoUsu.findByErusCodigo", query = "SELECT e FROM ErusEstacaoRastreamentoUsu e WHERE e.erusCodigo = :erusCodigo"),
+    @NamedQuery(name = "ErusEstacaoRastreamentoUsu.findByErusDataCadastro", query = "SELECT e FROM ErusEstacaoRastreamentoUsu e WHERE e.erusDataCadastro = :erusDataCadastro"),
+    @NamedQuery(name = "ErusEstacaoRastreamentoUsu.findByErusCodigoGr", query = "SELECT e FROM ErusEstacaoRastreamentoUsu e WHERE e.erusCodigoGr = :erusCodigoGr"),
+    @NamedQuery(name = "ErusEstacaoRastreamentoUsu.findByErusImportado", query = "SELECT e FROM ErusEstacaoRastreamentoUsu e WHERE e.erusImportado = :erusImportado")})
 public class ErusEstacaoRastreamentoUsu implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,10 +48,10 @@ public class ErusEstacaoRastreamentoUsu implements Serializable {
     @Column(name = "erus_importado")
     private Character erusImportado;
     @JoinColumn(name = "erus_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "erus_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
 
     public ErusEstacaoRastreamentoUsu() {

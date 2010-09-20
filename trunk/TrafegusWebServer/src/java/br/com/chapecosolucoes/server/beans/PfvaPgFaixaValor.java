@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,9 +25,16 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "pfva_pg_faixa_valor")
+@Table(name = "pfva_pg_faixa_valor", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PfvaPgFaixaValor.findAll", query = "SELECT p FROM PfvaPgFaixaValor p")})
+    @NamedQuery(name = "PfvaPgFaixaValor.findAll", query = "SELECT p FROM PfvaPgFaixaValor p"),
+    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaCodigo", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaCodigo = :pfvaCodigo"),
+    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaDescricao", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaDescricao = :pfvaDescricao"),
+    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaValorMinimo", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaValorMinimo = :pfvaValorMinimo"),
+    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaValorMaximo", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaValorMaximo = :pfvaValorMaximo"),
+    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaDataCadastro", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaDataCadastro = :pfvaDataCadastro"),
+    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaCodigoGr", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaCodigoGr = :pfvaCodigoGr"),
+    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaImportado", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaImportado = :pfvaImportado")})
 public class PfvaPgFaixaValor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,7 +55,7 @@ public class PfvaPgFaixaValor implements Serializable {
     @Column(name = "pfva_importado")
     private Character pfvaImportado;
     @OneToMany(mappedBy = "pfvaPgFaixaValor")
-    private Collection<PgpgPg> pgpgPgCollection;
+    private List<PgpgPg> pgpgPgList;
 
     public PfvaPgFaixaValor() {
     }
@@ -113,12 +120,12 @@ public class PfvaPgFaixaValor implements Serializable {
         this.pfvaImportado = pfvaImportado;
     }
 
-    public Collection<PgpgPg> getPgpgPgCollection() {
-        return pgpgPgCollection;
+    public List<PgpgPg> getPgpgPgList() {
+        return pgpgPgList;
     }
 
-    public void setPgpgPgCollection(Collection<PgpgPg> pgpgPgCollection) {
-        this.pgpgPgCollection = pgpgPgCollection;
+    public void setPgpgPgList(List<PgpgPg> pgpgPgList) {
+        this.pgpgPgList = pgpgPgList;
     }
 
     @Override

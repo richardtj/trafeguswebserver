@@ -17,9 +17,26 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_dados_transportador")
+@Table(name = "view_dados_transportador", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewDadosTransportador.findAll", query = "SELECT v FROM ViewDadosTransportador v")})
+    @NamedQuery(name = "ViewDadosTransportador.findAll", query = "SELECT v FROM ViewDadosTransportador v"),
+    @NamedQuery(name = "ViewDadosTransportador.findByPessOrasCodigo", query = "SELECT v FROM ViewDadosTransportador v WHERE v.pessOrasCodigo = :pessOrasCodigo"),
+    @NamedQuery(name = "ViewDadosTransportador.findByTranPessOrasCodigo", query = "SELECT v FROM ViewDadosTransportador v WHERE v.tranPessOrasCodigo = :tranPessOrasCodigo"),
+    @NamedQuery(name = "ViewDadosTransportador.findByPessNome", query = "SELECT v FROM ViewDadosTransportador v WHERE v.pessNome = :pessNome"),
+    @NamedQuery(name = "ViewDadosTransportador.findByPessNumero", query = "SELECT v FROM ViewDadosTransportador v WHERE v.pessNumero = :pessNumero"),
+    @NamedQuery(name = "ViewDadosTransportador.findByPessComplemento", query = "SELECT v FROM ViewDadosTransportador v WHERE v.pessComplemento = :pessComplemento"),
+    @NamedQuery(name = "ViewDadosTransportador.findByPjurCnpj", query = "SELECT v FROM ViewDadosTransportador v WHERE v.pjurCnpj = :pjurCnpj"),
+    @NamedQuery(name = "ViewDadosTransportador.findByPjurInscricaoEstadual", query = "SELECT v FROM ViewDadosTransportador v WHERE v.pjurInscricaoEstadual = :pjurInscricaoEstadual"),
+    @NamedQuery(name = "ViewDadosTransportador.findByPjurRazaoSocial", query = "SELECT v FROM ViewDadosTransportador v WHERE v.pjurRazaoSocial = :pjurRazaoSocial"),
+    @NamedQuery(name = "ViewDadosTransportador.findByLogrCep", query = "SELECT v FROM ViewDadosTransportador v WHERE v.logrCep = :logrCep"),
+    @NamedQuery(name = "ViewDadosTransportador.findByPfisCpf", query = "SELECT v FROM ViewDadosTransportador v WHERE v.pfisCpf = :pfisCpf"),
+    @NamedQuery(name = "ViewDadosTransportador.findByPfisRg", query = "SELECT v FROM ViewDadosTransportador v WHERE v.pfisRg = :pfisRg"),
+    @NamedQuery(name = "ViewDadosTransportador.findByEndereco", query = "SELECT v FROM ViewDadosTransportador v WHERE v.endereco = :endereco"),
+    @NamedQuery(name = "ViewDadosTransportador.findByBairro", query = "SELECT v FROM ViewDadosTransportador v WHERE v.bairro = :bairro"),
+    @NamedQuery(name = "ViewDadosTransportador.findByCidade", query = "SELECT v FROM ViewDadosTransportador v WHERE v.cidade = :cidade"),
+    @NamedQuery(name = "ViewDadosTransportador.findByEstado", query = "SELECT v FROM ViewDadosTransportador v WHERE v.estado = :estado"),
+    @NamedQuery(name = "ViewDadosTransportador.findBySigla", query = "SELECT v FROM ViewDadosTransportador v WHERE v.sigla = :sigla"),
+    @NamedQuery(name = "ViewDadosTransportador.findByPais", query = "SELECT v FROM ViewDadosTransportador v WHERE v.pais = :pais")})
 public class ViewDadosTransportador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "pess_oras_codigo")

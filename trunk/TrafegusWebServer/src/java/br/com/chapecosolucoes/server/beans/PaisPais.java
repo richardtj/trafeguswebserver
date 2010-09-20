@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,9 +24,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "pais_pais")
+@Table(name = "pais_pais", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PaisPais.findAll", query = "SELECT p FROM PaisPais p")})
+    @NamedQuery(name = "PaisPais.findAll", query = "SELECT p FROM PaisPais p"),
+    @NamedQuery(name = "PaisPais.findByPaisCodigo", query = "SELECT p FROM PaisPais p WHERE p.paisCodigo = :paisCodigo"),
+    @NamedQuery(name = "PaisPais.findByPaisDescricao", query = "SELECT p FROM PaisPais p WHERE p.paisDescricao = :paisDescricao"),
+    @NamedQuery(name = "PaisPais.findByPaisDataCadastro", query = "SELECT p FROM PaisPais p WHERE p.paisDataCadastro = :paisDataCadastro"),
+    @NamedQuery(name = "PaisPais.findByPaisCodigoGr", query = "SELECT p FROM PaisPais p WHERE p.paisCodigoGr = :paisCodigoGr"),
+    @NamedQuery(name = "PaisPais.findByPaisImportado", query = "SELECT p FROM PaisPais p WHERE p.paisImportado = :paisImportado")})
 public class PaisPais implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,7 +48,7 @@ public class PaisPais implements Serializable {
     @Column(name = "pais_importado")
     private Character paisImportado;
     @OneToMany(mappedBy = "paisPais")
-    private Collection<EstaEstado> estaEstadoCollection;
+    private List<EstaEstado> estaEstadoList;
 
     public PaisPais() {
     }
@@ -92,12 +97,12 @@ public class PaisPais implements Serializable {
         this.paisImportado = paisImportado;
     }
 
-    public Collection<EstaEstado> getEstaEstadoCollection() {
-        return estaEstadoCollection;
+    public List<EstaEstado> getEstaEstadoList() {
+        return estaEstadoList;
     }
 
-    public void setEstaEstadoCollection(Collection<EstaEstado> estaEstadoCollection) {
-        this.estaEstadoCollection = estaEstadoCollection;
+    public void setEstaEstadoList(List<EstaEstado> estaEstadoList) {
+        this.estaEstadoList = estaEstadoList;
     }
 
     @Override

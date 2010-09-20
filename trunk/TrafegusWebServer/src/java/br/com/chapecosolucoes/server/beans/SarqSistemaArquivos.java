@@ -19,9 +19,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "sarq_sistema_arquivos")
+@Table(name = "sarq_sistema_arquivos", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "SarqSistemaArquivos.findAll", query = "SELECT s FROM SarqSistemaArquivos s")})
+    @NamedQuery(name = "SarqSistemaArquivos.findAll", query = "SELECT s FROM SarqSistemaArquivos s"),
+    @NamedQuery(name = "SarqSistemaArquivos.findBySarqCodigo", query = "SELECT s FROM SarqSistemaArquivos s WHERE s.sarqCodigo = :sarqCodigo"),
+    @NamedQuery(name = "SarqSistemaArquivos.findBySarqPath", query = "SELECT s FROM SarqSistemaArquivos s WHERE s.sarqPath = :sarqPath")})
 public class SarqSistemaArquivos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

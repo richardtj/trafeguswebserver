@@ -22,9 +22,19 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "scri_script_criacao")
+@Table(name = "scri_script_criacao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ScriScriptCriacao.findAll", query = "SELECT s FROM ScriScriptCriacao s")})
+    @NamedQuery(name = "ScriScriptCriacao.findAll", query = "SELECT s FROM ScriScriptCriacao s"),
+    @NamedQuery(name = "ScriScriptCriacao.findByScriCodigo", query = "SELECT s FROM ScriScriptCriacao s WHERE s.scriCodigo = :scriCodigo"),
+    @NamedQuery(name = "ScriScriptCriacao.findByScriDescricao", query = "SELECT s FROM ScriScriptCriacao s WHERE s.scriDescricao = :scriDescricao"),
+    @NamedQuery(name = "ScriScriptCriacao.findByScriScriptPostgres", query = "SELECT s FROM ScriScriptCriacao s WHERE s.scriScriptPostgres = :scriScriptPostgres"),
+    @NamedQuery(name = "ScriScriptCriacao.findByScriScriptOracle", query = "SELECT s FROM ScriScriptCriacao s WHERE s.scriScriptOracle = :scriScriptOracle"),
+    @NamedQuery(name = "ScriScriptCriacao.findByScriScriptSqlServer", query = "SELECT s FROM ScriScriptCriacao s WHERE s.scriScriptSqlServer = :scriScriptSqlServer"),
+    @NamedQuery(name = "ScriScriptCriacao.findByScriAutor", query = "SELECT s FROM ScriScriptCriacao s WHERE s.scriAutor = :scriAutor"),
+    @NamedQuery(name = "ScriScriptCriacao.findByScriData", query = "SELECT s FROM ScriScriptCriacao s WHERE s.scriData = :scriData"),
+    @NamedQuery(name = "ScriScriptCriacao.findByScriDataAlteracao", query = "SELECT s FROM ScriScriptCriacao s WHERE s.scriDataAlteracao = :scriDataAlteracao"),
+    @NamedQuery(name = "ScriScriptCriacao.findByScriVersaoCriacao", query = "SELECT s FROM ScriScriptCriacao s WHERE s.scriVersaoCriacao = :scriVersaoCriacao"),
+    @NamedQuery(name = "ScriScriptCriacao.findByScriVersaoAtualizar", query = "SELECT s FROM ScriScriptCriacao s WHERE s.scriVersaoAtualizar = :scriVersaoAtualizar")})
 public class ScriScriptCriacao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

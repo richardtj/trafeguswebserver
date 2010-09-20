@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "ppro_permissao_produto")
+@Table(name = "ppro_permissao_produto", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PproPermissaoProduto.findAll", query = "SELECT p FROM PproPermissaoProduto p")})
+    @NamedQuery(name = "PproPermissaoProduto.findAll", query = "SELECT p FROM PproPermissaoProduto p"),
+    @NamedQuery(name = "PproPermissaoProduto.findByPproCodigo", query = "SELECT p FROM PproPermissaoProduto p WHERE p.pproCodigo = :pproCodigo"),
+    @NamedQuery(name = "PproPermissaoProduto.findByPproIdObjetoProduto", query = "SELECT p FROM PproPermissaoProduto p WHERE p.pproIdObjetoProduto = :pproIdObjetoProduto"),
+    @NamedQuery(name = "PproPermissaoProduto.findByPproDataCadastro", query = "SELECT p FROM PproPermissaoProduto p WHERE p.pproDataCadastro = :pproDataCadastro"),
+    @NamedQuery(name = "PproPermissaoProduto.findByPproCodigoGr", query = "SELECT p FROM PproPermissaoProduto p WHERE p.pproCodigoGr = :pproCodigoGr"),
+    @NamedQuery(name = "PproPermissaoProduto.findByPproImportado", query = "SELECT p FROM PproPermissaoProduto p WHERE p.pproImportado = :pproImportado")})
 public class PproPermissaoProduto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,7 +50,7 @@ public class PproPermissaoProduto implements Serializable {
     @Column(name = "ppro_importado")
     private Character pproImportado;
     @JoinColumn(name = "ppro_perf_codigo", referencedColumnName = "perf_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PerfPerfil perfPerfil;
 
     public PproPermissaoProduto() {

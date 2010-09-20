@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,9 +23,10 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "acom_acao_comando")
+@Table(name = "acom_acao_comando", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "AcomAcaoComando.findAll", query = "SELECT a FROM AcomAcaoComando a")})
+    @NamedQuery(name = "AcomAcaoComando.findAll", query = "SELECT a FROM AcomAcaoComando a"),
+    @NamedQuery(name = "AcomAcaoComando.findByAcomApadCodigo", query = "SELECT a FROM AcomAcaoComando a WHERE a.acomApadCodigo = :acomApadCodigo")})
 public class AcomAcaoComando implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,10 +34,10 @@ public class AcomAcaoComando implements Serializable {
     @Column(name = "acom_apad_codigo", nullable = false)
     private Integer acomApadCodigo;
     @JoinColumn(name = "acom_cpad_codigo", referencedColumnName = "cpad_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private CpadComandoPadrao cpadComandoPadrao;
     @JoinColumn(name = "acom_apad_codigo", referencedColumnName = "apad_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public AcomAcaoComando() {

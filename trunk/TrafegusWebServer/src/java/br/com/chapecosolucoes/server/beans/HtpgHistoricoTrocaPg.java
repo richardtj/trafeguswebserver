@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "htpg_historico_troca_pg")
+@Table(name = "htpg_historico_troca_pg", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "HtpgHistoricoTrocaPg.findAll", query = "SELECT h FROM HtpgHistoricoTrocaPg h")})
+    @NamedQuery(name = "HtpgHistoricoTrocaPg.findAll", query = "SELECT h FROM HtpgHistoricoTrocaPg h"),
+    @NamedQuery(name = "HtpgHistoricoTrocaPg.findByHtpgCodigo", query = "SELECT h FROM HtpgHistoricoTrocaPg h WHERE h.htpgCodigo = :htpgCodigo"),
+    @NamedQuery(name = "HtpgHistoricoTrocaPg.findByHtpgDataHora", query = "SELECT h FROM HtpgHistoricoTrocaPg h WHERE h.htpgDataHora = :htpgDataHora"),
+    @NamedQuery(name = "HtpgHistoricoTrocaPg.findByHtpgPgAnterior", query = "SELECT h FROM HtpgHistoricoTrocaPg h WHERE h.htpgPgAnterior = :htpgPgAnterior"),
+    @NamedQuery(name = "HtpgHistoricoTrocaPg.findByHtpgPgPosterior", query = "SELECT h FROM HtpgHistoricoTrocaPg h WHERE h.htpgPgPosterior = :htpgPgPosterior")})
 public class HtpgHistoricoTrocaPg implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,10 +46,10 @@ public class HtpgHistoricoTrocaPg implements Serializable {
     @Column(name = "htpg_pg_posterior")
     private Integer htpgPgPosterior;
     @JoinColumn(name = "htpg_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "htpg_oras_codigo", referencedColumnName = "oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
 
     public HtpgHistoricoTrocaPg() {

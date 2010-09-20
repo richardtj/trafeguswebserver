@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,9 +27,16 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "pite_pg_item")
+@Table(name = "pite_pg_item", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PitePgItem.findAll", query = "SELECT p FROM PitePgItem p")})
+    @NamedQuery(name = "PitePgItem.findAll", query = "SELECT p FROM PitePgItem p"),
+    @NamedQuery(name = "PitePgItem.findByPiteCodigo", query = "SELECT p FROM PitePgItem p WHERE p.piteCodigo = :piteCodigo"),
+    @NamedQuery(name = "PitePgItem.findByPiteDescricao", query = "SELECT p FROM PitePgItem p WHERE p.piteDescricao = :piteDescricao"),
+    @NamedQuery(name = "PitePgItem.findByPiteDetalhe", query = "SELECT p FROM PitePgItem p WHERE p.piteDetalhe = :piteDetalhe"),
+    @NamedQuery(name = "PitePgItem.findByPiteParametros", query = "SELECT p FROM PitePgItem p WHERE p.piteParametros = :piteParametros"),
+    @NamedQuery(name = "PitePgItem.findByPiteDataCadastro", query = "SELECT p FROM PitePgItem p WHERE p.piteDataCadastro = :piteDataCadastro"),
+    @NamedQuery(name = "PitePgItem.findByPiteCodigoGr", query = "SELECT p FROM PitePgItem p WHERE p.piteCodigoGr = :piteCodigoGr"),
+    @NamedQuery(name = "PitePgItem.findByPiteImportado", query = "SELECT p FROM PitePgItem p WHERE p.piteImportado = :piteImportado")})
 public class PitePgItem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,21 +57,21 @@ public class PitePgItem implements Serializable {
     @Column(name = "pite_importado")
     private Character piteImportado;
     @JoinColumn(name = "pite_ptit_codigo", referencedColumnName = "ptit_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PtitPgTipoItem ptitPgTipoItem;
     @JoinColumn(name = "pite_ppad_codigo", referencedColumnName = "ppad_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PpadPerifericoPadrao ppadPerifericoPadrao;
     @JoinColumn(name = "pite_mpad_codigo", referencedColumnName = "mpad_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private MpadMacroPadrao mpadMacroPadrao;
     @JoinColumn(name = "pite_espa_codigo", referencedColumnName = "espa_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EspaEventoSistemaPadrao espaEventoSistemaPadrao;
-    @OneToMany(mappedBy = "pitePgItem")
-    private Collection<PgaiPgAssociaItem> pgaiPgAssociaItemCollection;
-    @OneToMany(mappedBy = "pitePgItem")
-    private Collection<PipaPgItemParametro> pipaPgItemParametroCollection;
+    @OneToMany(mappedBy = "pitePgItem", fetch = FetchType.EAGER)
+    private List<PgaiPgAssociaItem> pgaiPgAssociaItemList;
+    @OneToMany(mappedBy = "pitePgItem", fetch = FetchType.EAGER)
+    private List<PipaPgItemParametro> pipaPgItemParametroList;
 
     public PitePgItem() {
     }
@@ -160,20 +168,20 @@ public class PitePgItem implements Serializable {
         this.espaEventoSistemaPadrao = espaEventoSistemaPadrao;
     }
 
-    public Collection<PgaiPgAssociaItem> getPgaiPgAssociaItemCollection() {
-        return pgaiPgAssociaItemCollection;
+    public List<PgaiPgAssociaItem> getPgaiPgAssociaItemList() {
+        return pgaiPgAssociaItemList;
     }
 
-    public void setPgaiPgAssociaItemCollection(Collection<PgaiPgAssociaItem> pgaiPgAssociaItemCollection) {
-        this.pgaiPgAssociaItemCollection = pgaiPgAssociaItemCollection;
+    public void setPgaiPgAssociaItemList(List<PgaiPgAssociaItem> pgaiPgAssociaItemList) {
+        this.pgaiPgAssociaItemList = pgaiPgAssociaItemList;
     }
 
-    public Collection<PipaPgItemParametro> getPipaPgItemParametroCollection() {
-        return pipaPgItemParametroCollection;
+    public List<PipaPgItemParametro> getPipaPgItemParametroList() {
+        return pipaPgItemParametroList;
     }
 
-    public void setPipaPgItemParametroCollection(Collection<PipaPgItemParametro> pipaPgItemParametroCollection) {
-        this.pipaPgItemParametroCollection = pipaPgItemParametroCollection;
+    public void setPipaPgItemParametroList(List<PipaPgItemParametro> pipaPgItemParametroList) {
+        this.pipaPgItemParametroList = pipaPgItemParametroList;
     }
 
     @Override

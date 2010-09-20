@@ -20,9 +20,16 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_integer_status_servico_ws")
+@Table(name = "view_integer_status_servico_ws", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewIntegerStatusServicoWs.findAll", query = "SELECT v FROM ViewIntegerStatusServicoWs v")})
+    @NamedQuery(name = "ViewIntegerStatusServicoWs.findAll", query = "SELECT v FROM ViewIntegerStatusServicoWs v"),
+    @NamedQuery(name = "ViewIntegerStatusServicoWs.findByCodConta", query = "SELECT v FROM ViewIntegerStatusServicoWs v WHERE v.codConta = :codConta"),
+    @NamedQuery(name = "ViewIntegerStatusServicoWs.findByServico", query = "SELECT v FROM ViewIntegerStatusServicoWs v WHERE v.servico = :servico"),
+    @NamedQuery(name = "ViewIntegerStatusServicoWs.findByDataAtualiza", query = "SELECT v FROM ViewIntegerStatusServicoWs v WHERE v.dataAtualiza = :dataAtualiza"),
+    @NamedQuery(name = "ViewIntegerStatusServicoWs.findByTolerancia", query = "SELECT v FROM ViewIntegerStatusServicoWs v WHERE v.tolerancia = :tolerancia"),
+    @NamedQuery(name = "ViewIntegerStatusServicoWs.findByServidor", query = "SELECT v FROM ViewIntegerStatusServicoWs v WHERE v.servidor = :servidor"),
+    @NamedQuery(name = "ViewIntegerStatusServicoWs.findByPathServico", query = "SELECT v FROM ViewIntegerStatusServicoWs v WHERE v.pathServico = :pathServico"),
+    @NamedQuery(name = "ViewIntegerStatusServicoWs.findByExcecao", query = "SELECT v FROM ViewIntegerStatusServicoWs v WHERE v.excecao = :excecao")})
 public class ViewIntegerStatusServicoWs implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "CodConta")

@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,10 +29,19 @@ import javax.persistence.UniqueConstraint;
  * @author Emerson
  */
 @Entity
-@Table(name = "term_terminal", uniqueConstraints = {
+@Table(name = "term_terminal", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"term_vtec_codigo", "term_numero_terminal"})})
 @NamedQueries({
-    @NamedQuery(name = "TermTerminal.findAll", query = "SELECT t FROM TermTerminal t")})
+    @NamedQuery(name = "TermTerminal.findAll", query = "SELECT t FROM TermTerminal t"),
+    @NamedQuery(name = "TermTerminal.findByTermCodigo", query = "SELECT t FROM TermTerminal t WHERE t.termCodigo = :termCodigo"),
+    @NamedQuery(name = "TermTerminal.findByTermNumeroTerminal", query = "SELECT t FROM TermTerminal t WHERE t.termNumeroTerminal = :termNumeroTerminal"),
+    @NamedQuery(name = "TermTerminal.findByTermTempoSatelitalPadrao", query = "SELECT t FROM TermTerminal t WHERE t.termTempoSatelitalPadrao = :termTempoSatelitalPadrao"),
+    @NamedQuery(name = "TermTerminal.findByTermTempoGprsPadrao", query = "SELECT t FROM TermTerminal t WHERE t.termTempoGprsPadrao = :termTempoGprsPadrao"),
+    @NamedQuery(name = "TermTerminal.findByTermAtivo", query = "SELECT t FROM TermTerminal t WHERE t.termAtivo = :termAtivo"),
+    @NamedQuery(name = "TermTerminal.findByTermDataCadastro", query = "SELECT t FROM TermTerminal t WHERE t.termDataCadastro = :termDataCadastro"),
+    @NamedQuery(name = "TermTerminal.findByTermCodigoGr", query = "SELECT t FROM TermTerminal t WHERE t.termCodigoGr = :termCodigoGr"),
+    @NamedQuery(name = "TermTerminal.findByTermImportado", query = "SELECT t FROM TermTerminal t WHERE t.termImportado = :termImportado"),
+    @NamedQuery(name = "TermTerminal.findByTermAtivoWs", query = "SELECT t FROM TermTerminal t WHERE t.termAtivoWs = :termAtivoWs")})
 public class TermTerminal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,35 +65,35 @@ public class TermTerminal implements Serializable {
     private Character termImportado;
     @Column(name = "term_ativo_ws")
     private Character termAtivoWs;
-    @OneToMany(mappedBy = "termTerminal")
-    private Collection<EsisEventoSistema> esisEventoSistemaCollection;
-    @OneToMany(mappedBy = "termTerminal")
-    private Collection<VterViagemTerminal> vterViagemTerminalCollection;
-    @OneToMany(mappedBy = "termTerminal")
-    private Collection<EnviEnvio> enviEnvioCollection;
+    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.EAGER)
+    private List<EsisEventoSistema> esisEventoSistemaList;
+    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.EAGER)
+    private List<VterViagemTerminal> vterViagemTerminalList;
+    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.EAGER)
+    private List<EnviEnvio> enviEnvioList;
     @JoinColumn(name = "term_vtec_codigo", referencedColumnName = "vtec_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private VtecVersaoTecnologia vtecVersaoTecnologia;
     @JoinColumn(name = "term_oras_codigo", referencedColumnName = "oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
     @JoinColumn(name = "term_gmac_central_veiculo", referencedColumnName = "gmac_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private GmacGrupoMacro gmacGrupoMacro;
     @JoinColumn(name = "term_gmac_veiculo_central", referencedColumnName = "gmac_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private GmacGrupoMacro gmacGrupoMacro1;
     @JoinColumn(name = "term_eter_codigo", referencedColumnName = "eter_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EterEstatusTerminal eterEstatusTerminal;
     @JoinColumn(name = "term_ctec_codigo", referencedColumnName = "ctec_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private CtecContaTecnologia ctecContaTecnologia;
-    @OneToMany(mappedBy = "termTerminal")
-    private Collection<SterSinalTerminal> sterSinalTerminalCollection;
-    @OneToMany(mappedBy = "termTerminal")
-    private Collection<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalCollection;
-    @OneToOne(mappedBy = "termTerminal")
+    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.EAGER)
+    private List<SterSinalTerminal> sterSinalTerminalList;
+    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.EAGER)
+    private List<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalList;
+    @OneToOne(mappedBy = "termTerminal", fetch = FetchType.EAGER)
     private OrteObjetoRastreadoTermina orteObjetoRastreadoTermina;
 
     public TermTerminal() {
@@ -165,28 +175,28 @@ public class TermTerminal implements Serializable {
         this.termAtivoWs = termAtivoWs;
     }
 
-    public Collection<EsisEventoSistema> getEsisEventoSistemaCollection() {
-        return esisEventoSistemaCollection;
+    public List<EsisEventoSistema> getEsisEventoSistemaList() {
+        return esisEventoSistemaList;
     }
 
-    public void setEsisEventoSistemaCollection(Collection<EsisEventoSistema> esisEventoSistemaCollection) {
-        this.esisEventoSistemaCollection = esisEventoSistemaCollection;
+    public void setEsisEventoSistemaList(List<EsisEventoSistema> esisEventoSistemaList) {
+        this.esisEventoSistemaList = esisEventoSistemaList;
     }
 
-    public Collection<VterViagemTerminal> getVterViagemTerminalCollection() {
-        return vterViagemTerminalCollection;
+    public List<VterViagemTerminal> getVterViagemTerminalList() {
+        return vterViagemTerminalList;
     }
 
-    public void setVterViagemTerminalCollection(Collection<VterViagemTerminal> vterViagemTerminalCollection) {
-        this.vterViagemTerminalCollection = vterViagemTerminalCollection;
+    public void setVterViagemTerminalList(List<VterViagemTerminal> vterViagemTerminalList) {
+        this.vterViagemTerminalList = vterViagemTerminalList;
     }
 
-    public Collection<EnviEnvio> getEnviEnvioCollection() {
-        return enviEnvioCollection;
+    public List<EnviEnvio> getEnviEnvioList() {
+        return enviEnvioList;
     }
 
-    public void setEnviEnvioCollection(Collection<EnviEnvio> enviEnvioCollection) {
-        this.enviEnvioCollection = enviEnvioCollection;
+    public void setEnviEnvioList(List<EnviEnvio> enviEnvioList) {
+        this.enviEnvioList = enviEnvioList;
     }
 
     public VtecVersaoTecnologia getVtecVersaoTecnologia() {
@@ -237,20 +247,20 @@ public class TermTerminal implements Serializable {
         this.ctecContaTecnologia = ctecContaTecnologia;
     }
 
-    public Collection<SterSinalTerminal> getSterSinalTerminalCollection() {
-        return sterSinalTerminalCollection;
+    public List<SterSinalTerminal> getSterSinalTerminalList() {
+        return sterSinalTerminalList;
     }
 
-    public void setSterSinalTerminalCollection(Collection<SterSinalTerminal> sterSinalTerminalCollection) {
-        this.sterSinalTerminalCollection = sterSinalTerminalCollection;
+    public void setSterSinalTerminalList(List<SterSinalTerminal> sterSinalTerminalList) {
+        this.sterSinalTerminalList = sterSinalTerminalList;
     }
 
-    public Collection<PpinPerifericoPadraoInstal> getPpinPerifericoPadraoInstalCollection() {
-        return ppinPerifericoPadraoInstalCollection;
+    public List<PpinPerifericoPadraoInstal> getPpinPerifericoPadraoInstalList() {
+        return ppinPerifericoPadraoInstalList;
     }
 
-    public void setPpinPerifericoPadraoInstalCollection(Collection<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalCollection) {
-        this.ppinPerifericoPadraoInstalCollection = ppinPerifericoPadraoInstalCollection;
+    public void setPpinPerifericoPadraoInstalList(List<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalList) {
+        this.ppinPerifericoPadraoInstalList = ppinPerifericoPadraoInstalList;
     }
 
     public OrteObjetoRastreadoTermina getOrteObjetoRastreadoTermina() {

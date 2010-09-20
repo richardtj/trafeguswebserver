@@ -19,9 +19,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "cate_categoria")
+@Table(name = "cate_categoria", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "CateCategoria.findAll", query = "SELECT c FROM CateCategoria c")})
+    @NamedQuery(name = "CateCategoria.findAll", query = "SELECT c FROM CateCategoria c"),
+    @NamedQuery(name = "CateCategoria.findByCateCodigo", query = "SELECT c FROM CateCategoria c WHERE c.cateCodigo = :cateCodigo"),
+    @NamedQuery(name = "CateCategoria.findByCateDescricao", query = "SELECT c FROM CateCategoria c WHERE c.cateDescricao = :cateDescricao")})
 public class CateCategoria implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

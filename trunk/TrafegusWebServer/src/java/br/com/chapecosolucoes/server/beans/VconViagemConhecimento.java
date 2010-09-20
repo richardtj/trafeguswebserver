@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,9 +27,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "vcon_viagem_conhecimento")
+@Table(name = "vcon_viagem_conhecimento", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VconViagemConhecimento.findAll", query = "SELECT v FROM VconViagemConhecimento v")})
+    @NamedQuery(name = "VconViagemConhecimento.findAll", query = "SELECT v FROM VconViagemConhecimento v"),
+    @NamedQuery(name = "VconViagemConhecimento.findByVconCodigo", query = "SELECT v FROM VconViagemConhecimento v WHERE v.vconCodigo = :vconCodigo"),
+    @NamedQuery(name = "VconViagemConhecimento.findByVconNumero", query = "SELECT v FROM VconViagemConhecimento v WHERE v.vconNumero = :vconNumero"),
+    @NamedQuery(name = "VconViagemConhecimento.findByVconDataCadastro", query = "SELECT v FROM VconViagemConhecimento v WHERE v.vconDataCadastro = :vconDataCadastro"),
+    @NamedQuery(name = "VconViagemConhecimento.findByVconCodigoGr", query = "SELECT v FROM VconViagemConhecimento v WHERE v.vconCodigoGr = :vconCodigoGr"),
+    @NamedQuery(name = "VconViagemConhecimento.findByVconImportado", query = "SELECT v FROM VconViagemConhecimento v WHERE v.vconImportado = :vconImportado")})
 public class VconViagemConhecimento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,13 +50,13 @@ public class VconViagemConhecimento implements Serializable {
     private Integer vconCodigoGr;
     @Column(name = "vcon_importado")
     private Character vconImportado;
-    @OneToMany(mappedBy = "vconViagemConhecimento")
-    private Collection<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalCollection;
+    @OneToMany(mappedBy = "vconViagemConhecimento", fetch = FetchType.EAGER)
+    private List<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalList;
     @JoinColumn(name = "vcon_vloc_codigo", referencedColumnName = "vloc_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private VlocViagemLocal vlocViagemLocal;
     @JoinColumn(name = "vcon_viag_codigo", referencedColumnName = "viag_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ViagViagem viagViagem;
 
     public VconViagemConhecimento() {
@@ -100,12 +106,12 @@ public class VconViagemConhecimento implements Serializable {
         this.vconImportado = vconImportado;
     }
 
-    public Collection<VnfiViagemNotaFiscal> getVnfiViagemNotaFiscalCollection() {
-        return vnfiViagemNotaFiscalCollection;
+    public List<VnfiViagemNotaFiscal> getVnfiViagemNotaFiscalList() {
+        return vnfiViagemNotaFiscalList;
     }
 
-    public void setVnfiViagemNotaFiscalCollection(Collection<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalCollection) {
-        this.vnfiViagemNotaFiscalCollection = vnfiViagemNotaFiscalCollection;
+    public void setVnfiViagemNotaFiscalList(List<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalList) {
+        this.vnfiViagemNotaFiscalList = vnfiViagemNotaFiscalList;
     }
 
     public VlocViagemLocal getVlocViagemLocal() {

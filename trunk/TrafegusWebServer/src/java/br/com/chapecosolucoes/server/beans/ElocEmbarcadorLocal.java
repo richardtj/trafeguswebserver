@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,9 +26,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "eloc_embarcador_local")
+@Table(name = "eloc_embarcador_local", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ElocEmbarcadorLocal.findAll", query = "SELECT e FROM ElocEmbarcadorLocal e")})
+    @NamedQuery(name = "ElocEmbarcadorLocal.findAll", query = "SELECT e FROM ElocEmbarcadorLocal e"),
+    @NamedQuery(name = "ElocEmbarcadorLocal.findByElocCodigo", query = "SELECT e FROM ElocEmbarcadorLocal e WHERE e.elocCodigo = :elocCodigo"),
+    @NamedQuery(name = "ElocEmbarcadorLocal.findByElocRaio", query = "SELECT e FROM ElocEmbarcadorLocal e WHERE e.elocRaio = :elocRaio"),
+    @NamedQuery(name = "ElocEmbarcadorLocal.findByElocDataCadastro", query = "SELECT e FROM ElocEmbarcadorLocal e WHERE e.elocDataCadastro = :elocDataCadastro"),
+    @NamedQuery(name = "ElocEmbarcadorLocal.findByElocCodigoGr", query = "SELECT e FROM ElocEmbarcadorLocal e WHERE e.elocCodigoGr = :elocCodigoGr"),
+    @NamedQuery(name = "ElocEmbarcadorLocal.findByElocImportado", query = "SELECT e FROM ElocEmbarcadorLocal e WHERE e.elocImportado = :elocImportado")})
 public class ElocEmbarcadorLocal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,13 +50,13 @@ public class ElocEmbarcadorLocal implements Serializable {
     @Column(name = "eloc_importado")
     private Character elocImportado;
     @JoinColumn(name = "eloc_tloc_codigo", referencedColumnName = "tloc_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TlocTipoLocal tlocTipoLocal;
     @JoinColumn(name = "eloc_refe_codigo", referencedColumnName = "refe_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private RefeReferencia refeReferencia;
     @JoinColumn(name = "eloc_emba_pjur_pess_oras_codigo", referencedColumnName = "emba_pjur_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EmbaEmbarcador embaEmbarcador;
 
     public ElocEmbarcadorLocal() {

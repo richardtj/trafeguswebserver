@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,9 +22,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "eter_estatus_terminal")
+@Table(name = "eter_estatus_terminal", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EterEstatusTerminal.findAll", query = "SELECT e FROM EterEstatusTerminal e")})
+    @NamedQuery(name = "EterEstatusTerminal.findAll", query = "SELECT e FROM EterEstatusTerminal e"),
+    @NamedQuery(name = "EterEstatusTerminal.findByEterCodigo", query = "SELECT e FROM EterEstatusTerminal e WHERE e.eterCodigo = :eterCodigo"),
+    @NamedQuery(name = "EterEstatusTerminal.findByEterDescricao", query = "SELECT e FROM EterEstatusTerminal e WHERE e.eterDescricao = :eterDescricao")})
 public class EterEstatusTerminal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,8 +35,8 @@ public class EterEstatusTerminal implements Serializable {
     private Integer eterCodigo;
     @Column(name = "eter_descricao", length = 50)
     private String eterDescricao;
-    @OneToMany(mappedBy = "eterEstatusTerminal")
-    private Collection<TermTerminal> termTerminalCollection;
+    @OneToMany(mappedBy = "eterEstatusTerminal", fetch = FetchType.EAGER)
+    private List<TermTerminal> termTerminalList;
 
     public EterEstatusTerminal() {
     }
@@ -58,12 +61,12 @@ public class EterEstatusTerminal implements Serializable {
         this.eterDescricao = eterDescricao;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection() {
-        return termTerminalCollection;
+    public List<TermTerminal> getTermTerminalList() {
+        return termTerminalList;
     }
 
-    public void setTermTerminalCollection(Collection<TermTerminal> termTerminalCollection) {
-        this.termTerminalCollection = termTerminalCollection;
+    public void setTermTerminalList(List<TermTerminal> termTerminalList) {
+        this.termTerminalList = termTerminalList;
     }
 
     @Override

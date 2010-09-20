@@ -19,9 +19,20 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "cfg_campo_framework")
+@Table(name = "cfg_campo_framework", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "CfgCampoFramework.findAll", query = "SELECT c FROM CfgCampoFramework c")})
+    @NamedQuery(name = "CfgCampoFramework.findAll", query = "SELECT c FROM CfgCampoFramework c"),
+    @NamedQuery(name = "CfgCampoFramework.findByCfcCampoFramework", query = "SELECT c FROM CfgCampoFramework c WHERE c.cfcCampoFramework = :cfcCampoFramework"),
+    @NamedQuery(name = "CfgCampoFramework.findByCtfTabelaFrameworkId", query = "SELECT c FROM CfgCampoFramework c WHERE c.ctfTabelaFrameworkId = :ctfTabelaFrameworkId"),
+    @NamedQuery(name = "CfgCampoFramework.findByCfcCampoDescricao", query = "SELECT c FROM CfgCampoFramework c WHERE c.cfcCampoDescricao = :cfcCampoDescricao"),
+    @NamedQuery(name = "CfgCampoFramework.findByCfcTamanho", query = "SELECT c FROM CfgCampoFramework c WHERE c.cfcTamanho = :cfcTamanho"),
+    @NamedQuery(name = "CfgCampoFramework.findByCfcTipo", query = "SELECT c FROM CfgCampoFramework c WHERE c.cfcTipo = :cfcTipo"),
+    @NamedQuery(name = "CfgCampoFramework.findByCfcNotnull", query = "SELECT c FROM CfgCampoFramework c WHERE c.cfcNotnull = :cfcNotnull"),
+    @NamedQuery(name = "CfgCampoFramework.findByCfcSequence", query = "SELECT c FROM CfgCampoFramework c WHERE c.cfcSequence = :cfcSequence"),
+    @NamedQuery(name = "CfgCampoFramework.findByCfcChavePrimaria", query = "SELECT c FROM CfgCampoFramework c WHERE c.cfcChavePrimaria = :cfcChavePrimaria"),
+    @NamedQuery(name = "CfgCampoFramework.findByCfcChaveEstrangeira", query = "SELECT c FROM CfgCampoFramework c WHERE c.cfcChaveEstrangeira = :cfcChaveEstrangeira"),
+    @NamedQuery(name = "CfgCampoFramework.findByCfcChaveEstTabela", query = "SELECT c FROM CfgCampoFramework c WHERE c.cfcChaveEstTabela = :cfcChaveEstTabela"),
+    @NamedQuery(name = "CfgCampoFramework.findByCfcCampoTela", query = "SELECT c FROM CfgCampoFramework c WHERE c.cfcCampoTela = :cfcCampoTela")})
 public class CfgCampoFramework implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

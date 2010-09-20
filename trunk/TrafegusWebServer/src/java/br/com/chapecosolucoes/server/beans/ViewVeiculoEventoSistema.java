@@ -20,9 +20,20 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_veiculo_evento_sistema")
+@Table(name = "view_veiculo_evento_sistema", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewVeiculoEventoSistema.findAll", query = "SELECT v FROM ViewVeiculoEventoSistema v")})
+    @NamedQuery(name = "ViewVeiculoEventoSistema.findAll", query = "SELECT v FROM ViewVeiculoEventoSistema v"),
+    @NamedQuery(name = "ViewVeiculoEventoSistema.findByIdentificador", query = "SELECT v FROM ViewVeiculoEventoSistema v WHERE v.identificador = :identificador"),
+    @NamedQuery(name = "ViewVeiculoEventoSistema.findByTermCodigo", query = "SELECT v FROM ViewVeiculoEventoSistema v WHERE v.termCodigo = :termCodigo"),
+    @NamedQuery(name = "ViewVeiculoEventoSistema.findByTermNumeroTerminal", query = "SELECT v FROM ViewVeiculoEventoSistema v WHERE v.termNumeroTerminal = :termNumeroTerminal"),
+    @NamedQuery(name = "ViewVeiculoEventoSistema.findByEspaCodigo", query = "SELECT v FROM ViewVeiculoEventoSistema v WHERE v.espaCodigo = :espaCodigo"),
+    @NamedQuery(name = "ViewVeiculoEventoSistema.findByEspaDescricao", query = "SELECT v FROM ViewVeiculoEventoSistema v WHERE v.espaDescricao = :espaDescricao"),
+    @NamedQuery(name = "ViewVeiculoEventoSistema.findByEsisCodigo", query = "SELECT v FROM ViewVeiculoEventoSistema v WHERE v.esisCodigo = :esisCodigo"),
+    @NamedQuery(name = "ViewVeiculoEventoSistema.findByEsisDescricao", query = "SELECT v FROM ViewVeiculoEventoSistema v WHERE v.esisDescricao = :esisDescricao"),
+    @NamedQuery(name = "ViewVeiculoEventoSistema.findByEsisDataInicio", query = "SELECT v FROM ViewVeiculoEventoSistema v WHERE v.esisDataInicio = :esisDataInicio"),
+    @NamedQuery(name = "ViewVeiculoEventoSistema.findByEsisValor", query = "SELECT v FROM ViewVeiculoEventoSistema v WHERE v.esisValor = :esisValor"),
+    @NamedQuery(name = "ViewVeiculoEventoSistema.findByErasCodigo", query = "SELECT v FROM ViewVeiculoEventoSistema v WHERE v.erasCodigo = :erasCodigo"),
+    @NamedQuery(name = "ViewVeiculoEventoSistema.findByEsisDataCadastro", query = "SELECT v FROM ViewVeiculoEventoSistema v WHERE v.esisDataCadastro = :esisDataCadastro")})
 public class ViewVeiculoEventoSistema implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "identificador", length = 2147483647)

@@ -18,9 +18,14 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_integ_cad_veiculo_v2")
+@Table(name = "view_integ_cad_veiculo_v2", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewIntegCadVeiculoV2.findAll", query = "SELECT v FROM ViewIntegCadVeiculoV2 v")})
+    @NamedQuery(name = "ViewIntegCadVeiculoV2.findAll", query = "SELECT v FROM ViewIntegCadVeiculoV2 v"),
+    @NamedQuery(name = "ViewIntegCadVeiculoV2.findByPackID", query = "SELECT v FROM ViewIntegCadVeiculoV2 v WHERE v.packID = :packID"),
+    @NamedQuery(name = "ViewIntegCadVeiculoV2.findByVehiclePlate", query = "SELECT v FROM ViewIntegCadVeiculoV2 v WHERE v.vehiclePlate = :vehiclePlate"),
+    @NamedQuery(name = "ViewIntegCadVeiculoV2.findBySerialNumber", query = "SELECT v FROM ViewIntegCadVeiculoV2 v WHERE v.serialNumber = :serialNumber"),
+    @NamedQuery(name = "ViewIntegCadVeiculoV2.findByCodEquipamento", query = "SELECT v FROM ViewIntegCadVeiculoV2 v WHERE v.codEquipamento = :codEquipamento"),
+    @NamedQuery(name = "ViewIntegCadVeiculoV2.findByAccount", query = "SELECT v FROM ViewIntegCadVeiculoV2 v WHERE v.account = :account")})
 public class ViewIntegCadVeiculoV2 implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "PackID")

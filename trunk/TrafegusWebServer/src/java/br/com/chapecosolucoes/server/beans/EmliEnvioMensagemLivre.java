@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -21,9 +22,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "emli_envio_mensagem_livre")
+@Table(name = "emli_envio_mensagem_livre", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EmliEnvioMensagemLivre.findAll", query = "SELECT e FROM EmliEnvioMensagemLivre e")})
+    @NamedQuery(name = "EmliEnvioMensagemLivre.findAll", query = "SELECT e FROM EmliEnvioMensagemLivre e"),
+    @NamedQuery(name = "EmliEnvioMensagemLivre.findByEmliEnviCodigo", query = "SELECT e FROM EmliEnvioMensagemLivre e WHERE e.emliEnviCodigo = :emliEnviCodigo"),
+    @NamedQuery(name = "EmliEnvioMensagemLivre.findByEmliTexto", query = "SELECT e FROM EmliEnvioMensagemLivre e WHERE e.emliTexto = :emliTexto")})
 public class EmliEnvioMensagemLivre implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,7 +36,7 @@ public class EmliEnvioMensagemLivre implements Serializable {
     @Column(name = "emli_texto", length = 1000)
     private String emliTexto;
     @JoinColumn(name = "emli_envi_codigo", referencedColumnName = "envi_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private EnviEnvio enviEnvio;
 
     public EmliEnvioMensagemLivre() {

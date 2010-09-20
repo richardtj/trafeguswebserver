@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,9 +26,15 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "cida_cidade")
+@Table(name = "cida_cidade", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "CidaCidade.findAll", query = "SELECT c FROM CidaCidade c")})
+    @NamedQuery(name = "CidaCidade.findAll", query = "SELECT c FROM CidaCidade c"),
+    @NamedQuery(name = "CidaCidade.findByCidaCodigo", query = "SELECT c FROM CidaCidade c WHERE c.cidaCodigo = :cidaCodigo"),
+    @NamedQuery(name = "CidaCidade.findByCidaDescricao", query = "SELECT c FROM CidaCidade c WHERE c.cidaDescricao = :cidaDescricao"),
+    @NamedQuery(name = "CidaCidade.findByCidaCepGenerico", query = "SELECT c FROM CidaCidade c WHERE c.cidaCepGenerico = :cidaCepGenerico"),
+    @NamedQuery(name = "CidaCidade.findByCidaDataCadastro", query = "SELECT c FROM CidaCidade c WHERE c.cidaDataCadastro = :cidaDataCadastro"),
+    @NamedQuery(name = "CidaCidade.findByCidaCodigoGr", query = "SELECT c FROM CidaCidade c WHERE c.cidaCodigoGr = :cidaCodigoGr"),
+    @NamedQuery(name = "CidaCidade.findByCidaImportado", query = "SELECT c FROM CidaCidade c WHERE c.cidaImportado = :cidaImportado")})
 public class CidaCidade implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,11 +56,7 @@ public class CidaCidade implements Serializable {
     @ManyToOne
     private EstaEstado estaEstado;
     @OneToMany(mappedBy = "cidaCidade")
-    private Collection<VeicVeiculo> veicVeiculoCollection;
-    @OneToMany(mappedBy = "cidaCidade")
-    private Collection<RefeReferencia> refeReferenciaCollection;
-    @OneToMany(mappedBy = "cidaCidade")
-    private Collection<BairBairro> bairBairroCollection;
+    private List<BairBairro> bairBairroList;
 
     public CidaCidade() {
     }
@@ -119,28 +121,12 @@ public class CidaCidade implements Serializable {
         this.estaEstado = estaEstado;
     }
 
-    public Collection<VeicVeiculo> getVeicVeiculoCollection() {
-        return veicVeiculoCollection;
+    public List<BairBairro> getBairBairroList() {
+        return bairBairroList;
     }
 
-    public void setVeicVeiculoCollection(Collection<VeicVeiculo> veicVeiculoCollection) {
-        this.veicVeiculoCollection = veicVeiculoCollection;
-    }
-
-    public Collection<RefeReferencia> getRefeReferenciaCollection() {
-        return refeReferenciaCollection;
-    }
-
-    public void setRefeReferenciaCollection(Collection<RefeReferencia> refeReferenciaCollection) {
-        this.refeReferenciaCollection = refeReferenciaCollection;
-    }
-
-    public Collection<BairBairro> getBairBairroCollection() {
-        return bairBairroCollection;
-    }
-
-    public void setBairBairroCollection(Collection<BairBairro> bairBairroCollection) {
-        this.bairBairroCollection = bairBairroCollection;
+    public void setBairBairroList(List<BairBairro> bairBairroList) {
+        this.bairBairroList = bairBairroList;
     }
 
     @Override

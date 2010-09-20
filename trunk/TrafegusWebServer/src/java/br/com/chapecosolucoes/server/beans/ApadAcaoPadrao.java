@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,9 +24,14 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "apad_acao_padrao")
+@Table(name = "apad_acao_padrao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ApadAcaoPadrao.findAll", query = "SELECT a FROM ApadAcaoPadrao a")})
+    @NamedQuery(name = "ApadAcaoPadrao.findAll", query = "SELECT a FROM ApadAcaoPadrao a"),
+    @NamedQuery(name = "ApadAcaoPadrao.findByApadCodigo", query = "SELECT a FROM ApadAcaoPadrao a WHERE a.apadCodigo = :apadCodigo"),
+    @NamedQuery(name = "ApadAcaoPadrao.findByApadDescricao", query = "SELECT a FROM ApadAcaoPadrao a WHERE a.apadDescricao = :apadDescricao"),
+    @NamedQuery(name = "ApadAcaoPadrao.findByApadCodigoGr", query = "SELECT a FROM ApadAcaoPadrao a WHERE a.apadCodigoGr = :apadCodigoGr"),
+    @NamedQuery(name = "ApadAcaoPadrao.findByApadTipoAcao", query = "SELECT a FROM ApadAcaoPadrao a WHERE a.apadTipoAcao = :apadTipoAcao"),
+    @NamedQuery(name = "ApadAcaoPadrao.findByApadTempoEspera", query = "SELECT a FROM ApadAcaoPadrao a WHERE a.apadTempoEspera = :apadTempoEspera")})
 public class ApadAcaoPadrao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,19 +46,19 @@ public class ApadAcaoPadrao implements Serializable {
     private String apadTipoAcao;
     @Column(name = "apad_tempo_espera")
     private Integer apadTempoEspera;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
     private AbolAcaoBolinha abolAcaoBolinha;
-    @OneToMany(mappedBy = "apadAcaoPadrao")
-    private Collection<PaiaPgAssociaItemAcao> paiaPgAssociaItemAcaoCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao")
+    @OneToMany(mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
+    private List<PaiaPgAssociaItemAcao> paiaPgAssociaItemAcaoList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
     private ApopAcaoPopup apopAcaoPopup;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
     private AmacAcaoMacro amacAcaoMacro;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
     private AlinAcaoLinha alinAcaoLinha;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
     private AbeeAcaoBeep abeeAcaoBeep;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
     private AcomAcaoComando acomAcaoComando;
 
     public ApadAcaoPadrao() {
@@ -110,12 +116,12 @@ public class ApadAcaoPadrao implements Serializable {
         this.abolAcaoBolinha = abolAcaoBolinha;
     }
 
-    public Collection<PaiaPgAssociaItemAcao> getPaiaPgAssociaItemAcaoCollection() {
-        return paiaPgAssociaItemAcaoCollection;
+    public List<PaiaPgAssociaItemAcao> getPaiaPgAssociaItemAcaoList() {
+        return paiaPgAssociaItemAcaoList;
     }
 
-    public void setPaiaPgAssociaItemAcaoCollection(Collection<PaiaPgAssociaItemAcao> paiaPgAssociaItemAcaoCollection) {
-        this.paiaPgAssociaItemAcaoCollection = paiaPgAssociaItemAcaoCollection;
+    public void setPaiaPgAssociaItemAcaoList(List<PaiaPgAssociaItemAcao> paiaPgAssociaItemAcaoList) {
+        this.paiaPgAssociaItemAcaoList = paiaPgAssociaItemAcaoList;
     }
 
     public ApopAcaoPopup getApopAcaoPopup() {

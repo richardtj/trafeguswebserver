@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -21,9 +22,14 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "apop_acao_popup")
+@Table(name = "apop_acao_popup", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ApopAcaoPopup.findAll", query = "SELECT a FROM ApopAcaoPopup a")})
+    @NamedQuery(name = "ApopAcaoPopup.findAll", query = "SELECT a FROM ApopAcaoPopup a"),
+    @NamedQuery(name = "ApopAcaoPopup.findByApopApadCodigo", query = "SELECT a FROM ApopAcaoPopup a WHERE a.apopApadCodigo = :apopApadCodigo"),
+    @NamedQuery(name = "ApopAcaoPopup.findByApopCor", query = "SELECT a FROM ApopAcaoPopup a WHERE a.apopCor = :apopCor"),
+    @NamedQuery(name = "ApopAcaoPopup.findByApopTitulo", query = "SELECT a FROM ApopAcaoPopup a WHERE a.apopTitulo = :apopTitulo"),
+    @NamedQuery(name = "ApopAcaoPopup.findByApopAltura", query = "SELECT a FROM ApopAcaoPopup a WHERE a.apopAltura = :apopAltura"),
+    @NamedQuery(name = "ApopAcaoPopup.findByApopLargura", query = "SELECT a FROM ApopAcaoPopup a WHERE a.apopLargura = :apopLargura")})
 public class ApopAcaoPopup implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,7 +45,7 @@ public class ApopAcaoPopup implements Serializable {
     @Column(name = "apop_largura")
     private Integer apopLargura;
     @JoinColumn(name = "apop_apad_codigo", referencedColumnName = "apad_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public ApopAcaoPopup() {

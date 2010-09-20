@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,9 +22,12 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "evca_estatus_veiculo_carga")
+@Table(name = "evca_estatus_veiculo_carga", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EvcaEstatusVeiculoCarga.findAll", query = "SELECT e FROM EvcaEstatusVeiculoCarga e")})
+    @NamedQuery(name = "EvcaEstatusVeiculoCarga.findAll", query = "SELECT e FROM EvcaEstatusVeiculoCarga e"),
+    @NamedQuery(name = "EvcaEstatusVeiculoCarga.findByEvcaCodigo", query = "SELECT e FROM EvcaEstatusVeiculoCarga e WHERE e.evcaCodigo = :evcaCodigo"),
+    @NamedQuery(name = "EvcaEstatusVeiculoCarga.findByEvcaDescricao", query = "SELECT e FROM EvcaEstatusVeiculoCarga e WHERE e.evcaDescricao = :evcaDescricao"),
+    @NamedQuery(name = "EvcaEstatusVeiculoCarga.findByEvcaCodigoGr", query = "SELECT e FROM EvcaEstatusVeiculoCarga e WHERE e.evcaCodigoGr = :evcaCodigoGr")})
 public class EvcaEstatusVeiculoCarga implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -34,14 +38,14 @@ public class EvcaEstatusVeiculoCarga implements Serializable {
     private String evcaDescricao;
     @Column(name = "evca_codigo_gr")
     private Integer evcaCodigoGr;
-    @OneToMany(mappedBy = "evcaEstatusVeiculoCarga")
-    private Collection<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaCollection;
-    @OneToMany(mappedBy = "evcaEstatusVeiculoCarga")
-    private Collection<VcarVeiculoCarreta> vcarVeiculoCarretaCollection;
-    @OneToMany(mappedBy = "evcaEstatusVeiculoCarga")
-    private Collection<VtruVeiculoTruck> vtruVeiculoTruckCollection;
-    @OneToMany(mappedBy = "evcaEstatusVeiculoCarga")
-    private Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection;
+    @OneToMany(mappedBy = "evcaEstatusVeiculoCarga", fetch = FetchType.EAGER)
+    private List<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaList;
+    @OneToMany(mappedBy = "evcaEstatusVeiculoCarga", fetch = FetchType.EAGER)
+    private List<VcarVeiculoCarreta> vcarVeiculoCarretaList;
+    @OneToMany(mappedBy = "evcaEstatusVeiculoCarga", fetch = FetchType.EAGER)
+    private List<VtruVeiculoTruck> vtruVeiculoTruckList;
+    @OneToMany(mappedBy = "evcaEstatusVeiculoCarga", fetch = FetchType.EAGER)
+    private List<VveiViagemVeiculo> vveiViagemVeiculoList;
 
     public EvcaEstatusVeiculoCarga() {
     }
@@ -74,36 +78,36 @@ public class EvcaEstatusVeiculoCarga implements Serializable {
         this.evcaCodigoGr = evcaCodigoGr;
     }
 
-    public Collection<VucaVeiculoUtilitarioCarga> getVucaVeiculoUtilitarioCargaCollection() {
-        return vucaVeiculoUtilitarioCargaCollection;
+    public List<VucaVeiculoUtilitarioCarga> getVucaVeiculoUtilitarioCargaList() {
+        return vucaVeiculoUtilitarioCargaList;
     }
 
-    public void setVucaVeiculoUtilitarioCargaCollection(Collection<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaCollection) {
-        this.vucaVeiculoUtilitarioCargaCollection = vucaVeiculoUtilitarioCargaCollection;
+    public void setVucaVeiculoUtilitarioCargaList(List<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaList) {
+        this.vucaVeiculoUtilitarioCargaList = vucaVeiculoUtilitarioCargaList;
     }
 
-    public Collection<VcarVeiculoCarreta> getVcarVeiculoCarretaCollection() {
-        return vcarVeiculoCarretaCollection;
+    public List<VcarVeiculoCarreta> getVcarVeiculoCarretaList() {
+        return vcarVeiculoCarretaList;
     }
 
-    public void setVcarVeiculoCarretaCollection(Collection<VcarVeiculoCarreta> vcarVeiculoCarretaCollection) {
-        this.vcarVeiculoCarretaCollection = vcarVeiculoCarretaCollection;
+    public void setVcarVeiculoCarretaList(List<VcarVeiculoCarreta> vcarVeiculoCarretaList) {
+        this.vcarVeiculoCarretaList = vcarVeiculoCarretaList;
     }
 
-    public Collection<VtruVeiculoTruck> getVtruVeiculoTruckCollection() {
-        return vtruVeiculoTruckCollection;
+    public List<VtruVeiculoTruck> getVtruVeiculoTruckList() {
+        return vtruVeiculoTruckList;
     }
 
-    public void setVtruVeiculoTruckCollection(Collection<VtruVeiculoTruck> vtruVeiculoTruckCollection) {
-        this.vtruVeiculoTruckCollection = vtruVeiculoTruckCollection;
+    public void setVtruVeiculoTruckList(List<VtruVeiculoTruck> vtruVeiculoTruckList) {
+        this.vtruVeiculoTruckList = vtruVeiculoTruckList;
     }
 
-    public Collection<VveiViagemVeiculo> getVveiViagemVeiculoCollection() {
-        return vveiViagemVeiculoCollection;
+    public List<VveiViagemVeiculo> getVveiViagemVeiculoList() {
+        return vveiViagemVeiculoList;
     }
 
-    public void setVveiViagemVeiculoCollection(Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection) {
-        this.vveiViagemVeiculoCollection = vveiViagemVeiculoCollection;
+    public void setVveiViagemVeiculoList(List<VveiViagemVeiculo> vveiViagemVeiculoList) {
+        this.vveiViagemVeiculoList = vveiViagemVeiculoList;
     }
 
     @Override

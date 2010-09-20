@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,9 +27,16 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "eras_estacao_rastreamento")
+@Table(name = "eras_estacao_rastreamento", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ErasEstacaoRastreamento.findAll", query = "SELECT e FROM ErasEstacaoRastreamento e")})
+    @NamedQuery(name = "ErasEstacaoRastreamento.findAll", query = "SELECT e FROM ErasEstacaoRastreamento e"),
+    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasCodigo", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasCodigo = :erasCodigo"),
+    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasDescricao", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasDescricao = :erasDescricao"),
+    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasMaximoObjetoRastreado", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasMaximoObjetoRastreado = :erasMaximoObjetoRastreado"),
+    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasDataCadastro", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasDataCadastro = :erasDataCadastro"),
+    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasCodigoGr", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasCodigoGr = :erasCodigoGr"),
+    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasImportado", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasImportado = :erasImportado"),
+    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasLayoutMonitor", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasLayoutMonitor = :erasLayoutMonitor")})
 public class ErasEstacaoRastreamento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,28 +56,28 @@ public class ErasEstacaoRastreamento implements Serializable {
     private Character erasImportado;
     @Column(name = "eras_layout_monitor", length = 50000)
     private String erasLayoutMonitor;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<ContContainer> contContainerCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<VmotVeiculoMoto> vmotVeiculoMotoCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<VcavVeiculoCavalo> vcavVeiculoCavaloCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<VtruVeiculoTruck> vtruVeiculoTruckCollection;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaList;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<ContContainer> contContainerList;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<VmotVeiculoMoto> vmotVeiculoMotoList;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<VcavVeiculoCavalo> vcavVeiculoCavaloList;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuList;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<VtruVeiculoTruck> vtruVeiculoTruckList;
     @JoinColumn(name = "eras_sras_codigo", referencedColumnName = "sras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private SrasSeparacaoRastreamento srasSeparacaoRastreamento;
     @JoinColumn(name = "eras_gris_pjur_pess_oras_codigo", referencedColumnName = "gris_pjur_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private GrisGerenciadoraRisco grisGerenciadoraRisco;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<MaloMalote> maloMaloteCollection;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseList;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<MaloMalote> maloMaloteList;
 
     public ErasEstacaoRastreamento() {
     }
@@ -134,52 +142,52 @@ public class ErasEstacaoRastreamento implements Serializable {
         this.erasLayoutMonitor = erasLayoutMonitor;
     }
 
-    public Collection<VucaVeiculoUtilitarioCarga> getVucaVeiculoUtilitarioCargaCollection() {
-        return vucaVeiculoUtilitarioCargaCollection;
+    public List<VucaVeiculoUtilitarioCarga> getVucaVeiculoUtilitarioCargaList() {
+        return vucaVeiculoUtilitarioCargaList;
     }
 
-    public void setVucaVeiculoUtilitarioCargaCollection(Collection<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaCollection) {
-        this.vucaVeiculoUtilitarioCargaCollection = vucaVeiculoUtilitarioCargaCollection;
+    public void setVucaVeiculoUtilitarioCargaList(List<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaList) {
+        this.vucaVeiculoUtilitarioCargaList = vucaVeiculoUtilitarioCargaList;
     }
 
-    public Collection<ContContainer> getContContainerCollection() {
-        return contContainerCollection;
+    public List<ContContainer> getContContainerList() {
+        return contContainerList;
     }
 
-    public void setContContainerCollection(Collection<ContContainer> contContainerCollection) {
-        this.contContainerCollection = contContainerCollection;
+    public void setContContainerList(List<ContContainer> contContainerList) {
+        this.contContainerList = contContainerList;
     }
 
-    public Collection<VmotVeiculoMoto> getVmotVeiculoMotoCollection() {
-        return vmotVeiculoMotoCollection;
+    public List<VmotVeiculoMoto> getVmotVeiculoMotoList() {
+        return vmotVeiculoMotoList;
     }
 
-    public void setVmotVeiculoMotoCollection(Collection<VmotVeiculoMoto> vmotVeiculoMotoCollection) {
-        this.vmotVeiculoMotoCollection = vmotVeiculoMotoCollection;
+    public void setVmotVeiculoMotoList(List<VmotVeiculoMoto> vmotVeiculoMotoList) {
+        this.vmotVeiculoMotoList = vmotVeiculoMotoList;
     }
 
-    public Collection<VcavVeiculoCavalo> getVcavVeiculoCavaloCollection() {
-        return vcavVeiculoCavaloCollection;
+    public List<VcavVeiculoCavalo> getVcavVeiculoCavaloList() {
+        return vcavVeiculoCavaloList;
     }
 
-    public void setVcavVeiculoCavaloCollection(Collection<VcavVeiculoCavalo> vcavVeiculoCavaloCollection) {
-        this.vcavVeiculoCavaloCollection = vcavVeiculoCavaloCollection;
+    public void setVcavVeiculoCavaloList(List<VcavVeiculoCavalo> vcavVeiculoCavaloList) {
+        this.vcavVeiculoCavaloList = vcavVeiculoCavaloList;
     }
 
-    public Collection<ErusEstacaoRastreamentoUsu> getErusEstacaoRastreamentoUsuCollection() {
-        return erusEstacaoRastreamentoUsuCollection;
+    public List<ErusEstacaoRastreamentoUsu> getErusEstacaoRastreamentoUsuList() {
+        return erusEstacaoRastreamentoUsuList;
     }
 
-    public void setErusEstacaoRastreamentoUsuCollection(Collection<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuCollection) {
-        this.erusEstacaoRastreamentoUsuCollection = erusEstacaoRastreamentoUsuCollection;
+    public void setErusEstacaoRastreamentoUsuList(List<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuList) {
+        this.erusEstacaoRastreamentoUsuList = erusEstacaoRastreamentoUsuList;
     }
 
-    public Collection<VtruVeiculoTruck> getVtruVeiculoTruckCollection() {
-        return vtruVeiculoTruckCollection;
+    public List<VtruVeiculoTruck> getVtruVeiculoTruckList() {
+        return vtruVeiculoTruckList;
     }
 
-    public void setVtruVeiculoTruckCollection(Collection<VtruVeiculoTruck> vtruVeiculoTruckCollection) {
-        this.vtruVeiculoTruckCollection = vtruVeiculoTruckCollection;
+    public void setVtruVeiculoTruckList(List<VtruVeiculoTruck> vtruVeiculoTruckList) {
+        this.vtruVeiculoTruckList = vtruVeiculoTruckList;
     }
 
     public SrasSeparacaoRastreamento getSrasSeparacaoRastreamento() {
@@ -198,20 +206,20 @@ public class ErasEstacaoRastreamento implements Serializable {
         this.grisGerenciadoraRisco = grisGerenciadoraRisco;
     }
 
-    public Collection<VupaVeiculoUtilitarioPasse> getVupaVeiculoUtilitarioPasseCollection() {
-        return vupaVeiculoUtilitarioPasseCollection;
+    public List<VupaVeiculoUtilitarioPasse> getVupaVeiculoUtilitarioPasseList() {
+        return vupaVeiculoUtilitarioPasseList;
     }
 
-    public void setVupaVeiculoUtilitarioPasseCollection(Collection<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseCollection) {
-        this.vupaVeiculoUtilitarioPasseCollection = vupaVeiculoUtilitarioPasseCollection;
+    public void setVupaVeiculoUtilitarioPasseList(List<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseList) {
+        this.vupaVeiculoUtilitarioPasseList = vupaVeiculoUtilitarioPasseList;
     }
 
-    public Collection<MaloMalote> getMaloMaloteCollection() {
-        return maloMaloteCollection;
+    public List<MaloMalote> getMaloMaloteList() {
+        return maloMaloteList;
     }
 
-    public void setMaloMaloteCollection(Collection<MaloMalote> maloMaloteCollection) {
-        this.maloMaloteCollection = maloMaloteCollection;
+    public void setMaloMaloteList(List<MaloMalote> maloMaloteList) {
+        this.maloMaloteList = maloMaloteList;
     }
 
     @Override

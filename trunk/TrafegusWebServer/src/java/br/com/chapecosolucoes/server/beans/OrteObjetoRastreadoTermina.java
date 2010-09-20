@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,10 +27,15 @@ import javax.persistence.UniqueConstraint;
  * @author Emerson
  */
 @Entity
-@Table(name = "orte_objeto_rastreado_termina", uniqueConstraints = {
+@Table(name = "orte_objeto_rastreado_termina", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"orte_term_codigo"})})
 @NamedQueries({
-    @NamedQuery(name = "OrteObjetoRastreadoTermina.findAll", query = "SELECT o FROM OrteObjetoRastreadoTermina o")})
+    @NamedQuery(name = "OrteObjetoRastreadoTermina.findAll", query = "SELECT o FROM OrteObjetoRastreadoTermina o"),
+    @NamedQuery(name = "OrteObjetoRastreadoTermina.findByOrteCodigo", query = "SELECT o FROM OrteObjetoRastreadoTermina o WHERE o.orteCodigo = :orteCodigo"),
+    @NamedQuery(name = "OrteObjetoRastreadoTermina.findByOrteSequencia", query = "SELECT o FROM OrteObjetoRastreadoTermina o WHERE o.orteSequencia = :orteSequencia"),
+    @NamedQuery(name = "OrteObjetoRastreadoTermina.findByOrteDataCadastro", query = "SELECT o FROM OrteObjetoRastreadoTermina o WHERE o.orteDataCadastro = :orteDataCadastro"),
+    @NamedQuery(name = "OrteObjetoRastreadoTermina.findByOrteCodigoGr", query = "SELECT o FROM OrteObjetoRastreadoTermina o WHERE o.orteCodigoGr = :orteCodigoGr"),
+    @NamedQuery(name = "OrteObjetoRastreadoTermina.findByOrteImportado", query = "SELECT o FROM OrteObjetoRastreadoTermina o WHERE o.orteImportado = :orteImportado")})
 public class OrteObjetoRastreadoTermina implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,10 +52,10 @@ public class OrteObjetoRastreadoTermina implements Serializable {
     @Column(name = "orte_importado")
     private Character orteImportado;
     @JoinColumn(name = "orte_term_codigo", referencedColumnName = "term_codigo")
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private TermTerminal termTerminal;
     @JoinColumn(name = "orte_oras_codigo", referencedColumnName = "oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
 
     public OrteObjetoRastreadoTermina() {

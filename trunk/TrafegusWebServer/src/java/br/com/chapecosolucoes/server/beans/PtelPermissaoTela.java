@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,9 +27,19 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "ptel_permissao_tela")
+@Table(name = "ptel_permissao_tela", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PtelPermissaoTela.findAll", query = "SELECT p FROM PtelPermissaoTela p")})
+    @NamedQuery(name = "PtelPermissaoTela.findAll", query = "SELECT p FROM PtelPermissaoTela p"),
+    @NamedQuery(name = "PtelPermissaoTela.findByPtelCodigo", query = "SELECT p FROM PtelPermissaoTela p WHERE p.ptelCodigo = :ptelCodigo"),
+    @NamedQuery(name = "PtelPermissaoTela.findByPtelIdObjeto", query = "SELECT p FROM PtelPermissaoTela p WHERE p.ptelIdObjeto = :ptelIdObjeto"),
+    @NamedQuery(name = "PtelPermissaoTela.findByPtelPermitirAlterar", query = "SELECT p FROM PtelPermissaoTela p WHERE p.ptelPermitirAlterar = :ptelPermitirAlterar"),
+    @NamedQuery(name = "PtelPermissaoTela.findByPtelPermitirInserir", query = "SELECT p FROM PtelPermissaoTela p WHERE p.ptelPermitirInserir = :ptelPermitirInserir"),
+    @NamedQuery(name = "PtelPermissaoTela.findByPtelPermitirExcluir", query = "SELECT p FROM PtelPermissaoTela p WHERE p.ptelPermitirExcluir = :ptelPermitirExcluir"),
+    @NamedQuery(name = "PtelPermissaoTela.findByPtelPermitirVisualizar", query = "SELECT p FROM PtelPermissaoTela p WHERE p.ptelPermitirVisualizar = :ptelPermitirVisualizar"),
+    @NamedQuery(name = "PtelPermissaoTela.findByPtelPermitirImprimir", query = "SELECT p FROM PtelPermissaoTela p WHERE p.ptelPermitirImprimir = :ptelPermitirImprimir"),
+    @NamedQuery(name = "PtelPermissaoTela.findByPtelDataCadastro", query = "SELECT p FROM PtelPermissaoTela p WHERE p.ptelDataCadastro = :ptelDataCadastro"),
+    @NamedQuery(name = "PtelPermissaoTela.findByPtelCodigoGr", query = "SELECT p FROM PtelPermissaoTela p WHERE p.ptelCodigoGr = :ptelCodigoGr"),
+    @NamedQuery(name = "PtelPermissaoTela.findByPtelImportado", query = "SELECT p FROM PtelPermissaoTela p WHERE p.ptelImportado = :ptelImportado")})
 public class PtelPermissaoTela implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,10 +66,10 @@ public class PtelPermissaoTela implements Serializable {
     @Column(name = "ptel_importado")
     private Character ptelImportado;
     @JoinColumn(name = "ptel_perf_codigo", referencedColumnName = "perf_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PerfPerfil perfPerfil;
-    @OneToMany(mappedBy = "ptelPermissaoTela")
-    private Collection<PcamPermissaoCampo> pcamPermissaoCampoCollection;
+    @OneToMany(mappedBy = "ptelPermissaoTela", fetch = FetchType.EAGER)
+    private List<PcamPermissaoCampo> pcamPermissaoCampoList;
 
     public PtelPermissaoTela() {
     }
@@ -155,12 +166,12 @@ public class PtelPermissaoTela implements Serializable {
         this.perfPerfil = perfPerfil;
     }
 
-    public Collection<PcamPermissaoCampo> getPcamPermissaoCampoCollection() {
-        return pcamPermissaoCampoCollection;
+    public List<PcamPermissaoCampo> getPcamPermissaoCampoList() {
+        return pcamPermissaoCampoList;
     }
 
-    public void setPcamPermissaoCampoCollection(Collection<PcamPermissaoCampo> pcamPermissaoCampoCollection) {
-        this.pcamPermissaoCampoCollection = pcamPermissaoCampoCollection;
+    public void setPcamPermissaoCampoList(List<PcamPermissaoCampo> pcamPermissaoCampoList) {
+        this.pcamPermissaoCampoList = pcamPermissaoCampoList;
     }
 
     @Override

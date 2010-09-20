@@ -25,9 +25,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "pfis_pessoa_fisica")
+@Table(name = "pfis_pessoa_fisica", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PfisPessoaFisica.findAll", query = "SELECT p FROM PfisPessoaFisica p")})
+    @NamedQuery(name = "PfisPessoaFisica.findAll", query = "SELECT p FROM PfisPessoaFisica p"),
+    @NamedQuery(name = "PfisPessoaFisica.findByPfisPessOrasCodigo", query = "SELECT p FROM PfisPessoaFisica p WHERE p.pfisPessOrasCodigo = :pfisPessOrasCodigo"),
+    @NamedQuery(name = "PfisPessoaFisica.findByPfisRg", query = "SELECT p FROM PfisPessoaFisica p WHERE p.pfisRg = :pfisRg"),
+    @NamedQuery(name = "PfisPessoaFisica.findByPfisCpf", query = "SELECT p FROM PfisPessoaFisica p WHERE p.pfisCpf = :pfisCpf"),
+    @NamedQuery(name = "PfisPessoaFisica.findByPfisDataNascimento", query = "SELECT p FROM PfisPessoaFisica p WHERE p.pfisDataNascimento = :pfisDataNascimento"),
+    @NamedQuery(name = "PfisPessoaFisica.findByPfisSexo", query = "SELECT p FROM PfisPessoaFisica p WHERE p.pfisSexo = :pfisSexo")})
 public class PfisPessoaFisica implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,13 +48,11 @@ public class PfisPessoaFisica implements Serializable {
     private Date pfisDataNascimento;
     @Column(name = "pfis_sexo", length = 10)
     private String pfisSexo;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pfisPessoaFisica")
+    private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "pfis_pess_oras_codigo", referencedColumnName = "pess_oras_codigo", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private PessPessoa pessPessoa;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pfisPessoaFisica")
-    private UsuaUsuario usuaUsuario;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pfisPessoaFisica")
-    private MotoMotorista motoMotorista;
 
     public PfisPessoaFisica() {
     }
@@ -98,14 +101,6 @@ public class PfisPessoaFisica implements Serializable {
         this.pfisSexo = pfisSexo;
     }
 
-    public PessPessoa getPessPessoa() {
-        return pessPessoa;
-    }
-
-    public void setPessPessoa(PessPessoa pessPessoa) {
-        this.pessPessoa = pessPessoa;
-    }
-
     public UsuaUsuario getUsuaUsuario() {
         return usuaUsuario;
     }
@@ -114,12 +109,12 @@ public class PfisPessoaFisica implements Serializable {
         this.usuaUsuario = usuaUsuario;
     }
 
-    public MotoMotorista getMotoMotorista() {
-        return motoMotorista;
+    public PessPessoa getPessPessoa() {
+        return pessPessoa;
     }
 
-    public void setMotoMotorista(MotoMotorista motoMotorista) {
-        this.motoMotorista = motoMotorista;
+    public void setPessPessoa(PessPessoa pessPessoa) {
+        this.pessPessoa = pessPessoa;
     }
 
     @Override

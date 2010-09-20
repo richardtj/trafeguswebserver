@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,9 +25,10 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "tran_transportador")
+@Table(name = "tran_transportador", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TranTransportador.findAll", query = "SELECT t FROM TranTransportador t")})
+    @NamedQuery(name = "TranTransportador.findAll", query = "SELECT t FROM TranTransportador t"),
+    @NamedQuery(name = "TranTransportador.findByTranPessOrasCodigo", query = "SELECT t FROM TranTransportador t WHERE t.tranPessOrasCodigo = :tranPessOrasCodigo")})
 public class TranTransportador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,19 +36,7 @@ public class TranTransportador implements Serializable {
     @Column(name = "tran_pess_oras_codigo", nullable = false)
     private Integer tranPessOrasCodigo;
     @OneToMany(mappedBy = "tranTransportador")
-    private Collection<TlocTransportadorLocal> tlocTransportadorLocalCollection;
-    @OneToMany(mappedBy = "tranTransportador")
-    private Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection;
-    @OneToMany(mappedBy = "tranTransportador")
-    private Collection<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tranTransportador")
-    private Collection<ViagViagem> viagViagemCollection;
-    @OneToMany(mappedBy = "tranTransportador")
-    private Collection<MtraMotoristaTransportador> mtraMotoristaTransportadorCollection;
-    @OneToMany(mappedBy = "tranTransportador")
-    private Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection;
-    @OneToMany(mappedBy = "tranTransportador")
-    private Collection<TranTransportador> tranTransportadorCollection;
+    private List<TranTransportador> tranTransportadorList;
     @JoinColumn(name = "tran_pess_oras_codigo_matriz", referencedColumnName = "tran_pess_oras_codigo")
     @ManyToOne
     private TranTransportador tranTransportador;
@@ -57,6 +46,8 @@ public class TranTransportador implements Serializable {
     @JoinColumn(name = "tran_pess_oras_codigo", referencedColumnName = "pess_oras_codigo", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private PessPessoa pessPessoa;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tranTransportador")
+    private List<ViagViagem> viagViagemList;
 
     public TranTransportador() {
     }
@@ -73,60 +64,12 @@ public class TranTransportador implements Serializable {
         this.tranPessOrasCodigo = tranPessOrasCodigo;
     }
 
-    public Collection<TlocTransportadorLocal> getTlocTransportadorLocalCollection() {
-        return tlocTransportadorLocalCollection;
+    public List<TranTransportador> getTranTransportadorList() {
+        return tranTransportadorList;
     }
 
-    public void setTlocTransportadorLocalCollection(Collection<TlocTransportadorLocal> tlocTransportadorLocalCollection) {
-        this.tlocTransportadorLocalCollection = tlocTransportadorLocalCollection;
-    }
-
-    public Collection<TembTransportadorEmbarcador> getTembTransportadorEmbarcadorCollection() {
-        return tembTransportadorEmbarcadorCollection;
-    }
-
-    public void setTembTransportadorEmbarcadorCollection(Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection) {
-        this.tembTransportadorEmbarcadorCollection = tembTransportadorEmbarcadorCollection;
-    }
-
-    public Collection<TspgTranspSegurPlanoGeren> getTspgTranspSegurPlanoGerenCollection() {
-        return tspgTranspSegurPlanoGerenCollection;
-    }
-
-    public void setTspgTranspSegurPlanoGerenCollection(Collection<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenCollection) {
-        this.tspgTranspSegurPlanoGerenCollection = tspgTranspSegurPlanoGerenCollection;
-    }
-
-    public Collection<ViagViagem> getViagViagemCollection() {
-        return viagViagemCollection;
-    }
-
-    public void setViagViagemCollection(Collection<ViagViagem> viagViagemCollection) {
-        this.viagViagemCollection = viagViagemCollection;
-    }
-
-    public Collection<MtraMotoristaTransportador> getMtraMotoristaTransportadorCollection() {
-        return mtraMotoristaTransportadorCollection;
-    }
-
-    public void setMtraMotoristaTransportadorCollection(Collection<MtraMotoristaTransportador> mtraMotoristaTransportadorCollection) {
-        this.mtraMotoristaTransportadorCollection = mtraMotoristaTransportadorCollection;
-    }
-
-    public Collection<VtraVeiculoTransportador> getVtraVeiculoTransportadorCollection() {
-        return vtraVeiculoTransportadorCollection;
-    }
-
-    public void setVtraVeiculoTransportadorCollection(Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection) {
-        this.vtraVeiculoTransportadorCollection = vtraVeiculoTransportadorCollection;
-    }
-
-    public Collection<TranTransportador> getTranTransportadorCollection() {
-        return tranTransportadorCollection;
-    }
-
-    public void setTranTransportadorCollection(Collection<TranTransportador> tranTransportadorCollection) {
-        this.tranTransportadorCollection = tranTransportadorCollection;
+    public void setTranTransportadorList(List<TranTransportador> tranTransportadorList) {
+        this.tranTransportadorList = tranTransportadorList;
     }
 
     public TranTransportador getTranTransportador() {
@@ -151,6 +94,14 @@ public class TranTransportador implements Serializable {
 
     public void setPessPessoa(PessPessoa pessPessoa) {
         this.pessPessoa = pessPessoa;
+    }
+
+    public List<ViagViagem> getViagViagemList() {
+        return viagViagemList;
+    }
+
+    public void setViagViagemList(List<ViagViagem> viagViagemList) {
+        this.viagViagemList = viagViagemList;
     }
 
     @Override

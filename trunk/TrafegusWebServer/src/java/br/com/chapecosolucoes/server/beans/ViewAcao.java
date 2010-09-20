@@ -17,9 +17,27 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_acao")
+@Table(name = "view_acao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewAcao.findAll", query = "SELECT v FROM ViewAcao v")})
+    @NamedQuery(name = "ViewAcao.findAll", query = "SELECT v FROM ViewAcao v"),
+    @NamedQuery(name = "ViewAcao.findByApadCodigo", query = "SELECT v FROM ViewAcao v WHERE v.apadCodigo = :apadCodigo"),
+    @NamedQuery(name = "ViewAcao.findByApadDescricao", query = "SELECT v FROM ViewAcao v WHERE v.apadDescricao = :apadDescricao"),
+    @NamedQuery(name = "ViewAcao.findByApadCodigoGr", query = "SELECT v FROM ViewAcao v WHERE v.apadCodigoGr = :apadCodigoGr"),
+    @NamedQuery(name = "ViewAcao.findByApadTipoAcao", query = "SELECT v FROM ViewAcao v WHERE v.apadTipoAcao = :apadTipoAcao"),
+    @NamedQuery(name = "ViewAcao.findByAbolCor", query = "SELECT v FROM ViewAcao v WHERE v.abolCor = :abolCor"),
+    @NamedQuery(name = "ViewAcao.findByApopAltura", query = "SELECT v FROM ViewAcao v WHERE v.apopAltura = :apopAltura"),
+    @NamedQuery(name = "ViewAcao.findByApopCor", query = "SELECT v FROM ViewAcao v WHERE v.apopCor = :apopCor"),
+    @NamedQuery(name = "ViewAcao.findByApopLargura", query = "SELECT v FROM ViewAcao v WHERE v.apopLargura = :apopLargura"),
+    @NamedQuery(name = "ViewAcao.findByApopTitulo", query = "SELECT v FROM ViewAcao v WHERE v.apopTitulo = :apopTitulo"),
+    @NamedQuery(name = "ViewAcao.findByAbbeFrequencia", query = "SELECT v FROM ViewAcao v WHERE v.abbeFrequencia = :abbeFrequencia"),
+    @NamedQuery(name = "ViewAcao.findByAbeeTempoBeep", query = "SELECT v FROM ViewAcao v WHERE v.abeeTempoBeep = :abeeTempoBeep"),
+    @NamedQuery(name = "ViewAcao.findByAbeeTempoEsperando", query = "SELECT v FROM ViewAcao v WHERE v.abeeTempoEsperando = :abeeTempoEsperando"),
+    @NamedQuery(name = "ViewAcao.findByAlinCorFundo", query = "SELECT v FROM ViewAcao v WHERE v.alinCorFundo = :alinCorFundo"),
+    @NamedQuery(name = "ViewAcao.findByAmacMpadCodigo", query = "SELECT v FROM ViewAcao v WHERE v.amacMpadCodigo = :amacMpadCodigo"),
+    @NamedQuery(name = "ViewAcao.findByAcomCpadCodigo", query = "SELECT v FROM ViewAcao v WHERE v.acomCpadCodigo = :acomCpadCodigo"),
+    @NamedQuery(name = "ViewAcao.findByMpadNumero", query = "SELECT v FROM ViewAcao v WHERE v.mpadNumero = :mpadNumero"),
+    @NamedQuery(name = "ViewAcao.findByMpadDescricao", query = "SELECT v FROM ViewAcao v WHERE v.mpadDescricao = :mpadDescricao"),
+    @NamedQuery(name = "ViewAcao.findByMpadMascara", query = "SELECT v FROM ViewAcao v WHERE v.mpadMascara = :mpadMascara")})
 public class ViewAcao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "apad_codigo")

@@ -21,9 +21,16 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "acesso_view")
+@Table(name = "acesso_view", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "AcessoView.findAll", query = "SELECT a FROM AcessoView a")})
+    @NamedQuery(name = "AcessoView.findAll", query = "SELECT a FROM AcessoView a"),
+    @NamedQuery(name = "AcessoView.findByProcesso", query = "SELECT a FROM AcessoView a WHERE a.processo = :processo"),
+    @NamedQuery(name = "AcessoView.findByBanco", query = "SELECT a FROM AcessoView a WHERE a.banco = :banco"),
+    @NamedQuery(name = "AcessoView.findByTabela", query = "SELECT a FROM AcessoView a WHERE a.tabela = :tabela"),
+    @NamedQuery(name = "AcessoView.findByModo", query = "SELECT a FROM AcessoView a WHERE a.modo = :modo"),
+    @NamedQuery(name = "AcessoView.findByStatus", query = "SELECT a FROM AcessoView a WHERE a.status = :status"),
+    @NamedQuery(name = "AcessoView.findByCurrentQuery", query = "SELECT a FROM AcessoView a WHERE a.currentQuery = :currentQuery"),
+    @NamedQuery(name = "AcessoView.findByInicio", query = "SELECT a FROM AcessoView a WHERE a.inicio = :inicio")})
 public class AcessoView implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "processo")

@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,9 +21,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "tpar_tipo_parada")
+@Table(name = "tpar_tipo_parada", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TparTipoParada.findAll", query = "SELECT t FROM TparTipoParada t")})
+    @NamedQuery(name = "TparTipoParada.findAll", query = "SELECT t FROM TparTipoParada t"),
+    @NamedQuery(name = "TparTipoParada.findByTparCodigo", query = "SELECT t FROM TparTipoParada t WHERE t.tparCodigo = :tparCodigo"),
+    @NamedQuery(name = "TparTipoParada.findByTparDescricao", query = "SELECT t FROM TparTipoParada t WHERE t.tparDescricao = :tparDescricao")})
 public class TparTipoParada implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,9 +35,7 @@ public class TparTipoParada implements Serializable {
     @Column(name = "tpar_descricao", length = 50)
     private String tparDescricao;
     @OneToMany(mappedBy = "tparTipoParada")
-    private Collection<RponRotaPonto> rponRotaPontoCollection;
-    @OneToMany(mappedBy = "tparTipoParada")
-    private Collection<VlocViagemLocal> vlocViagemLocalCollection;
+    private List<VlocViagemLocal> vlocViagemLocalList;
 
     public TparTipoParada() {
     }
@@ -60,20 +60,12 @@ public class TparTipoParada implements Serializable {
         this.tparDescricao = tparDescricao;
     }
 
-    public Collection<RponRotaPonto> getRponRotaPontoCollection() {
-        return rponRotaPontoCollection;
+    public List<VlocViagemLocal> getVlocViagemLocalList() {
+        return vlocViagemLocalList;
     }
 
-    public void setRponRotaPontoCollection(Collection<RponRotaPonto> rponRotaPontoCollection) {
-        this.rponRotaPontoCollection = rponRotaPontoCollection;
-    }
-
-    public Collection<VlocViagemLocal> getVlocViagemLocalCollection() {
-        return vlocViagemLocalCollection;
-    }
-
-    public void setVlocViagemLocalCollection(Collection<VlocViagemLocal> vlocViagemLocalCollection) {
-        this.vlocViagemLocalCollection = vlocViagemLocalCollection;
+    public void setVlocViagemLocalList(List<VlocViagemLocal> vlocViagemLocalList) {
+        this.vlocViagemLocalList = vlocViagemLocalList;
     }
 
     @Override

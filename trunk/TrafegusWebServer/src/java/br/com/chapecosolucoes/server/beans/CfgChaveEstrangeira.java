@@ -19,9 +19,15 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "cfg_chave_estrangeira")
+@Table(name = "cfg_chave_estrangeira", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "CfgChaveEstrangeira.findAll", query = "SELECT c FROM CfgChaveEstrangeira c")})
+    @NamedQuery(name = "CfgChaveEstrangeira.findAll", query = "SELECT c FROM CfgChaveEstrangeira c"),
+    @NamedQuery(name = "CfgChaveEstrangeira.findByCceChaveFrameworkId", query = "SELECT c FROM CfgChaveEstrangeira c WHERE c.cceChaveFrameworkId = :cceChaveFrameworkId"),
+    @NamedQuery(name = "CfgChaveEstrangeira.findByCceDicionario", query = "SELECT c FROM CfgChaveEstrangeira c WHERE c.cceDicionario = :cceDicionario"),
+    @NamedQuery(name = "CfgChaveEstrangeira.findByCceDescricaoChaveEstrangeira", query = "SELECT c FROM CfgChaveEstrangeira c WHERE c.cceDescricaoChaveEstrangeira = :cceDescricaoChaveEstrangeira"),
+    @NamedQuery(name = "CfgChaveEstrangeira.findByCceTabelaReferenciada", query = "SELECT c FROM CfgChaveEstrangeira c WHERE c.cceTabelaReferenciada = :cceTabelaReferenciada"),
+    @NamedQuery(name = "CfgChaveEstrangeira.findByCceCamposPk", query = "SELECT c FROM CfgChaveEstrangeira c WHERE c.cceCamposPk = :cceCamposPk"),
+    @NamedQuery(name = "CfgChaveEstrangeira.findByCceCamposReferencia", query = "SELECT c FROM CfgChaveEstrangeira c WHERE c.cceCamposReferencia = :cceCamposReferencia")})
 public class CfgChaveEstrangeira implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

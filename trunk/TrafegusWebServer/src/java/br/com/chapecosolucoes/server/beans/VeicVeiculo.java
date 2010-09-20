@@ -7,9 +7,8 @@ package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -27,10 +26,24 @@ import javax.persistence.UniqueConstraint;
  * @author Emerson
  */
 @Entity
-@Table(name = "veic_veiculo", uniqueConstraints = {
+@Table(name = "veic_veiculo", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"veic_placa"})})
 @NamedQueries({
-    @NamedQuery(name = "VeicVeiculo.findAll", query = "SELECT v FROM VeicVeiculo v")})
+    @NamedQuery(name = "VeicVeiculo.findAll", query = "SELECT v FROM VeicVeiculo v"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicOrasCodigo", query = "SELECT v FROM VeicVeiculo v WHERE v.veicOrasCodigo = :veicOrasCodigo"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicPlaca", query = "SELECT v FROM VeicVeiculo v WHERE v.veicPlaca = :veicPlaca"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicAnoFabricacao", query = "SELECT v FROM VeicVeiculo v WHERE v.veicAnoFabricacao = :veicAnoFabricacao"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicAnoModelo", query = "SELECT v FROM VeicVeiculo v WHERE v.veicAnoModelo = :veicAnoModelo"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicRenavam", query = "SELECT v FROM VeicVeiculo v WHERE v.veicRenavam = :veicRenavam"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicChassi", query = "SELECT v FROM VeicVeiculo v WHERE v.veicChassi = :veicChassi"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicCor", query = "SELECT v FROM VeicVeiculo v WHERE v.veicCor = :veicCor"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicObservacao", query = "SELECT v FROM VeicVeiculo v WHERE v.veicObservacao = :veicObservacao"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicTamanho", query = "SELECT v FROM VeicVeiculo v WHERE v.veicTamanho = :veicTamanho"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicFatorVelocidade", query = "SELECT v FROM VeicVeiculo v WHERE v.veicFatorVelocidade = :veicFatorVelocidade"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicFatorRpm", query = "SELECT v FROM VeicVeiculo v WHERE v.veicFatorRpm = :veicFatorRpm"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicSenhaProprietario", query = "SELECT v FROM VeicVeiculo v WHERE v.veicSenhaProprietario = :veicSenhaProprietario"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicTelefone", query = "SELECT v FROM VeicVeiculo v WHERE v.veicTelefone = :veicTelefone"),
+    @NamedQuery(name = "VeicVeiculo.findByVeicFrota", query = "SELECT v FROM VeicVeiculo v WHERE v.veicFrota = :veicFrota")})
 public class VeicVeiculo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -63,16 +76,6 @@ public class VeicVeiculo implements Serializable {
     private String veicTelefone;
     @Column(name = "veic_frota", length = 10)
     private String veicFrota;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo")
-    private VucaVeiculoUtilitarioCarga vucaVeiculoUtilitarioCarga;
-    @OneToMany(mappedBy = "veicVeiculo")
-    private Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo")
-    private VmotVeiculoMoto vmotVeiculoMoto;
-    @OneToMany(mappedBy = "veicVeiculo")
-    private Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo")
-    private VcavVeiculoCavalo vcavVeiculoCavalo;
     @JoinColumn(name = "veic_tvei_codigo", referencedColumnName = "tvei_codigo")
     @ManyToOne
     private TveiTipoVeiculo tveiTipoVeiculo;
@@ -91,16 +94,8 @@ public class VeicVeiculo implements Serializable {
     @JoinColumn(name = "veic_cida_codigo_emplacamento", referencedColumnName = "cida_codigo")
     @ManyToOne
     private CidaCidade cidaCidade;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo")
-    private VcarVeiculoCarreta vcarVeiculoCarreta;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo")
-    private VtruVeiculoTruck vtruVeiculoTruck;
     @OneToMany(mappedBy = "veicVeiculo")
-    private Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo")
-    private VupaVeiculoUtilitarioPasse vupaVeiculoUtilitarioPasse;
-    @OneToMany(mappedBy = "veicVeiculo")
-    private Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection;
+    private List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList;
 
     public VeicVeiculo() {
     }
@@ -221,46 +216,6 @@ public class VeicVeiculo implements Serializable {
         this.veicFrota = veicFrota;
     }
 
-    public VucaVeiculoUtilitarioCarga getVucaVeiculoUtilitarioCarga() {
-        return vucaVeiculoUtilitarioCarga;
-    }
-
-    public void setVucaVeiculoUtilitarioCarga(VucaVeiculoUtilitarioCarga vucaVeiculoUtilitarioCarga) {
-        this.vucaVeiculoUtilitarioCarga = vucaVeiculoUtilitarioCarga;
-    }
-
-    public Collection<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorCollection() {
-        return vembVeiculoEmbarcadorCollection;
-    }
-
-    public void setVembVeiculoEmbarcadorCollection(Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection) {
-        this.vembVeiculoEmbarcadorCollection = vembVeiculoEmbarcadorCollection;
-    }
-
-    public VmotVeiculoMoto getVmotVeiculoMoto() {
-        return vmotVeiculoMoto;
-    }
-
-    public void setVmotVeiculoMoto(VmotVeiculoMoto vmotVeiculoMoto) {
-        this.vmotVeiculoMoto = vmotVeiculoMoto;
-    }
-
-    public Collection<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorCollection() {
-        return hpmoHistoricoPesquisaMotorCollection;
-    }
-
-    public void setHpmoHistoricoPesquisaMotorCollection(Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection) {
-        this.hpmoHistoricoPesquisaMotorCollection = hpmoHistoricoPesquisaMotorCollection;
-    }
-
-    public VcavVeiculoCavalo getVcavVeiculoCavalo() {
-        return vcavVeiculoCavalo;
-    }
-
-    public void setVcavVeiculoCavalo(VcavVeiculoCavalo vcavVeiculoCavalo) {
-        this.vcavVeiculoCavalo = vcavVeiculoCavalo;
-    }
-
     public TveiTipoVeiculo getTveiTipoVeiculo() {
         return tveiTipoVeiculo;
     }
@@ -309,44 +264,12 @@ public class VeicVeiculo implements Serializable {
         this.cidaCidade = cidaCidade;
     }
 
-    public VcarVeiculoCarreta getVcarVeiculoCarreta() {
-        return vcarVeiculoCarreta;
+    public List<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorList() {
+        return hpmoHistoricoPesquisaMotorList;
     }
 
-    public void setVcarVeiculoCarreta(VcarVeiculoCarreta vcarVeiculoCarreta) {
-        this.vcarVeiculoCarreta = vcarVeiculoCarreta;
-    }
-
-    public VtruVeiculoTruck getVtruVeiculoTruck() {
-        return vtruVeiculoTruck;
-    }
-
-    public void setVtruVeiculoTruck(VtruVeiculoTruck vtruVeiculoTruck) {
-        this.vtruVeiculoTruck = vtruVeiculoTruck;
-    }
-
-    public Collection<VtraVeiculoTransportador> getVtraVeiculoTransportadorCollection() {
-        return vtraVeiculoTransportadorCollection;
-    }
-
-    public void setVtraVeiculoTransportadorCollection(Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection) {
-        this.vtraVeiculoTransportadorCollection = vtraVeiculoTransportadorCollection;
-    }
-
-    public VupaVeiculoUtilitarioPasse getVupaVeiculoUtilitarioPasse() {
-        return vupaVeiculoUtilitarioPasse;
-    }
-
-    public void setVupaVeiculoUtilitarioPasse(VupaVeiculoUtilitarioPasse vupaVeiculoUtilitarioPasse) {
-        this.vupaVeiculoUtilitarioPasse = vupaVeiculoUtilitarioPasse;
-    }
-
-    public Collection<VveiViagemVeiculo> getVveiViagemVeiculoCollection() {
-        return vveiViagemVeiculoCollection;
-    }
-
-    public void setVveiViagemVeiculoCollection(Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection) {
-        this.vveiViagemVeiculoCollection = vveiViagemVeiculoCollection;
+    public void setHpmoHistoricoPesquisaMotorList(List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList) {
+        this.hpmoHistoricoPesquisaMotorList = hpmoHistoricoPesquisaMotorList;
     }
 
     @Override

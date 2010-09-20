@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,9 +22,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "tenv_tipo_envio")
+@Table(name = "tenv_tipo_envio", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TenvTipoEnvio.findAll", query = "SELECT t FROM TenvTipoEnvio t")})
+    @NamedQuery(name = "TenvTipoEnvio.findAll", query = "SELECT t FROM TenvTipoEnvio t"),
+    @NamedQuery(name = "TenvTipoEnvio.findByTenvCodigo", query = "SELECT t FROM TenvTipoEnvio t WHERE t.tenvCodigo = :tenvCodigo"),
+    @NamedQuery(name = "TenvTipoEnvio.findByTenvDescricao", query = "SELECT t FROM TenvTipoEnvio t WHERE t.tenvDescricao = :tenvDescricao")})
 public class TenvTipoEnvio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,8 +35,8 @@ public class TenvTipoEnvio implements Serializable {
     private Integer tenvCodigo;
     @Column(name = "tenv_descricao", length = 50)
     private String tenvDescricao;
-    @OneToMany(mappedBy = "tenvTipoEnvio")
-    private Collection<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoCollection;
+    @OneToMany(mappedBy = "tenvTipoEnvio", fetch = FetchType.EAGER)
+    private List<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoList;
 
     public TenvTipoEnvio() {
     }
@@ -58,12 +61,12 @@ public class TenvTipoEnvio implements Serializable {
         this.tenvDescricao = tenvDescricao;
     }
 
-    public Collection<LemcListaEnvioMsgContato> getLemcListaEnvioMsgContatoCollection() {
-        return lemcListaEnvioMsgContatoCollection;
+    public List<LemcListaEnvioMsgContato> getLemcListaEnvioMsgContatoList() {
+        return lemcListaEnvioMsgContatoList;
     }
 
-    public void setLemcListaEnvioMsgContatoCollection(Collection<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoCollection) {
-        this.lemcListaEnvioMsgContatoCollection = lemcListaEnvioMsgContatoCollection;
+    public void setLemcListaEnvioMsgContatoList(List<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoList) {
+        this.lemcListaEnvioMsgContatoList = lemcListaEnvioMsgContatoList;
     }
 
     @Override

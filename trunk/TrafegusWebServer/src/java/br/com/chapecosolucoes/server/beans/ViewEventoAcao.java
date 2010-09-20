@@ -20,9 +20,39 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_evento_acao")
+@Table(name = "view_evento_acao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewEventoAcao.findAll", query = "SELECT v FROM ViewEventoAcao v")})
+    @NamedQuery(name = "ViewEventoAcao.findAll", query = "SELECT v FROM ViewEventoAcao v"),
+    @NamedQuery(name = "ViewEventoAcao.findByEsisCodigo", query = "SELECT v FROM ViewEventoAcao v WHERE v.esisCodigo = :esisCodigo"),
+    @NamedQuery(name = "ViewEventoAcao.findByEsisDataCadastro", query = "SELECT v FROM ViewEventoAcao v WHERE v.esisDataCadastro = :esisDataCadastro"),
+    @NamedQuery(name = "ViewEventoAcao.findByEsisDataInicio", query = "SELECT v FROM ViewEventoAcao v WHERE v.esisDataInicio = :esisDataInicio"),
+    @NamedQuery(name = "ViewEventoAcao.findByEsisDataFim", query = "SELECT v FROM ViewEventoAcao v WHERE v.esisDataFim = :esisDataFim"),
+    @NamedQuery(name = "ViewEventoAcao.findByEsisDataLeitura", query = "SELECT v FROM ViewEventoAcao v WHERE v.esisDataLeitura = :esisDataLeitura"),
+    @NamedQuery(name = "ViewEventoAcao.findByEsisDescricao", query = "SELECT v FROM ViewEventoAcao v WHERE v.esisDescricao = :esisDescricao"),
+    @NamedQuery(name = "ViewEventoAcao.findByEsisEspaCodigo", query = "SELECT v FROM ViewEventoAcao v WHERE v.esisEspaCodigo = :esisEspaCodigo"),
+    @NamedQuery(name = "ViewEventoAcao.findByEsisPgaiCodigo", query = "SELECT v FROM ViewEventoAcao v WHERE v.esisPgaiCodigo = :esisPgaiCodigo"),
+    @NamedQuery(name = "ViewEventoAcao.findByEsisTermCodigo", query = "SELECT v FROM ViewEventoAcao v WHERE v.esisTermCodigo = :esisTermCodigo"),
+    @NamedQuery(name = "ViewEventoAcao.findByEsisUsuCodigoLeitura", query = "SELECT v FROM ViewEventoAcao v WHERE v.esisUsuCodigoLeitura = :esisUsuCodigoLeitura"),
+    @NamedQuery(name = "ViewEventoAcao.findByEsisValor", query = "SELECT v FROM ViewEventoAcao v WHERE v.esisValor = :esisValor"),
+    @NamedQuery(name = "ViewEventoAcao.findByEsisViolacaoGeradaIntegracao", query = "SELECT v FROM ViewEventoAcao v WHERE v.esisViolacaoGeradaIntegracao = :esisViolacaoGeradaIntegracao"),
+    @NamedQuery(name = "ViewEventoAcao.findByEsisDataTratamentoServidor", query = "SELECT v FROM ViewEventoAcao v WHERE v.esisDataTratamentoServidor = :esisDataTratamentoServidor"),
+    @NamedQuery(name = "ViewEventoAcao.findByApadCodigo", query = "SELECT v FROM ViewEventoAcao v WHERE v.apadCodigo = :apadCodigo"),
+    @NamedQuery(name = "ViewEventoAcao.findByApadDescricao", query = "SELECT v FROM ViewEventoAcao v WHERE v.apadDescricao = :apadDescricao"),
+    @NamedQuery(name = "ViewEventoAcao.findByApadTipoAcao", query = "SELECT v FROM ViewEventoAcao v WHERE v.apadTipoAcao = :apadTipoAcao"),
+    @NamedQuery(name = "ViewEventoAcao.findByAbbeFrequencia", query = "SELECT v FROM ViewEventoAcao v WHERE v.abbeFrequencia = :abbeFrequencia"),
+    @NamedQuery(name = "ViewEventoAcao.findByAbeeTempoBeep", query = "SELECT v FROM ViewEventoAcao v WHERE v.abeeTempoBeep = :abeeTempoBeep"),
+    @NamedQuery(name = "ViewEventoAcao.findByAbeeTempoEsperando", query = "SELECT v FROM ViewEventoAcao v WHERE v.abeeTempoEsperando = :abeeTempoEsperando"),
+    @NamedQuery(name = "ViewEventoAcao.findByAbolCor", query = "SELECT v FROM ViewEventoAcao v WHERE v.abolCor = :abolCor"),
+    @NamedQuery(name = "ViewEventoAcao.findByAcomCpadCodigo", query = "SELECT v FROM ViewEventoAcao v WHERE v.acomCpadCodigo = :acomCpadCodigo"),
+    @NamedQuery(name = "ViewEventoAcao.findByAlinCorFundo", query = "SELECT v FROM ViewEventoAcao v WHERE v.alinCorFundo = :alinCorFundo"),
+    @NamedQuery(name = "ViewEventoAcao.findByAmacMpadCodigo", query = "SELECT v FROM ViewEventoAcao v WHERE v.amacMpadCodigo = :amacMpadCodigo"),
+    @NamedQuery(name = "ViewEventoAcao.findByApopAltura", query = "SELECT v FROM ViewEventoAcao v WHERE v.apopAltura = :apopAltura"),
+    @NamedQuery(name = "ViewEventoAcao.findByApopCor", query = "SELECT v FROM ViewEventoAcao v WHERE v.apopCor = :apopCor"),
+    @NamedQuery(name = "ViewEventoAcao.findByApopLargura", query = "SELECT v FROM ViewEventoAcao v WHERE v.apopLargura = :apopLargura"),
+    @NamedQuery(name = "ViewEventoAcao.findByApopTitulo", query = "SELECT v FROM ViewEventoAcao v WHERE v.apopTitulo = :apopTitulo"),
+    @NamedQuery(name = "ViewEventoAcao.findByMpadNumero", query = "SELECT v FROM ViewEventoAcao v WHERE v.mpadNumero = :mpadNumero"),
+    @NamedQuery(name = "ViewEventoAcao.findByMpadDescricao", query = "SELECT v FROM ViewEventoAcao v WHERE v.mpadDescricao = :mpadDescricao"),
+    @NamedQuery(name = "ViewEventoAcao.findByMpadMascara", query = "SELECT v FROM ViewEventoAcao v WHERE v.mpadMascara = :mpadMascara")})
 public class ViewEventoAcao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "esis_codigo")

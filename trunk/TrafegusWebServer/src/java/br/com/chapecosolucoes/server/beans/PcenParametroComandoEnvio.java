@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,9 +22,12 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "pcen_parametro_comando_envio")
+@Table(name = "pcen_parametro_comando_envio", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PcenParametroComandoEnvio.findAll", query = "SELECT p FROM PcenParametroComandoEnvio p")})
+    @NamedQuery(name = "PcenParametroComandoEnvio.findAll", query = "SELECT p FROM PcenParametroComandoEnvio p"),
+    @NamedQuery(name = "PcenParametroComandoEnvio.findByPcenCodigo", query = "SELECT p FROM PcenParametroComandoEnvio p WHERE p.pcenCodigo = :pcenCodigo"),
+    @NamedQuery(name = "PcenParametroComandoEnvio.findByPcenSequencia", query = "SELECT p FROM PcenParametroComandoEnvio p WHERE p.pcenSequencia = :pcenSequencia"),
+    @NamedQuery(name = "PcenParametroComandoEnvio.findByPcenValor", query = "SELECT p FROM PcenParametroComandoEnvio p WHERE p.pcenValor = :pcenValor")})
 public class PcenParametroComandoEnvio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,7 +39,7 @@ public class PcenParametroComandoEnvio implements Serializable {
     @Column(name = "pcen_valor", length = 50)
     private String pcenValor;
     @JoinColumn(name = "pcen_envi_codigo", referencedColumnName = "ecom_envi_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EcomEnvioComando ecomEnvioComando;
 
     public PcenParametroComandoEnvio() {

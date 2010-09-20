@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "svte_seguradora_versao_tecnol")
+@Table(name = "svte_seguradora_versao_tecnol", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "SvteSeguradoraVersaoTecnol.findAll", query = "SELECT s FROM SvteSeguradoraVersaoTecnol s")})
+    @NamedQuery(name = "SvteSeguradoraVersaoTecnol.findAll", query = "SELECT s FROM SvteSeguradoraVersaoTecnol s"),
+    @NamedQuery(name = "SvteSeguradoraVersaoTecnol.findBySvteCodigo", query = "SELECT s FROM SvteSeguradoraVersaoTecnol s WHERE s.svteCodigo = :svteCodigo"),
+    @NamedQuery(name = "SvteSeguradoraVersaoTecnol.findBySvteDataCadastro", query = "SELECT s FROM SvteSeguradoraVersaoTecnol s WHERE s.svteDataCadastro = :svteDataCadastro"),
+    @NamedQuery(name = "SvteSeguradoraVersaoTecnol.findBySvteCodigoGr", query = "SELECT s FROM SvteSeguradoraVersaoTecnol s WHERE s.svteCodigoGr = :svteCodigoGr"),
+    @NamedQuery(name = "SvteSeguradoraVersaoTecnol.findBySvteImportado", query = "SELECT s FROM SvteSeguradoraVersaoTecnol s WHERE s.svteImportado = :svteImportado")})
 public class SvteSeguradoraVersaoTecnol implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,13 +46,13 @@ public class SvteSeguradoraVersaoTecnol implements Serializable {
     @Column(name = "svte_importado")
     private Character svteImportado;
     @JoinColumn(name = "svte_vtec_codigo", referencedColumnName = "vtec_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private VtecVersaoTecnologia vtecVersaoTecnologia;
     @JoinColumn(name = "svte_ttra_codigo", referencedColumnName = "ttra_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TtraTipoTransporte ttraTipoTransporte;
     @JoinColumn(name = "svte_segu_pjur_pess_oras_codigo", referencedColumnName = "segu_pjur_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private SeguSeguradora seguSeguradora;
 
     public SvteSeguradoraVersaoTecnol() {

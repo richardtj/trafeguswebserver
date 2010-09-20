@@ -17,9 +17,16 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_dados_contato")
+@Table(name = "view_dados_contato", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewDadosContato.findAll", query = "SELECT v FROM ViewDadosContato v")})
+    @NamedQuery(name = "ViewDadosContato.findAll", query = "SELECT v FROM ViewDadosContato v"),
+    @NamedQuery(name = "ViewDadosContato.findByPconPessOrasCodigo", query = "SELECT v FROM ViewDadosContato v WHERE v.pconPessOrasCodigo = :pconPessOrasCodigo"),
+    @NamedQuery(name = "ViewDadosContato.findByConaTexto", query = "SELECT v FROM ViewDadosContato v WHERE v.conaTexto = :conaTexto"),
+    @NamedQuery(name = "ViewDadosContato.findByConaEmail", query = "SELECT v FROM ViewDadosContato v WHERE v.conaEmail = :conaEmail"),
+    @NamedQuery(name = "ViewDadosContato.findByConaTelefone1", query = "SELECT v FROM ViewDadosContato v WHERE v.conaTelefone1 = :conaTelefone1"),
+    @NamedQuery(name = "ViewDadosContato.findByConaTelefone2", query = "SELECT v FROM ViewDadosContato v WHERE v.conaTelefone2 = :conaTelefone2"),
+    @NamedQuery(name = "ViewDadosContato.findByConaTelefone3", query = "SELECT v FROM ViewDadosContato v WHERE v.conaTelefone3 = :conaTelefone3"),
+    @NamedQuery(name = "ViewDadosContato.findByConaObservacao", query = "SELECT v FROM ViewDadosContato v WHERE v.conaObservacao = :conaObservacao")})
 public class ViewDadosContato implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "pcon_pess_oras_codigo")

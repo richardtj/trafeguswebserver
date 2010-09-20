@@ -20,9 +20,23 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_evento_acao_popup")
+@Table(name = "view_evento_acao_popup", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewEventoAcaoPopup.findAll", query = "SELECT v FROM ViewEventoAcaoPopup v")})
+    @NamedQuery(name = "ViewEventoAcaoPopup.findAll", query = "SELECT v FROM ViewEventoAcaoPopup v"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByErasCodigo", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.erasCodigo = :erasCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByIdentificador", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.identificador = :identificador"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByTermNumeroTerminal", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.termNumeroTerminal = :termNumeroTerminal"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByEsisCodigo", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.esisCodigo = :esisCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByEsisTermCodigo", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.esisTermCodigo = :esisTermCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByEsisDescricao", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.esisDescricao = :esisDescricao"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByPgaiCodigo", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.pgaiCodigo = :pgaiCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByOrasCodigo", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.orasCodigo = :orasCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByApopAltura", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.apopAltura = :apopAltura"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByApopLargura", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.apopLargura = :apopLargura"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByApopTitulo", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.apopTitulo = :apopTitulo"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByApopCor", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.apopCor = :apopCor"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByEsisDataCadastro", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.esisDataCadastro = :esisDataCadastro"),
+    @NamedQuery(name = "ViewEventoAcaoPopup.findByEsisDataInicio", query = "SELECT v FROM ViewEventoAcaoPopup v WHERE v.esisDataInicio = :esisDataInicio")})
 public class ViewEventoAcaoPopup implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "eras_codigo")

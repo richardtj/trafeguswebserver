@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,18 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "vvei_viagem_veiculo")
+@Table(name = "vvei_viagem_veiculo", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VveiViagemVeiculo.findAll", query = "SELECT v FROM VveiViagemVeiculo v")})
+    @NamedQuery(name = "VveiViagemVeiculo.findAll", query = "SELECT v FROM VveiViagemVeiculo v"),
+    @NamedQuery(name = "VveiViagemVeiculo.findByVveiCodigo", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiCodigo = :vveiCodigo"),
+    @NamedQuery(name = "VveiViagemVeiculo.findByVveiPrecedencia", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiPrecedencia = :vveiPrecedencia"),
+    @NamedQuery(name = "VveiViagemVeiculo.findByVveiDataInicioComboio", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiDataInicioComboio = :vveiDataInicioComboio"),
+    @NamedQuery(name = "VveiViagemVeiculo.findByVveiDataFimComboio", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiDataFimComboio = :vveiDataFimComboio"),
+    @NamedQuery(name = "VveiViagemVeiculo.findByVveiAtivo", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiAtivo = :vveiAtivo"),
+    @NamedQuery(name = "VveiViagemVeiculo.findByVveiSequencia", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiSequencia = :vveiSequencia"),
+    @NamedQuery(name = "VveiViagemVeiculo.findByVveiDataCadastro", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiDataCadastro = :vveiDataCadastro"),
+    @NamedQuery(name = "VveiViagemVeiculo.findByVveiCodigoGr", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiCodigoGr = :vveiCodigoGr"),
+    @NamedQuery(name = "VveiViagemVeiculo.findByVveiImportado", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiImportado = :vveiImportado")})
 public class VveiViagemVeiculo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,19 +63,19 @@ public class VveiViagemVeiculo implements Serializable {
     @Column(name = "vvei_importado")
     private Character vveiImportado;
     @JoinColumn(name = "vvei_viag_codigo", referencedColumnName = "viag_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ViagViagem viagViagem;
     @JoinColumn(name = "vvei_veic_oras_codigo", referencedColumnName = "veic_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vvei_moto_pfis_pess_oras_codigo", referencedColumnName = "moto_pfis_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private MotoMotorista motoMotorista;
     @JoinColumn(name = "vvei_evca_codigo", referencedColumnName = "evca_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EvcaEstatusVeiculoCarga evcaEstatusVeiculoCarga;
     @JoinColumn(name = "vvei_comb_codigo", referencedColumnName = "comb_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private CombComboio combComboio;
 
     public VveiViagemVeiculo() {

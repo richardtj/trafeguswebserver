@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,9 +26,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "hppr_historico_pesquisa_prod")
+@Table(name = "hppr_historico_pesquisa_prod", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "HpprHistoricoPesquisaProd.findAll", query = "SELECT h FROM HpprHistoricoPesquisaProd h")})
+    @NamedQuery(name = "HpprHistoricoPesquisaProd.findAll", query = "SELECT h FROM HpprHistoricoPesquisaProd h"),
+    @NamedQuery(name = "HpprHistoricoPesquisaProd.findByHpprCodigo", query = "SELECT h FROM HpprHistoricoPesquisaProd h WHERE h.hpprCodigo = :hpprCodigo"),
+    @NamedQuery(name = "HpprHistoricoPesquisaProd.findByHpprValorMaximo", query = "SELECT h FROM HpprHistoricoPesquisaProd h WHERE h.hpprValorMaximo = :hpprValorMaximo"),
+    @NamedQuery(name = "HpprHistoricoPesquisaProd.findByHpprDataCadastro", query = "SELECT h FROM HpprHistoricoPesquisaProd h WHERE h.hpprDataCadastro = :hpprDataCadastro"),
+    @NamedQuery(name = "HpprHistoricoPesquisaProd.findByHpprCodigoGr", query = "SELECT h FROM HpprHistoricoPesquisaProd h WHERE h.hpprCodigoGr = :hpprCodigoGr"),
+    @NamedQuery(name = "HpprHistoricoPesquisaProd.findByHpprImportado", query = "SELECT h FROM HpprHistoricoPesquisaProd h WHERE h.hpprImportado = :hpprImportado")})
 public class HpprHistoricoPesquisaProd implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,10 +50,10 @@ public class HpprHistoricoPesquisaProd implements Serializable {
     @Column(name = "hppr_importado")
     private Character hpprImportado;
     @JoinColumn(name = "hppr_tpro_codigo", referencedColumnName = "tpro_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TproProduto tproProduto;
     @JoinColumn(name = "hppr_hpmo_codigo", referencedColumnName = "hpmo_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private HpmoHistoricoPesquisaMotor hpmoHistoricoPesquisaMotor;
 
     public HpprHistoricoPesquisaProd() {

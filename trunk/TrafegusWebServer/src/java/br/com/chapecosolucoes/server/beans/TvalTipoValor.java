@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,9 +21,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "tval_tipo_valor")
+@Table(name = "tval_tipo_valor", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TvalTipoValor.findAll", query = "SELECT t FROM TvalTipoValor t")})
+    @NamedQuery(name = "TvalTipoValor.findAll", query = "SELECT t FROM TvalTipoValor t"),
+    @NamedQuery(name = "TvalTipoValor.findByTvalCodigo", query = "SELECT t FROM TvalTipoValor t WHERE t.tvalCodigo = :tvalCodigo"),
+    @NamedQuery(name = "TvalTipoValor.findByTvalDescricao", query = "SELECT t FROM TvalTipoValor t WHERE t.tvalDescricao = :tvalDescricao")})
 public class TvalTipoValor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,15 +35,7 @@ public class TvalTipoValor implements Serializable {
     @Column(name = "tval_descricao", length = 50)
     private String tvalDescricao;
     @OneToMany(mappedBy = "tvalTipoValor")
-    private Collection<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoCollection;
-    @OneToMany(mappedBy = "tvalTipoValor")
-    private Collection<PaipPgAssociaItemParam> paipPgAssociaItemParamCollection;
-    @OneToMany(mappedBy = "tvalTipoValor")
-    private Collection<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoCollection;
-    @OneToMany(mappedBy = "tvalTipoValor")
-    private Collection<EspaEventoSistemaPadrao> espaEventoSistemaPadraoCollection;
-    @OneToMany(mappedBy = "tvalTipoValor")
-    private Collection<PipaPgItemParametro> pipaPgItemParametroCollection;
+    private List<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoList;
 
     public TvalTipoValor() {
     }
@@ -66,44 +60,12 @@ public class TvalTipoValor implements Serializable {
         this.tvalDescricao = tvalDescricao;
     }
 
-    public Collection<EppaEventoPerifericoPadrao> getEppaEventoPerifericoPadraoCollection() {
-        return eppaEventoPerifericoPadraoCollection;
+    public List<EppaEventoPerifericoPadrao> getEppaEventoPerifericoPadraoList() {
+        return eppaEventoPerifericoPadraoList;
     }
 
-    public void setEppaEventoPerifericoPadraoCollection(Collection<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoCollection) {
-        this.eppaEventoPerifericoPadraoCollection = eppaEventoPerifericoPadraoCollection;
-    }
-
-    public Collection<PaipPgAssociaItemParam> getPaipPgAssociaItemParamCollection() {
-        return paipPgAssociaItemParamCollection;
-    }
-
-    public void setPaipPgAssociaItemParamCollection(Collection<PaipPgAssociaItemParam> paipPgAssociaItemParamCollection) {
-        this.paipPgAssociaItemParamCollection = paipPgAssociaItemParamCollection;
-    }
-
-    public Collection<PcpaParametroComandoPadrao> getPcpaParametroComandoPadraoCollection() {
-        return pcpaParametroComandoPadraoCollection;
-    }
-
-    public void setPcpaParametroComandoPadraoCollection(Collection<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoCollection) {
-        this.pcpaParametroComandoPadraoCollection = pcpaParametroComandoPadraoCollection;
-    }
-
-    public Collection<EspaEventoSistemaPadrao> getEspaEventoSistemaPadraoCollection() {
-        return espaEventoSistemaPadraoCollection;
-    }
-
-    public void setEspaEventoSistemaPadraoCollection(Collection<EspaEventoSistemaPadrao> espaEventoSistemaPadraoCollection) {
-        this.espaEventoSistemaPadraoCollection = espaEventoSistemaPadraoCollection;
-    }
-
-    public Collection<PipaPgItemParametro> getPipaPgItemParametroCollection() {
-        return pipaPgItemParametroCollection;
-    }
-
-    public void setPipaPgItemParametroCollection(Collection<PipaPgItemParametro> pipaPgItemParametroCollection) {
-        this.pipaPgItemParametroCollection = pipaPgItemParametroCollection;
+    public void setEppaEventoPerifericoPadraoList(List<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoList) {
+        this.eppaEventoPerifericoPadraoList = eppaEventoPerifericoPadraoList;
     }
 
     @Override

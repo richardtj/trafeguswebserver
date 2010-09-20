@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,9 +23,10 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "amac_acao_macro")
+@Table(name = "amac_acao_macro", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "AmacAcaoMacro.findAll", query = "SELECT a FROM AmacAcaoMacro a")})
+    @NamedQuery(name = "AmacAcaoMacro.findAll", query = "SELECT a FROM AmacAcaoMacro a"),
+    @NamedQuery(name = "AmacAcaoMacro.findByAmacApadCodigo", query = "SELECT a FROM AmacAcaoMacro a WHERE a.amacApadCodigo = :amacApadCodigo")})
 public class AmacAcaoMacro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,10 +34,10 @@ public class AmacAcaoMacro implements Serializable {
     @Column(name = "amac_apad_codigo", nullable = false)
     private Integer amacApadCodigo;
     @JoinColumn(name = "amac_mpad_codigo", referencedColumnName = "mpad_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private MpadMacroPadrao mpadMacroPadrao;
     @JoinColumn(name = "amac_apad_codigo", referencedColumnName = "apad_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public AmacAcaoMacro() {

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -21,9 +22,13 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "abee_acao_beep")
+@Table(name = "abee_acao_beep", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "AbeeAcaoBeep.findAll", query = "SELECT a FROM AbeeAcaoBeep a")})
+    @NamedQuery(name = "AbeeAcaoBeep.findAll", query = "SELECT a FROM AbeeAcaoBeep a"),
+    @NamedQuery(name = "AbeeAcaoBeep.findByAbeeApadCodigo", query = "SELECT a FROM AbeeAcaoBeep a WHERE a.abeeApadCodigo = :abeeApadCodigo"),
+    @NamedQuery(name = "AbeeAcaoBeep.findByAbbeFrequencia", query = "SELECT a FROM AbeeAcaoBeep a WHERE a.abbeFrequencia = :abbeFrequencia"),
+    @NamedQuery(name = "AbeeAcaoBeep.findByAbeeTempoBeep", query = "SELECT a FROM AbeeAcaoBeep a WHERE a.abeeTempoBeep = :abeeTempoBeep"),
+    @NamedQuery(name = "AbeeAcaoBeep.findByAbeeTempoEsperando", query = "SELECT a FROM AbeeAcaoBeep a WHERE a.abeeTempoEsperando = :abeeTempoEsperando")})
 public class AbeeAcaoBeep implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,7 +42,7 @@ public class AbeeAcaoBeep implements Serializable {
     @Column(name = "abee_tempo_esperando")
     private Integer abeeTempoEsperando;
     @JoinColumn(name = "abee_apad_codigo", referencedColumnName = "apad_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public AbeeAcaoBeep() {

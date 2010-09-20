@@ -17,9 +17,14 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_pgr_em_viagem")
+@Table(name = "view_pgr_em_viagem", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewPgrEmViagem.findAll", query = "SELECT v FROM ViewPgrEmViagem v")})
+    @NamedQuery(name = "ViewPgrEmViagem.findAll", query = "SELECT v FROM ViewPgrEmViagem v"),
+    @NamedQuery(name = "ViewPgrEmViagem.findByViagCodigo", query = "SELECT v FROM ViewPgrEmViagem v WHERE v.viagCodigo = :viagCodigo"),
+    @NamedQuery(name = "ViewPgrEmViagem.findByPgpgDescricao", query = "SELECT v FROM ViewPgrEmViagem v WHERE v.pgpgDescricao = :pgpgDescricao"),
+    @NamedQuery(name = "ViewPgrEmViagem.findByPgpgCodigo", query = "SELECT v FROM ViewPgrEmViagem v WHERE v.pgpgCodigo = :pgpgCodigo"),
+    @NamedQuery(name = "ViewPgrEmViagem.findByPipaDescricao", query = "SELECT v FROM ViewPgrEmViagem v WHERE v.pipaDescricao = :pipaDescricao"),
+    @NamedQuery(name = "ViewPgrEmViagem.findByPiteDescricao", query = "SELECT v FROM ViewPgrEmViagem v WHERE v.piteDescricao = :piteDescricao")})
 public class ViewPgrEmViagem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "viag_codigo")

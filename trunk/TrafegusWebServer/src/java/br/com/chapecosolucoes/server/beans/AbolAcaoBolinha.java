@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -21,9 +22,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "abol_acao_bolinha")
+@Table(name = "abol_acao_bolinha", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "AbolAcaoBolinha.findAll", query = "SELECT a FROM AbolAcaoBolinha a")})
+    @NamedQuery(name = "AbolAcaoBolinha.findAll", query = "SELECT a FROM AbolAcaoBolinha a"),
+    @NamedQuery(name = "AbolAcaoBolinha.findByAbolApadCodigo", query = "SELECT a FROM AbolAcaoBolinha a WHERE a.abolApadCodigo = :abolApadCodigo"),
+    @NamedQuery(name = "AbolAcaoBolinha.findByAbolCor", query = "SELECT a FROM AbolAcaoBolinha a WHERE a.abolCor = :abolCor")})
 public class AbolAcaoBolinha implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,7 +36,7 @@ public class AbolAcaoBolinha implements Serializable {
     @Column(name = "abol_cor")
     private Integer abolCor;
     @JoinColumn(name = "abol_apad_codigo", referencedColumnName = "apad_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public AbolAcaoBolinha() {

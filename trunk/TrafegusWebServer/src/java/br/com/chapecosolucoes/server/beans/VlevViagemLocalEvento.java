@@ -24,9 +24,16 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "vlev_viagem_local_evento")
+@Table(name = "vlev_viagem_local_evento", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VlevViagemLocalEvento.findAll", query = "SELECT v FROM VlevViagemLocalEvento v")})
+    @NamedQuery(name = "VlevViagemLocalEvento.findAll", query = "SELECT v FROM VlevViagemLocalEvento v"),
+    @NamedQuery(name = "VlevViagemLocalEvento.findByVlevCodigo", query = "SELECT v FROM VlevViagemLocalEvento v WHERE v.vlevCodigo = :vlevCodigo"),
+    @NamedQuery(name = "VlevViagemLocalEvento.findByVlevSequencia", query = "SELECT v FROM VlevViagemLocalEvento v WHERE v.vlevSequencia = :vlevSequencia"),
+    @NamedQuery(name = "VlevViagemLocalEvento.findByVlevDataPrevisao", query = "SELECT v FROM VlevViagemLocalEvento v WHERE v.vlevDataPrevisao = :vlevDataPrevisao"),
+    @NamedQuery(name = "VlevViagemLocalEvento.findByVlevData", query = "SELECT v FROM VlevViagemLocalEvento v WHERE v.vlevData = :vlevData"),
+    @NamedQuery(name = "VlevViagemLocalEvento.findByVlevDataCadastro", query = "SELECT v FROM VlevViagemLocalEvento v WHERE v.vlevDataCadastro = :vlevDataCadastro"),
+    @NamedQuery(name = "VlevViagemLocalEvento.findByVlevCodigoGr", query = "SELECT v FROM VlevViagemLocalEvento v WHERE v.vlevCodigoGr = :vlevCodigoGr"),
+    @NamedQuery(name = "VlevViagemLocalEvento.findByVlevImportado", query = "SELECT v FROM VlevViagemLocalEvento v WHERE v.vlevImportado = :vlevImportado")})
 public class VlevViagemLocalEvento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

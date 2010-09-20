@@ -19,9 +19,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "mint_mensagem_integracao")
+@Table(name = "mint_mensagem_integracao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "MintMensagemIntegracao.findAll", query = "SELECT m FROM MintMensagemIntegracao m")})
+    @NamedQuery(name = "MintMensagemIntegracao.findAll", query = "SELECT m FROM MintMensagemIntegracao m"),
+    @NamedQuery(name = "MintMensagemIntegracao.findByMintCodigo", query = "SELECT m FROM MintMensagemIntegracao m WHERE m.mintCodigo = :mintCodigo"),
+    @NamedQuery(name = "MintMensagemIntegracao.findByMintMensagemIntegracao", query = "SELECT m FROM MintMensagemIntegracao m WHERE m.mintMensagemIntegracao = :mintMensagemIntegracao")})
 public class MintMensagemIntegracao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

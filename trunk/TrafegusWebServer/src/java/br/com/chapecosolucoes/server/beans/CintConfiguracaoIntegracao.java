@@ -22,9 +22,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "cint_configuracao_integracao")
+@Table(name = "cint_configuracao_integracao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "CintConfiguracaoIntegracao.findAll", query = "SELECT c FROM CintConfiguracaoIntegracao c")})
+    @NamedQuery(name = "CintConfiguracaoIntegracao.findAll", query = "SELECT c FROM CintConfiguracaoIntegracao c"),
+    @NamedQuery(name = "CintConfiguracaoIntegracao.findByCintCodigo", query = "SELECT c FROM CintConfiguracaoIntegracao c WHERE c.cintCodigo = :cintCodigo"),
+    @NamedQuery(name = "CintConfiguracaoIntegracao.findByCintHistoricoDia", query = "SELECT c FROM CintConfiguracaoIntegracao c WHERE c.cintHistoricoDia = :cintHistoricoDia"),
+    @NamedQuery(name = "CintConfiguracaoIntegracao.findByCintDataCadastro", query = "SELECT c FROM CintConfiguracaoIntegracao c WHERE c.cintDataCadastro = :cintDataCadastro"),
+    @NamedQuery(name = "CintConfiguracaoIntegracao.findByCintCodigoGr", query = "SELECT c FROM CintConfiguracaoIntegracao c WHERE c.cintCodigoGr = :cintCodigoGr"),
+    @NamedQuery(name = "CintConfiguracaoIntegracao.findByCintImportado", query = "SELECT c FROM CintConfiguracaoIntegracao c WHERE c.cintImportado = :cintImportado")})
 public class CintConfiguracaoIntegracao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

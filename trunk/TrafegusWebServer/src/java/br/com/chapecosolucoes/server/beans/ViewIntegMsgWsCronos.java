@@ -20,9 +20,20 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_integ_msg_ws_cronos")
+@Table(name = "view_integ_msg_ws_cronos", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewIntegMsgWsCronos.findAll", query = "SELECT v FROM ViewIntegMsgWsCronos v")})
+    @NamedQuery(name = "ViewIntegMsgWsCronos.findAll", query = "SELECT v FROM ViewIntegMsgWsCronos v"),
+    @NamedQuery(name = "ViewIntegMsgWsCronos.findByPackId", query = "SELECT v FROM ViewIntegMsgWsCronos v WHERE v.packId = :packId"),
+    @NamedQuery(name = "ViewIntegMsgWsCronos.findByVehiclePlate", query = "SELECT v FROM ViewIntegMsgWsCronos v WHERE v.vehiclePlate = :vehiclePlate"),
+    @NamedQuery(name = "ViewIntegMsgWsCronos.findBySerialNumber", query = "SELECT v FROM ViewIntegMsgWsCronos v WHERE v.serialNumber = :serialNumber"),
+    @NamedQuery(name = "ViewIntegMsgWsCronos.findByCreatDateTime", query = "SELECT v FROM ViewIntegMsgWsCronos v WHERE v.creatDateTime = :creatDateTime"),
+    @NamedQuery(name = "ViewIntegMsgWsCronos.findByIntegrator", query = "SELECT v FROM ViewIntegMsgWsCronos v WHERE v.integrator = :integrator"),
+    @NamedQuery(name = "ViewIntegMsgWsCronos.findByAccount", query = "SELECT v FROM ViewIntegMsgWsCronos v WHERE v.account = :account"),
+    @NamedQuery(name = "ViewIntegMsgWsCronos.findByMessageCode", query = "SELECT v FROM ViewIntegMsgWsCronos v WHERE v.messageCode = :messageCode"),
+    @NamedQuery(name = "ViewIntegMsgWsCronos.findByMacroNumber", query = "SELECT v FROM ViewIntegMsgWsCronos v WHERE v.macroNumber = :macroNumber"),
+    @NamedQuery(name = "ViewIntegMsgWsCronos.findByText", query = "SELECT v FROM ViewIntegMsgWsCronos v WHERE v.text = :text"),
+    @NamedQuery(name = "ViewIntegMsgWsCronos.findByCodEquipamento", query = "SELECT v FROM ViewIntegMsgWsCronos v WHERE v.codEquipamento = :codEquipamento"),
+    @NamedQuery(name = "ViewIntegMsgWsCronos.findByTpMsg", query = "SELECT v FROM ViewIntegMsgWsCronos v WHERE v.tpMsg = :tpMsg")})
 public class ViewIntegMsgWsCronos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "PackId")

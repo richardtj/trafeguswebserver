@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,9 +22,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "ptit_pg_tipo_item")
+@Table(name = "ptit_pg_tipo_item", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PtitPgTipoItem.findAll", query = "SELECT p FROM PtitPgTipoItem p")})
+    @NamedQuery(name = "PtitPgTipoItem.findAll", query = "SELECT p FROM PtitPgTipoItem p"),
+    @NamedQuery(name = "PtitPgTipoItem.findByPtitCodigo", query = "SELECT p FROM PtitPgTipoItem p WHERE p.ptitCodigo = :ptitCodigo"),
+    @NamedQuery(name = "PtitPgTipoItem.findByPtitDescricao", query = "SELECT p FROM PtitPgTipoItem p WHERE p.ptitDescricao = :ptitDescricao")})
 public class PtitPgTipoItem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,8 +35,8 @@ public class PtitPgTipoItem implements Serializable {
     private Integer ptitCodigo;
     @Column(name = "ptit_descricao", length = 50)
     private String ptitDescricao;
-    @OneToMany(mappedBy = "ptitPgTipoItem")
-    private Collection<PitePgItem> pitePgItemCollection;
+    @OneToMany(mappedBy = "ptitPgTipoItem", fetch = FetchType.EAGER)
+    private List<PitePgItem> pitePgItemList;
 
     public PtitPgTipoItem() {
     }
@@ -58,12 +61,12 @@ public class PtitPgTipoItem implements Serializable {
         this.ptitDescricao = ptitDescricao;
     }
 
-    public Collection<PitePgItem> getPitePgItemCollection() {
-        return pitePgItemCollection;
+    public List<PitePgItem> getPitePgItemList() {
+        return pitePgItemList;
     }
 
-    public void setPitePgItemCollection(Collection<PitePgItem> pitePgItemCollection) {
-        this.pitePgItemCollection = pitePgItemCollection;
+    public void setPitePgItemList(List<PitePgItem> pitePgItemList) {
+        this.pitePgItemList = pitePgItemList;
     }
 
     @Override

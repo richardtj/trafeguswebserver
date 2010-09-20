@@ -7,11 +7,12 @@ package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,9 +28,17 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "rota_rota")
+@Table(name = "rota_rota", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "RotaRota.findAll", query = "SELECT r FROM RotaRota r")})
+    @NamedQuery(name = "RotaRota.findAll", query = "SELECT r FROM RotaRota r"),
+    @NamedQuery(name = "RotaRota.findByRotaCodigo", query = "SELECT r FROM RotaRota r WHERE r.rotaCodigo = :rotaCodigo"),
+    @NamedQuery(name = "RotaRota.findByRotaDescricao", query = "SELECT r FROM RotaRota r WHERE r.rotaDescricao = :rotaDescricao"),
+    @NamedQuery(name = "RotaRota.findByRotaDistancia", query = "SELECT r FROM RotaRota r WHERE r.rotaDistancia = :rotaDistancia"),
+    @NamedQuery(name = "RotaRota.findByRotaCoordenada", query = "SELECT r FROM RotaRota r WHERE r.rotaCoordenada = :rotaCoordenada"),
+    @NamedQuery(name = "RotaRota.findByRotaDataCadastro", query = "SELECT r FROM RotaRota r WHERE r.rotaDataCadastro = :rotaDataCadastro"),
+    @NamedQuery(name = "RotaRota.findByRotaCodigoGr", query = "SELECT r FROM RotaRota r WHERE r.rotaCodigoGr = :rotaCodigoGr"),
+    @NamedQuery(name = "RotaRota.findByRotaImportado", query = "SELECT r FROM RotaRota r WHERE r.rotaImportado = :rotaImportado"),
+    @NamedQuery(name = "RotaRota.findByRotaCoordenadaspipe", query = "SELECT r FROM RotaRota r WHERE r.rotaCoordenadaspipe = :rotaCoordenadaspipe")})
 public class RotaRota implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -51,13 +60,13 @@ public class RotaRota implements Serializable {
     private Character rotaImportado;
     @Column(name = "rota_coordenadaspipe", length = 1000000)
     private String rotaCoordenadaspipe;
-    @OneToMany(mappedBy = "rotaRota")
-    private Collection<RponRotaPonto> rponRotaPontoCollection;
+    @OneToMany(mappedBy = "rotaRota", fetch = FetchType.EAGER)
+    private List<RponRotaPonto> rponRotaPontoList;
     @JoinColumn(name = "rota_pess_oras_codigo_dono", referencedColumnName = "pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PessPessoa pessPessoa;
-    @OneToMany(mappedBy = "rotaRota")
-    private Collection<VrotViagemRota> vrotViagemRotaCollection;
+    @OneToMany(mappedBy = "rotaRota", fetch = FetchType.EAGER)
+    private List<VrotViagemRota> vrotViagemRotaList;
 
     public RotaRota() {
     }
@@ -130,12 +139,12 @@ public class RotaRota implements Serializable {
         this.rotaCoordenadaspipe = rotaCoordenadaspipe;
     }
 
-    public Collection<RponRotaPonto> getRponRotaPontoCollection() {
-        return rponRotaPontoCollection;
+    public List<RponRotaPonto> getRponRotaPontoList() {
+        return rponRotaPontoList;
     }
 
-    public void setRponRotaPontoCollection(Collection<RponRotaPonto> rponRotaPontoCollection) {
-        this.rponRotaPontoCollection = rponRotaPontoCollection;
+    public void setRponRotaPontoList(List<RponRotaPonto> rponRotaPontoList) {
+        this.rponRotaPontoList = rponRotaPontoList;
     }
 
     public PessPessoa getPessPessoa() {
@@ -146,12 +155,12 @@ public class RotaRota implements Serializable {
         this.pessPessoa = pessPessoa;
     }
 
-    public Collection<VrotViagemRota> getVrotViagemRotaCollection() {
-        return vrotViagemRotaCollection;
+    public List<VrotViagemRota> getVrotViagemRotaList() {
+        return vrotViagemRotaList;
     }
 
-    public void setVrotViagemRotaCollection(Collection<VrotViagemRota> vrotViagemRotaCollection) {
-        this.vrotViagemRotaCollection = vrotViagemRotaCollection;
+    public void setVrotViagemRotaList(List<VrotViagemRota> vrotViagemRotaList) {
+        this.vrotViagemRotaList = vrotViagemRotaList;
     }
 
     @Override

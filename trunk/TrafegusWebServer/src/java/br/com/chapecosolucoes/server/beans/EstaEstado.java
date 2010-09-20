@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,9 +26,15 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "esta_estado")
+@Table(name = "esta_estado", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EstaEstado.findAll", query = "SELECT e FROM EstaEstado e")})
+    @NamedQuery(name = "EstaEstado.findAll", query = "SELECT e FROM EstaEstado e"),
+    @NamedQuery(name = "EstaEstado.findByEstaCodigo", query = "SELECT e FROM EstaEstado e WHERE e.estaCodigo = :estaCodigo"),
+    @NamedQuery(name = "EstaEstado.findByEstaSigla", query = "SELECT e FROM EstaEstado e WHERE e.estaSigla = :estaSigla"),
+    @NamedQuery(name = "EstaEstado.findByEstaDescricao", query = "SELECT e FROM EstaEstado e WHERE e.estaDescricao = :estaDescricao"),
+    @NamedQuery(name = "EstaEstado.findByEstaDataCadastro", query = "SELECT e FROM EstaEstado e WHERE e.estaDataCadastro = :estaDataCadastro"),
+    @NamedQuery(name = "EstaEstado.findByEstaCodigoGr", query = "SELECT e FROM EstaEstado e WHERE e.estaCodigoGr = :estaCodigoGr"),
+    @NamedQuery(name = "EstaEstado.findByEstaImportado", query = "SELECT e FROM EstaEstado e WHERE e.estaImportado = :estaImportado")})
 public class EstaEstado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,7 +53,7 @@ public class EstaEstado implements Serializable {
     @Column(name = "esta_importado")
     private Character estaImportado;
     @OneToMany(mappedBy = "estaEstado")
-    private Collection<CidaCidade> cidaCidadeCollection;
+    private List<CidaCidade> cidaCidadeList;
     @JoinColumn(name = "esta_pais_codigo", referencedColumnName = "pais_codigo")
     @ManyToOne
     private PaisPais paisPais;
@@ -107,12 +113,12 @@ public class EstaEstado implements Serializable {
         this.estaImportado = estaImportado;
     }
 
-    public Collection<CidaCidade> getCidaCidadeCollection() {
-        return cidaCidadeCollection;
+    public List<CidaCidade> getCidaCidadeList() {
+        return cidaCidadeList;
     }
 
-    public void setCidaCidadeCollection(Collection<CidaCidade> cidaCidadeCollection) {
-        this.cidaCidadeCollection = cidaCidadeCollection;
+    public void setCidaCidadeList(List<CidaCidade> cidaCidadeList) {
+        this.cidaCidadeList = cidaCidadeList;
     }
 
     public PaisPais getPaisPais() {

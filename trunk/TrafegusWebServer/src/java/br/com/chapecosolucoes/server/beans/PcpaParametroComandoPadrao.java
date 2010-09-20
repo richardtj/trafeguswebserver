@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,9 +22,12 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "pcpa_parametro_comando_padrao")
+@Table(name = "pcpa_parametro_comando_padrao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PcpaParametroComandoPadrao.findAll", query = "SELECT p FROM PcpaParametroComandoPadrao p")})
+    @NamedQuery(name = "PcpaParametroComandoPadrao.findAll", query = "SELECT p FROM PcpaParametroComandoPadrao p"),
+    @NamedQuery(name = "PcpaParametroComandoPadrao.findByPcpaCodigo", query = "SELECT p FROM PcpaParametroComandoPadrao p WHERE p.pcpaCodigo = :pcpaCodigo"),
+    @NamedQuery(name = "PcpaParametroComandoPadrao.findByPcpaSequencia", query = "SELECT p FROM PcpaParametroComandoPadrao p WHERE p.pcpaSequencia = :pcpaSequencia"),
+    @NamedQuery(name = "PcpaParametroComandoPadrao.findByPcpaValor", query = "SELECT p FROM PcpaParametroComandoPadrao p WHERE p.pcpaValor = :pcpaValor")})
 public class PcpaParametroComandoPadrao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,10 +39,10 @@ public class PcpaParametroComandoPadrao implements Serializable {
     @Column(name = "pcpa_valor", length = 50)
     private String pcpaValor;
     @JoinColumn(name = "pcpa_tval_codigo", referencedColumnName = "tval_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvalTipoValor tvalTipoValor;
     @JoinColumn(name = "pcpa_cpad_codigo", referencedColumnName = "cpad_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private CpadComandoPadrao cpadComandoPadrao;
 
     public PcpaParametroComandoPadrao() {

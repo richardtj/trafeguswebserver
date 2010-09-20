@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,16 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "pipa_pg_item_parametro")
+@Table(name = "pipa_pg_item_parametro", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PipaPgItemParametro.findAll", query = "SELECT p FROM PipaPgItemParametro p")})
+    @NamedQuery(name = "PipaPgItemParametro.findAll", query = "SELECT p FROM PipaPgItemParametro p"),
+    @NamedQuery(name = "PipaPgItemParametro.findByPipaCodigo", query = "SELECT p FROM PipaPgItemParametro p WHERE p.pipaCodigo = :pipaCodigo"),
+    @NamedQuery(name = "PipaPgItemParametro.findByPipaSequencia", query = "SELECT p FROM PipaPgItemParametro p WHERE p.pipaSequencia = :pipaSequencia"),
+    @NamedQuery(name = "PipaPgItemParametro.findByPipaDescricao", query = "SELECT p FROM PipaPgItemParametro p WHERE p.pipaDescricao = :pipaDescricao"),
+    @NamedQuery(name = "PipaPgItemParametro.findByPipaValor", query = "SELECT p FROM PipaPgItemParametro p WHERE p.pipaValor = :pipaValor"),
+    @NamedQuery(name = "PipaPgItemParametro.findByPipaDataCadastro", query = "SELECT p FROM PipaPgItemParametro p WHERE p.pipaDataCadastro = :pipaDataCadastro"),
+    @NamedQuery(name = "PipaPgItemParametro.findByPipaCodigoGr", query = "SELECT p FROM PipaPgItemParametro p WHERE p.pipaCodigoGr = :pipaCodigoGr"),
+    @NamedQuery(name = "PipaPgItemParametro.findByPipaImportado", query = "SELECT p FROM PipaPgItemParametro p WHERE p.pipaImportado = :pipaImportado")})
 public class PipaPgItemParametro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,13 +55,13 @@ public class PipaPgItemParametro implements Serializable {
     @Column(name = "pipa_importado")
     private Character pipaImportado;
     @JoinColumn(name = "pipa_tval_codigo", referencedColumnName = "tval_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvalTipoValor tvalTipoValor;
     @JoinColumn(name = "pipa_tpar_codigo", referencedColumnName = "tpar_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TparTipoParametro tparTipoParametro;
     @JoinColumn(name = "pipa_pite_codigo", referencedColumnName = "pite_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PitePgItem pitePgItem;
 
     public PipaPgItemParametro() {

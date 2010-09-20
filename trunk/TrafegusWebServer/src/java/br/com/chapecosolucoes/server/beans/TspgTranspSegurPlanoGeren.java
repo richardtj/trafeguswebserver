@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "tspg_transp_segur_plano_geren")
+@Table(name = "tspg_transp_segur_plano_geren", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TspgTranspSegurPlanoGeren.findAll", query = "SELECT t FROM TspgTranspSegurPlanoGeren t")})
+    @NamedQuery(name = "TspgTranspSegurPlanoGeren.findAll", query = "SELECT t FROM TspgTranspSegurPlanoGeren t"),
+    @NamedQuery(name = "TspgTranspSegurPlanoGeren.findByTspgCodigo", query = "SELECT t FROM TspgTranspSegurPlanoGeren t WHERE t.tspgCodigo = :tspgCodigo"),
+    @NamedQuery(name = "TspgTranspSegurPlanoGeren.findByTspgDataCadastro", query = "SELECT t FROM TspgTranspSegurPlanoGeren t WHERE t.tspgDataCadastro = :tspgDataCadastro"),
+    @NamedQuery(name = "TspgTranspSegurPlanoGeren.findByTspgCodigoGr", query = "SELECT t FROM TspgTranspSegurPlanoGeren t WHERE t.tspgCodigoGr = :tspgCodigoGr"),
+    @NamedQuery(name = "TspgTranspSegurPlanoGeren.findByTspgImportado", query = "SELECT t FROM TspgTranspSegurPlanoGeren t WHERE t.tspgImportado = :tspgImportado")})
 public class TspgTranspSegurPlanoGeren implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,13 +46,13 @@ public class TspgTranspSegurPlanoGeren implements Serializable {
     @Column(name = "tspg_importado")
     private Character tspgImportado;
     @JoinColumn(name = "tspg_pess_oras_codigo", referencedColumnName = "tran_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TranTransportador tranTransportador;
     @JoinColumn(name = "tspg_segu_pjur_pess_oras_codigo", referencedColumnName = "segu_pjur_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private SeguSeguradora seguSeguradora;
     @JoinColumn(name = "tspg_pgpg_codigo", referencedColumnName = "pgpg_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PgpgPg pgpgPg;
 
     public TspgTranspSegurPlanoGeren() {

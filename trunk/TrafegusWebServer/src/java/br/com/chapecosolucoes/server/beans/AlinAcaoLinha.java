@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -21,9 +22,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "alin_acao_linha")
+@Table(name = "alin_acao_linha", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "AlinAcaoLinha.findAll", query = "SELECT a FROM AlinAcaoLinha a")})
+    @NamedQuery(name = "AlinAcaoLinha.findAll", query = "SELECT a FROM AlinAcaoLinha a"),
+    @NamedQuery(name = "AlinAcaoLinha.findByAlinApadCodigo", query = "SELECT a FROM AlinAcaoLinha a WHERE a.alinApadCodigo = :alinApadCodigo"),
+    @NamedQuery(name = "AlinAcaoLinha.findByAlinCorFundo", query = "SELECT a FROM AlinAcaoLinha a WHERE a.alinCorFundo = :alinCorFundo")})
 public class AlinAcaoLinha implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,7 +36,7 @@ public class AlinAcaoLinha implements Serializable {
     @Column(name = "alin_cor_fundo")
     private Integer alinCorFundo;
     @JoinColumn(name = "alin_apad_codigo", referencedColumnName = "apad_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public AlinAcaoLinha() {

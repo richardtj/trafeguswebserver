@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,9 +27,17 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "espa_evento_sistema_padrao")
+@Table(name = "espa_evento_sistema_padrao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EspaEventoSistemaPadrao.findAll", query = "SELECT e FROM EspaEventoSistemaPadrao e")})
+    @NamedQuery(name = "EspaEventoSistemaPadrao.findAll", query = "SELECT e FROM EspaEventoSistemaPadrao e"),
+    @NamedQuery(name = "EspaEventoSistemaPadrao.findByEspaCodigo", query = "SELECT e FROM EspaEventoSistemaPadrao e WHERE e.espaCodigo = :espaCodigo"),
+    @NamedQuery(name = "EspaEventoSistemaPadrao.findByEspaDescricao", query = "SELECT e FROM EspaEventoSistemaPadrao e WHERE e.espaDescricao = :espaDescricao"),
+    @NamedQuery(name = "EspaEventoSistemaPadrao.findByEspaPreenchimento", query = "SELECT e FROM EspaEventoSistemaPadrao e WHERE e.espaPreenchimento = :espaPreenchimento"),
+    @NamedQuery(name = "EspaEventoSistemaPadrao.findByEspaCor", query = "SELECT e FROM EspaEventoSistemaPadrao e WHERE e.espaCor = :espaCor"),
+    @NamedQuery(name = "EspaEventoSistemaPadrao.findByEspaDataCadastro", query = "SELECT e FROM EspaEventoSistemaPadrao e WHERE e.espaDataCadastro = :espaDataCadastro"),
+    @NamedQuery(name = "EspaEventoSistemaPadrao.findByEspaCodigoGr", query = "SELECT e FROM EspaEventoSistemaPadrao e WHERE e.espaCodigoGr = :espaCodigoGr"),
+    @NamedQuery(name = "EspaEventoSistemaPadrao.findByEspaImportado", query = "SELECT e FROM EspaEventoSistemaPadrao e WHERE e.espaImportado = :espaImportado"),
+    @NamedQuery(name = "EspaEventoSistemaPadrao.findByEspaPrioridade", query = "SELECT e FROM EspaEventoSistemaPadrao e WHERE e.espaPrioridade = :espaPrioridade")})
 public class EspaEventoSistemaPadrao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,12 +59,12 @@ public class EspaEventoSistemaPadrao implements Serializable {
     private Character espaImportado;
     @Column(name = "espa_prioridade", length = 10)
     private String espaPrioridade;
-    @OneToMany(mappedBy = "espaEventoSistemaPadrao")
-    private Collection<EsisEventoSistema> esisEventoSistemaCollection;
-    @OneToMany(mappedBy = "espaEventoSistemaPadrao")
-    private Collection<PitePgItem> pitePgItemCollection;
+    @OneToMany(mappedBy = "espaEventoSistemaPadrao", fetch = FetchType.EAGER)
+    private List<EsisEventoSistema> esisEventoSistemaList;
+    @OneToMany(mappedBy = "espaEventoSistemaPadrao", fetch = FetchType.EAGER)
+    private List<PitePgItem> pitePgItemList;
     @JoinColumn(name = "espa_tval_codigo", referencedColumnName = "tval_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvalTipoValor tvalTipoValor;
 
     public EspaEventoSistemaPadrao() {
@@ -129,20 +138,20 @@ public class EspaEventoSistemaPadrao implements Serializable {
         this.espaPrioridade = espaPrioridade;
     }
 
-    public Collection<EsisEventoSistema> getEsisEventoSistemaCollection() {
-        return esisEventoSistemaCollection;
+    public List<EsisEventoSistema> getEsisEventoSistemaList() {
+        return esisEventoSistemaList;
     }
 
-    public void setEsisEventoSistemaCollection(Collection<EsisEventoSistema> esisEventoSistemaCollection) {
-        this.esisEventoSistemaCollection = esisEventoSistemaCollection;
+    public void setEsisEventoSistemaList(List<EsisEventoSistema> esisEventoSistemaList) {
+        this.esisEventoSistemaList = esisEventoSistemaList;
     }
 
-    public Collection<PitePgItem> getPitePgItemCollection() {
-        return pitePgItemCollection;
+    public List<PitePgItem> getPitePgItemList() {
+        return pitePgItemList;
     }
 
-    public void setPitePgItemCollection(Collection<PitePgItem> pitePgItemCollection) {
-        this.pitePgItemCollection = pitePgItemCollection;
+    public void setPitePgItemList(List<PitePgItem> pitePgItemList) {
+        this.pitePgItemList = pitePgItemList;
     }
 
     public TvalTipoValor getTvalTipoValor() {

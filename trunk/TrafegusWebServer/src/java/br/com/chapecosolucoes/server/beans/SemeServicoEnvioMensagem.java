@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,21 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "seme_servico_envio_mensagem")
+@Table(name = "seme_servico_envio_mensagem", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "SemeServicoEnvioMensagem.findAll", query = "SELECT s FROM SemeServicoEnvioMensagem s")})
+    @NamedQuery(name = "SemeServicoEnvioMensagem.findAll", query = "SELECT s FROM SemeServicoEnvioMensagem s"),
+    @NamedQuery(name = "SemeServicoEnvioMensagem.findBySemeCodigo", query = "SELECT s FROM SemeServicoEnvioMensagem s WHERE s.semeCodigo = :semeCodigo"),
+    @NamedQuery(name = "SemeServicoEnvioMensagem.findBySemeDescricao", query = "SELECT s FROM SemeServicoEnvioMensagem s WHERE s.semeDescricao = :semeDescricao"),
+    @NamedQuery(name = "SemeServicoEnvioMensagem.findBySemeDataHora", query = "SELECT s FROM SemeServicoEnvioMensagem s WHERE s.semeDataHora = :semeDataHora"),
+    @NamedQuery(name = "SemeServicoEnvioMensagem.findBySemeDomingo", query = "SELECT s FROM SemeServicoEnvioMensagem s WHERE s.semeDomingo = :semeDomingo"),
+    @NamedQuery(name = "SemeServicoEnvioMensagem.findBySemeSegunda", query = "SELECT s FROM SemeServicoEnvioMensagem s WHERE s.semeSegunda = :semeSegunda"),
+    @NamedQuery(name = "SemeServicoEnvioMensagem.findBySemeTerca", query = "SELECT s FROM SemeServicoEnvioMensagem s WHERE s.semeTerca = :semeTerca"),
+    @NamedQuery(name = "SemeServicoEnvioMensagem.findBySemeQuarta", query = "SELECT s FROM SemeServicoEnvioMensagem s WHERE s.semeQuarta = :semeQuarta"),
+    @NamedQuery(name = "SemeServicoEnvioMensagem.findBySemeQuinta", query = "SELECT s FROM SemeServicoEnvioMensagem s WHERE s.semeQuinta = :semeQuinta"),
+    @NamedQuery(name = "SemeServicoEnvioMensagem.findBySemeSexta", query = "SELECT s FROM SemeServicoEnvioMensagem s WHERE s.semeSexta = :semeSexta"),
+    @NamedQuery(name = "SemeServicoEnvioMensagem.findBySemeSabado", query = "SELECT s FROM SemeServicoEnvioMensagem s WHERE s.semeSabado = :semeSabado"),
+    @NamedQuery(name = "SemeServicoEnvioMensagem.findBySemeDataCadastro", query = "SELECT s FROM SemeServicoEnvioMensagem s WHERE s.semeDataCadastro = :semeDataCadastro"),
+    @NamedQuery(name = "SemeServicoEnvioMensagem.findBySemeDataEnvio", query = "SELECT s FROM SemeServicoEnvioMensagem s WHERE s.semeDataEnvio = :semeDataEnvio")})
 public class SemeServicoEnvioMensagem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,10 +72,10 @@ public class SemeServicoEnvioMensagem implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date semeDataEnvio;
     @JoinColumn(name = "seme_penv_codigo", referencedColumnName = "penv_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PenvPeriodicidadeEnvio penvPeriodicidadeEnvio;
     @JoinColumn(name = "seme_leme_codigo", referencedColumnName = "leme_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private LemeListaEnvioMensagem lemeListaEnvioMensagem;
 
     public SemeServicoEnvioMensagem() {

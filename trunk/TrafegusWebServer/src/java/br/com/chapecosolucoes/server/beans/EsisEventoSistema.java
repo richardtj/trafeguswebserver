@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,21 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "esis_evento_sistema")
+@Table(name = "esis_evento_sistema", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EsisEventoSistema.findAll", query = "SELECT e FROM EsisEventoSistema e")})
+    @NamedQuery(name = "EsisEventoSistema.findAll", query = "SELECT e FROM EsisEventoSistema e"),
+    @NamedQuery(name = "EsisEventoSistema.findByEsisCodigo", query = "SELECT e FROM EsisEventoSistema e WHERE e.esisCodigo = :esisCodigo"),
+    @NamedQuery(name = "EsisEventoSistema.findByEsisDataCadastro", query = "SELECT e FROM EsisEventoSistema e WHERE e.esisDataCadastro = :esisDataCadastro"),
+    @NamedQuery(name = "EsisEventoSistema.findByEsisDataInicio", query = "SELECT e FROM EsisEventoSistema e WHERE e.esisDataInicio = :esisDataInicio"),
+    @NamedQuery(name = "EsisEventoSistema.findByEsisDataFim", query = "SELECT e FROM EsisEventoSistema e WHERE e.esisDataFim = :esisDataFim"),
+    @NamedQuery(name = "EsisEventoSistema.findByEsisDescricao", query = "SELECT e FROM EsisEventoSistema e WHERE e.esisDescricao = :esisDescricao"),
+    @NamedQuery(name = "EsisEventoSistema.findByEsisValor", query = "SELECT e FROM EsisEventoSistema e WHERE e.esisValor = :esisValor"),
+    @NamedQuery(name = "EsisEventoSistema.findByEsisViolacaoGeradaIntegracao", query = "SELECT e FROM EsisEventoSistema e WHERE e.esisViolacaoGeradaIntegracao = :esisViolacaoGeradaIntegracao"),
+    @NamedQuery(name = "EsisEventoSistema.findByEsisImportado", query = "SELECT e FROM EsisEventoSistema e WHERE e.esisImportado = :esisImportado"),
+    @NamedQuery(name = "EsisEventoSistema.findByEsisUsuCodigoLeitura", query = "SELECT e FROM EsisEventoSistema e WHERE e.esisUsuCodigoLeitura = :esisUsuCodigoLeitura"),
+    @NamedQuery(name = "EsisEventoSistema.findByEsisDataLeitura", query = "SELECT e FROM EsisEventoSistema e WHERE e.esisDataLeitura = :esisDataLeitura"),
+    @NamedQuery(name = "EsisEventoSistema.findByEsisDataTratamentoServidor", query = "SELECT e FROM EsisEventoSistema e WHERE e.esisDataTratamentoServidor = :esisDataTratamentoServidor"),
+    @NamedQuery(name = "EsisEventoSistema.findByEsisDescTratamento", query = "SELECT e FROM EsisEventoSistema e WHERE e.esisDescTratamento = :esisDescTratamento")})
 public class EsisEventoSistema implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,13 +74,13 @@ public class EsisEventoSistema implements Serializable {
     @Column(name = "esis_desc_tratamento", length = 250)
     private String esisDescTratamento;
     @JoinColumn(name = "esis_term_codigo", referencedColumnName = "term_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TermTerminal termTerminal;
     @JoinColumn(name = "esis_pgai_codigo", referencedColumnName = "pgai_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PgaiPgAssociaItem pgaiPgAssociaItem;
     @JoinColumn(name = "esis_espa_codigo", referencedColumnName = "espa_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EspaEventoSistemaPadrao espaEventoSistemaPadrao;
 
     public EsisEventoSistema() {

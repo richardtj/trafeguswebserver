@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,16 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "pcam_permissao_campo")
+@Table(name = "pcam_permissao_campo", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PcamPermissaoCampo.findAll", query = "SELECT p FROM PcamPermissaoCampo p")})
+    @NamedQuery(name = "PcamPermissaoCampo.findAll", query = "SELECT p FROM PcamPermissaoCampo p"),
+    @NamedQuery(name = "PcamPermissaoCampo.findByPcamCodigo", query = "SELECT p FROM PcamPermissaoCampo p WHERE p.pcamCodigo = :pcamCodigo"),
+    @NamedQuery(name = "PcamPermissaoCampo.findByPcamIdObejto", query = "SELECT p FROM PcamPermissaoCampo p WHERE p.pcamIdObejto = :pcamIdObejto"),
+    @NamedQuery(name = "PcamPermissaoCampo.findByPcamPermitirAlterar", query = "SELECT p FROM PcamPermissaoCampo p WHERE p.pcamPermitirAlterar = :pcamPermitirAlterar"),
+    @NamedQuery(name = "PcamPermissaoCampo.findByPcamPermitirVisualizar", query = "SELECT p FROM PcamPermissaoCampo p WHERE p.pcamPermitirVisualizar = :pcamPermitirVisualizar"),
+    @NamedQuery(name = "PcamPermissaoCampo.findByPcamDataCadastro", query = "SELECT p FROM PcamPermissaoCampo p WHERE p.pcamDataCadastro = :pcamDataCadastro"),
+    @NamedQuery(name = "PcamPermissaoCampo.findByPcamCodigoGr", query = "SELECT p FROM PcamPermissaoCampo p WHERE p.pcamCodigoGr = :pcamCodigoGr"),
+    @NamedQuery(name = "PcamPermissaoCampo.findByPcamImportado", query = "SELECT p FROM PcamPermissaoCampo p WHERE p.pcamImportado = :pcamImportado")})
 public class PcamPermissaoCampo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,7 +55,7 @@ public class PcamPermissaoCampo implements Serializable {
     @Column(name = "pcam_importado")
     private Character pcamImportado;
     @JoinColumn(name = "pcam_ptel_codigo", referencedColumnName = "ptel_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PtelPermissaoTela ptelPermissaoTela;
 
     public PcamPermissaoCampo() {

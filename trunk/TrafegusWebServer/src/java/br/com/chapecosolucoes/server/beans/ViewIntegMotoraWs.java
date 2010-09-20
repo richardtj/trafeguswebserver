@@ -21,9 +21,23 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_integ_motora_ws")
+@Table(name = "view_integ_motora_ws", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewIntegMotoraWs.findAll", query = "SELECT v FROM ViewIntegMotoraWs v")})
+    @NamedQuery(name = "ViewIntegMotoraWs.findAll", query = "SELECT v FROM ViewIntegMotoraWs v"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByPackId", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.packId = :packId"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByIntegrator", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.integrator = :integrator"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByAccount", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.account = :account"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByNome", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.nome = :nome"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByCnh", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.cnh = :cnh"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByValidadeCnh", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.validadeCnh = :validadeCnh"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByCpf", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.cpf = :cpf"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByRg", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.rg = :rg"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByCidade", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.cidade = :cidade"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByUf", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.uf = :uf"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByRua", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.rua = :rua"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByNumero", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.numero = :numero"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByBairro", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.bairro = :bairro"),
+    @NamedQuery(name = "ViewIntegMotoraWs.findByCep", query = "SELECT v FROM ViewIntegMotoraWs v WHERE v.cep = :cep")})
 public class ViewIntegMotoraWs implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "PackId")

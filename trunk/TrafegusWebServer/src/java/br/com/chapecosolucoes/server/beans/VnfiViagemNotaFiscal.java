@@ -7,11 +7,12 @@ package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,9 +28,15 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "vnfi_viagem_nota_fiscal")
+@Table(name = "vnfi_viagem_nota_fiscal", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VnfiViagemNotaFiscal.findAll", query = "SELECT v FROM VnfiViagemNotaFiscal v")})
+    @NamedQuery(name = "VnfiViagemNotaFiscal.findAll", query = "SELECT v FROM VnfiViagemNotaFiscal v"),
+    @NamedQuery(name = "VnfiViagemNotaFiscal.findByVnfiCodigo", query = "SELECT v FROM VnfiViagemNotaFiscal v WHERE v.vnfiCodigo = :vnfiCodigo"),
+    @NamedQuery(name = "VnfiViagemNotaFiscal.findByVnfiNumero", query = "SELECT v FROM VnfiViagemNotaFiscal v WHERE v.vnfiNumero = :vnfiNumero"),
+    @NamedQuery(name = "VnfiViagemNotaFiscal.findByVnfiValor", query = "SELECT v FROM VnfiViagemNotaFiscal v WHERE v.vnfiValor = :vnfiValor"),
+    @NamedQuery(name = "VnfiViagemNotaFiscal.findByVnfiDataCadastro", query = "SELECT v FROM VnfiViagemNotaFiscal v WHERE v.vnfiDataCadastro = :vnfiDataCadastro"),
+    @NamedQuery(name = "VnfiViagemNotaFiscal.findByVnfiCodigoGr", query = "SELECT v FROM VnfiViagemNotaFiscal v WHERE v.vnfiCodigoGr = :vnfiCodigoGr"),
+    @NamedQuery(name = "VnfiViagemNotaFiscal.findByVnfiImportado", query = "SELECT v FROM VnfiViagemNotaFiscal v WHERE v.vnfiImportado = :vnfiImportado")})
 public class VnfiViagemNotaFiscal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,13 +54,13 @@ public class VnfiViagemNotaFiscal implements Serializable {
     private Integer vnfiCodigoGr;
     @Column(name = "vnfi_importado")
     private Character vnfiImportado;
-    @OneToMany(mappedBy = "vnfiViagemNotaFiscal")
-    private Collection<VproViagemProduto> vproViagemProdutoCollection;
+    @OneToMany(mappedBy = "vnfiViagemNotaFiscal", fetch = FetchType.EAGER)
+    private List<VproViagemProduto> vproViagemProdutoList;
     @JoinColumn(name = "vnfi_vloc_codigo", referencedColumnName = "vloc_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private VlocViagemLocal vlocViagemLocal;
     @JoinColumn(name = "vnfi_vcon_codigo", referencedColumnName = "vcon_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private VconViagemConhecimento vconViagemConhecimento;
 
     public VnfiViagemNotaFiscal() {
@@ -111,12 +118,12 @@ public class VnfiViagemNotaFiscal implements Serializable {
         this.vnfiImportado = vnfiImportado;
     }
 
-    public Collection<VproViagemProduto> getVproViagemProdutoCollection() {
-        return vproViagemProdutoCollection;
+    public List<VproViagemProduto> getVproViagemProdutoList() {
+        return vproViagemProdutoList;
     }
 
-    public void setVproViagemProdutoCollection(Collection<VproViagemProduto> vproViagemProdutoCollection) {
-        this.vproViagemProdutoCollection = vproViagemProdutoCollection;
+    public void setVproViagemProdutoList(List<VproViagemProduto> vproViagemProdutoList) {
+        this.vproViagemProdutoList = vproViagemProdutoList;
     }
 
     public VlocViagemLocal getVlocViagemLocal() {

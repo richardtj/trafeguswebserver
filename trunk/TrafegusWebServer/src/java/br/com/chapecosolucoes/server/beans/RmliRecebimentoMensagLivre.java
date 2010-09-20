@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "rmli_recebimento_mensag_livre")
+@Table(name = "rmli_recebimento_mensag_livre", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "RmliRecebimentoMensagLivre.findAll", query = "SELECT r FROM RmliRecebimentoMensagLivre r")})
+    @NamedQuery(name = "RmliRecebimentoMensagLivre.findAll", query = "SELECT r FROM RmliRecebimentoMensagLivre r"),
+    @NamedQuery(name = "RmliRecebimentoMensagLivre.findByRmliReceCodigo", query = "SELECT r FROM RmliRecebimentoMensagLivre r WHERE r.rmliReceCodigo = :rmliReceCodigo"),
+    @NamedQuery(name = "RmliRecebimentoMensagLivre.findByRmliTexto", query = "SELECT r FROM RmliRecebimentoMensagLivre r WHERE r.rmliTexto = :rmliTexto"),
+    @NamedQuery(name = "RmliRecebimentoMensagLivre.findByRmliDataLeitura", query = "SELECT r FROM RmliRecebimentoMensagLivre r WHERE r.rmliDataLeitura = :rmliDataLeitura"),
+    @NamedQuery(name = "RmliRecebimentoMensagLivre.findByRmliDataComputadorBordo", query = "SELECT r FROM RmliRecebimentoMensagLivre r WHERE r.rmliDataComputadorBordo = :rmliDataComputadorBordo")})
 public class RmliRecebimentoMensagLivre implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,7 +47,7 @@ public class RmliRecebimentoMensagLivre implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date rmliDataComputadorBordo;
     @JoinColumn(name = "rmli_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
 
     public RmliRecebimentoMensagLivre() {

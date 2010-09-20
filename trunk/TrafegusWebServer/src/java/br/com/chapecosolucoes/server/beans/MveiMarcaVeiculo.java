@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,10 +25,15 @@ import javax.persistence.UniqueConstraint;
  * @author Emerson
  */
 @Entity
-@Table(name = "mvei_marca_veiculo", uniqueConstraints = {
+@Table(name = "mvei_marca_veiculo", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"mvei_descricao"})})
 @NamedQueries({
-    @NamedQuery(name = "MveiMarcaVeiculo.findAll", query = "SELECT m FROM MveiMarcaVeiculo m")})
+    @NamedQuery(name = "MveiMarcaVeiculo.findAll", query = "SELECT m FROM MveiMarcaVeiculo m"),
+    @NamedQuery(name = "MveiMarcaVeiculo.findByMveiCodigo", query = "SELECT m FROM MveiMarcaVeiculo m WHERE m.mveiCodigo = :mveiCodigo"),
+    @NamedQuery(name = "MveiMarcaVeiculo.findByMveiDescricao", query = "SELECT m FROM MveiMarcaVeiculo m WHERE m.mveiDescricao = :mveiDescricao"),
+    @NamedQuery(name = "MveiMarcaVeiculo.findByMveiDataCadastro", query = "SELECT m FROM MveiMarcaVeiculo m WHERE m.mveiDataCadastro = :mveiDataCadastro"),
+    @NamedQuery(name = "MveiMarcaVeiculo.findByMveiCodigoGr", query = "SELECT m FROM MveiMarcaVeiculo m WHERE m.mveiCodigoGr = :mveiCodigoGr"),
+    @NamedQuery(name = "MveiMarcaVeiculo.findByMveiImportado", query = "SELECT m FROM MveiMarcaVeiculo m WHERE m.mveiImportado = :mveiImportado")})
 public class MveiMarcaVeiculo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,7 +50,7 @@ public class MveiMarcaVeiculo implements Serializable {
     @Column(name = "mvei_importado")
     private Character mveiImportado;
     @OneToMany(mappedBy = "mveiMarcaVeiculo")
-    private Collection<MvecModeloVeiculo> mvecModeloVeiculoCollection;
+    private List<MvecModeloVeiculo> mvecModeloVeiculoList;
 
     public MveiMarcaVeiculo() {
     }
@@ -94,12 +99,12 @@ public class MveiMarcaVeiculo implements Serializable {
         this.mveiImportado = mveiImportado;
     }
 
-    public Collection<MvecModeloVeiculo> getMvecModeloVeiculoCollection() {
-        return mvecModeloVeiculoCollection;
+    public List<MvecModeloVeiculo> getMvecModeloVeiculoList() {
+        return mvecModeloVeiculoList;
     }
 
-    public void setMvecModeloVeiculoCollection(Collection<MvecModeloVeiculo> mvecModeloVeiculoCollection) {
-        this.mvecModeloVeiculoCollection = mvecModeloVeiculoCollection;
+    public void setMvecModeloVeiculoList(List<MvecModeloVeiculo> mvecModeloVeiculoList) {
+        this.mvecModeloVeiculoList = mvecModeloVeiculoList;
     }
 
     @Override

@@ -22,9 +22,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "csis_configuracao_sistema")
+@Table(name = "csis_configuracao_sistema", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "CsisConfiguracaoSistema.findAll", query = "SELECT c FROM CsisConfiguracaoSistema c")})
+    @NamedQuery(name = "CsisConfiguracaoSistema.findAll", query = "SELECT c FROM CsisConfiguracaoSistema c"),
+    @NamedQuery(name = "CsisConfiguracaoSistema.findByCsisCodigo", query = "SELECT c FROM CsisConfiguracaoSistema c WHERE c.csisCodigo = :csisCodigo"),
+    @NamedQuery(name = "CsisConfiguracaoSistema.findByCsisUsarSeparacaoFilial", query = "SELECT c FROM CsisConfiguracaoSistema c WHERE c.csisUsarSeparacaoFilial = :csisUsarSeparacaoFilial"),
+    @NamedQuery(name = "CsisConfiguracaoSistema.findByCsisDataCadastro", query = "SELECT c FROM CsisConfiguracaoSistema c WHERE c.csisDataCadastro = :csisDataCadastro"),
+    @NamedQuery(name = "CsisConfiguracaoSistema.findByCsisImportado", query = "SELECT c FROM CsisConfiguracaoSistema c WHERE c.csisImportado = :csisImportado")})
 public class CsisConfiguracaoSistema implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

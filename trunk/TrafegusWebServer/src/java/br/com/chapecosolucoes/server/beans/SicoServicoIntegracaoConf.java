@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,9 +22,13 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "sico_servico_integracao_conf")
+@Table(name = "sico_servico_integracao_conf", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "SicoServicoIntegracaoConf.findAll", query = "SELECT s FROM SicoServicoIntegracaoConf s")})
+    @NamedQuery(name = "SicoServicoIntegracaoConf.findAll", query = "SELECT s FROM SicoServicoIntegracaoConf s"),
+    @NamedQuery(name = "SicoServicoIntegracaoConf.findBySicoCodigo", query = "SELECT s FROM SicoServicoIntegracaoConf s WHERE s.sicoCodigo = :sicoCodigo"),
+    @NamedQuery(name = "SicoServicoIntegracaoConf.findBySicoHostExecutavel", query = "SELECT s FROM SicoServicoIntegracaoConf s WHERE s.sicoHostExecutavel = :sicoHostExecutavel"),
+    @NamedQuery(name = "SicoServicoIntegracaoConf.findBySicoCaminhoAplicacao", query = "SELECT s FROM SicoServicoIntegracaoConf s WHERE s.sicoCaminhoAplicacao = :sicoCaminhoAplicacao"),
+    @NamedQuery(name = "SicoServicoIntegracaoConf.findBySicoNomeExecutavel", query = "SELECT s FROM SicoServicoIntegracaoConf s WHERE s.sicoNomeExecutavel = :sicoNomeExecutavel")})
 public class SicoServicoIntegracaoConf implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,10 +42,10 @@ public class SicoServicoIntegracaoConf implements Serializable {
     @Column(name = "sico_nome_executavel", length = 50)
     private String sicoNomeExecutavel;
     @JoinColumn(name = "sico_tecn_codigo", referencedColumnName = "tecn_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TecnTecnologia tecnTecnologia;
     @JoinColumn(name = "sico_ssis_codigo", referencedColumnName = "ssis_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private SsisServicoSistema ssisServicoSistema;
 
     public SicoServicoIntegracaoConf() {

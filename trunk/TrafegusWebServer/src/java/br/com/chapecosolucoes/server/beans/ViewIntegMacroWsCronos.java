@@ -17,9 +17,18 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_integ_macro_ws_cronos")
+@Table(name = "view_integ_macro_ws_cronos", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewIntegMacroWsCronos.findAll", query = "SELECT v FROM ViewIntegMacroWsCronos v")})
+    @NamedQuery(name = "ViewIntegMacroWsCronos.findAll", query = "SELECT v FROM ViewIntegMacroWsCronos v"),
+    @NamedQuery(name = "ViewIntegMacroWsCronos.findByPackId", query = "SELECT v FROM ViewIntegMacroWsCronos v WHERE v.packId = :packId"),
+    @NamedQuery(name = "ViewIntegMacroWsCronos.findByIntegrator", query = "SELECT v FROM ViewIntegMacroWsCronos v WHERE v.integrator = :integrator"),
+    @NamedQuery(name = "ViewIntegMacroWsCronos.findByAccount", query = "SELECT v FROM ViewIntegMacroWsCronos v WHERE v.account = :account"),
+    @NamedQuery(name = "ViewIntegMacroWsCronos.findByCodEquipamento", query = "SELECT v FROM ViewIntegMacroWsCronos v WHERE v.codEquipamento = :codEquipamento"),
+    @NamedQuery(name = "ViewIntegMacroWsCronos.findByMacroNumber", query = "SELECT v FROM ViewIntegMacroWsCronos v WHERE v.macroNumber = :macroNumber"),
+    @NamedQuery(name = "ViewIntegMacroWsCronos.findByTitle", query = "SELECT v FROM ViewIntegMacroWsCronos v WHERE v.title = :title"),
+    @NamedQuery(name = "ViewIntegMacroWsCronos.findByLabel", query = "SELECT v FROM ViewIntegMacroWsCronos v WHERE v.label = :label"),
+    @NamedQuery(name = "ViewIntegMacroWsCronos.findByEnableMsgLivre", query = "SELECT v FROM ViewIntegMacroWsCronos v WHERE v.enableMsgLivre = :enableMsgLivre"),
+    @NamedQuery(name = "ViewIntegMacroWsCronos.findByEnable", query = "SELECT v FROM ViewIntegMacroWsCronos v WHERE v.enable = :enable")})
 public class ViewIntegMacroWsCronos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "PackId")

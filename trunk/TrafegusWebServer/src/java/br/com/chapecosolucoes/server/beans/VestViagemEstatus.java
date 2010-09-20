@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "vest_viagem_estatus")
+@Table(name = "vest_viagem_estatus", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VestViagemEstatus.findAll", query = "SELECT v FROM VestViagemEstatus v")})
+    @NamedQuery(name = "VestViagemEstatus.findAll", query = "SELECT v FROM VestViagemEstatus v"),
+    @NamedQuery(name = "VestViagemEstatus.findByVestCodigo", query = "SELECT v FROM VestViagemEstatus v WHERE v.vestCodigo = :vestCodigo"),
+    @NamedQuery(name = "VestViagemEstatus.findByVestEstatus", query = "SELECT v FROM VestViagemEstatus v WHERE v.vestEstatus = :vestEstatus"),
+    @NamedQuery(name = "VestViagemEstatus.findByVestDataCadastro", query = "SELECT v FROM VestViagemEstatus v WHERE v.vestDataCadastro = :vestDataCadastro"),
+    @NamedQuery(name = "VestViagemEstatus.findByVestObservacao", query = "SELECT v FROM VestViagemEstatus v WHERE v.vestObservacao = :vestObservacao")})
 public class VestViagemEstatus implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,13 +46,13 @@ public class VestViagemEstatus implements Serializable {
     @Column(name = "vest_observacao", length = 200)
     private String vestObservacao;
     @JoinColumn(name = "vest_viag_codigo", referencedColumnName = "viag_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ViagViagem viagViagem;
     @JoinColumn(name = "vest_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "vest_moti_codigo", referencedColumnName = "moti_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private MotiMotivo motiMotivo;
 
     public VestViagemEstatus() {

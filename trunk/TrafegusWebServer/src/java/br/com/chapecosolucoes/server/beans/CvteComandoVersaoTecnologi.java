@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,10 +26,14 @@ import javax.persistence.UniqueConstraint;
  * @author Emerson
  */
 @Entity
-@Table(name = "cvte_comando_versao_tecnologi", uniqueConstraints = {
+@Table(name = "cvte_comando_versao_tecnologi", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"cvte_vtec_codigo", "cvte_cpad_codigo"})})
 @NamedQueries({
-    @NamedQuery(name = "CvteComandoVersaoTecnologi.findAll", query = "SELECT c FROM CvteComandoVersaoTecnologi c")})
+    @NamedQuery(name = "CvteComandoVersaoTecnologi.findAll", query = "SELECT c FROM CvteComandoVersaoTecnologi c"),
+    @NamedQuery(name = "CvteComandoVersaoTecnologi.findByCvteCodigo", query = "SELECT c FROM CvteComandoVersaoTecnologi c WHERE c.cvteCodigo = :cvteCodigo"),
+    @NamedQuery(name = "CvteComandoVersaoTecnologi.findByCvteDataCadastro", query = "SELECT c FROM CvteComandoVersaoTecnologi c WHERE c.cvteDataCadastro = :cvteDataCadastro"),
+    @NamedQuery(name = "CvteComandoVersaoTecnologi.findByCvteCodigoGr", query = "SELECT c FROM CvteComandoVersaoTecnologi c WHERE c.cvteCodigoGr = :cvteCodigoGr"),
+    @NamedQuery(name = "CvteComandoVersaoTecnologi.findByCvteImportado", query = "SELECT c FROM CvteComandoVersaoTecnologi c WHERE c.cvteImportado = :cvteImportado")})
 public class CvteComandoVersaoTecnologi implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,10 +48,10 @@ public class CvteComandoVersaoTecnologi implements Serializable {
     @Column(name = "cvte_importado")
     private Character cvteImportado;
     @JoinColumn(name = "cvte_vtec_codigo", referencedColumnName = "vtec_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private VtecVersaoTecnologia vtecVersaoTecnologia;
     @JoinColumn(name = "cvte_cpad_codigo", referencedColumnName = "cpad_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private CpadComandoPadrao cpadComandoPadrao;
 
     public CvteComandoVersaoTecnologi() {

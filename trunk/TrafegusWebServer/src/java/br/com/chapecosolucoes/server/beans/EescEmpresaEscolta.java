@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -23,9 +24,10 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "eesc_empresa_escolta")
+@Table(name = "eesc_empresa_escolta", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EescEmpresaEscolta.findAll", query = "SELECT e FROM EescEmpresaEscolta e")})
+    @NamedQuery(name = "EescEmpresaEscolta.findAll", query = "SELECT e FROM EescEmpresaEscolta e"),
+    @NamedQuery(name = "EescEmpresaEscolta.findByEescOrasPessPesjCodigo", query = "SELECT e FROM EescEmpresaEscolta e WHERE e.eescOrasPessPesjCodigo = :eescOrasPessPesjCodigo")})
 public class EescEmpresaEscolta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,10 +35,10 @@ public class EescEmpresaEscolta implements Serializable {
     @Column(name = "eesc_oras_pess_pesj_codigo", nullable = false)
     private Integer eescOrasPessPesjCodigo;
     @JoinColumn(name = "eesc_oras_pess_pesj_codigo", referencedColumnName = "pjur_pess_oras_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private PjurPessoaJuridica pjurPessoaJuridica;
-    @OneToMany(mappedBy = "eescEmpresaEscolta")
-    private Collection<CombComboio> combComboioCollection;
+    @OneToMany(mappedBy = "eescEmpresaEscolta", fetch = FetchType.EAGER)
+    private List<CombComboio> combComboioList;
 
     public EescEmpresaEscolta() {
     }
@@ -61,12 +63,12 @@ public class EescEmpresaEscolta implements Serializable {
         this.pjurPessoaJuridica = pjurPessoaJuridica;
     }
 
-    public Collection<CombComboio> getCombComboioCollection() {
-        return combComboioCollection;
+    public List<CombComboio> getCombComboioList() {
+        return combComboioList;
     }
 
-    public void setCombComboioCollection(Collection<CombComboio> combComboioCollection) {
-        this.combComboioCollection = combComboioCollection;
+    public void setCombComboioList(List<CombComboio> combComboioList) {
+        this.combComboioList = combComboioList;
     }
 
     @Override

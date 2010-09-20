@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,9 +27,15 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "gmac_grupo_macro")
+@Table(name = "gmac_grupo_macro", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "GmacGrupoMacro.findAll", query = "SELECT g FROM GmacGrupoMacro g")})
+    @NamedQuery(name = "GmacGrupoMacro.findAll", query = "SELECT g FROM GmacGrupoMacro g"),
+    @NamedQuery(name = "GmacGrupoMacro.findByGmacCodigo", query = "SELECT g FROM GmacGrupoMacro g WHERE g.gmacCodigo = :gmacCodigo"),
+    @NamedQuery(name = "GmacGrupoMacro.findByGmacDescricao", query = "SELECT g FROM GmacGrupoMacro g WHERE g.gmacDescricao = :gmacDescricao"),
+    @NamedQuery(name = "GmacGrupoMacro.findByGmacDataCadastro", query = "SELECT g FROM GmacGrupoMacro g WHERE g.gmacDataCadastro = :gmacDataCadastro"),
+    @NamedQuery(name = "GmacGrupoMacro.findByGmacCodigoGr", query = "SELECT g FROM GmacGrupoMacro g WHERE g.gmacCodigoGr = :gmacCodigoGr"),
+    @NamedQuery(name = "GmacGrupoMacro.findByGmacImportado", query = "SELECT g FROM GmacGrupoMacro g WHERE g.gmacImportado = :gmacImportado"),
+    @NamedQuery(name = "GmacGrupoMacro.findByGmacTipoGrupo", query = "SELECT g FROM GmacGrupoMacro g WHERE g.gmacTipoGrupo = :gmacTipoGrupo")})
 public class GmacGrupoMacro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,14 +53,14 @@ public class GmacGrupoMacro implements Serializable {
     private Character gmacImportado;
     @Column(name = "gmac_tipo_grupo", length = 10)
     private String gmacTipoGrupo;
-    @OneToMany(mappedBy = "gmacGrupoMacro")
-    private Collection<TermTerminal> termTerminalCollection;
-    @OneToMany(mappedBy = "gmacGrupoMacro1")
-    private Collection<TermTerminal> termTerminalCollection1;
-    @OneToMany(mappedBy = "gmacGrupoMacro")
-    private Collection<MpadMacroPadrao> mpadMacroPadraoCollection;
+    @OneToMany(mappedBy = "gmacGrupoMacro", fetch = FetchType.EAGER)
+    private List<TermTerminal> termTerminalList;
+    @OneToMany(mappedBy = "gmacGrupoMacro1", fetch = FetchType.EAGER)
+    private List<TermTerminal> termTerminalList1;
+    @OneToMany(mappedBy = "gmacGrupoMacro", fetch = FetchType.EAGER)
+    private List<MpadMacroPadrao> mpadMacroPadraoList;
     @JoinColumn(name = "gmac_vtec_codigo", referencedColumnName = "vtec_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private VtecVersaoTecnologia vtecVersaoTecnologia;
 
     public GmacGrupoMacro() {
@@ -111,28 +118,28 @@ public class GmacGrupoMacro implements Serializable {
         this.gmacTipoGrupo = gmacTipoGrupo;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection() {
-        return termTerminalCollection;
+    public List<TermTerminal> getTermTerminalList() {
+        return termTerminalList;
     }
 
-    public void setTermTerminalCollection(Collection<TermTerminal> termTerminalCollection) {
-        this.termTerminalCollection = termTerminalCollection;
+    public void setTermTerminalList(List<TermTerminal> termTerminalList) {
+        this.termTerminalList = termTerminalList;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection1() {
-        return termTerminalCollection1;
+    public List<TermTerminal> getTermTerminalList1() {
+        return termTerminalList1;
     }
 
-    public void setTermTerminalCollection1(Collection<TermTerminal> termTerminalCollection1) {
-        this.termTerminalCollection1 = termTerminalCollection1;
+    public void setTermTerminalList1(List<TermTerminal> termTerminalList1) {
+        this.termTerminalList1 = termTerminalList1;
     }
 
-    public Collection<MpadMacroPadrao> getMpadMacroPadraoCollection() {
-        return mpadMacroPadraoCollection;
+    public List<MpadMacroPadrao> getMpadMacroPadraoList() {
+        return mpadMacroPadraoList;
     }
 
-    public void setMpadMacroPadraoCollection(Collection<MpadMacroPadrao> mpadMacroPadraoCollection) {
-        this.mpadMacroPadraoCollection = mpadMacroPadraoCollection;
+    public void setMpadMacroPadraoList(List<MpadMacroPadrao> mpadMacroPadraoList) {
+        this.mpadMacroPadraoList = mpadMacroPadraoList;
     }
 
     public VtecVersaoTecnologia getVtecVersaoTecnologia() {

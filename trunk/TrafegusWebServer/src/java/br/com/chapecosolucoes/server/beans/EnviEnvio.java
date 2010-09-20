@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,9 +27,17 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "envi_envio")
+@Table(name = "envi_envio", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EnviEnvio.findAll", query = "SELECT e FROM EnviEnvio e")})
+    @NamedQuery(name = "EnviEnvio.findAll", query = "SELECT e FROM EnviEnvio e"),
+    @NamedQuery(name = "EnviEnvio.findByEnviCodigo", query = "SELECT e FROM EnviEnvio e WHERE e.enviCodigo = :enviCodigo"),
+    @NamedQuery(name = "EnviEnvio.findByEnviDataEnviado", query = "SELECT e FROM EnviEnvio e WHERE e.enviDataEnviado = :enviDataEnviado"),
+    @NamedQuery(name = "EnviEnvio.findByEnviDataCadastro", query = "SELECT e FROM EnviEnvio e WHERE e.enviDataCadastro = :enviDataCadastro"),
+    @NamedQuery(name = "EnviEnvio.findByEnviEstatus", query = "SELECT e FROM EnviEnvio e WHERE e.enviEstatus = :enviEstatus"),
+    @NamedQuery(name = "EnviEnvio.findByEnviCodigoGr", query = "SELECT e FROM EnviEnvio e WHERE e.enviCodigoGr = :enviCodigoGr"),
+    @NamedQuery(name = "EnviEnvio.findByEnviDescricaoEstatus", query = "SELECT e FROM EnviEnvio e WHERE e.enviDescricaoEstatus = :enviDescricaoEstatus"),
+    @NamedQuery(name = "EnviEnvio.findByEnviEstatusIgnicao", query = "SELECT e FROM EnviEnvio e WHERE e.enviEstatusIgnicao = :enviEstatusIgnicao"),
+    @NamedQuery(name = "EnviEnvio.findByEnviVinculoExterno", query = "SELECT e FROM EnviEnvio e WHERE e.enviVinculoExterno = :enviVinculoExterno")})
 public class EnviEnvio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,16 +61,16 @@ public class EnviEnvio implements Serializable {
     @Column(name = "envi_vinculo_externo", length = 50)
     private String enviVinculoExterno;
     @JoinColumn(name = "envi_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "envi_term_codigo", referencedColumnName = "term_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TermTerminal termTerminal;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "enviEnvio")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "enviEnvio", fetch = FetchType.EAGER)
     private EmacEnvioMacro emacEnvioMacro;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "enviEnvio")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "enviEnvio", fetch = FetchType.EAGER)
     private EcomEnvioComando ecomEnvioComando;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "enviEnvio")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "enviEnvio", fetch = FetchType.EAGER)
     private EmliEnvioMensagemLivre emliEnvioMensagemLivre;
 
     public EnviEnvio() {

@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,9 +22,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "tmac_tipo_macro")
+@Table(name = "tmac_tipo_macro", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TmacTipoMacro.findAll", query = "SELECT t FROM TmacTipoMacro t")})
+    @NamedQuery(name = "TmacTipoMacro.findAll", query = "SELECT t FROM TmacTipoMacro t"),
+    @NamedQuery(name = "TmacTipoMacro.findByTmacCodigo", query = "SELECT t FROM TmacTipoMacro t WHERE t.tmacCodigo = :tmacCodigo"),
+    @NamedQuery(name = "TmacTipoMacro.findByTmacDescricao", query = "SELECT t FROM TmacTipoMacro t WHERE t.tmacDescricao = :tmacDescricao")})
 public class TmacTipoMacro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,8 +35,8 @@ public class TmacTipoMacro implements Serializable {
     private Integer tmacCodigo;
     @Column(name = "tmac_descricao", length = 50)
     private String tmacDescricao;
-    @OneToMany(mappedBy = "tmacTipoMacro")
-    private Collection<MpadMacroPadrao> mpadMacroPadraoCollection;
+    @OneToMany(mappedBy = "tmacTipoMacro", fetch = FetchType.EAGER)
+    private List<MpadMacroPadrao> mpadMacroPadraoList;
 
     public TmacTipoMacro() {
     }
@@ -58,12 +61,12 @@ public class TmacTipoMacro implements Serializable {
         this.tmacDescricao = tmacDescricao;
     }
 
-    public Collection<MpadMacroPadrao> getMpadMacroPadraoCollection() {
-        return mpadMacroPadraoCollection;
+    public List<MpadMacroPadrao> getMpadMacroPadraoList() {
+        return mpadMacroPadraoList;
     }
 
-    public void setMpadMacroPadraoCollection(Collection<MpadMacroPadrao> mpadMacroPadraoCollection) {
-        this.mpadMacroPadraoCollection = mpadMacroPadraoCollection;
+    public void setMpadMacroPadraoList(List<MpadMacroPadrao> mpadMacroPadraoList) {
+        this.mpadMacroPadraoList = mpadMacroPadraoList;
     }
 
     @Override

@@ -19,9 +19,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "cfg_tabela_framework")
+@Table(name = "cfg_tabela_framework", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "CfgTabelaFramework.findAll", query = "SELECT c FROM CfgTabelaFramework c")})
+    @NamedQuery(name = "CfgTabelaFramework.findAll", query = "SELECT c FROM CfgTabelaFramework c"),
+    @NamedQuery(name = "CfgTabelaFramework.findByCtfTabelaFrameworkId", query = "SELECT c FROM CfgTabelaFramework c WHERE c.ctfTabelaFrameworkId = :ctfTabelaFrameworkId"),
+    @NamedQuery(name = "CfgTabelaFramework.findByCtfTabelaDescricao", query = "SELECT c FROM CfgTabelaFramework c WHERE c.ctfTabelaDescricao = :ctfTabelaDescricao")})
 public class CfgTabelaFramework implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

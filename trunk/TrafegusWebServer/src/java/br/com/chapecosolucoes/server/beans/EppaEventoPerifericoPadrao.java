@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,9 +26,15 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "eppa_evento_periferico_padrao")
+@Table(name = "eppa_evento_periferico_padrao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EppaEventoPerifericoPadrao.findAll", query = "SELECT e FROM EppaEventoPerifericoPadrao e")})
+    @NamedQuery(name = "EppaEventoPerifericoPadrao.findAll", query = "SELECT e FROM EppaEventoPerifericoPadrao e"),
+    @NamedQuery(name = "EppaEventoPerifericoPadrao.findByEppaCodigo", query = "SELECT e FROM EppaEventoPerifericoPadrao e WHERE e.eppaCodigo = :eppaCodigo"),
+    @NamedQuery(name = "EppaEventoPerifericoPadrao.findByEppaDescricao", query = "SELECT e FROM EppaEventoPerifericoPadrao e WHERE e.eppaDescricao = :eppaDescricao"),
+    @NamedQuery(name = "EppaEventoPerifericoPadrao.findByEppaPreenchimento", query = "SELECT e FROM EppaEventoPerifericoPadrao e WHERE e.eppaPreenchimento = :eppaPreenchimento"),
+    @NamedQuery(name = "EppaEventoPerifericoPadrao.findByEppaDataCadastro", query = "SELECT e FROM EppaEventoPerifericoPadrao e WHERE e.eppaDataCadastro = :eppaDataCadastro"),
+    @NamedQuery(name = "EppaEventoPerifericoPadrao.findByEppaCodigoGr", query = "SELECT e FROM EppaEventoPerifericoPadrao e WHERE e.eppaCodigoGr = :eppaCodigoGr"),
+    @NamedQuery(name = "EppaEventoPerifericoPadrao.findByEppaImportado", query = "SELECT e FROM EppaEventoPerifericoPadrao e WHERE e.eppaImportado = :eppaImportado")})
 public class EppaEventoPerifericoPadrao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,14 +52,14 @@ public class EppaEventoPerifericoPadrao implements Serializable {
     private Integer eppaCodigoGr;
     @Column(name = "eppa_importado")
     private Character eppaImportado;
-    @OneToMany(mappedBy = "eppaEventoPerifericoPadrao")
-    private Collection<UrpeUltimoRecPeriferico> urpeUltimoRecPerifericoCollection;
     @JoinColumn(name = "eppa_tval_codigo", referencedColumnName = "tval_codigo")
     @ManyToOne
     private TvalTipoValor tvalTipoValor;
     @JoinColumn(name = "eppa_ppad_codigo", referencedColumnName = "ppad_codigo")
     @ManyToOne
     private PpadPerifericoPadrao ppadPerifericoPadrao;
+    @OneToMany(mappedBy = "eppaEventoPerifericoPadrao")
+    private List<RperRecebimentoPeriferico> rperRecebimentoPerifericoList;
 
     public EppaEventoPerifericoPadrao() {
     }
@@ -110,14 +116,6 @@ public class EppaEventoPerifericoPadrao implements Serializable {
         this.eppaImportado = eppaImportado;
     }
 
-    public Collection<UrpeUltimoRecPeriferico> getUrpeUltimoRecPerifericoCollection() {
-        return urpeUltimoRecPerifericoCollection;
-    }
-
-    public void setUrpeUltimoRecPerifericoCollection(Collection<UrpeUltimoRecPeriferico> urpeUltimoRecPerifericoCollection) {
-        this.urpeUltimoRecPerifericoCollection = urpeUltimoRecPerifericoCollection;
-    }
-
     public TvalTipoValor getTvalTipoValor() {
         return tvalTipoValor;
     }
@@ -132,6 +130,14 @@ public class EppaEventoPerifericoPadrao implements Serializable {
 
     public void setPpadPerifericoPadrao(PpadPerifericoPadrao ppadPerifericoPadrao) {
         this.ppadPerifericoPadrao = ppadPerifericoPadrao;
+    }
+
+    public List<RperRecebimentoPeriferico> getRperRecebimentoPerifericoList() {
+        return rperRecebimentoPerifericoList;
+    }
+
+    public void setRperRecebimentoPerifericoList(List<RperRecebimentoPeriferico> rperRecebimentoPerifericoList) {
+        this.rperRecebimentoPerifericoList = rperRecebimentoPerifericoList;
     }
 
     @Override

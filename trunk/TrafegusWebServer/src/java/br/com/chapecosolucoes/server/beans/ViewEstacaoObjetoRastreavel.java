@@ -17,9 +17,14 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_estacao_objeto_rastreavel")
+@Table(name = "view_estacao_objeto_rastreavel", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewEstacaoObjetoRastreavel.findAll", query = "SELECT v FROM ViewEstacaoObjetoRastreavel v")})
+    @NamedQuery(name = "ViewEstacaoObjetoRastreavel.findAll", query = "SELECT v FROM ViewEstacaoObjetoRastreavel v"),
+    @NamedQuery(name = "ViewEstacaoObjetoRastreavel.findByErasCodigo", query = "SELECT v FROM ViewEstacaoObjetoRastreavel v WHERE v.erasCodigo = :erasCodigo"),
+    @NamedQuery(name = "ViewEstacaoObjetoRastreavel.findByOrasCodigo", query = "SELECT v FROM ViewEstacaoObjetoRastreavel v WHERE v.orasCodigo = :orasCodigo"),
+    @NamedQuery(name = "ViewEstacaoObjetoRastreavel.findByOrasTipo", query = "SELECT v FROM ViewEstacaoObjetoRastreavel v WHERE v.orasTipo = :orasTipo"),
+    @NamedQuery(name = "ViewEstacaoObjetoRastreavel.findByIdentificador", query = "SELECT v FROM ViewEstacaoObjetoRastreavel v WHERE v.identificador = :identificador"),
+    @NamedQuery(name = "ViewEstacaoObjetoRastreavel.findByTipoOperacao", query = "SELECT v FROM ViewEstacaoObjetoRastreavel v WHERE v.tipoOperacao = :tipoOperacao")})
 public class ViewEstacaoObjetoRastreavel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "eras_codigo")

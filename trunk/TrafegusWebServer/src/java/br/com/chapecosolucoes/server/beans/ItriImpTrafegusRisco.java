@@ -19,9 +19,15 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "itri_imp_trafegus_risco")
+@Table(name = "itri_imp_trafegus_risco", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ItriImpTrafegusRisco.findAll", query = "SELECT i FROM ItriImpTrafegusRisco i")})
+    @NamedQuery(name = "ItriImpTrafegusRisco.findAll", query = "SELECT i FROM ItriImpTrafegusRisco i"),
+    @NamedQuery(name = "ItriImpTrafegusRisco.findByItriCodigo", query = "SELECT i FROM ItriImpTrafegusRisco i WHERE i.itriCodigo = :itriCodigo"),
+    @NamedQuery(name = "ItriImpTrafegusRisco.findByItriIdImportacao", query = "SELECT i FROM ItriImpTrafegusRisco i WHERE i.itriIdImportacao = :itriIdImportacao"),
+    @NamedQuery(name = "ItriImpTrafegusRisco.findByItriIdCliente", query = "SELECT i FROM ItriImpTrafegusRisco i WHERE i.itriIdCliente = :itriIdCliente"),
+    @NamedQuery(name = "ItriImpTrafegusRisco.findByItriInformacaoImportar", query = "SELECT i FROM ItriImpTrafegusRisco i WHERE i.itriInformacaoImportar = :itriInformacaoImportar"),
+    @NamedQuery(name = "ItriImpTrafegusRisco.findByItriImportado", query = "SELECT i FROM ItriImpTrafegusRisco i WHERE i.itriImportado = :itriImportado"),
+    @NamedQuery(name = "ItriImpTrafegusRisco.findByItriUltimoErro", query = "SELECT i FROM ItriImpTrafegusRisco i WHERE i.itriUltimoErro = :itriUltimoErro")})
 public class ItriImpTrafegusRisco implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

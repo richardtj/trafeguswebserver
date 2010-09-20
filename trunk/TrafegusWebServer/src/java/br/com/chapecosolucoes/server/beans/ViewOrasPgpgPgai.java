@@ -17,9 +17,13 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_oras_pgpg_pgai")
+@Table(name = "view_oras_pgpg_pgai", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewOrasPgpgPgai.findAll", query = "SELECT v FROM ViewOrasPgpgPgai v")})
+    @NamedQuery(name = "ViewOrasPgpgPgai.findAll", query = "SELECT v FROM ViewOrasPgpgPgai v"),
+    @NamedQuery(name = "ViewOrasPgpgPgai.findByOrasCodigo", query = "SELECT v FROM ViewOrasPgpgPgai v WHERE v.orasCodigo = :orasCodigo"),
+    @NamedQuery(name = "ViewOrasPgpgPgai.findByPgpgCodigo", query = "SELECT v FROM ViewOrasPgpgPgai v WHERE v.pgpgCodigo = :pgpgCodigo"),
+    @NamedQuery(name = "ViewOrasPgpgPgai.findByPgaiCodigo", query = "SELECT v FROM ViewOrasPgpgPgai v WHERE v.pgaiCodigo = :pgaiCodigo"),
+    @NamedQuery(name = "ViewOrasPgpgPgai.findByPiteCodigo", query = "SELECT v FROM ViewOrasPgpgPgai v WHERE v.piteCodigo = :piteCodigo")})
 public class ViewOrasPgpgPgai implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "oras_codigo")

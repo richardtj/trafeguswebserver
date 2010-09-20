@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,20 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "pper_problema_periferico")
+@Table(name = "pper_problema_periferico", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PperProblemaPeriferico.findAll", query = "SELECT p FROM PperProblemaPeriferico p")})
+    @NamedQuery(name = "PperProblemaPeriferico.findAll", query = "SELECT p FROM PperProblemaPeriferico p"),
+    @NamedQuery(name = "PperProblemaPeriferico.findByPperCodigo", query = "SELECT p FROM PperProblemaPeriferico p WHERE p.pperCodigo = :pperCodigo"),
+    @NamedQuery(name = "PperProblemaPeriferico.findByPperDataCadastro", query = "SELECT p FROM PperProblemaPeriferico p WHERE p.pperDataCadastro = :pperDataCadastro"),
+    @NamedQuery(name = "PperProblemaPeriferico.findByPperDataInicioProblema", query = "SELECT p FROM PperProblemaPeriferico p WHERE p.pperDataInicioProblema = :pperDataInicioProblema"),
+    @NamedQuery(name = "PperProblemaPeriferico.findByPperDataFimProblema", query = "SELECT p FROM PperProblemaPeriferico p WHERE p.pperDataFimProblema = :pperDataFimProblema"),
+    @NamedQuery(name = "PperProblemaPeriferico.findByPperDescricao", query = "SELECT p FROM PperProblemaPeriferico p WHERE p.pperDescricao = :pperDescricao"),
+    @NamedQuery(name = "PperProblemaPeriferico.findByPperDataHoraNotificacao", query = "SELECT p FROM PperProblemaPeriferico p WHERE p.pperDataHoraNotificacao = :pperDataHoraNotificacao"),
+    @NamedQuery(name = "PperProblemaPeriferico.findByPperTipoNotificacao", query = "SELECT p FROM PperProblemaPeriferico p WHERE p.pperTipoNotificacao = :pperTipoNotificacao"),
+    @NamedQuery(name = "PperProblemaPeriferico.findByPperContatoNotificado", query = "SELECT p FROM PperProblemaPeriferico p WHERE p.pperContatoNotificado = :pperContatoNotificado"),
+    @NamedQuery(name = "PperProblemaPeriferico.findByPperObservacao", query = "SELECT p FROM PperProblemaPeriferico p WHERE p.pperObservacao = :pperObservacao"),
+    @NamedQuery(name = "PperProblemaPeriferico.findByPperCodigoGr", query = "SELECT p FROM PperProblemaPeriferico p WHERE p.pperCodigoGr = :pperCodigoGr"),
+    @NamedQuery(name = "PperProblemaPeriferico.findByPperImportado", query = "SELECT p FROM PperProblemaPeriferico p WHERE p.pperImportado = :pperImportado")})
 public class PperProblemaPeriferico implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,10 +70,10 @@ public class PperProblemaPeriferico implements Serializable {
     @Column(name = "pper_importado")
     private Character pperImportado;
     @JoinColumn(name = "pper_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "pper_ppin_codigo", referencedColumnName = "ppin_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PpinPerifericoPadraoInstal ppinPerifericoPadraoInstal;
 
     public PperProblemaPeriferico() {

@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,9 +25,21 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "tecn_tecnologia")
+@Table(name = "tecn_tecnologia", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TecnTecnologia.findAll", query = "SELECT t FROM TecnTecnologia t")})
+    @NamedQuery(name = "TecnTecnologia.findAll", query = "SELECT t FROM TecnTecnologia t"),
+    @NamedQuery(name = "TecnTecnologia.findByTecnCodigo", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnCodigo = :tecnCodigo"),
+    @NamedQuery(name = "TecnTecnologia.findByTecnDescricao", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnDescricao = :tecnDescricao"),
+    @NamedQuery(name = "TecnTecnologia.findByTecnEnderecoIp", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnEnderecoIp = :tecnEnderecoIp"),
+    @NamedQuery(name = "TecnTecnologia.findByTecnEnderecoIpAlternativo", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnEnderecoIpAlternativo = :tecnEnderecoIpAlternativo"),
+    @NamedQuery(name = "TecnTecnologia.findByTecnPortaEntrada", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnPortaEntrada = :tecnPortaEntrada"),
+    @NamedQuery(name = "TecnTecnologia.findByTecnPortaSaida", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnPortaSaida = :tecnPortaSaida"),
+    @NamedQuery(name = "TecnTecnologia.findByTecnServidor", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnServidor = :tecnServidor"),
+    @NamedQuery(name = "TecnTecnologia.findByTecnCodigoCentral", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnCodigoCentral = :tecnCodigoCentral"),
+    @NamedQuery(name = "TecnTecnologia.findByTecnDataCadastro", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnDataCadastro = :tecnDataCadastro"),
+    @NamedQuery(name = "TecnTecnologia.findByTecnCodigoGr", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnCodigoGr = :tecnCodigoGr"),
+    @NamedQuery(name = "TecnTecnologia.findByTecnImportado", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnImportado = :tecnImportado"),
+    @NamedQuery(name = "TecnTecnologia.findByTecnTolerancia", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnTolerancia = :tecnTolerancia")})
 public class TecnTecnologia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,12 +69,12 @@ public class TecnTecnologia implements Serializable {
     private Character tecnImportado;
     @Column(name = "tecn_tolerancia")
     private Integer tecnTolerancia;
-    @OneToMany(mappedBy = "tecnTecnologia")
-    private Collection<VtecVersaoTecnologia> vtecVersaoTecnologiaCollection;
-    @OneToMany(mappedBy = "tecnTecnologia")
-    private Collection<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfCollection;
-    @OneToMany(mappedBy = "tecnTecnologia")
-    private Collection<CtecContaTecnologia> ctecContaTecnologiaCollection;
+    @OneToMany(mappedBy = "tecnTecnologia", fetch = FetchType.EAGER)
+    private List<VtecVersaoTecnologia> vtecVersaoTecnologiaList;
+    @OneToMany(mappedBy = "tecnTecnologia", fetch = FetchType.EAGER)
+    private List<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfList;
+    @OneToMany(mappedBy = "tecnTecnologia", fetch = FetchType.EAGER)
+    private List<CtecContaTecnologia> ctecContaTecnologiaList;
 
     public TecnTecnologia() {
     }
@@ -166,28 +179,28 @@ public class TecnTecnologia implements Serializable {
         this.tecnTolerancia = tecnTolerancia;
     }
 
-    public Collection<VtecVersaoTecnologia> getVtecVersaoTecnologiaCollection() {
-        return vtecVersaoTecnologiaCollection;
+    public List<VtecVersaoTecnologia> getVtecVersaoTecnologiaList() {
+        return vtecVersaoTecnologiaList;
     }
 
-    public void setVtecVersaoTecnologiaCollection(Collection<VtecVersaoTecnologia> vtecVersaoTecnologiaCollection) {
-        this.vtecVersaoTecnologiaCollection = vtecVersaoTecnologiaCollection;
+    public void setVtecVersaoTecnologiaList(List<VtecVersaoTecnologia> vtecVersaoTecnologiaList) {
+        this.vtecVersaoTecnologiaList = vtecVersaoTecnologiaList;
     }
 
-    public Collection<SicoServicoIntegracaoConf> getSicoServicoIntegracaoConfCollection() {
-        return sicoServicoIntegracaoConfCollection;
+    public List<SicoServicoIntegracaoConf> getSicoServicoIntegracaoConfList() {
+        return sicoServicoIntegracaoConfList;
     }
 
-    public void setSicoServicoIntegracaoConfCollection(Collection<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfCollection) {
-        this.sicoServicoIntegracaoConfCollection = sicoServicoIntegracaoConfCollection;
+    public void setSicoServicoIntegracaoConfList(List<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfList) {
+        this.sicoServicoIntegracaoConfList = sicoServicoIntegracaoConfList;
     }
 
-    public Collection<CtecContaTecnologia> getCtecContaTecnologiaCollection() {
-        return ctecContaTecnologiaCollection;
+    public List<CtecContaTecnologia> getCtecContaTecnologiaList() {
+        return ctecContaTecnologiaList;
     }
 
-    public void setCtecContaTecnologiaCollection(Collection<CtecContaTecnologia> ctecContaTecnologiaCollection) {
-        this.ctecContaTecnologiaCollection = ctecContaTecnologiaCollection;
+    public void setCtecContaTecnologiaList(List<CtecContaTecnologia> ctecContaTecnologiaList) {
+        this.ctecContaTecnologiaList = ctecContaTecnologiaList;
     }
 
     @Override

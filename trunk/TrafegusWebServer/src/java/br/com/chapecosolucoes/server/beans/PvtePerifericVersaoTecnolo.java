@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "pvte_periferic_versao_tecnolo")
+@Table(name = "pvte_periferic_versao_tecnolo", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PvtePerifericVersaoTecnolo.findAll", query = "SELECT p FROM PvtePerifericVersaoTecnolo p")})
+    @NamedQuery(name = "PvtePerifericVersaoTecnolo.findAll", query = "SELECT p FROM PvtePerifericVersaoTecnolo p"),
+    @NamedQuery(name = "PvtePerifericVersaoTecnolo.findByPvteCodigo", query = "SELECT p FROM PvtePerifericVersaoTecnolo p WHERE p.pvteCodigo = :pvteCodigo"),
+    @NamedQuery(name = "PvtePerifericVersaoTecnolo.findByPvteDataCadastro", query = "SELECT p FROM PvtePerifericVersaoTecnolo p WHERE p.pvteDataCadastro = :pvteDataCadastro"),
+    @NamedQuery(name = "PvtePerifericVersaoTecnolo.findByPvteCodigoGr", query = "SELECT p FROM PvtePerifericVersaoTecnolo p WHERE p.pvteCodigoGr = :pvteCodigoGr"),
+    @NamedQuery(name = "PvtePerifericVersaoTecnolo.findByPvteImportado", query = "SELECT p FROM PvtePerifericVersaoTecnolo p WHERE p.pvteImportado = :pvteImportado")})
 public class PvtePerifericVersaoTecnolo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,10 +46,10 @@ public class PvtePerifericVersaoTecnolo implements Serializable {
     @Column(name = "pvte_importado")
     private Character pvteImportado;
     @JoinColumn(name = "pvte_vtec_codigo", referencedColumnName = "vtec_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private VtecVersaoTecnologia vtecVersaoTecnologia;
     @JoinColumn(name = "pvte_ppad_codigo", referencedColumnName = "ppad_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PpadPerifericoPadrao ppadPerifericoPadrao;
 
     public PvtePerifericVersaoTecnolo() {

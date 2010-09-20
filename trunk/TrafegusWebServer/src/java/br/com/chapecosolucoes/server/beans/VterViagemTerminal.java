@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,17 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "vter_viagem_terminal")
+@Table(name = "vter_viagem_terminal", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VterViagemTerminal.findAll", query = "SELECT v FROM VterViagemTerminal v")})
+    @NamedQuery(name = "VterViagemTerminal.findAll", query = "SELECT v FROM VterViagemTerminal v"),
+    @NamedQuery(name = "VterViagemTerminal.findByVterCodigo", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterCodigo = :vterCodigo"),
+    @NamedQuery(name = "VterViagemTerminal.findByVterPrecedencia", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterPrecedencia = :vterPrecedencia"),
+    @NamedQuery(name = "VterViagemTerminal.findByVterTempoSatelital", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterTempoSatelital = :vterTempoSatelital"),
+    @NamedQuery(name = "VterViagemTerminal.findByVterTempoGprs", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterTempoGprs = :vterTempoGprs"),
+    @NamedQuery(name = "VterViagemTerminal.findByVterDataCadastro", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterDataCadastro = :vterDataCadastro"),
+    @NamedQuery(name = "VterViagemTerminal.findByVterCodigoGr", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterCodigoGr = :vterCodigoGr"),
+    @NamedQuery(name = "VterViagemTerminal.findByVterImportado", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterImportado = :vterImportado"),
+    @NamedQuery(name = "VterViagemTerminal.findByVterAtivo", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterAtivo = :vterAtivo")})
 public class VterViagemTerminal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,13 +58,13 @@ public class VterViagemTerminal implements Serializable {
     @Column(name = "vter_ativo")
     private Character vterAtivo;
     @JoinColumn(name = "vter_viag_codigo", referencedColumnName = "viag_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ViagViagem viagViagem;
     @JoinColumn(name = "vter_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "vter_term_codigo", referencedColumnName = "term_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TermTerminal termTerminal;
 
     public VterViagemTerminal() {

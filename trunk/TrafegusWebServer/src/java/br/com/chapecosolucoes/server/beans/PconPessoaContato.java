@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "pcon_pessoa_contato")
+@Table(name = "pcon_pessoa_contato", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PconPessoaContato.findAll", query = "SELECT p FROM PconPessoaContato p")})
+    @NamedQuery(name = "PconPessoaContato.findAll", query = "SELECT p FROM PconPessoaContato p"),
+    @NamedQuery(name = "PconPessoaContato.findByPconCodigo", query = "SELECT p FROM PconPessoaContato p WHERE p.pconCodigo = :pconCodigo"),
+    @NamedQuery(name = "PconPessoaContato.findByPconDataCadastro", query = "SELECT p FROM PconPessoaContato p WHERE p.pconDataCadastro = :pconDataCadastro"),
+    @NamedQuery(name = "PconPessoaContato.findByPconCodigoGr", query = "SELECT p FROM PconPessoaContato p WHERE p.pconCodigoGr = :pconCodigoGr"),
+    @NamedQuery(name = "PconPessoaContato.findByPconImportado", query = "SELECT p FROM PconPessoaContato p WHERE p.pconImportado = :pconImportado")})
 public class PconPessoaContato implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,10 +46,10 @@ public class PconPessoaContato implements Serializable {
     @Column(name = "pcon_importado")
     private Character pconImportado;
     @JoinColumn(name = "pcon_pess_oras_codigo", referencedColumnName = "pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PessPessoa pessPessoa;
     @JoinColumn(name = "pcon_cona_codigo", referencedColumnName = "cona_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ConaContato conaContato;
 
     public PconPessoaContato() {

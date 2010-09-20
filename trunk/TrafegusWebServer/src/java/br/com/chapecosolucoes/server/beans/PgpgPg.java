@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,9 +26,15 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "pgpg_pg")
+@Table(name = "pgpg_pg", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "PgpgPg.findAll", query = "SELECT p FROM PgpgPg p")})
+    @NamedQuery(name = "PgpgPg.findAll", query = "SELECT p FROM PgpgPg p"),
+    @NamedQuery(name = "PgpgPg.findByPgpgCodigo", query = "SELECT p FROM PgpgPg p WHERE p.pgpgCodigo = :pgpgCodigo"),
+    @NamedQuery(name = "PgpgPg.findByPgpgDescricao", query = "SELECT p FROM PgpgPg p WHERE p.pgpgDescricao = :pgpgDescricao"),
+    @NamedQuery(name = "PgpgPg.findByPgpgDataCadastro", query = "SELECT p FROM PgpgPg p WHERE p.pgpgDataCadastro = :pgpgDataCadastro"),
+    @NamedQuery(name = "PgpgPg.findByPgpgCodigoGr", query = "SELECT p FROM PgpgPg p WHERE p.pgpgCodigoGr = :pgpgCodigoGr"),
+    @NamedQuery(name = "PgpgPg.findByPgpgImportado", query = "SELECT p FROM PgpgPg p WHERE p.pgpgImportado = :pgpgImportado"),
+    @NamedQuery(name = "PgpgPg.findByPgpgValidacaoOperacao", query = "SELECT p FROM PgpgPg p WHERE p.pgpgValidacaoOperacao = :pgpgValidacaoOperacao")})
 public class PgpgPg implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,18 +53,10 @@ public class PgpgPg implements Serializable {
     @Column(name = "pgpg_validacao_operacao", length = 10)
     private String pgpgValidacaoOperacao;
     @OneToMany(mappedBy = "pgpgPg")
-    private Collection<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenCollection;
-    @OneToMany(mappedBy = "pgpgPg")
-    private Collection<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenCollection;
-    @OneToMany(mappedBy = "pgpgPg")
-    private Collection<ViagViagem> viagViagemCollection;
-    @OneToMany(mappedBy = "pgpgPg")
-    private Collection<PgaiPgAssociaItem> pgaiPgAssociaItemCollection;
+    private List<OrasObjetoRastreado> orasObjetoRastreadoList;
     @JoinColumn(name = "pgpg_pfva_codigo", referencedColumnName = "pfva_codigo")
     @ManyToOne
     private PfvaPgFaixaValor pfvaPgFaixaValor;
-    @OneToMany(mappedBy = "pgpgPg")
-    private Collection<OrasObjetoRastreado> orasObjetoRastreadoCollection;
 
     public PgpgPg() {
     }
@@ -115,36 +113,12 @@ public class PgpgPg implements Serializable {
         this.pgpgValidacaoOperacao = pgpgValidacaoOperacao;
     }
 
-    public Collection<EspgEmbarcSegurPlanoGeren> getEspgEmbarcSegurPlanoGerenCollection() {
-        return espgEmbarcSegurPlanoGerenCollection;
+    public List<OrasObjetoRastreado> getOrasObjetoRastreadoList() {
+        return orasObjetoRastreadoList;
     }
 
-    public void setEspgEmbarcSegurPlanoGerenCollection(Collection<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenCollection) {
-        this.espgEmbarcSegurPlanoGerenCollection = espgEmbarcSegurPlanoGerenCollection;
-    }
-
-    public Collection<TspgTranspSegurPlanoGeren> getTspgTranspSegurPlanoGerenCollection() {
-        return tspgTranspSegurPlanoGerenCollection;
-    }
-
-    public void setTspgTranspSegurPlanoGerenCollection(Collection<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenCollection) {
-        this.tspgTranspSegurPlanoGerenCollection = tspgTranspSegurPlanoGerenCollection;
-    }
-
-    public Collection<ViagViagem> getViagViagemCollection() {
-        return viagViagemCollection;
-    }
-
-    public void setViagViagemCollection(Collection<ViagViagem> viagViagemCollection) {
-        this.viagViagemCollection = viagViagemCollection;
-    }
-
-    public Collection<PgaiPgAssociaItem> getPgaiPgAssociaItemCollection() {
-        return pgaiPgAssociaItemCollection;
-    }
-
-    public void setPgaiPgAssociaItemCollection(Collection<PgaiPgAssociaItem> pgaiPgAssociaItemCollection) {
-        this.pgaiPgAssociaItemCollection = pgaiPgAssociaItemCollection;
+    public void setOrasObjetoRastreadoList(List<OrasObjetoRastreado> orasObjetoRastreadoList) {
+        this.orasObjetoRastreadoList = orasObjetoRastreadoList;
     }
 
     public PfvaPgFaixaValor getPfvaPgFaixaValor() {
@@ -153,14 +127,6 @@ public class PgpgPg implements Serializable {
 
     public void setPfvaPgFaixaValor(PfvaPgFaixaValor pfvaPgFaixaValor) {
         this.pfvaPgFaixaValor = pfvaPgFaixaValor;
-    }
-
-    public Collection<OrasObjetoRastreado> getOrasObjetoRastreadoCollection() {
-        return orasObjetoRastreadoCollection;
-    }
-
-    public void setOrasObjetoRastreadoCollection(Collection<OrasObjetoRastreado> orasObjetoRastreadoCollection) {
-        this.orasObjetoRastreadoCollection = orasObjetoRastreadoCollection;
     }
 
     @Override

@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,9 +21,12 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "epmo_estatus_pesquisa_motoris")
+@Table(name = "epmo_estatus_pesquisa_motoris", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EpmoEstatusPesquisaMotoris.findAll", query = "SELECT e FROM EpmoEstatusPesquisaMotoris e")})
+    @NamedQuery(name = "EpmoEstatusPesquisaMotoris.findAll", query = "SELECT e FROM EpmoEstatusPesquisaMotoris e"),
+    @NamedQuery(name = "EpmoEstatusPesquisaMotoris.findByEpmoCodigo", query = "SELECT e FROM EpmoEstatusPesquisaMotoris e WHERE e.epmoCodigo = :epmoCodigo"),
+    @NamedQuery(name = "EpmoEstatusPesquisaMotoris.findByEpmoDescricao", query = "SELECT e FROM EpmoEstatusPesquisaMotoris e WHERE e.epmoDescricao = :epmoDescricao"),
+    @NamedQuery(name = "EpmoEstatusPesquisaMotoris.findByEpmoCodigoGr", query = "SELECT e FROM EpmoEstatusPesquisaMotoris e WHERE e.epmoCodigoGr = :epmoCodigoGr")})
 public class EpmoEstatusPesquisaMotoris implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,9 +38,9 @@ public class EpmoEstatusPesquisaMotoris implements Serializable {
     @Column(name = "epmo_codigo_gr")
     private Integer epmoCodigoGr;
     @OneToMany(mappedBy = "epmoEstatusPesquisaMotoris")
-    private Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection;
+    private List<MotoMotorista> motoMotoristaList;
     @OneToMany(mappedBy = "epmoEstatusPesquisaMotoris")
-    private Collection<MotoMotorista> motoMotoristaCollection;
+    private List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList;
 
     public EpmoEstatusPesquisaMotoris() {
     }
@@ -70,20 +73,20 @@ public class EpmoEstatusPesquisaMotoris implements Serializable {
         this.epmoCodigoGr = epmoCodigoGr;
     }
 
-    public Collection<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorCollection() {
-        return hpmoHistoricoPesquisaMotorCollection;
+    public List<MotoMotorista> getMotoMotoristaList() {
+        return motoMotoristaList;
     }
 
-    public void setHpmoHistoricoPesquisaMotorCollection(Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection) {
-        this.hpmoHistoricoPesquisaMotorCollection = hpmoHistoricoPesquisaMotorCollection;
+    public void setMotoMotoristaList(List<MotoMotorista> motoMotoristaList) {
+        this.motoMotoristaList = motoMotoristaList;
     }
 
-    public Collection<MotoMotorista> getMotoMotoristaCollection() {
-        return motoMotoristaCollection;
+    public List<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorList() {
+        return hpmoHistoricoPesquisaMotorList;
     }
 
-    public void setMotoMotoristaCollection(Collection<MotoMotorista> motoMotoristaCollection) {
-        this.motoMotoristaCollection = motoMotoristaCollection;
+    public void setHpmoHistoricoPesquisaMotorList(List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList) {
+        this.hpmoHistoricoPesquisaMotorList = hpmoHistoricoPesquisaMotorList;
     }
 
     @Override

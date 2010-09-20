@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,9 +22,13 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "sins_servico_instancia")
+@Table(name = "sins_servico_instancia", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "SinsServicoInstancia.findAll", query = "SELECT s FROM SinsServicoInstancia s")})
+    @NamedQuery(name = "SinsServicoInstancia.findAll", query = "SELECT s FROM SinsServicoInstancia s"),
+    @NamedQuery(name = "SinsServicoInstancia.findBySinsCodigo", query = "SELECT s FROM SinsServicoInstancia s WHERE s.sinsCodigo = :sinsCodigo"),
+    @NamedQuery(name = "SinsServicoInstancia.findBySinsIpServico", query = "SELECT s FROM SinsServicoInstancia s WHERE s.sinsIpServico = :sinsIpServico"),
+    @NamedQuery(name = "SinsServicoInstancia.findBySinsCaminhoAplicacao", query = "SELECT s FROM SinsServicoInstancia s WHERE s.sinsCaminhoAplicacao = :sinsCaminhoAplicacao"),
+    @NamedQuery(name = "SinsServicoInstancia.findBySinsMonitoradoGuardiao", query = "SELECT s FROM SinsServicoInstancia s WHERE s.sinsMonitoradoGuardiao = :sinsMonitoradoGuardiao")})
 public class SinsServicoInstancia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,7 +42,7 @@ public class SinsServicoInstancia implements Serializable {
     @Column(name = "sins_monitorado_guardiao")
     private Character sinsMonitoradoGuardiao;
     @JoinColumn(name = "sins_ssis_codigo", referencedColumnName = "ssis_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private SsisServicoSistema ssisServicoSistema;
 
     public SinsServicoInstancia() {

@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +27,23 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "viag_viagem")
+@Table(name = "viag_viagem", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViagViagem.findAll", query = "SELECT v FROM ViagViagem v")})
+    @NamedQuery(name = "ViagViagem.findAll", query = "SELECT v FROM ViagViagem v"),
+    @NamedQuery(name = "ViagViagem.findByViagCodigo", query = "SELECT v FROM ViagViagem v WHERE v.viagCodigo = :viagCodigo"),
+    @NamedQuery(name = "ViagViagem.findByViagDataCadastro", query = "SELECT v FROM ViagViagem v WHERE v.viagDataCadastro = :viagDataCadastro"),
+    @NamedQuery(name = "ViagViagem.findByViagValorCarga", query = "SELECT v FROM ViagViagem v WHERE v.viagValorCarga = :viagValorCarga"),
+    @NamedQuery(name = "ViagViagem.findByViagPrevisaoInicio", query = "SELECT v FROM ViagViagem v WHERE v.viagPrevisaoInicio = :viagPrevisaoInicio"),
+    @NamedQuery(name = "ViagViagem.findByViagPrevisaoFim", query = "SELECT v FROM ViagViagem v WHERE v.viagPrevisaoFim = :viagPrevisaoFim"),
+    @NamedQuery(name = "ViagViagem.findByViagDataInicio", query = "SELECT v FROM ViagViagem v WHERE v.viagDataInicio = :viagDataInicio"),
+    @NamedQuery(name = "ViagViagem.findByViagDataFim", query = "SELECT v FROM ViagViagem v WHERE v.viagDataFim = :viagDataFim"),
+    @NamedQuery(name = "ViagViagem.findByViagDistancia", query = "SELECT v FROM ViagViagem v WHERE v.viagDistancia = :viagDistancia"),
+    @NamedQuery(name = "ViagViagem.findByViagTempoTermForaAreaRisco", query = "SELECT v FROM ViagViagem v WHERE v.viagTempoTermForaAreaRisco = :viagTempoTermForaAreaRisco"),
+    @NamedQuery(name = "ViagViagem.findByViagTempoTermEmAreaRisco", query = "SELECT v FROM ViagViagem v WHERE v.viagTempoTermEmAreaRisco = :viagTempoTermEmAreaRisco"),
+    @NamedQuery(name = "ViagViagem.findByViagTempoTermFimViagem", query = "SELECT v FROM ViagViagem v WHERE v.viagTempoTermFimViagem = :viagTempoTermFimViagem"),
+    @NamedQuery(name = "ViagViagem.findByViagCodigoPai", query = "SELECT v FROM ViagViagem v WHERE v.viagCodigoPai = :viagCodigoPai"),
+    @NamedQuery(name = "ViagViagem.findByViagCodigoGr", query = "SELECT v FROM ViagViagem v WHERE v.viagCodigoGr = :viagCodigoGr"),
+    @NamedQuery(name = "ViagViagem.findByViagImportado", query = "SELECT v FROM ViagViagem v WHERE v.viagImportado = :viagImportado")})
 public class ViagViagem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -67,14 +81,6 @@ public class ViagViagem implements Serializable {
     private Integer viagCodigoGr;
     @Column(name = "viag_importado")
     private Character viagImportado;
-    @OneToMany(mappedBy = "viagViagem")
-    private Collection<VterViagemTerminal> vterViagemTerminalCollection;
-    @OneToMany(mappedBy = "viagViagem")
-    private Collection<VrotViagemRota> vrotViagemRotaCollection;
-    @OneToMany(mappedBy = "viagViagem")
-    private Collection<VestViagemEstatus> vestViagemEstatusCollection;
-    @OneToMany(mappedBy = "viagViagem")
-    private Collection<VtemViagemTemperatura> vtemViagemTemperaturaCollection;
     @JoinColumn(name = "viag_ttra_codigo", referencedColumnName = "ttra_codigo")
     @ManyToOne
     private TtraTipoTransporte ttraTipoTransporte;
@@ -94,11 +100,7 @@ public class ViagViagem implements Serializable {
     @ManyToOne
     private EmbaEmbarcador embaEmbarcador;
     @OneToMany(mappedBy = "viagViagem")
-    private Collection<VconViagemConhecimento> vconViagemConhecimentoCollection;
-    @OneToMany(mappedBy = "viagViagem")
-    private Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection;
-    @OneToMany(mappedBy = "viagViagem")
-    private Collection<VlocViagemLocal> vlocViagemLocalCollection;
+    private List<VlocViagemLocal> vlocViagemLocalList;
 
     public ViagViagem() {
     }
@@ -219,38 +221,6 @@ public class ViagViagem implements Serializable {
         this.viagImportado = viagImportado;
     }
 
-    public Collection<VterViagemTerminal> getVterViagemTerminalCollection() {
-        return vterViagemTerminalCollection;
-    }
-
-    public void setVterViagemTerminalCollection(Collection<VterViagemTerminal> vterViagemTerminalCollection) {
-        this.vterViagemTerminalCollection = vterViagemTerminalCollection;
-    }
-
-    public Collection<VrotViagemRota> getVrotViagemRotaCollection() {
-        return vrotViagemRotaCollection;
-    }
-
-    public void setVrotViagemRotaCollection(Collection<VrotViagemRota> vrotViagemRotaCollection) {
-        this.vrotViagemRotaCollection = vrotViagemRotaCollection;
-    }
-
-    public Collection<VestViagemEstatus> getVestViagemEstatusCollection() {
-        return vestViagemEstatusCollection;
-    }
-
-    public void setVestViagemEstatusCollection(Collection<VestViagemEstatus> vestViagemEstatusCollection) {
-        this.vestViagemEstatusCollection = vestViagemEstatusCollection;
-    }
-
-    public Collection<VtemViagemTemperatura> getVtemViagemTemperaturaCollection() {
-        return vtemViagemTemperaturaCollection;
-    }
-
-    public void setVtemViagemTemperaturaCollection(Collection<VtemViagemTemperatura> vtemViagemTemperaturaCollection) {
-        this.vtemViagemTemperaturaCollection = vtemViagemTemperaturaCollection;
-    }
-
     public TtraTipoTransporte getTtraTipoTransporte() {
         return ttraTipoTransporte;
     }
@@ -299,28 +269,12 @@ public class ViagViagem implements Serializable {
         this.embaEmbarcador = embaEmbarcador;
     }
 
-    public Collection<VconViagemConhecimento> getVconViagemConhecimentoCollection() {
-        return vconViagemConhecimentoCollection;
+    public List<VlocViagemLocal> getVlocViagemLocalList() {
+        return vlocViagemLocalList;
     }
 
-    public void setVconViagemConhecimentoCollection(Collection<VconViagemConhecimento> vconViagemConhecimentoCollection) {
-        this.vconViagemConhecimentoCollection = vconViagemConhecimentoCollection;
-    }
-
-    public Collection<VveiViagemVeiculo> getVveiViagemVeiculoCollection() {
-        return vveiViagemVeiculoCollection;
-    }
-
-    public void setVveiViagemVeiculoCollection(Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection) {
-        this.vveiViagemVeiculoCollection = vveiViagemVeiculoCollection;
-    }
-
-    public Collection<VlocViagemLocal> getVlocViagemLocalCollection() {
-        return vlocViagemLocalCollection;
-    }
-
-    public void setVlocViagemLocalCollection(Collection<VlocViagemLocal> vlocViagemLocalCollection) {
-        this.vlocViagemLocalCollection = vlocViagemLocalCollection;
+    public void setVlocViagemLocalList(List<VlocViagemLocal> vlocViagemLocalList) {
+        this.vlocViagemLocalList = vlocViagemLocalList;
     }
 
     @Override

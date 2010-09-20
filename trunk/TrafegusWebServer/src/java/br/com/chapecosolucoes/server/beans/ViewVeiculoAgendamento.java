@@ -20,9 +20,35 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_veiculo_agendamento")
+@Table(name = "view_veiculo_agendamento", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewVeiculoAgendamento.findAll", query = "SELECT v FROM ViewVeiculoAgendamento v")})
+    @NamedQuery(name = "ViewVeiculoAgendamento.findAll", query = "SELECT v FROM ViewVeiculoAgendamento v"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByViagCodigo", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.viagCodigo = :viagCodigo"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByErasCodigo", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.erasCodigo = :erasCodigo"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByVcavVeicOrasCodigo", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.vcavVeicOrasCodigo = :vcavVeicOrasCodigo"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByIdentificador", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.identificador = :identificador"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByTermCodigo", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.termCodigo = :termCodigo"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByTermNumeroTerminal", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.termNumeroTerminal = :termNumeroTerminal"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByTecnDescricao", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.tecnDescricao = :tecnDescricao"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByVtecTipoComunicacao", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.vtecTipoComunicacao = :vtecTipoComunicacao"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByReceDataComputadorBordo", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.receDataComputadorBordo = :receDataComputadorBordo"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByUposDescricaoSistema", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.uposDescricaoSistema = :uposDescricaoSistema"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByTransportador", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.transportador = :transportador"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByEmbarcador", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.embarcador = :embarcador"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByTransfrota", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.transfrota = :transfrota"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByObsobjeto", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.obsobjeto = :obsobjeto"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByIgnicao", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.ignicao = :ignicao"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByOrigem", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.origem = :origem"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByDestino", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.destino = :destino"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByVterTempoSatelital", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.vterTempoSatelital = :vterTempoSatelital"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByVterTempoGprs", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.vterTempoGprs = :vterTempoGprs"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByViagTranPessOrasCodigo", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.viagTranPessOrasCodigo = :viagTranPessOrasCodigo"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByViagEmbaPjurPessOrasCodigo", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.viagEmbaPjurPessOrasCodigo = :viagEmbaPjurPessOrasCodigo"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByVeicOrasCodigo", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.veicOrasCodigo = :veicOrasCodigo"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByViagDataCadastro", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.viagDataCadastro = :viagDataCadastro"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByTopeDescricao", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.topeDescricao = :topeDescricao"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByViagPrevisaoInicio", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.viagPrevisaoInicio = :viagPrevisaoInicio"),
+    @NamedQuery(name = "ViewVeiculoAgendamento.findByViagPrevisaoFim", query = "SELECT v FROM ViewVeiculoAgendamento v WHERE v.viagPrevisaoFim = :viagPrevisaoFim")})
 public class ViewVeiculoAgendamento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "viag_codigo")

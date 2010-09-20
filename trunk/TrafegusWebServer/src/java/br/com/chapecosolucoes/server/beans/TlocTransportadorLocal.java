@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,10 +26,15 @@ import javax.persistence.UniqueConstraint;
  * @author Emerson
  */
 @Entity
-@Table(name = "tloc_transportador_local", uniqueConstraints = {
+@Table(name = "tloc_transportador_local", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"tloc_refe_codigo", "tloc_tran_pess_oras_codigo"})})
 @NamedQueries({
-    @NamedQuery(name = "TlocTransportadorLocal.findAll", query = "SELECT t FROM TlocTransportadorLocal t")})
+    @NamedQuery(name = "TlocTransportadorLocal.findAll", query = "SELECT t FROM TlocTransportadorLocal t"),
+    @NamedQuery(name = "TlocTransportadorLocal.findByTlocCodigo", query = "SELECT t FROM TlocTransportadorLocal t WHERE t.tlocCodigo = :tlocCodigo"),
+    @NamedQuery(name = "TlocTransportadorLocal.findByTlocRaio", query = "SELECT t FROM TlocTransportadorLocal t WHERE t.tlocRaio = :tlocRaio"),
+    @NamedQuery(name = "TlocTransportadorLocal.findByTlocDataCadastro", query = "SELECT t FROM TlocTransportadorLocal t WHERE t.tlocDataCadastro = :tlocDataCadastro"),
+    @NamedQuery(name = "TlocTransportadorLocal.findByTlocCodigoGr", query = "SELECT t FROM TlocTransportadorLocal t WHERE t.tlocCodigoGr = :tlocCodigoGr"),
+    @NamedQuery(name = "TlocTransportadorLocal.findByTlocImportado", query = "SELECT t FROM TlocTransportadorLocal t WHERE t.tlocImportado = :tlocImportado")})
 public class TlocTransportadorLocal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,13 +51,13 @@ public class TlocTransportadorLocal implements Serializable {
     @Column(name = "tloc_importado")
     private Character tlocImportado;
     @JoinColumn(name = "tloc_tran_pess_oras_codigo", referencedColumnName = "tran_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TranTransportador tranTransportador;
     @JoinColumn(name = "tloc_tloc_codigo", referencedColumnName = "tloc_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TlocTipoLocal tlocTipoLocal;
     @JoinColumn(name = "tloc_refe_codigo", referencedColumnName = "refe_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private RefeReferencia refeReferencia;
 
     public TlocTransportadorLocal() {

@@ -20,9 +20,20 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_integ_pos_ws")
+@Table(name = "view_integ_pos_ws", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewIntegPosWs.findAll", query = "SELECT v FROM ViewIntegPosWs v")})
+    @NamedQuery(name = "ViewIntegPosWs.findAll", query = "SELECT v FROM ViewIntegPosWs v"),
+    @NamedQuery(name = "ViewIntegPosWs.findByPackId", query = "SELECT v FROM ViewIntegPosWs v WHERE v.packId = :packId"),
+    @NamedQuery(name = "ViewIntegPosWs.findByVehiclePlate", query = "SELECT v FROM ViewIntegPosWs v WHERE v.vehiclePlate = :vehiclePlate"),
+    @NamedQuery(name = "ViewIntegPosWs.findBySerialNumber", query = "SELECT v FROM ViewIntegPosWs v WHERE v.serialNumber = :serialNumber"),
+    @NamedQuery(name = "ViewIntegPosWs.findByCreatDateTime", query = "SELECT v FROM ViewIntegPosWs v WHERE v.creatDateTime = :creatDateTime"),
+    @NamedQuery(name = "ViewIntegPosWs.findByIntegrator", query = "SELECT v FROM ViewIntegPosWs v WHERE v.integrator = :integrator"),
+    @NamedQuery(name = "ViewIntegPosWs.findByAccount", query = "SELECT v FROM ViewIntegPosWs v WHERE v.account = :account"),
+    @NamedQuery(name = "ViewIntegPosWs.findByMessageCode", query = "SELECT v FROM ViewIntegPosWs v WHERE v.messageCode = :messageCode"),
+    @NamedQuery(name = "ViewIntegPosWs.findByMacroNumber", query = "SELECT v FROM ViewIntegPosWs v WHERE v.macroNumber = :macroNumber"),
+    @NamedQuery(name = "ViewIntegPosWs.findByText", query = "SELECT v FROM ViewIntegPosWs v WHERE v.text = :text"),
+    @NamedQuery(name = "ViewIntegPosWs.findByCodEquipamento", query = "SELECT v FROM ViewIntegPosWs v WHERE v.codEquipamento = :codEquipamento"),
+    @NamedQuery(name = "ViewIntegPosWs.findByTpMsg", query = "SELECT v FROM ViewIntegPosWs v WHERE v.tpMsg = :tpMsg")})
 public class ViewIntegPosWs implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "PackId")

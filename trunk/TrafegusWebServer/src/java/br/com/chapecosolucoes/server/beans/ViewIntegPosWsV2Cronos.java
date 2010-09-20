@@ -21,9 +21,28 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_integ_pos_ws_v2_cronos")
+@Table(name = "view_integ_pos_ws_v2_cronos", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findAll", query = "SELECT v FROM ViewIntegPosWsV2Cronos v")})
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findAll", query = "SELECT v FROM ViewIntegPosWsV2Cronos v"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByPackId", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.packId = :packId"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByIntegrator", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.integrator = :integrator"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByAccount", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.account = :account"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByVehiclePlate", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.vehiclePlate = :vehiclePlate"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findBySerialNumber", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.serialNumber = :serialNumber"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByEventDateTime", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.eventDateTime = :eventDateTime"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByOdometer", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.odometer = :odometer"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByRpm", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.rpm = :rpm"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByTemperatureSensor", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.temperatureSensor = :temperatureSensor"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findBySpeed", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.speed = :speed"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByGPSSpeed", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.gPSSpeed = :gPSSpeed"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByGPSLatitude", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.gPSLatitude = :gPSLatitude"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByGPSLongitude", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.gPSLongitude = :gPSLongitude"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByGPSDescTec", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.gPSDescTec = :gPSDescTec"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByGPSDescSis", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.gPSDescSis = :gPSDescSis"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByIgnition", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.ignition = :ignition"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByGPSNorthAngle", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.gPSNorthAngle = :gPSNorthAngle"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findBySleepMode", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.sleepMode = :sleepMode"),
+    @NamedQuery(name = "ViewIntegPosWsV2Cronos.findByCodEquipamento", query = "SELECT v FROM ViewIntegPosWsV2Cronos v WHERE v.codEquipamento = :codEquipamento")})
 public class ViewIntegPosWsV2Cronos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "PackId")

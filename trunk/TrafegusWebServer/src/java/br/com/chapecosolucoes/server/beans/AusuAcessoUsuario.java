@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,9 +27,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "ausu_acesso_usuario")
+@Table(name = "ausu_acesso_usuario", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "AusuAcessoUsuario.findAll", query = "SELECT a FROM AusuAcessoUsuario a")})
+    @NamedQuery(name = "AusuAcessoUsuario.findAll", query = "SELECT a FROM AusuAcessoUsuario a"),
+    @NamedQuery(name = "AusuAcessoUsuario.findByAusuCodigo", query = "SELECT a FROM AusuAcessoUsuario a WHERE a.ausuCodigo = :ausuCodigo"),
+    @NamedQuery(name = "AusuAcessoUsuario.findByAusuDataCadastro", query = "SELECT a FROM AusuAcessoUsuario a WHERE a.ausuDataCadastro = :ausuDataCadastro"),
+    @NamedQuery(name = "AusuAcessoUsuario.findByAusuDataInicioAcesso", query = "SELECT a FROM AusuAcessoUsuario a WHERE a.ausuDataInicioAcesso = :ausuDataInicioAcesso"),
+    @NamedQuery(name = "AusuAcessoUsuario.findByAusuDataFimAcesso", query = "SELECT a FROM AusuAcessoUsuario a WHERE a.ausuDataFimAcesso = :ausuDataFimAcesso")})
 public class AusuAcessoUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,10 +50,10 @@ public class AusuAcessoUsuario implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date ausuDataFimAcesso;
     @JoinColumn(name = "ausu_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
-    @OneToMany(mappedBy = "ausuAcessoUsuario")
-    private Collection<AtusAcessoTelaUsuario> atusAcessoTelaUsuarioCollection;
+    @OneToMany(mappedBy = "ausuAcessoUsuario", fetch = FetchType.EAGER)
+    private List<AtusAcessoTelaUsuario> atusAcessoTelaUsuarioList;
 
     public AusuAcessoUsuario() {
     }
@@ -97,12 +102,12 @@ public class AusuAcessoUsuario implements Serializable {
         this.usuaUsuario = usuaUsuario;
     }
 
-    public Collection<AtusAcessoTelaUsuario> getAtusAcessoTelaUsuarioCollection() {
-        return atusAcessoTelaUsuarioCollection;
+    public List<AtusAcessoTelaUsuario> getAtusAcessoTelaUsuarioList() {
+        return atusAcessoTelaUsuarioList;
     }
 
-    public void setAtusAcessoTelaUsuarioCollection(Collection<AtusAcessoTelaUsuario> atusAcessoTelaUsuarioCollection) {
-        this.atusAcessoTelaUsuarioCollection = atusAcessoTelaUsuarioCollection;
+    public void setAtusAcessoTelaUsuarioList(List<AtusAcessoTelaUsuario> atusAcessoTelaUsuarioList) {
+        this.atusAcessoTelaUsuarioList = atusAcessoTelaUsuarioList;
     }
 
     @Override

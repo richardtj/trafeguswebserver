@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,10 +26,17 @@ import javax.persistence.UniqueConstraint;
  * @author Emerson
  */
 @Entity
-@Table(name = "paip_pg_associa_item_param", uniqueConstraints = {
+@Table(name = "paip_pg_associa_item_param", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"paip_pgai_codigo", "paip_sequencia"})})
 @NamedQueries({
-    @NamedQuery(name = "PaipPgAssociaItemParam.findAll", query = "SELECT p FROM PaipPgAssociaItemParam p")})
+    @NamedQuery(name = "PaipPgAssociaItemParam.findAll", query = "SELECT p FROM PaipPgAssociaItemParam p"),
+    @NamedQuery(name = "PaipPgAssociaItemParam.findByPaipCodigo", query = "SELECT p FROM PaipPgAssociaItemParam p WHERE p.paipCodigo = :paipCodigo"),
+    @NamedQuery(name = "PaipPgAssociaItemParam.findByPaipSequencia", query = "SELECT p FROM PaipPgAssociaItemParam p WHERE p.paipSequencia = :paipSequencia"),
+    @NamedQuery(name = "PaipPgAssociaItemParam.findByPaipValor", query = "SELECT p FROM PaipPgAssociaItemParam p WHERE p.paipValor = :paipValor"),
+    @NamedQuery(name = "PaipPgAssociaItemParam.findByPaipDataCadastro", query = "SELECT p FROM PaipPgAssociaItemParam p WHERE p.paipDataCadastro = :paipDataCadastro"),
+    @NamedQuery(name = "PaipPgAssociaItemParam.findByPaipCodigoGr", query = "SELECT p FROM PaipPgAssociaItemParam p WHERE p.paipCodigoGr = :paipCodigoGr"),
+    @NamedQuery(name = "PaipPgAssociaItemParam.findByPaipImportado", query = "SELECT p FROM PaipPgAssociaItemParam p WHERE p.paipImportado = :paipImportado"),
+    @NamedQuery(name = "PaipPgAssociaItemParam.findByPaipDescricao", query = "SELECT p FROM PaipPgAssociaItemParam p WHERE p.paipDescricao = :paipDescricao")})
 public class PaipPgAssociaItemParam implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,13 +57,13 @@ public class PaipPgAssociaItemParam implements Serializable {
     @Column(name = "paip_descricao", length = 50)
     private String paipDescricao;
     @JoinColumn(name = "paip_tval_codigo", referencedColumnName = "tval_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvalTipoValor tvalTipoValor;
     @JoinColumn(name = "paip_tpar_codigo", referencedColumnName = "tpar_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TparTipoParametro tparTipoParametro;
     @JoinColumn(name = "paip_pgai_codigo", referencedColumnName = "pgai_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PgaiPgAssociaItem pgaiPgAssociaItem;
 
     public PaipPgAssociaItemParam() {

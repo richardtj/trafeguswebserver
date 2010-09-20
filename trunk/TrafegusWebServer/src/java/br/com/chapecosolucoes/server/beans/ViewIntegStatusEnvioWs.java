@@ -20,9 +20,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_integ_status_envio_ws")
+@Table(name = "view_integ_status_envio_ws", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewIntegStatusEnvioWs.findAll", query = "SELECT v FROM ViewIntegStatusEnvioWs v")})
+    @NamedQuery(name = "ViewIntegStatusEnvioWs.findAll", query = "SELECT v FROM ViewIntegStatusEnvioWs v"),
+    @NamedQuery(name = "ViewIntegStatusEnvioWs.findByPackId", query = "SELECT v FROM ViewIntegStatusEnvioWs v WHERE v.packId = :packId"),
+    @NamedQuery(name = "ViewIntegStatusEnvioWs.findByStatusDateTime", query = "SELECT v FROM ViewIntegStatusEnvioWs v WHERE v.statusDateTime = :statusDateTime"),
+    @NamedQuery(name = "ViewIntegStatusEnvioWs.findByStatusId", query = "SELECT v FROM ViewIntegStatusEnvioWs v WHERE v.statusId = :statusId"),
+    @NamedQuery(name = "ViewIntegStatusEnvioWs.findByStatus", query = "SELECT v FROM ViewIntegStatusEnvioWs v WHERE v.status = :status")})
 public class ViewIntegStatusEnvioWs implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "PackId")

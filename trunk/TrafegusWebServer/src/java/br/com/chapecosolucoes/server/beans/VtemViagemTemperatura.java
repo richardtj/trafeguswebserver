@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,16 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "vtem_viagem_temperatura")
+@Table(name = "vtem_viagem_temperatura", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VtemViagemTemperatura.findAll", query = "SELECT v FROM VtemViagemTemperatura v")})
+    @NamedQuery(name = "VtemViagemTemperatura.findAll", query = "SELECT v FROM VtemViagemTemperatura v"),
+    @NamedQuery(name = "VtemViagemTemperatura.findByVtemCodigo", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemCodigo = :vtemCodigo"),
+    @NamedQuery(name = "VtemViagemTemperatura.findByVtemValorMinimo", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemValorMinimo = :vtemValorMinimo"),
+    @NamedQuery(name = "VtemViagemTemperatura.findByVtemValorMaximo", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemValorMaximo = :vtemValorMaximo"),
+    @NamedQuery(name = "VtemViagemTemperatura.findByVtemAtivo", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemAtivo = :vtemAtivo"),
+    @NamedQuery(name = "VtemViagemTemperatura.findByVtemDataCadastro", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemDataCadastro = :vtemDataCadastro"),
+    @NamedQuery(name = "VtemViagemTemperatura.findByVtemImportado", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemImportado = :vtemImportado"),
+    @NamedQuery(name = "VtemViagemTemperatura.findByVtemCodigoGr", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemCodigoGr = :vtemCodigoGr")})
 public class VtemViagemTemperatura implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,7 +55,7 @@ public class VtemViagemTemperatura implements Serializable {
     @Column(name = "vtem_codigo_gr")
     private Integer vtemCodigoGr;
     @JoinColumn(name = "vtem_viag_codigo", referencedColumnName = "viag_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ViagViagem viagViagem;
 
     public VtemViagemTemperatura() {

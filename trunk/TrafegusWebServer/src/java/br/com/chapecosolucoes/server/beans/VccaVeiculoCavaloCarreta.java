@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,10 +27,15 @@ import javax.persistence.UniqueConstraint;
  * @author Emerson
  */
 @Entity
-@Table(name = "vcca_veiculo_cavalo_carreta", uniqueConstraints = {
+@Table(name = "vcca_veiculo_cavalo_carreta", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"vcca_vcar_veic_oras_codigo"})})
 @NamedQueries({
-    @NamedQuery(name = "VccaVeiculoCavaloCarreta.findAll", query = "SELECT v FROM VccaVeiculoCavaloCarreta v")})
+    @NamedQuery(name = "VccaVeiculoCavaloCarreta.findAll", query = "SELECT v FROM VccaVeiculoCavaloCarreta v"),
+    @NamedQuery(name = "VccaVeiculoCavaloCarreta.findByVccaCodigo", query = "SELECT v FROM VccaVeiculoCavaloCarreta v WHERE v.vccaCodigo = :vccaCodigo"),
+    @NamedQuery(name = "VccaVeiculoCavaloCarreta.findByVccaSequencia", query = "SELECT v FROM VccaVeiculoCavaloCarreta v WHERE v.vccaSequencia = :vccaSequencia"),
+    @NamedQuery(name = "VccaVeiculoCavaloCarreta.findByVccaDataCadastro", query = "SELECT v FROM VccaVeiculoCavaloCarreta v WHERE v.vccaDataCadastro = :vccaDataCadastro"),
+    @NamedQuery(name = "VccaVeiculoCavaloCarreta.findByVccaCodigoGr", query = "SELECT v FROM VccaVeiculoCavaloCarreta v WHERE v.vccaCodigoGr = :vccaCodigoGr"),
+    @NamedQuery(name = "VccaVeiculoCavaloCarreta.findByVccaImportado", query = "SELECT v FROM VccaVeiculoCavaloCarreta v WHERE v.vccaImportado = :vccaImportado")})
 public class VccaVeiculoCavaloCarreta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,13 +52,13 @@ public class VccaVeiculoCavaloCarreta implements Serializable {
     @Column(name = "vcca_importado")
     private Character vccaImportado;
     @JoinColumn(name = "vcca_vcav_veic_oras_codigo", referencedColumnName = "vcav_veic_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private VcavVeiculoCavalo vcavVeiculoCavalo;
     @JoinColumn(name = "vcca_vcar_veic_oras_codigo", referencedColumnName = "vcar_veic_oras_codigo")
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private VcarVeiculoCarreta vcarVeiculoCarreta;
     @JoinColumn(name = "vcca_cont_oras_codigo", referencedColumnName = "cont_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ContContainer contContainer;
 
     public VccaVeiculoCavaloCarreta() {

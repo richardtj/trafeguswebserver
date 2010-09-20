@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,9 +22,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "tcom_tipo_comunicacao")
+@Table(name = "tcom_tipo_comunicacao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TcomTipoComunicacao.findAll", query = "SELECT t FROM TcomTipoComunicacao t")})
+    @NamedQuery(name = "TcomTipoComunicacao.findAll", query = "SELECT t FROM TcomTipoComunicacao t"),
+    @NamedQuery(name = "TcomTipoComunicacao.findByTcomCodigo", query = "SELECT t FROM TcomTipoComunicacao t WHERE t.tcomCodigo = :tcomCodigo"),
+    @NamedQuery(name = "TcomTipoComunicacao.findByTcomDescricao", query = "SELECT t FROM TcomTipoComunicacao t WHERE t.tcomDescricao = :tcomDescricao")})
 public class TcomTipoComunicacao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,8 +35,8 @@ public class TcomTipoComunicacao implements Serializable {
     private Integer tcomCodigo;
     @Column(name = "tcom_descricao", length = 50)
     private String tcomDescricao;
-    @OneToMany(mappedBy = "tcomTipoComunicacao")
-    private Collection<VtecVersaoTecnologia> vtecVersaoTecnologiaCollection;
+    @OneToMany(mappedBy = "tcomTipoComunicacao", fetch = FetchType.EAGER)
+    private List<VtecVersaoTecnologia> vtecVersaoTecnologiaList;
 
     public TcomTipoComunicacao() {
     }
@@ -58,12 +61,12 @@ public class TcomTipoComunicacao implements Serializable {
         this.tcomDescricao = tcomDescricao;
     }
 
-    public Collection<VtecVersaoTecnologia> getVtecVersaoTecnologiaCollection() {
-        return vtecVersaoTecnologiaCollection;
+    public List<VtecVersaoTecnologia> getVtecVersaoTecnologiaList() {
+        return vtecVersaoTecnologiaList;
     }
 
-    public void setVtecVersaoTecnologiaCollection(Collection<VtecVersaoTecnologia> vtecVersaoTecnologiaCollection) {
-        this.vtecVersaoTecnologiaCollection = vtecVersaoTecnologiaCollection;
+    public void setVtecVersaoTecnologiaList(List<VtecVersaoTecnologia> vtecVersaoTecnologiaList) {
+        this.vtecVersaoTecnologiaList = vtecVersaoTecnologiaList;
     }
 
     @Override

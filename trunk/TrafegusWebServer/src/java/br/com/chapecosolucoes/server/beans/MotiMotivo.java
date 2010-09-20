@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,9 +24,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "moti_motivo")
+@Table(name = "moti_motivo", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "MotiMotivo.findAll", query = "SELECT m FROM MotiMotivo m")})
+    @NamedQuery(name = "MotiMotivo.findAll", query = "SELECT m FROM MotiMotivo m"),
+    @NamedQuery(name = "MotiMotivo.findByMotiCodigo", query = "SELECT m FROM MotiMotivo m WHERE m.motiCodigo = :motiCodigo"),
+    @NamedQuery(name = "MotiMotivo.findByMotiDescricao", query = "SELECT m FROM MotiMotivo m WHERE m.motiDescricao = :motiDescricao")})
 public class MotiMotivo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,10 +38,10 @@ public class MotiMotivo implements Serializable {
     @Column(name = "moti_descricao", length = 100)
     private String motiDescricao;
     @JoinColumn(name = "moti_tmot_codigo", referencedColumnName = "tmot_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TmotTipoMotivo tmotTipoMotivo;
-    @OneToMany(mappedBy = "motiMotivo")
-    private Collection<VestViagemEstatus> vestViagemEstatusCollection;
+    @OneToMany(mappedBy = "motiMotivo", fetch = FetchType.EAGER)
+    private List<VestViagemEstatus> vestViagemEstatusList;
 
     public MotiMotivo() {
     }
@@ -71,12 +74,12 @@ public class MotiMotivo implements Serializable {
         this.tmotTipoMotivo = tmotTipoMotivo;
     }
 
-    public Collection<VestViagemEstatus> getVestViagemEstatusCollection() {
-        return vestViagemEstatusCollection;
+    public List<VestViagemEstatus> getVestViagemEstatusList() {
+        return vestViagemEstatusList;
     }
 
-    public void setVestViagemEstatusCollection(Collection<VestViagemEstatus> vestViagemEstatusCollection) {
-        this.vestViagemEstatusCollection = vestViagemEstatusCollection;
+    public void setVestViagemEstatusList(List<VestViagemEstatus> vestViagemEstatusList) {
+        this.vestViagemEstatusList = vestViagemEstatusList;
     }
 
     @Override

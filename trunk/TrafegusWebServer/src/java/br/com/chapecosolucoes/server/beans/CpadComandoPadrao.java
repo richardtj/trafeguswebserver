@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,9 +25,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "cpad_comando_padrao")
+@Table(name = "cpad_comando_padrao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "CpadComandoPadrao.findAll", query = "SELECT c FROM CpadComandoPadrao c")})
+    @NamedQuery(name = "CpadComandoPadrao.findAll", query = "SELECT c FROM CpadComandoPadrao c"),
+    @NamedQuery(name = "CpadComandoPadrao.findByCpadCodigo", query = "SELECT c FROM CpadComandoPadrao c WHERE c.cpadCodigo = :cpadCodigo"),
+    @NamedQuery(name = "CpadComandoPadrao.findByCpadDescricao", query = "SELECT c FROM CpadComandoPadrao c WHERE c.cpadDescricao = :cpadDescricao"),
+    @NamedQuery(name = "CpadComandoPadrao.findByCpadDataCadastro", query = "SELECT c FROM CpadComandoPadrao c WHERE c.cpadDataCadastro = :cpadDataCadastro"),
+    @NamedQuery(name = "CpadComandoPadrao.findByCpadCodigoGr", query = "SELECT c FROM CpadComandoPadrao c WHERE c.cpadCodigoGr = :cpadCodigoGr"),
+    @NamedQuery(name = "CpadComandoPadrao.findByCpadImportado", query = "SELECT c FROM CpadComandoPadrao c WHERE c.cpadImportado = :cpadImportado")})
 public class CpadComandoPadrao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,14 +48,14 @@ public class CpadComandoPadrao implements Serializable {
     private Integer cpadCodigoGr;
     @Column(name = "cpad_importado")
     private Character cpadImportado;
-    @OneToMany(mappedBy = "cpadComandoPadrao")
-    private Collection<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiCollection;
-    @OneToMany(mappedBy = "cpadComandoPadrao")
-    private Collection<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoCollection;
-    @OneToMany(mappedBy = "cpadComandoPadrao")
-    private Collection<AcomAcaoComando> acomAcaoComandoCollection;
-    @OneToMany(mappedBy = "cpadComandoPadrao")
-    private Collection<EcomEnvioComando> ecomEnvioComandoCollection;
+    @OneToMany(mappedBy = "cpadComandoPadrao", fetch = FetchType.EAGER)
+    private List<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiList;
+    @OneToMany(mappedBy = "cpadComandoPadrao", fetch = FetchType.EAGER)
+    private List<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoList;
+    @OneToMany(mappedBy = "cpadComandoPadrao", fetch = FetchType.EAGER)
+    private List<AcomAcaoComando> acomAcaoComandoList;
+    @OneToMany(mappedBy = "cpadComandoPadrao", fetch = FetchType.EAGER)
+    private List<EcomEnvioComando> ecomEnvioComandoList;
 
     public CpadComandoPadrao() {
     }
@@ -98,36 +104,36 @@ public class CpadComandoPadrao implements Serializable {
         this.cpadImportado = cpadImportado;
     }
 
-    public Collection<CvteComandoVersaoTecnologi> getCvteComandoVersaoTecnologiCollection() {
-        return cvteComandoVersaoTecnologiCollection;
+    public List<CvteComandoVersaoTecnologi> getCvteComandoVersaoTecnologiList() {
+        return cvteComandoVersaoTecnologiList;
     }
 
-    public void setCvteComandoVersaoTecnologiCollection(Collection<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiCollection) {
-        this.cvteComandoVersaoTecnologiCollection = cvteComandoVersaoTecnologiCollection;
+    public void setCvteComandoVersaoTecnologiList(List<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiList) {
+        this.cvteComandoVersaoTecnologiList = cvteComandoVersaoTecnologiList;
     }
 
-    public Collection<PcpaParametroComandoPadrao> getPcpaParametroComandoPadraoCollection() {
-        return pcpaParametroComandoPadraoCollection;
+    public List<PcpaParametroComandoPadrao> getPcpaParametroComandoPadraoList() {
+        return pcpaParametroComandoPadraoList;
     }
 
-    public void setPcpaParametroComandoPadraoCollection(Collection<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoCollection) {
-        this.pcpaParametroComandoPadraoCollection = pcpaParametroComandoPadraoCollection;
+    public void setPcpaParametroComandoPadraoList(List<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoList) {
+        this.pcpaParametroComandoPadraoList = pcpaParametroComandoPadraoList;
     }
 
-    public Collection<AcomAcaoComando> getAcomAcaoComandoCollection() {
-        return acomAcaoComandoCollection;
+    public List<AcomAcaoComando> getAcomAcaoComandoList() {
+        return acomAcaoComandoList;
     }
 
-    public void setAcomAcaoComandoCollection(Collection<AcomAcaoComando> acomAcaoComandoCollection) {
-        this.acomAcaoComandoCollection = acomAcaoComandoCollection;
+    public void setAcomAcaoComandoList(List<AcomAcaoComando> acomAcaoComandoList) {
+        this.acomAcaoComandoList = acomAcaoComandoList;
     }
 
-    public Collection<EcomEnvioComando> getEcomEnvioComandoCollection() {
-        return ecomEnvioComandoCollection;
+    public List<EcomEnvioComando> getEcomEnvioComandoList() {
+        return ecomEnvioComandoList;
     }
 
-    public void setEcomEnvioComandoCollection(Collection<EcomEnvioComando> ecomEnvioComandoCollection) {
-        this.ecomEnvioComandoCollection = ecomEnvioComandoCollection;
+    public void setEcomEnvioComandoList(List<EcomEnvioComando> ecomEnvioComandoList) {
+        this.ecomEnvioComandoList = ecomEnvioComandoList;
     }
 
     @Override

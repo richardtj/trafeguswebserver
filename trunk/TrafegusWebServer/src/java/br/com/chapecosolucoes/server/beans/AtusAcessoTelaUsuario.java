@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "atus_acesso_tela_usuario")
+@Table(name = "atus_acesso_tela_usuario", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "AtusAcessoTelaUsuario.findAll", query = "SELECT a FROM AtusAcessoTelaUsuario a")})
+    @NamedQuery(name = "AtusAcessoTelaUsuario.findAll", query = "SELECT a FROM AtusAcessoTelaUsuario a"),
+    @NamedQuery(name = "AtusAcessoTelaUsuario.findByAtusCodigo", query = "SELECT a FROM AtusAcessoTelaUsuario a WHERE a.atusCodigo = :atusCodigo"),
+    @NamedQuery(name = "AtusAcessoTelaUsuario.findByAtusNomeJanela", query = "SELECT a FROM AtusAcessoTelaUsuario a WHERE a.atusNomeJanela = :atusNomeJanela"),
+    @NamedQuery(name = "AtusAcessoTelaUsuario.findByAtusNomeClasse", query = "SELECT a FROM AtusAcessoTelaUsuario a WHERE a.atusNomeClasse = :atusNomeClasse"),
+    @NamedQuery(name = "AtusAcessoTelaUsuario.findByAtusDataCadastro", query = "SELECT a FROM AtusAcessoTelaUsuario a WHERE a.atusDataCadastro = :atusDataCadastro")})
 public class AtusAcessoTelaUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,7 +46,7 @@ public class AtusAcessoTelaUsuario implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date atusDataCadastro;
     @JoinColumn(name = "atus_uaus_codigo", referencedColumnName = "ausu_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private AusuAcessoUsuario ausuAcessoUsuario;
 
     public AtusAcessoTelaUsuario() {

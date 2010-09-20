@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,9 +26,19 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "logr_logradouro")
+@Table(name = "logr_logradouro", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "LogrLogradouro.findAll", query = "SELECT l FROM LogrLogradouro l")})
+    @NamedQuery(name = "LogrLogradouro.findAll", query = "SELECT l FROM LogrLogradouro l"),
+    @NamedQuery(name = "LogrLogradouro.findByLogrCodigo", query = "SELECT l FROM LogrLogradouro l WHERE l.logrCodigo = :logrCodigo"),
+    @NamedQuery(name = "LogrLogradouro.findByLogrTipoLogradouro", query = "SELECT l FROM LogrLogradouro l WHERE l.logrTipoLogradouro = :logrTipoLogradouro"),
+    @NamedQuery(name = "LogrLogradouro.findByLogrDescricao", query = "SELECT l FROM LogrLogradouro l WHERE l.logrDescricao = :logrDescricao"),
+    @NamedQuery(name = "LogrLogradouro.findByLogrComplemento", query = "SELECT l FROM LogrLogradouro l WHERE l.logrComplemento = :logrComplemento"),
+    @NamedQuery(name = "LogrLogradouro.findByLogrCep", query = "SELECT l FROM LogrLogradouro l WHERE l.logrCep = :logrCep"),
+    @NamedQuery(name = "LogrLogradouro.findByLogrCidaCodigo", query = "SELECT l FROM LogrLogradouro l WHERE l.logrCidaCodigo = :logrCidaCodigo"),
+    @NamedQuery(name = "LogrLogradouro.findByLogrEstaCodigo", query = "SELECT l FROM LogrLogradouro l WHERE l.logrEstaCodigo = :logrEstaCodigo"),
+    @NamedQuery(name = "LogrLogradouro.findByLogrDataCadastro", query = "SELECT l FROM LogrLogradouro l WHERE l.logrDataCadastro = :logrDataCadastro"),
+    @NamedQuery(name = "LogrLogradouro.findByLogrCodigoGr", query = "SELECT l FROM LogrLogradouro l WHERE l.logrCodigoGr = :logrCodigoGr"),
+    @NamedQuery(name = "LogrLogradouro.findByLogrImportado", query = "SELECT l FROM LogrLogradouro l WHERE l.logrImportado = :logrImportado")})
 public class LogrLogradouro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,7 +65,7 @@ public class LogrLogradouro implements Serializable {
     @Column(name = "logr_importado")
     private Character logrImportado;
     @OneToMany(mappedBy = "logrLogradouro")
-    private Collection<PessPessoa> pessPessoaCollection;
+    private List<PessPessoa> pessPessoaList;
     @JoinColumn(name = "logr_bair_codigo", referencedColumnName = "bair_codigo")
     @ManyToOne
     private BairBairro bairBairro;
@@ -147,12 +157,12 @@ public class LogrLogradouro implements Serializable {
         this.logrImportado = logrImportado;
     }
 
-    public Collection<PessPessoa> getPessPessoaCollection() {
-        return pessPessoaCollection;
+    public List<PessPessoa> getPessPessoaList() {
+        return pessPessoaList;
     }
 
-    public void setPessPessoaCollection(Collection<PessPessoa> pessPessoaCollection) {
-        this.pessPessoaCollection = pessPessoaCollection;
+    public void setPessPessoaList(List<PessPessoa> pessPessoaList) {
+        this.pessPessoaList = pessPessoaList;
     }
 
     public BairBairro getBairBairro() {

@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,9 +27,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "comb_comboio")
+@Table(name = "comb_comboio", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "CombComboio.findAll", query = "SELECT c FROM CombComboio c")})
+    @NamedQuery(name = "CombComboio.findAll", query = "SELECT c FROM CombComboio c"),
+    @NamedQuery(name = "CombComboio.findByCombCodigo", query = "SELECT c FROM CombComboio c WHERE c.combCodigo = :combCodigo"),
+    @NamedQuery(name = "CombComboio.findByCombDescricao", query = "SELECT c FROM CombComboio c WHERE c.combDescricao = :combDescricao"),
+    @NamedQuery(name = "CombComboio.findByCombDataCadastro", query = "SELECT c FROM CombComboio c WHERE c.combDataCadastro = :combDataCadastro"),
+    @NamedQuery(name = "CombComboio.findByCombCodigoGr", query = "SELECT c FROM CombComboio c WHERE c.combCodigoGr = :combCodigoGr"),
+    @NamedQuery(name = "CombComboio.findByCombImportado", query = "SELECT c FROM CombComboio c WHERE c.combImportado = :combImportado")})
 public class CombComboio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,10 +51,10 @@ public class CombComboio implements Serializable {
     @Column(name = "comb_importado")
     private Character combImportado;
     @JoinColumn(name = "comb_eesc_pesj_pess_oras_codigo", referencedColumnName = "eesc_oras_pess_pesj_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EescEmpresaEscolta eescEmpresaEscolta;
-    @OneToMany(mappedBy = "combComboio")
-    private Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection;
+    @OneToMany(mappedBy = "combComboio", fetch = FetchType.EAGER)
+    private List<VveiViagemVeiculo> vveiViagemVeiculoList;
 
     public CombComboio() {
     }
@@ -105,12 +111,12 @@ public class CombComboio implements Serializable {
         this.eescEmpresaEscolta = eescEmpresaEscolta;
     }
 
-    public Collection<VveiViagemVeiculo> getVveiViagemVeiculoCollection() {
-        return vveiViagemVeiculoCollection;
+    public List<VveiViagemVeiculo> getVveiViagemVeiculoList() {
+        return vveiViagemVeiculoList;
     }
 
-    public void setVveiViagemVeiculoCollection(Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection) {
-        this.vveiViagemVeiculoCollection = vveiViagemVeiculoCollection;
+    public void setVveiViagemVeiculoList(List<VveiViagemVeiculo> vveiViagemVeiculoList) {
+        this.vveiViagemVeiculoList = vveiViagemVeiculoList;
     }
 
     @Override

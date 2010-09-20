@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "rcon_referencia_contato")
+@Table(name = "rcon_referencia_contato", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "RconReferenciaContato.findAll", query = "SELECT r FROM RconReferenciaContato r")})
+    @NamedQuery(name = "RconReferenciaContato.findAll", query = "SELECT r FROM RconReferenciaContato r"),
+    @NamedQuery(name = "RconReferenciaContato.findByRconCodigo", query = "SELECT r FROM RconReferenciaContato r WHERE r.rconCodigo = :rconCodigo"),
+    @NamedQuery(name = "RconReferenciaContato.findByRconDataCadastro", query = "SELECT r FROM RconReferenciaContato r WHERE r.rconDataCadastro = :rconDataCadastro"),
+    @NamedQuery(name = "RconReferenciaContato.findByRconCodigoGr", query = "SELECT r FROM RconReferenciaContato r WHERE r.rconCodigoGr = :rconCodigoGr"),
+    @NamedQuery(name = "RconReferenciaContato.findByRconImportado", query = "SELECT r FROM RconReferenciaContato r WHERE r.rconImportado = :rconImportado")})
 public class RconReferenciaContato implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,10 +46,10 @@ public class RconReferenciaContato implements Serializable {
     @Column(name = "rcon_importado")
     private Character rconImportado;
     @JoinColumn(name = "rcon_refe_codigo", referencedColumnName = "refe_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private RefeReferencia refeReferencia;
     @JoinColumn(name = "rcon_cona_codigo", referencedColumnName = "cona_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ConaContato conaContato;
 
     public RconReferenciaContato() {

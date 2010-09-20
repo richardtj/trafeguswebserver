@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +27,16 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "vloc_viagem_local")
+@Table(name = "vloc_viagem_local", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VlocViagemLocal.findAll", query = "SELECT v FROM VlocViagemLocal v")})
+    @NamedQuery(name = "VlocViagemLocal.findAll", query = "SELECT v FROM VlocViagemLocal v"),
+    @NamedQuery(name = "VlocViagemLocal.findByVlocCodigo", query = "SELECT v FROM VlocViagemLocal v WHERE v.vlocCodigo = :vlocCodigo"),
+    @NamedQuery(name = "VlocViagemLocal.findByVlocSequencia", query = "SELECT v FROM VlocViagemLocal v WHERE v.vlocSequencia = :vlocSequencia"),
+    @NamedQuery(name = "VlocViagemLocal.findByVlocRaio", query = "SELECT v FROM VlocViagemLocal v WHERE v.vlocRaio = :vlocRaio"),
+    @NamedQuery(name = "VlocViagemLocal.findByVlocDataCadastro", query = "SELECT v FROM VlocViagemLocal v WHERE v.vlocDataCadastro = :vlocDataCadastro"),
+    @NamedQuery(name = "VlocViagemLocal.findByVlocCodigoGr", query = "SELECT v FROM VlocViagemLocal v WHERE v.vlocCodigoGr = :vlocCodigoGr"),
+    @NamedQuery(name = "VlocViagemLocal.findByVlocImportado", query = "SELECT v FROM VlocViagemLocal v WHERE v.vlocImportado = :vlocImportado"),
+    @NamedQuery(name = "VlocViagemLocal.findByVlocDescricao", query = "SELECT v FROM VlocViagemLocal v WHERE v.vlocDescricao = :vlocDescricao")})
 public class VlocViagemLocal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,11 +57,7 @@ public class VlocViagemLocal implements Serializable {
     @Column(name = "vloc_descricao", length = 200)
     private String vlocDescricao;
     @OneToMany(mappedBy = "vlocViagemLocal")
-    private Collection<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalCollection;
-    @OneToMany(mappedBy = "vlocViagemLocal")
-    private Collection<VlevViagemLocalEvento> vlevViagemLocalEventoCollection;
-    @OneToMany(mappedBy = "vlocViagemLocal")
-    private Collection<VconViagemConhecimento> vconViagemConhecimentoCollection;
+    private List<VlevViagemLocalEvento> vlevViagemLocalEventoList;
     @JoinColumn(name = "vloc_viag_codigo", referencedColumnName = "viag_codigo")
     @ManyToOne
     private ViagViagem viagViagem;
@@ -128,28 +131,12 @@ public class VlocViagemLocal implements Serializable {
         this.vlocDescricao = vlocDescricao;
     }
 
-    public Collection<VnfiViagemNotaFiscal> getVnfiViagemNotaFiscalCollection() {
-        return vnfiViagemNotaFiscalCollection;
+    public List<VlevViagemLocalEvento> getVlevViagemLocalEventoList() {
+        return vlevViagemLocalEventoList;
     }
 
-    public void setVnfiViagemNotaFiscalCollection(Collection<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalCollection) {
-        this.vnfiViagemNotaFiscalCollection = vnfiViagemNotaFiscalCollection;
-    }
-
-    public Collection<VlevViagemLocalEvento> getVlevViagemLocalEventoCollection() {
-        return vlevViagemLocalEventoCollection;
-    }
-
-    public void setVlevViagemLocalEventoCollection(Collection<VlevViagemLocalEvento> vlevViagemLocalEventoCollection) {
-        this.vlevViagemLocalEventoCollection = vlevViagemLocalEventoCollection;
-    }
-
-    public Collection<VconViagemConhecimento> getVconViagemConhecimentoCollection() {
-        return vconViagemConhecimentoCollection;
-    }
-
-    public void setVconViagemConhecimentoCollection(Collection<VconViagemConhecimento> vconViagemConhecimentoCollection) {
-        this.vconViagemConhecimentoCollection = vconViagemConhecimentoCollection;
+    public void setVlevViagemLocalEventoList(List<VlevViagemLocalEvento> vlevViagemLocalEventoList) {
+        this.vlevViagemLocalEventoList = vlevViagemLocalEventoList;
     }
 
     public ViagViagem getViagViagem() {

@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,10 +27,17 @@ import javax.persistence.UniqueConstraint;
  * @author Emerson
  */
 @Entity
-@Table(name = "bair_bairro", uniqueConstraints = {
+@Table(name = "bair_bairro", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"bair_cida_codigo", "bair_descricao"})})
 @NamedQueries({
-    @NamedQuery(name = "BairBairro.findAll", query = "SELECT b FROM BairBairro b")})
+    @NamedQuery(name = "BairBairro.findAll", query = "SELECT b FROM BairBairro b"),
+    @NamedQuery(name = "BairBairro.findByBairCodigo", query = "SELECT b FROM BairBairro b WHERE b.bairCodigo = :bairCodigo"),
+    @NamedQuery(name = "BairBairro.findByBairDescricao", query = "SELECT b FROM BairBairro b WHERE b.bairDescricao = :bairDescricao"),
+    @NamedQuery(name = "BairBairro.findByBairAbreviacao", query = "SELECT b FROM BairBairro b WHERE b.bairAbreviacao = :bairAbreviacao"),
+    @NamedQuery(name = "BairBairro.findByBairDataCadastro", query = "SELECT b FROM BairBairro b WHERE b.bairDataCadastro = :bairDataCadastro"),
+    @NamedQuery(name = "BairBairro.findByBairCodigoGr", query = "SELECT b FROM BairBairro b WHERE b.bairCodigoGr = :bairCodigoGr"),
+    @NamedQuery(name = "BairBairro.findByBairImportado", query = "SELECT b FROM BairBairro b WHERE b.bairImportado = :bairImportado"),
+    @NamedQuery(name = "BairBairro.findByBairEstaCodigo", query = "SELECT b FROM BairBairro b WHERE b.bairEstaCodigo = :bairEstaCodigo")})
 public class BairBairro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,7 +61,7 @@ public class BairBairro implements Serializable {
     @ManyToOne
     private CidaCidade cidaCidade;
     @OneToMany(mappedBy = "bairBairro")
-    private Collection<LogrLogradouro> logrLogradouroCollection;
+    private List<LogrLogradouro> logrLogradouroList;
 
     public BairBairro() {
     }
@@ -127,12 +134,12 @@ public class BairBairro implements Serializable {
         this.cidaCidade = cidaCidade;
     }
 
-    public Collection<LogrLogradouro> getLogrLogradouroCollection() {
-        return logrLogradouroCollection;
+    public List<LogrLogradouro> getLogrLogradouroList() {
+        return logrLogradouroList;
     }
 
-    public void setLogrLogradouroCollection(Collection<LogrLogradouro> logrLogradouroCollection) {
-        this.logrLogradouroCollection = logrLogradouroCollection;
+    public void setLogrLogradouroList(List<LogrLogradouro> logrLogradouroList) {
+        this.logrLogradouroList = logrLogradouroList;
     }
 
     @Override

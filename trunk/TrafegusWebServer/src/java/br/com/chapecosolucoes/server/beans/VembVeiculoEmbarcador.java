@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,10 +26,14 @@ import javax.persistence.UniqueConstraint;
  * @author Emerson
  */
 @Entity
-@Table(name = "vemb_veiculo_embarcador", uniqueConstraints = {
+@Table(name = "vemb_veiculo_embarcador", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"vemb_emba_pjur_pess_oras_codigo", "vemb_veic_oras_codigo"})})
 @NamedQueries({
-    @NamedQuery(name = "VembVeiculoEmbarcador.findAll", query = "SELECT v FROM VembVeiculoEmbarcador v")})
+    @NamedQuery(name = "VembVeiculoEmbarcador.findAll", query = "SELECT v FROM VembVeiculoEmbarcador v"),
+    @NamedQuery(name = "VembVeiculoEmbarcador.findByVembCodigo", query = "SELECT v FROM VembVeiculoEmbarcador v WHERE v.vembCodigo = :vembCodigo"),
+    @NamedQuery(name = "VembVeiculoEmbarcador.findByVembDataCadastro", query = "SELECT v FROM VembVeiculoEmbarcador v WHERE v.vembDataCadastro = :vembDataCadastro"),
+    @NamedQuery(name = "VembVeiculoEmbarcador.findByVembCodigoGr", query = "SELECT v FROM VembVeiculoEmbarcador v WHERE v.vembCodigoGr = :vembCodigoGr"),
+    @NamedQuery(name = "VembVeiculoEmbarcador.findByVembImportado", query = "SELECT v FROM VembVeiculoEmbarcador v WHERE v.vembImportado = :vembImportado")})
 public class VembVeiculoEmbarcador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,19 +48,19 @@ public class VembVeiculoEmbarcador implements Serializable {
     @Column(name = "vemb_importado")
     private Character vembImportado;
     @JoinColumn(name = "vemb_veic_oras_codigo", referencedColumnName = "veic_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vemb_tvco_codigo", referencedColumnName = "tvco_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvcoTipoVinculoContratual tvcoTipoVinculoContratual;
     @JoinColumn(name = "vemb_eobj_codigo", referencedColumnName = "eobj_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EobjEstatusObjeto eobjEstatusObjeto;
     @JoinColumn(name = "vemb_emba_pjur_pess_oras_codigo", referencedColumnName = "emba_pjur_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EmbaEmbarcador embaEmbarcador;
     @JoinColumn(name = "vemb_ctec_codigo", referencedColumnName = "ctec_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private CtecContaTecnologia ctecContaTecnologia;
 
     public VembVeiculoEmbarcador() {

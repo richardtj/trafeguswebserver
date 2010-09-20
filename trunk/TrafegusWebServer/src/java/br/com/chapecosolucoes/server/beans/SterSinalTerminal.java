@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,12 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "ster_sinal_terminal")
+@Table(name = "ster_sinal_terminal", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "SterSinalTerminal.findAll", query = "SELECT s FROM SterSinalTerminal s")})
+    @NamedQuery(name = "SterSinalTerminal.findAll", query = "SELECT s FROM SterSinalTerminal s"),
+    @NamedQuery(name = "SterSinalTerminal.findBySterCodigo", query = "SELECT s FROM SterSinalTerminal s WHERE s.sterCodigo = :sterCodigo"),
+    @NamedQuery(name = "SterSinalTerminal.findBySterDataInclusaoSinal", query = "SELECT s FROM SterSinalTerminal s WHERE s.sterDataInclusaoSinal = :sterDataInclusaoSinal"),
+    @NamedQuery(name = "SterSinalTerminal.findBySterDataExclusaoSinal", query = "SELECT s FROM SterSinalTerminal s WHERE s.sterDataExclusaoSinal = :sterDataExclusaoSinal")})
 public class SterSinalTerminal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,13 +44,13 @@ public class SterSinalTerminal implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date sterDataExclusaoSinal;
     @JoinColumn(name = "ster_term_codigo", referencedColumnName = "term_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TermTerminal termTerminal;
     @JoinColumn(name = "ster_gris_pjur_pess_oras_destino", referencedColumnName = "gris_pjur_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private GrisGerenciadoraRisco grisGerenciadoraRisco;
     @JoinColumn(name = "ster_gris_pjur_pess_oras_origem", referencedColumnName = "gris_pjur_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private GrisGerenciadoraRisco grisGerenciadoraRisco1;
 
     public SterSinalTerminal() {

@@ -7,11 +7,12 @@ package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,9 +28,15 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "prod_produto")
+@Table(name = "prod_produto", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ProdProduto.findAll", query = "SELECT p FROM ProdProduto p")})
+    @NamedQuery(name = "ProdProduto.findAll", query = "SELECT p FROM ProdProduto p"),
+    @NamedQuery(name = "ProdProduto.findByProdCodigo", query = "SELECT p FROM ProdProduto p WHERE p.prodCodigo = :prodCodigo"),
+    @NamedQuery(name = "ProdProduto.findByProdDescricao", query = "SELECT p FROM ProdProduto p WHERE p.prodDescricao = :prodDescricao"),
+    @NamedQuery(name = "ProdProduto.findByProdValorUnitario", query = "SELECT p FROM ProdProduto p WHERE p.prodValorUnitario = :prodValorUnitario"),
+    @NamedQuery(name = "ProdProduto.findByProdDataCadastro", query = "SELECT p FROM ProdProduto p WHERE p.prodDataCadastro = :prodDataCadastro"),
+    @NamedQuery(name = "ProdProduto.findByProdCodigoGr", query = "SELECT p FROM ProdProduto p WHERE p.prodCodigoGr = :prodCodigoGr"),
+    @NamedQuery(name = "ProdProduto.findByProdImportado", query = "SELECT p FROM ProdProduto p WHERE p.prodImportado = :prodImportado")})
 public class ProdProduto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,10 +55,10 @@ public class ProdProduto implements Serializable {
     @Column(name = "prod_importado")
     private Character prodImportado;
     @JoinColumn(name = "prod_tpro_codigo", referencedColumnName = "tpro_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TproProduto tproProduto;
-    @OneToMany(mappedBy = "prodProduto")
-    private Collection<VproViagemProduto> vproViagemProdutoCollection;
+    @OneToMany(mappedBy = "prodProduto", fetch = FetchType.EAGER)
+    private List<VproViagemProduto> vproViagemProdutoList;
 
     public ProdProduto() {
     }
@@ -116,12 +123,12 @@ public class ProdProduto implements Serializable {
         this.tproProduto = tproProduto;
     }
 
-    public Collection<VproViagemProduto> getVproViagemProdutoCollection() {
-        return vproViagemProdutoCollection;
+    public List<VproViagemProduto> getVproViagemProdutoList() {
+        return vproViagemProdutoList;
     }
 
-    public void setVproViagemProdutoCollection(Collection<VproViagemProduto> vproViagemProdutoCollection) {
-        this.vproViagemProdutoCollection = vproViagemProdutoCollection;
+    public void setVproViagemProdutoList(List<VproViagemProduto> vproViagemProdutoList) {
+        this.vproViagemProdutoList = vproViagemProdutoList;
     }
 
     @Override

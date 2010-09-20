@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "temb_transportador_embarcador")
+@Table(name = "temb_transportador_embarcador", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TembTransportadorEmbarcador.findAll", query = "SELECT t FROM TembTransportadorEmbarcador t")})
+    @NamedQuery(name = "TembTransportadorEmbarcador.findAll", query = "SELECT t FROM TembTransportadorEmbarcador t"),
+    @NamedQuery(name = "TembTransportadorEmbarcador.findByTembCodigo", query = "SELECT t FROM TembTransportadorEmbarcador t WHERE t.tembCodigo = :tembCodigo"),
+    @NamedQuery(name = "TembTransportadorEmbarcador.findByTembDataCadastro", query = "SELECT t FROM TembTransportadorEmbarcador t WHERE t.tembDataCadastro = :tembDataCadastro"),
+    @NamedQuery(name = "TembTransportadorEmbarcador.findByTembCodigoGr", query = "SELECT t FROM TembTransportadorEmbarcador t WHERE t.tembCodigoGr = :tembCodigoGr"),
+    @NamedQuery(name = "TembTransportadorEmbarcador.findByTembImportado", query = "SELECT t FROM TembTransportadorEmbarcador t WHERE t.tembImportado = :tembImportado")})
 public class TembTransportadorEmbarcador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,13 +46,13 @@ public class TembTransportadorEmbarcador implements Serializable {
     @Column(name = "temb_importado")
     private Character tembImportado;
     @JoinColumn(name = "tvco_codigo", referencedColumnName = "tvco_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvcoTipoVinculoContratual tvcoTipoVinculoContratual;
     @JoinColumn(name = "temb_tran_pess_oras_codigo", referencedColumnName = "tran_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TranTransportador tranTransportador;
     @JoinColumn(name = "temb_emb_pjur_pess_oras_codigo", referencedColumnName = "emba_pjur_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EmbaEmbarcador embaEmbarcador;
 
     public TembTransportadorEmbarcador() {

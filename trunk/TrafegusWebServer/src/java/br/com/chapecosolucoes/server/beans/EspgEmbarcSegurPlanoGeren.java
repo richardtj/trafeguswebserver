@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "espg_embarc_segur_plano_geren")
+@Table(name = "espg_embarc_segur_plano_geren", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EspgEmbarcSegurPlanoGeren.findAll", query = "SELECT e FROM EspgEmbarcSegurPlanoGeren e")})
+    @NamedQuery(name = "EspgEmbarcSegurPlanoGeren.findAll", query = "SELECT e FROM EspgEmbarcSegurPlanoGeren e"),
+    @NamedQuery(name = "EspgEmbarcSegurPlanoGeren.findByEspgCodigo", query = "SELECT e FROM EspgEmbarcSegurPlanoGeren e WHERE e.espgCodigo = :espgCodigo"),
+    @NamedQuery(name = "EspgEmbarcSegurPlanoGeren.findByEspgDataCadastro", query = "SELECT e FROM EspgEmbarcSegurPlanoGeren e WHERE e.espgDataCadastro = :espgDataCadastro"),
+    @NamedQuery(name = "EspgEmbarcSegurPlanoGeren.findByEspgCodigoGr", query = "SELECT e FROM EspgEmbarcSegurPlanoGeren e WHERE e.espgCodigoGr = :espgCodigoGr"),
+    @NamedQuery(name = "EspgEmbarcSegurPlanoGeren.findByEspgImportado", query = "SELECT e FROM EspgEmbarcSegurPlanoGeren e WHERE e.espgImportado = :espgImportado")})
 public class EspgEmbarcSegurPlanoGeren implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,13 +46,13 @@ public class EspgEmbarcSegurPlanoGeren implements Serializable {
     @Column(name = "espg_importado")
     private Character espgImportado;
     @JoinColumn(name = "espg_segu_pjur_pess_oras_codigo", referencedColumnName = "segu_pjur_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private SeguSeguradora seguSeguradora;
     @JoinColumn(name = "espg_pgpg_codigo", referencedColumnName = "pgpg_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PgpgPg pgpgPg;
     @JoinColumn(name = "espg_emba_pjur_pess_oras_codigo", referencedColumnName = "emba_pjur_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EmbaEmbarcador embaEmbarcador;
 
     public EspgEmbarcSegurPlanoGeren() {

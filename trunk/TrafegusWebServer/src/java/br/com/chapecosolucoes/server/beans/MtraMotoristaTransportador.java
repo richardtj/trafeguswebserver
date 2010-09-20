@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,13 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "mtra_motorista_transportador")
+@Table(name = "mtra_motorista_transportador", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "MtraMotoristaTransportador.findAll", query = "SELECT m FROM MtraMotoristaTransportador m")})
+    @NamedQuery(name = "MtraMotoristaTransportador.findAll", query = "SELECT m FROM MtraMotoristaTransportador m"),
+    @NamedQuery(name = "MtraMotoristaTransportador.findByMtraCodigo", query = "SELECT m FROM MtraMotoristaTransportador m WHERE m.mtraCodigo = :mtraCodigo"),
+    @NamedQuery(name = "MtraMotoristaTransportador.findByMtraDataCadastro", query = "SELECT m FROM MtraMotoristaTransportador m WHERE m.mtraDataCadastro = :mtraDataCadastro"),
+    @NamedQuery(name = "MtraMotoristaTransportador.findByMtraCodigoGr", query = "SELECT m FROM MtraMotoristaTransportador m WHERE m.mtraCodigoGr = :mtraCodigoGr"),
+    @NamedQuery(name = "MtraMotoristaTransportador.findByMtraImportado", query = "SELECT m FROM MtraMotoristaTransportador m WHERE m.mtraImportado = :mtraImportado")})
 public class MtraMotoristaTransportador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,10 +46,10 @@ public class MtraMotoristaTransportador implements Serializable {
     @Column(name = "mtra_importado")
     private Character mtraImportado;
     @JoinColumn(name = "mtra_tran_pess_oras_codigo", referencedColumnName = "tran_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TranTransportador tranTransportador;
     @JoinColumn(name = "mtra_moto_pfis_pess_oras_codigo", referencedColumnName = "moto_pfis_pess_oras_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private MotoMotorista motoMotorista;
 
     public MtraMotoristaTransportador() {

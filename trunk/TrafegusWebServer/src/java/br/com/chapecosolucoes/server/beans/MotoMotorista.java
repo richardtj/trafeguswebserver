@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +27,17 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "moto_motorista")
+@Table(name = "moto_motorista", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "MotoMotorista.findAll", query = "SELECT m FROM MotoMotorista m")})
+    @NamedQuery(name = "MotoMotorista.findAll", query = "SELECT m FROM MotoMotorista m"),
+    @NamedQuery(name = "MotoMotorista.findByMotoPfisPessOrasCodigo", query = "SELECT m FROM MotoMotorista m WHERE m.motoPfisPessOrasCodigo = :motoPfisPessOrasCodigo"),
+    @NamedQuery(name = "MotoMotorista.findByMotoNumeroCnh", query = "SELECT m FROM MotoMotorista m WHERE m.motoNumeroCnh = :motoNumeroCnh"),
+    @NamedQuery(name = "MotoMotorista.findByMotoCategoriaCnh", query = "SELECT m FROM MotoMotorista m WHERE m.motoCategoriaCnh = :motoCategoriaCnh"),
+    @NamedQuery(name = "MotoMotorista.findByMotoValidadeCnh", query = "SELECT m FROM MotoMotorista m WHERE m.motoValidadeCnh = :motoValidadeCnh"),
+    @NamedQuery(name = "MotoMotorista.findByMotoSenha", query = "SELECT m FROM MotoMotorista m WHERE m.motoSenha = :motoSenha"),
+    @NamedQuery(name = "MotoMotorista.findByMotoTreinado", query = "SELECT m FROM MotoMotorista m WHERE m.motoTreinado = :motoTreinado"),
+    @NamedQuery(name = "MotoMotorista.findByMotoUltimoTreinamento", query = "SELECT m FROM MotoMotorista m WHERE m.motoUltimoTreinamento = :motoUltimoTreinamento"),
+    @NamedQuery(name = "MotoMotorista.findByMotoValidadePesquisa", query = "SELECT m FROM MotoMotorista m WHERE m.motoValidadePesquisa = :motoValidadePesquisa")})
 public class MotoMotorista implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,11 +62,7 @@ public class MotoMotorista implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date motoValidadePesquisa;
     @OneToMany(mappedBy = "motoMotorista")
-    private Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection;
-    @OneToMany(mappedBy = "motoMotorista")
-    private Collection<VeicVeiculo> veicVeiculoCollection;
-    @OneToMany(mappedBy = "motoMotorista")
-    private Collection<MtraMotoristaTransportador> mtraMotoristaTransportadorCollection;
+    private List<VeicVeiculo> veicVeiculoList;
     @JoinColumn(name = "moto_pfis_pess_oras_codigo", referencedColumnName = "pfis_pess_oras_codigo", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private PfisPessoaFisica pfisPessoaFisica;
@@ -66,7 +70,7 @@ public class MotoMotorista implements Serializable {
     @ManyToOne
     private EpmoEstatusPesquisaMotoris epmoEstatusPesquisaMotoris;
     @OneToMany(mappedBy = "motoMotorista")
-    private Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection;
+    private List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList;
 
     public MotoMotorista() {
     }
@@ -139,28 +143,12 @@ public class MotoMotorista implements Serializable {
         this.motoValidadePesquisa = motoValidadePesquisa;
     }
 
-    public Collection<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorCollection() {
-        return hpmoHistoricoPesquisaMotorCollection;
+    public List<VeicVeiculo> getVeicVeiculoList() {
+        return veicVeiculoList;
     }
 
-    public void setHpmoHistoricoPesquisaMotorCollection(Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection) {
-        this.hpmoHistoricoPesquisaMotorCollection = hpmoHistoricoPesquisaMotorCollection;
-    }
-
-    public Collection<VeicVeiculo> getVeicVeiculoCollection() {
-        return veicVeiculoCollection;
-    }
-
-    public void setVeicVeiculoCollection(Collection<VeicVeiculo> veicVeiculoCollection) {
-        this.veicVeiculoCollection = veicVeiculoCollection;
-    }
-
-    public Collection<MtraMotoristaTransportador> getMtraMotoristaTransportadorCollection() {
-        return mtraMotoristaTransportadorCollection;
-    }
-
-    public void setMtraMotoristaTransportadorCollection(Collection<MtraMotoristaTransportador> mtraMotoristaTransportadorCollection) {
-        this.mtraMotoristaTransportadorCollection = mtraMotoristaTransportadorCollection;
+    public void setVeicVeiculoList(List<VeicVeiculo> veicVeiculoList) {
+        this.veicVeiculoList = veicVeiculoList;
     }
 
     public PfisPessoaFisica getPfisPessoaFisica() {
@@ -179,12 +167,12 @@ public class MotoMotorista implements Serializable {
         this.epmoEstatusPesquisaMotoris = epmoEstatusPesquisaMotoris;
     }
 
-    public Collection<VveiViagemVeiculo> getVveiViagemVeiculoCollection() {
-        return vveiViagemVeiculoCollection;
+    public List<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorList() {
+        return hpmoHistoricoPesquisaMotorList;
     }
 
-    public void setVveiViagemVeiculoCollection(Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection) {
-        this.vveiViagemVeiculoCollection = vveiViagemVeiculoCollection;
+    public void setHpmoHistoricoPesquisaMotorList(List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList) {
+        this.hpmoHistoricoPesquisaMotorList = hpmoHistoricoPesquisaMotorList;
     }
 
     @Override

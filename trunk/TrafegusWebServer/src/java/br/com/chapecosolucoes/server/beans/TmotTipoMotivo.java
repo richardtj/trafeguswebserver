@@ -6,10 +6,11 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,9 +22,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "tmot_tipo_motivo")
+@Table(name = "tmot_tipo_motivo", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "TmotTipoMotivo.findAll", query = "SELECT t FROM TmotTipoMotivo t")})
+    @NamedQuery(name = "TmotTipoMotivo.findAll", query = "SELECT t FROM TmotTipoMotivo t"),
+    @NamedQuery(name = "TmotTipoMotivo.findByTmotCodigo", query = "SELECT t FROM TmotTipoMotivo t WHERE t.tmotCodigo = :tmotCodigo"),
+    @NamedQuery(name = "TmotTipoMotivo.findByTmotDescricao", query = "SELECT t FROM TmotTipoMotivo t WHERE t.tmotDescricao = :tmotDescricao")})
 public class TmotTipoMotivo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,8 +35,8 @@ public class TmotTipoMotivo implements Serializable {
     private Integer tmotCodigo;
     @Column(name = "tmot_descricao", length = 50)
     private String tmotDescricao;
-    @OneToMany(mappedBy = "tmotTipoMotivo")
-    private Collection<MotiMotivo> motiMotivoCollection;
+    @OneToMany(mappedBy = "tmotTipoMotivo", fetch = FetchType.EAGER)
+    private List<MotiMotivo> motiMotivoList;
 
     public TmotTipoMotivo() {
     }
@@ -58,12 +61,12 @@ public class TmotTipoMotivo implements Serializable {
         this.tmotDescricao = tmotDescricao;
     }
 
-    public Collection<MotiMotivo> getMotiMotivoCollection() {
-        return motiMotivoCollection;
+    public List<MotiMotivo> getMotiMotivoList() {
+        return motiMotivoList;
     }
 
-    public void setMotiMotivoCollection(Collection<MotiMotivo> motiMotivoCollection) {
-        this.motiMotivoCollection = motiMotivoCollection;
+    public void setMotiMotivoList(List<MotiMotivo> motiMotivoList) {
+        this.motiMotivoList = motiMotivoList;
     }
 
     @Override

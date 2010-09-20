@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,9 +21,12 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "eobj_estatus_objeto")
+@Table(name = "eobj_estatus_objeto", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "EobjEstatusObjeto.findAll", query = "SELECT e FROM EobjEstatusObjeto e")})
+    @NamedQuery(name = "EobjEstatusObjeto.findAll", query = "SELECT e FROM EobjEstatusObjeto e"),
+    @NamedQuery(name = "EobjEstatusObjeto.findByEobjCodigo", query = "SELECT e FROM EobjEstatusObjeto e WHERE e.eobjCodigo = :eobjCodigo"),
+    @NamedQuery(name = "EobjEstatusObjeto.findByEobjDescricao", query = "SELECT e FROM EobjEstatusObjeto e WHERE e.eobjDescricao = :eobjDescricao"),
+    @NamedQuery(name = "EobjEstatusObjeto.findByEobjCodigoGr", query = "SELECT e FROM EobjEstatusObjeto e WHERE e.eobjCodigoGr = :eobjCodigoGr")})
 public class EobjEstatusObjeto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,11 +38,7 @@ public class EobjEstatusObjeto implements Serializable {
     @Column(name = "eobj_codigo_gr")
     private Integer eobjCodigoGr;
     @OneToMany(mappedBy = "eobjEstatusObjeto")
-    private Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection;
-    @OneToMany(mappedBy = "eobjEstatusObjeto")
-    private Collection<OrasObjetoRastreado> orasObjetoRastreadoCollection;
-    @OneToMany(mappedBy = "eobjEstatusObjeto")
-    private Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection;
+    private List<OrasObjetoRastreado> orasObjetoRastreadoList;
 
     public EobjEstatusObjeto() {
     }
@@ -72,28 +71,12 @@ public class EobjEstatusObjeto implements Serializable {
         this.eobjCodigoGr = eobjCodigoGr;
     }
 
-    public Collection<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorCollection() {
-        return vembVeiculoEmbarcadorCollection;
+    public List<OrasObjetoRastreado> getOrasObjetoRastreadoList() {
+        return orasObjetoRastreadoList;
     }
 
-    public void setVembVeiculoEmbarcadorCollection(Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection) {
-        this.vembVeiculoEmbarcadorCollection = vembVeiculoEmbarcadorCollection;
-    }
-
-    public Collection<OrasObjetoRastreado> getOrasObjetoRastreadoCollection() {
-        return orasObjetoRastreadoCollection;
-    }
-
-    public void setOrasObjetoRastreadoCollection(Collection<OrasObjetoRastreado> orasObjetoRastreadoCollection) {
-        this.orasObjetoRastreadoCollection = orasObjetoRastreadoCollection;
-    }
-
-    public Collection<VtraVeiculoTransportador> getVtraVeiculoTransportadorCollection() {
-        return vtraVeiculoTransportadorCollection;
-    }
-
-    public void setVtraVeiculoTransportadorCollection(Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection) {
-        this.vtraVeiculoTransportadorCollection = vtraVeiculoTransportadorCollection;
+    public void setOrasObjetoRastreadoList(List<OrasObjetoRastreado> orasObjetoRastreadoList) {
+        this.orasObjetoRastreadoList = orasObjetoRastreadoList;
     }
 
     @Override

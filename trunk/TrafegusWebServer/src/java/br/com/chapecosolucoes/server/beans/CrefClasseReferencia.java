@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,9 +26,15 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "cref_classe_referencia")
+@Table(name = "cref_classe_referencia", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "CrefClasseReferencia.findAll", query = "SELECT c FROM CrefClasseReferencia c")})
+    @NamedQuery(name = "CrefClasseReferencia.findAll", query = "SELECT c FROM CrefClasseReferencia c"),
+    @NamedQuery(name = "CrefClasseReferencia.findByCrefCodigo", query = "SELECT c FROM CrefClasseReferencia c WHERE c.crefCodigo = :crefCodigo"),
+    @NamedQuery(name = "CrefClasseReferencia.findByCrefDescricao", query = "SELECT c FROM CrefClasseReferencia c WHERE c.crefDescricao = :crefDescricao"),
+    @NamedQuery(name = "CrefClasseReferencia.findByCrefClasseSistema", query = "SELECT c FROM CrefClasseReferencia c WHERE c.crefClasseSistema = :crefClasseSistema"),
+    @NamedQuery(name = "CrefClasseReferencia.findByCrefDataCadastro", query = "SELECT c FROM CrefClasseReferencia c WHERE c.crefDataCadastro = :crefDataCadastro"),
+    @NamedQuery(name = "CrefClasseReferencia.findByCrefCodigoGr", query = "SELECT c FROM CrefClasseReferencia c WHERE c.crefCodigoGr = :crefCodigoGr"),
+    @NamedQuery(name = "CrefClasseReferencia.findByCrefImportado", query = "SELECT c FROM CrefClasseReferencia c WHERE c.crefImportado = :crefImportado")})
 public class CrefClasseReferencia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,7 +53,7 @@ public class CrefClasseReferencia implements Serializable {
     @Column(name = "cref_importado")
     private Character crefImportado;
     @OneToMany(mappedBy = "crefClasseReferencia")
-    private Collection<RefeReferencia> refeReferenciaCollection;
+    private List<RefeReferencia> refeReferenciaList;
     @JoinColumn(name = "cref_pess_oras_codigo", referencedColumnName = "pess_oras_codigo")
     @ManyToOne
     private PessPessoa pessPessoa;
@@ -107,12 +113,12 @@ public class CrefClasseReferencia implements Serializable {
         this.crefImportado = crefImportado;
     }
 
-    public Collection<RefeReferencia> getRefeReferenciaCollection() {
-        return refeReferenciaCollection;
+    public List<RefeReferencia> getRefeReferenciaList() {
+        return refeReferenciaList;
     }
 
-    public void setRefeReferenciaCollection(Collection<RefeReferencia> refeReferenciaCollection) {
-        this.refeReferenciaCollection = refeReferenciaCollection;
+    public void setRefeReferenciaList(List<RefeReferencia> refeReferenciaList) {
+        this.refeReferenciaList = refeReferenciaList;
     }
 
     public PessPessoa getPessPessoa() {

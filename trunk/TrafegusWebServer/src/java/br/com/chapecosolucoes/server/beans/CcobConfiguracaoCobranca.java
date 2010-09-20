@@ -23,9 +23,17 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "ccob_configuracao_cobranca")
+@Table(name = "ccob_configuracao_cobranca", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "CcobConfiguracaoCobranca.findAll", query = "SELECT c FROM CcobConfiguracaoCobranca c")})
+    @NamedQuery(name = "CcobConfiguracaoCobranca.findAll", query = "SELECT c FROM CcobConfiguracaoCobranca c"),
+    @NamedQuery(name = "CcobConfiguracaoCobranca.findByCcobCodigo", query = "SELECT c FROM CcobConfiguracaoCobranca c WHERE c.ccobCodigo = :ccobCodigo"),
+    @NamedQuery(name = "CcobConfiguracaoCobranca.findByCcobQuantidadeMinimaObjetoRastreado", query = "SELECT c FROM CcobConfiguracaoCobranca c WHERE c.ccobQuantidadeMinimaObjetoRastreado = :ccobQuantidadeMinimaObjetoRastreado"),
+    @NamedQuery(name = "CcobConfiguracaoCobranca.findByCcobQuantidadeMaximaObjetoRastreado", query = "SELECT c FROM CcobConfiguracaoCobranca c WHERE c.ccobQuantidadeMaximaObjetoRastreado = :ccobQuantidadeMaximaObjetoRastreado"),
+    @NamedQuery(name = "CcobConfiguracaoCobranca.findByCcobValorDia", query = "SELECT c FROM CcobConfiguracaoCobranca c WHERE c.ccobValorDia = :ccobValorDia"),
+    @NamedQuery(name = "CcobConfiguracaoCobranca.findByCcobQuantidadeMinimaDias", query = "SELECT c FROM CcobConfiguracaoCobranca c WHERE c.ccobQuantidadeMinimaDias = :ccobQuantidadeMinimaDias"),
+    @NamedQuery(name = "CcobConfiguracaoCobranca.findByCcobDataCadastro", query = "SELECT c FROM CcobConfiguracaoCobranca c WHERE c.ccobDataCadastro = :ccobDataCadastro"),
+    @NamedQuery(name = "CcobConfiguracaoCobranca.findByCcobCodigoGr", query = "SELECT c FROM CcobConfiguracaoCobranca c WHERE c.ccobCodigoGr = :ccobCodigoGr"),
+    @NamedQuery(name = "CcobConfiguracaoCobranca.findByCcobImportado", query = "SELECT c FROM CcobConfiguracaoCobranca c WHERE c.ccobImportado = :ccobImportado")})
 public class CcobConfiguracaoCobranca implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

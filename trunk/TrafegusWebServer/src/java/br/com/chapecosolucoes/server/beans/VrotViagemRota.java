@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +25,14 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "vrot_viagem_rota")
+@Table(name = "vrot_viagem_rota", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VrotViagemRota.findAll", query = "SELECT v FROM VrotViagemRota v")})
+    @NamedQuery(name = "VrotViagemRota.findAll", query = "SELECT v FROM VrotViagemRota v"),
+    @NamedQuery(name = "VrotViagemRota.findByVrotCodigo", query = "SELECT v FROM VrotViagemRota v WHERE v.vrotCodigo = :vrotCodigo"),
+    @NamedQuery(name = "VrotViagemRota.findByVrotDataCadastro", query = "SELECT v FROM VrotViagemRota v WHERE v.vrotDataCadastro = :vrotDataCadastro"),
+    @NamedQuery(name = "VrotViagemRota.findByVrotCodigoGr", query = "SELECT v FROM VrotViagemRota v WHERE v.vrotCodigoGr = :vrotCodigoGr"),
+    @NamedQuery(name = "VrotViagemRota.findByVrotImportado", query = "SELECT v FROM VrotViagemRota v WHERE v.vrotImportado = :vrotImportado"),
+    @NamedQuery(name = "VrotViagemRota.findByVrotAtivo", query = "SELECT v FROM VrotViagemRota v WHERE v.vrotAtivo = :vrotAtivo")})
 public class VrotViagemRota implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,10 +49,10 @@ public class VrotViagemRota implements Serializable {
     @Column(name = "vrot_ativo")
     private Character vrotAtivo;
     @JoinColumn(name = "vrot_viag_codigo", referencedColumnName = "viag_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ViagViagem viagViagem;
     @JoinColumn(name = "vrot_rota_codigo", referencedColumnName = "rota_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private RotaRota rotaRota;
 
     public VrotViagemRota() {

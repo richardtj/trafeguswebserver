@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,9 +23,11 @@ import javax.persistence.Table;
  * @author Emerson
  */
 @Entity
-@Table(name = "vcar_veiculo_carreta")
+@Table(name = "vcar_veiculo_carreta", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "VcarVeiculoCarreta.findAll", query = "SELECT v FROM VcarVeiculoCarreta v")})
+    @NamedQuery(name = "VcarVeiculoCarreta.findAll", query = "SELECT v FROM VcarVeiculoCarreta v"),
+    @NamedQuery(name = "VcarVeiculoCarreta.findByVcarVeicOrasCodigo", query = "SELECT v FROM VcarVeiculoCarreta v WHERE v.vcarVeicOrasCodigo = :vcarVeicOrasCodigo"),
+    @NamedQuery(name = "VcarVeiculoCarreta.findByVcarNumeroPalets", query = "SELECT v FROM VcarVeiculoCarreta v WHERE v.vcarNumeroPalets = :vcarNumeroPalets")})
 public class VcarVeiculoCarreta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,13 +36,13 @@ public class VcarVeiculoCarreta implements Serializable {
     private Integer vcarVeicOrasCodigo;
     @Column(name = "vcar_numero_palets")
     private Integer vcarNumeroPalets;
-    @OneToOne(mappedBy = "vcarVeiculoCarreta")
+    @OneToOne(mappedBy = "vcarVeiculoCarreta", fetch = FetchType.EAGER)
     private VccaVeiculoCavaloCarreta vccaVeiculoCavaloCarreta;
     @JoinColumn(name = "vcar_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vcar_evca_codigo", referencedColumnName = "evca_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private EvcaEstatusVeiculoCarga evcaEstatusVeiculoCarga;
 
     public VcarVeiculoCarreta() {

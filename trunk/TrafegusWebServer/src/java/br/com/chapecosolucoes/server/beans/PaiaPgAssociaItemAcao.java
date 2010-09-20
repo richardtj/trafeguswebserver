@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,10 +26,15 @@ import javax.persistence.UniqueConstraint;
  * @author Emerson
  */
 @Entity
-@Table(name = "paia_pg_associa_item_acao", uniqueConstraints = {
+@Table(name = "paia_pg_associa_item_acao", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"paia_pgai_codigo", "paia_apad_codigo"})})
 @NamedQueries({
-    @NamedQuery(name = "PaiaPgAssociaItemAcao.findAll", query = "SELECT p FROM PaiaPgAssociaItemAcao p")})
+    @NamedQuery(name = "PaiaPgAssociaItemAcao.findAll", query = "SELECT p FROM PaiaPgAssociaItemAcao p"),
+    @NamedQuery(name = "PaiaPgAssociaItemAcao.findByPaiaCodigo", query = "SELECT p FROM PaiaPgAssociaItemAcao p WHERE p.paiaCodigo = :paiaCodigo"),
+    @NamedQuery(name = "PaiaPgAssociaItemAcao.findByPaiaSequencia", query = "SELECT p FROM PaiaPgAssociaItemAcao p WHERE p.paiaSequencia = :paiaSequencia"),
+    @NamedQuery(name = "PaiaPgAssociaItemAcao.findByPaiaDataCadastro", query = "SELECT p FROM PaiaPgAssociaItemAcao p WHERE p.paiaDataCadastro = :paiaDataCadastro"),
+    @NamedQuery(name = "PaiaPgAssociaItemAcao.findByPaiaImportado", query = "SELECT p FROM PaiaPgAssociaItemAcao p WHERE p.paiaImportado = :paiaImportado"),
+    @NamedQuery(name = "PaiaPgAssociaItemAcao.findByPaiaTempoEspera", query = "SELECT p FROM PaiaPgAssociaItemAcao p WHERE p.paiaTempoEspera = :paiaTempoEspera")})
 public class PaiaPgAssociaItemAcao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,10 +51,10 @@ public class PaiaPgAssociaItemAcao implements Serializable {
     @Column(name = "paia_tempo_espera")
     private Integer paiaTempoEspera;
     @JoinColumn(name = "paia_pgai_codigo", referencedColumnName = "pgai_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PgaiPgAssociaItem pgaiPgAssociaItem;
     @JoinColumn(name = "paia_apad_codigo", referencedColumnName = "apad_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public PaiaPgAssociaItemAcao() {

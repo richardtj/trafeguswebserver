@@ -20,9 +20,21 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "view_evento_acao_beep")
+@Table(name = "view_evento_acao_beep", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "ViewEventoAcaoBeep.findAll", query = "SELECT v FROM ViewEventoAcaoBeep v")})
+    @NamedQuery(name = "ViewEventoAcaoBeep.findAll", query = "SELECT v FROM ViewEventoAcaoBeep v"),
+    @NamedQuery(name = "ViewEventoAcaoBeep.findByErasCodigo", query = "SELECT v FROM ViewEventoAcaoBeep v WHERE v.erasCodigo = :erasCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoBeep.findByIdentificador", query = "SELECT v FROM ViewEventoAcaoBeep v WHERE v.identificador = :identificador"),
+    @NamedQuery(name = "ViewEventoAcaoBeep.findByTermNumeroTerminal", query = "SELECT v FROM ViewEventoAcaoBeep v WHERE v.termNumeroTerminal = :termNumeroTerminal"),
+    @NamedQuery(name = "ViewEventoAcaoBeep.findByEsisCodigo", query = "SELECT v FROM ViewEventoAcaoBeep v WHERE v.esisCodigo = :esisCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoBeep.findByEsisTermCodigo", query = "SELECT v FROM ViewEventoAcaoBeep v WHERE v.esisTermCodigo = :esisTermCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoBeep.findByEsisDescricao", query = "SELECT v FROM ViewEventoAcaoBeep v WHERE v.esisDescricao = :esisDescricao"),
+    @NamedQuery(name = "ViewEventoAcaoBeep.findByPgaiCodigo", query = "SELECT v FROM ViewEventoAcaoBeep v WHERE v.pgaiCodigo = :pgaiCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoBeep.findByOrasCodigo", query = "SELECT v FROM ViewEventoAcaoBeep v WHERE v.orasCodigo = :orasCodigo"),
+    @NamedQuery(name = "ViewEventoAcaoBeep.findByAbbeFrequencia", query = "SELECT v FROM ViewEventoAcaoBeep v WHERE v.abbeFrequencia = :abbeFrequencia"),
+    @NamedQuery(name = "ViewEventoAcaoBeep.findByAbeeTempoBeep", query = "SELECT v FROM ViewEventoAcaoBeep v WHERE v.abeeTempoBeep = :abeeTempoBeep"),
+    @NamedQuery(name = "ViewEventoAcaoBeep.findByAbeeTempoEsperando", query = "SELECT v FROM ViewEventoAcaoBeep v WHERE v.abeeTempoEsperando = :abeeTempoEsperando"),
+    @NamedQuery(name = "ViewEventoAcaoBeep.findByEsisDataInicio", query = "SELECT v FROM ViewEventoAcaoBeep v WHERE v.esisDataInicio = :esisDataInicio")})
 public class ViewEventoAcaoBeep implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "eras_codigo")

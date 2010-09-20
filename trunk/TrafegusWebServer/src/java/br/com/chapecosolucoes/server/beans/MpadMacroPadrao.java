@@ -6,11 +6,12 @@
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,9 +27,16 @@ import javax.persistence.TemporalType;
  * @author Emerson
  */
 @Entity
-@Table(name = "mpad_macro_padrao")
+@Table(name = "mpad_macro_padrao", catalog = "trafegus_transc", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "MpadMacroPadrao.findAll", query = "SELECT m FROM MpadMacroPadrao m")})
+    @NamedQuery(name = "MpadMacroPadrao.findAll", query = "SELECT m FROM MpadMacroPadrao m"),
+    @NamedQuery(name = "MpadMacroPadrao.findByMpadCodigo", query = "SELECT m FROM MpadMacroPadrao m WHERE m.mpadCodigo = :mpadCodigo"),
+    @NamedQuery(name = "MpadMacroPadrao.findByMpadNumero", query = "SELECT m FROM MpadMacroPadrao m WHERE m.mpadNumero = :mpadNumero"),
+    @NamedQuery(name = "MpadMacroPadrao.findByMpadDescricao", query = "SELECT m FROM MpadMacroPadrao m WHERE m.mpadDescricao = :mpadDescricao"),
+    @NamedQuery(name = "MpadMacroPadrao.findByMpadMascara", query = "SELECT m FROM MpadMacroPadrao m WHERE m.mpadMascara = :mpadMascara"),
+    @NamedQuery(name = "MpadMacroPadrao.findByMpadDataCadastro", query = "SELECT m FROM MpadMacroPadrao m WHERE m.mpadDataCadastro = :mpadDataCadastro"),
+    @NamedQuery(name = "MpadMacroPadrao.findByMpadCodigoGr", query = "SELECT m FROM MpadMacroPadrao m WHERE m.mpadCodigoGr = :mpadCodigoGr"),
+    @NamedQuery(name = "MpadMacroPadrao.findByMpadImportado", query = "SELECT m FROM MpadMacroPadrao m WHERE m.mpadImportado = :mpadImportado")})
 public class MpadMacroPadrao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,17 +56,17 @@ public class MpadMacroPadrao implements Serializable {
     private Integer mpadCodigoGr;
     @Column(name = "mpad_importado")
     private Character mpadImportado;
-    @OneToMany(mappedBy = "mpadMacroPadrao")
-    private Collection<AmacAcaoMacro> amacAcaoMacroCollection;
-    @OneToMany(mappedBy = "mpadMacroPadrao")
-    private Collection<PitePgItem> pitePgItemCollection;
-    @OneToMany(mappedBy = "mpadMacroPadrao")
-    private Collection<EmacEnvioMacro> emacEnvioMacroCollection;
+    @OneToMany(mappedBy = "mpadMacroPadrao", fetch = FetchType.EAGER)
+    private List<AmacAcaoMacro> amacAcaoMacroList;
+    @OneToMany(mappedBy = "mpadMacroPadrao", fetch = FetchType.EAGER)
+    private List<PitePgItem> pitePgItemList;
+    @OneToMany(mappedBy = "mpadMacroPadrao", fetch = FetchType.EAGER)
+    private List<EmacEnvioMacro> emacEnvioMacroList;
     @JoinColumn(name = "mpad_tmac_codigo", referencedColumnName = "tmac_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private TmacTipoMacro tmacTipoMacro;
     @JoinColumn(name = "mpad_gmac_codigo", referencedColumnName = "gmac_codigo")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private GmacGrupoMacro gmacGrupoMacro;
 
     public MpadMacroPadrao() {
@@ -124,28 +132,28 @@ public class MpadMacroPadrao implements Serializable {
         this.mpadImportado = mpadImportado;
     }
 
-    public Collection<AmacAcaoMacro> getAmacAcaoMacroCollection() {
-        return amacAcaoMacroCollection;
+    public List<AmacAcaoMacro> getAmacAcaoMacroList() {
+        return amacAcaoMacroList;
     }
 
-    public void setAmacAcaoMacroCollection(Collection<AmacAcaoMacro> amacAcaoMacroCollection) {
-        this.amacAcaoMacroCollection = amacAcaoMacroCollection;
+    public void setAmacAcaoMacroList(List<AmacAcaoMacro> amacAcaoMacroList) {
+        this.amacAcaoMacroList = amacAcaoMacroList;
     }
 
-    public Collection<PitePgItem> getPitePgItemCollection() {
-        return pitePgItemCollection;
+    public List<PitePgItem> getPitePgItemList() {
+        return pitePgItemList;
     }
 
-    public void setPitePgItemCollection(Collection<PitePgItem> pitePgItemCollection) {
-        this.pitePgItemCollection = pitePgItemCollection;
+    public void setPitePgItemList(List<PitePgItem> pitePgItemList) {
+        this.pitePgItemList = pitePgItemList;
     }
 
-    public Collection<EmacEnvioMacro> getEmacEnvioMacroCollection() {
-        return emacEnvioMacroCollection;
+    public List<EmacEnvioMacro> getEmacEnvioMacroList() {
+        return emacEnvioMacroList;
     }
 
-    public void setEmacEnvioMacroCollection(Collection<EmacEnvioMacro> emacEnvioMacroCollection) {
-        this.emacEnvioMacroCollection = emacEnvioMacroCollection;
+    public void setEmacEnvioMacroList(List<EmacEnvioMacro> emacEnvioMacroList) {
+        this.emacEnvioMacroList = emacEnvioMacroList;
     }
 
     public TmacTipoMacro getTmacTipoMacro() {
