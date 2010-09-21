@@ -8,7 +8,6 @@ package br.com.chapecosolucoes.server.beans;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -56,8 +54,6 @@ public class VlocViagemLocal implements Serializable {
     private Character vlocImportado;
     @Column(name = "vloc_descricao", length = 200)
     private String vlocDescricao;
-    @OneToMany(mappedBy = "vlocViagemLocal")
-    private List<VlevViagemLocalEvento> vlevViagemLocalEventoList;
     @JoinColumn(name = "vloc_viag_codigo", referencedColumnName = "viag_codigo")
     @ManyToOne
     private ViagViagem viagViagem;
@@ -129,14 +125,6 @@ public class VlocViagemLocal implements Serializable {
 
     public void setVlocDescricao(String vlocDescricao) {
         this.vlocDescricao = vlocDescricao;
-    }
-
-    public List<VlevViagemLocalEvento> getVlevViagemLocalEventoList() {
-        return vlevViagemLocalEventoList;
-    }
-
-    public void setVlevViagemLocalEventoList(List<VlevViagemLocalEvento> vlevViagemLocalEventoList) {
-        this.vlevViagemLocalEventoList = vlevViagemLocalEventoList;
     }
 
     public ViagViagem getViagViagem() {

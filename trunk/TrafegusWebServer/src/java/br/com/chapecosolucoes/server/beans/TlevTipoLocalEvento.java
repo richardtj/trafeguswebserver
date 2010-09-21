@@ -37,8 +37,6 @@ public class TlevTipoLocalEvento implements Serializable {
     private String tlevDescricao;
     @Column(name = "tlev_sequencia")
     private Integer tlevSequencia;
-    @OneToMany(mappedBy = "tlevTipoLocalEvento")
-    private List<VlevViagemLocalEvento> vlevViagemLocalEventoList;
 
     public TlevTipoLocalEvento() {
     }
@@ -69,14 +67,6 @@ public class TlevTipoLocalEvento implements Serializable {
 
     public void setTlevSequencia(Integer tlevSequencia) {
         this.tlevSequencia = tlevSequencia;
-    }
-
-    public List<VlevViagemLocalEvento> getVlevViagemLocalEventoList() {
-        return vlevViagemLocalEventoList;
-    }
-
-    public void setVlevViagemLocalEventoList(List<VlevViagemLocalEvento> vlevViagemLocalEventoList) {
-        this.vlevViagemLocalEventoList = vlevViagemLocalEventoList;
     }
 
     @Override

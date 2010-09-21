@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.com.chapecosolucoes.server.beans;
 
 import java.io.Serializable;
@@ -15,7 +14,17 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class ReceRecebimentoPK implements Serializable {
 
+    private Integer rece_codigo;
+
     public ReceRecebimentoPK() {
+    }
+
+    public Integer getRece_codigo() {
+        return rece_codigo;
+    }
+
+    public void setRece_codigo(Integer rece_codigo) {
+        this.rece_codigo = rece_codigo;
     }
 
     @Override

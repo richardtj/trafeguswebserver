@@ -47,8 +47,6 @@ public class CpatCelulaPatio implements Serializable {
     private Integer cpatCodigoGr;
     @Column(name = "cpat_importado")
     private Character cpatImportado;
-    @OneToMany(mappedBy = "cpatCelulaPatio")
-    private List<VlevViagemLocalEvento> vlevViagemLocalEventoList;
 
     public CpatCelulaPatio() {
     }
@@ -95,14 +93,6 @@ public class CpatCelulaPatio implements Serializable {
 
     public void setCpatImportado(Character cpatImportado) {
         this.cpatImportado = cpatImportado;
-    }
-
-    public List<VlevViagemLocalEvento> getVlevViagemLocalEventoList() {
-        return vlevViagemLocalEventoList;
-    }
-
-    public void setVlevViagemLocalEventoList(List<VlevViagemLocalEvento> vlevViagemLocalEventoList) {
-        this.vlevViagemLocalEventoList = vlevViagemLocalEventoList;
     }
 
     @Override

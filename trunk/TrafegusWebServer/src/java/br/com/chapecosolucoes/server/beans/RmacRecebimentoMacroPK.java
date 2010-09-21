@@ -15,7 +15,17 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class RmacRecebimentoMacroPK implements Serializable {
 
+    private Integer rmac_rece_codigo;
+
     public RmacRecebimentoMacroPK() {
+    }
+
+    public Integer getRmac_rece_codigo() {
+        return rmac_rece_codigo;
+    }
+
+    public void setRmac_rece_codigo(Integer rmac_rece_codigo) {
+        this.rmac_rece_codigo = rmac_rece_codigo;
     }
 
     @Override

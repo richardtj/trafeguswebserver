@@ -15,6 +15,8 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class RposRecebimentoPosicaoPK implements Serializable {
 
+    private Integer rpos_rece_codigo;
+
     public RposRecebimentoPosicaoPK() {
     }
 
@@ -22,6 +24,14 @@ public class RposRecebimentoPosicaoPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         return hash;
+    }
+
+    public Integer getRpos_rece_codigo() {
+        return rpos_rece_codigo;
+    }
+
+    public void setRpos_rece_codigo(Integer rpos_rece_codigo) {
+        this.rpos_rece_codigo = rpos_rece_codigo;
     }
 
     @Override

@@ -4,7 +4,10 @@
  */
 package br.com.chapecosolucoes.server.webservice;
 
+import br.com.chapecosolucoes.server.beans.UsuaUsuario;
 import br.com.chapecosolucoes.server.controller.JPAController;
+import com.thoughtworks.xstream.XStream;
+import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -24,9 +27,11 @@ public class trafegusWebService {
     @WebMethod(operationName = "login")
     public String login(@WebParam(name = "user") String user, @WebParam(name = "pwd") String pwd) {
         EntityManager entityManager = JPAController.getInstance().getEntityManager();
-        Query query = entityManager.createQuery("SELECT u FROM UsuaUsuario u");
-        query.getResultList();
-
-        return "ok";
+        Query query = entityManager.createNamedQuery("UsuaUsuario.findAll");
+        List<UsuaUsuario> result = query.getResultList();
+        entityManager.getTransaction().commit();
+        XStream x = new XStream();
+        
+        return x.toXML(result);
     }
 }
