@@ -4,7 +4,11 @@
  */
 package br.com.chapecosolucoes.server.operations;
 
+import br.com.chapecosolucoes.server.beans.CrefClasseReferencia;
+import br.com.chapecosolucoes.server.beans.UsuaUsuario;
 import br.com.chapecosolucoes.server.util.JPAUtil;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -26,14 +30,25 @@ public class Operations {
         return instance;
     }
 
-    public Boolean findLogin(String user, String pwd) {
-        Boolean result = false;
+    public UsuaUsuario solicitaAcesso(String usuario, String senha) {
+        UsuaUsuario result = null;
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         Query q = em.createNamedQuery("UsuaUsuario.findByUsuaLoginAndSenha");
-        q.setParameter(1, user);
-        q.setParameter(2, pwd);
-        result = q.getSingleResult() != null;
+        q.setParameter(1, usuario);
+        q.setParameter(2, senha);
+        result = (UsuaUsuario) q.getSingleResult();
         em.getTransaction().commit();
         return result;
+    }
+
+    public List<CrefClasseReferencia> solicitaClassesReferencias(Integer codEmpresa) {
+        ArrayList<CrefClasseReferencia> result = null;
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        Query q = em.createNamedQuery("SELECT c FROM CrefClasseReferencia c WHERE c.crefCodigo = :crefCodigo");
+        q.setParameter(1, codEmpresa);
+        result = (ArrayList<CrefClasseReferencia>) q.getResultList();
+        em.getTransaction().commit();
+        return result;
+
     }
 }
