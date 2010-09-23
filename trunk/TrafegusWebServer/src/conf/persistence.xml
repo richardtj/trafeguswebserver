@@ -2,6 +2,7 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
   <persistence-unit name="TrafegusWebServerPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <non-jta-data-source/>
     <class>br.com.chapecosolucoes.server.beans.AbeeAcaoBeep</class>
     <class>br.com.chapecosolucoes.server.beans.AbolAcaoBolinha</class>
     <class>br.com.chapecosolucoes.server.beans.AcessoView</class>
@@ -208,10 +209,10 @@
     <class>br.com.chapecosolucoes.server.beans.VveiViagemVeiculo</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.0.66:6969/trafegus_transc"/>
-      <property name="javax.persistence.jdbc.password" value="easy"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://200.180.96.112:6969/trafegus_transc"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
+      <property name="javax.persistence.jdbc.password" value="easy"/>
     </properties>
   </persistence-unit>
 </persistence>

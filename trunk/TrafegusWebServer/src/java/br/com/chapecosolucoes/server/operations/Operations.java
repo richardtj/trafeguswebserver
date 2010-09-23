@@ -49,6 +49,5 @@ public class Operations {
         result = (ArrayList<CrefClasseReferencia>) q.getResultList();
         em.getTransaction().commit();
         return result;
-
     }
 }
