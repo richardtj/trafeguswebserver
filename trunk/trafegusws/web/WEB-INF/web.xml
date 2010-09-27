@@ -4,6 +4,10 @@
     <listener>
         <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
     </listener>
+    <listener>
+        <description>Trafegus session listener</description>
+        <listener-class>br.com.chapecosolucoes.trafegusweb.server.sessionlistener.TrafegusSessionListener</listener-class>
+    </listener>
     <servlet>
         <servlet-name>TrafegusWS</servlet-name>
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
