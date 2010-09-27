@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
@@ -43,6 +42,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "RefeReferencia.findByRefeImportado", query = "SELECT r FROM RefeReferencia r WHERE r.refeImportado = :refeImportado"),
     @NamedQuery(name = "RefeReferencia.findByRefePessOrasCodigoDono", query = "SELECT r FROM RefeReferencia r WHERE r.refePessOrasCodigoDono = :refePessOrasCodigoDono")})
 public class RefeReferencia implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -282,5 +282,4 @@ public class RefeReferencia implements Serializable {
     public String toString() {
         return "br.com.chapecosolucoes.trafegusweb.server.beans.RefeReferencia[refeCodigo=" + refeCodigo + "]";
     }
-
 }

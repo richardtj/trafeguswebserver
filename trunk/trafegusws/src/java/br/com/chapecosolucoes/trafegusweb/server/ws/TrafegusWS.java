@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.trafegusweb.server.ws;
 import br.com.chapecosolucoes.trafegusweb.server.beans.CrefClasseReferencia;
 import br.com.chapecosolucoes.trafegusweb.server.beans.UsuaUsuario;
 import br.com.chapecosolucoes.trafegusweb.server.jpa.JPAUtil;
+import br.com.chapecosolucoes.trafegusweb.server.sqlutils.SQLBuilder;
 import java.util.ArrayList;
-import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -63,9 +63,14 @@ public class TrafegusWS {
      */
     @WebMethod(operationName = "solicitaReferencias")
     public ArrayList<CrefClasseReferencia> solicitaReferencias(@WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "codClasseReferencia") Integer codClasseReferencia) {
+        SQLBuilder sql = new SQLBuilder();
         EntityManager em = JPAUtil.getInstance().getEntityManager();
-        Query q = em.createQuery("SELECT c FROM CrefClasseReferencia c WHERE (c.cref_pess_oras_codigo = null or c.cref_pess_oras_codigo = :cref_pess_oras_codigo) and (c.crefCodigo = :crefCodigo)");
-        q.setParameter("cref_pess_oras_codigo", codEmpresa);
+        sql.Add("SELECT c FROM CrefClasseReferencia c");
+        sql.Add("WHERE");
+        sql.Add("c.refeReferenciaCollection.pessPessoa.pessOrasCodigo = :pessOrasCodigo and (c.crefCodigo = :crefCodigo)");
+
+        Query q = em.createQuery(sql.getText());
+        q.setParameter("pessOrasCodigo", codEmpresa);
         q.setParameter("crefCodigo", codClasseReferencia);
 
         ArrayList<CrefClasseReferencia> result = null;
