@@ -17,7 +17,6 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
 import javax.persistence.Query;
 
 /**
