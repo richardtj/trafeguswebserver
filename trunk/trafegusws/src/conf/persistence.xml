@@ -165,7 +165,7 @@
             <property name="hibernate.connection.username" value="postgres"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
             <property name="hibernate.connection.password" value="easy"/>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://200.180.96.112:6969/trafegus_transc"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://192.168.0.66:6969/trafegus_transc"/>
             <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
