@@ -12,6 +12,7 @@ import br.com.chapecosolucoes.trafegusweb.server.beans.UsuaUsuario;
 import br.com.chapecosolucoes.trafegusweb.server.beans.VeicVeiculo;
 import br.com.chapecosolucoes.trafegusweb.server.jpa.JPAUtil;
 import br.com.chapecosolucoes.trafegusweb.server.sqlutils.SQLBuilder;
+import com.thoughtworks.xstream.XStream;
 import java.util.ArrayList;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -30,7 +31,7 @@ public class TrafegusWS {
      * Operação de serviço web
      */
     @WebMethod(operationName = "solicitaAcesso")
-    public UsuaUsuario solicitaAcesso(@WebParam(name = "usuario") String usuario, @WebParam(name = "senha") String senha) {
+    public String solicitaAcesso(@WebParam(name = "usuario") String usuario, @WebParam(name = "senha") String senha) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         Query q = em.createNamedQuery("UsuaUsuario.findByUsuaLoginSenha");
         q.setParameter("usuaLogin", usuario);
@@ -41,7 +42,8 @@ public class TrafegusWS {
         } catch (Exception e) {
             result = new UsuaUsuario();
         }
-        return result;
+        XStream stream = new XStream();
+        return stream.toXML(result);
     }
 
     /**
