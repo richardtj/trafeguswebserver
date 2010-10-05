@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,26 +18,24 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "test_tipo_estabelecimento", catalog = "trafegus_transc", schema = "public")
+@Table(name = "test_tipo_estabelecimento")
 @NamedQueries({
-    @NamedQuery(name = "TestTipoEstabelecimento.findAll", query = "SELECT t FROM TestTipoEstabelecimento t"),
-    @NamedQuery(name = "TestTipoEstabelecimento.findByTestCodigo", query = "SELECT t FROM TestTipoEstabelecimento t WHERE t.testCodigo = :testCodigo"),
-    @NamedQuery(name = "TestTipoEstabelecimento.findByTestDescricao", query = "SELECT t FROM TestTipoEstabelecimento t WHERE t.testDescricao = :testDescricao")})
+    @NamedQuery(name = "TestTipoEstabelecimento.findAll", query = "SELECT t FROM TestTipoEstabelecimento t")})
 public class TestTipoEstabelecimento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "test_codigo", nullable = false)
+    @Column(name = "test_codigo")
     private Integer testCodigo;
-    @Column(name = "test_descricao", length = 50)
+    @Column(name = "test_descricao")
     private String testDescricao;
     @OneToMany(mappedBy = "testTipoEstabelecimento")
-    private Collection<TranTransportador> tranTransportadorCollection;
+    private Set<TranTransportador> tranTransportadorSet;
     @OneToMany(mappedBy = "testTipoEstabelecimento")
-    private Collection<EmbaEmbarcador> embaEmbarcadorCollection;
+    private Set<EmbaEmbarcador> embaEmbarcadorSet;
 
     public TestTipoEstabelecimento() {
     }
@@ -62,20 +60,20 @@ public class TestTipoEstabelecimento implements Serializable {
         this.testDescricao = testDescricao;
     }
 
-    public Collection<TranTransportador> getTranTransportadorCollection() {
-        return tranTransportadorCollection;
+    public Set<TranTransportador> getTranTransportadorSet() {
+        return tranTransportadorSet;
     }
 
-    public void setTranTransportadorCollection(Collection<TranTransportador> tranTransportadorCollection) {
-        this.tranTransportadorCollection = tranTransportadorCollection;
+    public void setTranTransportadorSet(Set<TranTransportador> tranTransportadorSet) {
+        this.tranTransportadorSet = tranTransportadorSet;
     }
 
-    public Collection<EmbaEmbarcador> getEmbaEmbarcadorCollection() {
-        return embaEmbarcadorCollection;
+    public Set<EmbaEmbarcador> getEmbaEmbarcadorSet() {
+        return embaEmbarcadorSet;
     }
 
-    public void setEmbaEmbarcadorCollection(Collection<EmbaEmbarcador> embaEmbarcadorCollection) {
-        this.embaEmbarcadorCollection = embaEmbarcadorCollection;
+    public void setEmbaEmbarcadorSet(Set<EmbaEmbarcador> embaEmbarcadorSet) {
+        this.embaEmbarcadorSet = embaEmbarcadorSet;
     }
 
     @Override

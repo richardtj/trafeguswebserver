@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,27 +24,21 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "vnfi_viagem_nota_fiscal", catalog = "trafegus_transc", schema = "public")
+@Table(name = "vnfi_viagem_nota_fiscal")
 @NamedQueries({
-    @NamedQuery(name = "VnfiViagemNotaFiscal.findAll", query = "SELECT v FROM VnfiViagemNotaFiscal v"),
-    @NamedQuery(name = "VnfiViagemNotaFiscal.findByVnfiCodigo", query = "SELECT v FROM VnfiViagemNotaFiscal v WHERE v.vnfiCodigo = :vnfiCodigo"),
-    @NamedQuery(name = "VnfiViagemNotaFiscal.findByVnfiNumero", query = "SELECT v FROM VnfiViagemNotaFiscal v WHERE v.vnfiNumero = :vnfiNumero"),
-    @NamedQuery(name = "VnfiViagemNotaFiscal.findByVnfiValor", query = "SELECT v FROM VnfiViagemNotaFiscal v WHERE v.vnfiValor = :vnfiValor"),
-    @NamedQuery(name = "VnfiViagemNotaFiscal.findByVnfiDataCadastro", query = "SELECT v FROM VnfiViagemNotaFiscal v WHERE v.vnfiDataCadastro = :vnfiDataCadastro"),
-    @NamedQuery(name = "VnfiViagemNotaFiscal.findByVnfiCodigoGr", query = "SELECT v FROM VnfiViagemNotaFiscal v WHERE v.vnfiCodigoGr = :vnfiCodigoGr"),
-    @NamedQuery(name = "VnfiViagemNotaFiscal.findByVnfiImportado", query = "SELECT v FROM VnfiViagemNotaFiscal v WHERE v.vnfiImportado = :vnfiImportado")})
+    @NamedQuery(name = "VnfiViagemNotaFiscal.findAll", query = "SELECT v FROM VnfiViagemNotaFiscal v")})
 public class VnfiViagemNotaFiscal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "vnfi_codigo", nullable = false)
+    @Column(name = "vnfi_codigo")
     private Integer vnfiCodigo;
-    @Column(name = "vnfi_numero", length = 20)
+    @Column(name = "vnfi_numero")
     private String vnfiNumero;
-    @Column(name = "vnfi_valor", precision = 15, scale = 2)
+    @Column(name = "vnfi_valor")
     private BigDecimal vnfiValor;
     @Column(name = "vnfi_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -53,14 +47,14 @@ public class VnfiViagemNotaFiscal implements Serializable {
     private Integer vnfiCodigoGr;
     @Column(name = "vnfi_importado")
     private Character vnfiImportado;
+    @OneToMany(mappedBy = "vnfiViagemNotaFiscal")
+    private Set<VproViagemProduto> vproViagemProdutoSet;
     @JoinColumn(name = "vnfi_vloc_codigo", referencedColumnName = "vloc_codigo")
     @ManyToOne
     private VlocViagemLocal vlocViagemLocal;
     @JoinColumn(name = "vnfi_vcon_codigo", referencedColumnName = "vcon_codigo")
     @ManyToOne
     private VconViagemConhecimento vconViagemConhecimento;
-    @OneToMany(mappedBy = "vnfiViagemNotaFiscal")
-    private Collection<VproViagemProduto> vproViagemProdutoCollection;
 
     public VnfiViagemNotaFiscal() {
     }
@@ -117,6 +111,14 @@ public class VnfiViagemNotaFiscal implements Serializable {
         this.vnfiImportado = vnfiImportado;
     }
 
+    public Set<VproViagemProduto> getVproViagemProdutoSet() {
+        return vproViagemProdutoSet;
+    }
+
+    public void setVproViagemProdutoSet(Set<VproViagemProduto> vproViagemProdutoSet) {
+        this.vproViagemProdutoSet = vproViagemProdutoSet;
+    }
+
     public VlocViagemLocal getVlocViagemLocal() {
         return vlocViagemLocal;
     }
@@ -131,14 +133,6 @@ public class VnfiViagemNotaFiscal implements Serializable {
 
     public void setVconViagemConhecimento(VconViagemConhecimento vconViagemConhecimento) {
         this.vconViagemConhecimento = vconViagemConhecimento;
-    }
-
-    public Collection<VproViagemProduto> getVproViagemProdutoCollection() {
-        return vproViagemProdutoCollection;
-    }
-
-    public void setVproViagemProdutoCollection(Collection<VproViagemProduto> vproViagemProdutoCollection) {
-        this.vproViagemProdutoCollection = vproViagemProdutoCollection;
     }
 
     @Override

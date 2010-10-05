@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,27 +23,21 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "esta_estado", catalog = "trafegus_transc", schema = "public")
+@Table(name = "esta_estado")
 @NamedQueries({
-    @NamedQuery(name = "EstaEstado.findAll", query = "SELECT e FROM EstaEstado e"),
-    @NamedQuery(name = "EstaEstado.findByEstaCodigo", query = "SELECT e FROM EstaEstado e WHERE e.estaCodigo = :estaCodigo"),
-    @NamedQuery(name = "EstaEstado.findByEstaSigla", query = "SELECT e FROM EstaEstado e WHERE e.estaSigla = :estaSigla"),
-    @NamedQuery(name = "EstaEstado.findByEstaDescricao", query = "SELECT e FROM EstaEstado e WHERE e.estaDescricao = :estaDescricao"),
-    @NamedQuery(name = "EstaEstado.findByEstaDataCadastro", query = "SELECT e FROM EstaEstado e WHERE e.estaDataCadastro = :estaDataCadastro"),
-    @NamedQuery(name = "EstaEstado.findByEstaCodigoGr", query = "SELECT e FROM EstaEstado e WHERE e.estaCodigoGr = :estaCodigoGr"),
-    @NamedQuery(name = "EstaEstado.findByEstaImportado", query = "SELECT e FROM EstaEstado e WHERE e.estaImportado = :estaImportado")})
+    @NamedQuery(name = "EstaEstado.findAll", query = "SELECT e FROM EstaEstado e")})
 public class EstaEstado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "esta_codigo", nullable = false)
+    @Column(name = "esta_codigo")
     private Integer estaCodigo;
-    @Column(name = "esta_sigla", length = 2)
+    @Column(name = "esta_sigla")
     private String estaSigla;
-    @Column(name = "esta_descricao", length = 100)
+    @Column(name = "esta_descricao")
     private String estaDescricao;
     @Column(name = "esta_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -53,7 +47,7 @@ public class EstaEstado implements Serializable {
     @Column(name = "esta_importado")
     private Character estaImportado;
     @OneToMany(mappedBy = "estaEstado")
-    private Collection<CidaCidade> cidaCidadeCollection;
+    private Set<CidaCidade> cidaCidadeSet;
     @JoinColumn(name = "esta_pais_codigo", referencedColumnName = "pais_codigo")
     @ManyToOne
     private PaisPais paisPais;
@@ -113,12 +107,12 @@ public class EstaEstado implements Serializable {
         this.estaImportado = estaImportado;
     }
 
-    public Collection<CidaCidade> getCidaCidadeCollection() {
-        return cidaCidadeCollection;
+    public Set<CidaCidade> getCidaCidadeSet() {
+        return cidaCidadeSet;
     }
 
-    public void setCidaCidadeCollection(Collection<CidaCidade> cidaCidadeCollection) {
-        this.cidaCidadeCollection = cidaCidadeCollection;
+    public void setCidaCidadeSet(Set<CidaCidade> cidaCidadeSet) {
+        this.cidaCidadeSet = cidaCidadeSet;
     }
 
     public PaisPais getPaisPais() {

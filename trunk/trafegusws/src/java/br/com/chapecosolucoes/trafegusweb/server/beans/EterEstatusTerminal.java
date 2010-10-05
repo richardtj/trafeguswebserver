@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,24 +18,22 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "eter_estatus_terminal", catalog = "trafegus_transc", schema = "public")
+@Table(name = "eter_estatus_terminal")
 @NamedQueries({
-    @NamedQuery(name = "EterEstatusTerminal.findAll", query = "SELECT e FROM EterEstatusTerminal e"),
-    @NamedQuery(name = "EterEstatusTerminal.findByEterCodigo", query = "SELECT e FROM EterEstatusTerminal e WHERE e.eterCodigo = :eterCodigo"),
-    @NamedQuery(name = "EterEstatusTerminal.findByEterDescricao", query = "SELECT e FROM EterEstatusTerminal e WHERE e.eterDescricao = :eterDescricao")})
+    @NamedQuery(name = "EterEstatusTerminal.findAll", query = "SELECT e FROM EterEstatusTerminal e")})
 public class EterEstatusTerminal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "eter_codigo", nullable = false)
+    @Column(name = "eter_codigo")
     private Integer eterCodigo;
-    @Column(name = "eter_descricao", length = 50)
+    @Column(name = "eter_descricao")
     private String eterDescricao;
     @OneToMany(mappedBy = "eterEstatusTerminal")
-    private Collection<TermTerminal> termTerminalCollection;
+    private Set<TermTerminal> termTerminalSet;
 
     public EterEstatusTerminal() {
     }
@@ -60,12 +58,12 @@ public class EterEstatusTerminal implements Serializable {
         this.eterDescricao = eterDescricao;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection() {
-        return termTerminalCollection;
+    public Set<TermTerminal> getTermTerminalSet() {
+        return termTerminalSet;
     }
 
-    public void setTermTerminalCollection(Collection<TermTerminal> termTerminalCollection) {
-        this.termTerminalCollection = termTerminalCollection;
+    public void setTermTerminalSet(Set<TermTerminal> termTerminalSet) {
+        this.termTerminalSet = termTerminalSet;
     }
 
     @Override

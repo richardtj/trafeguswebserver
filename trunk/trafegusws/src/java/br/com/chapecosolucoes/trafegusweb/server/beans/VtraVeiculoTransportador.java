@@ -18,26 +18,20 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "vtra_veiculo_transportador", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"vtra_tran_pess_oras_codigo", "vtra_veic_oras_codigo"})})
+@Table(name = "vtra_veiculo_transportador")
 @NamedQueries({
-    @NamedQuery(name = "VtraVeiculoTransportador.findAll", query = "SELECT v FROM VtraVeiculoTransportador v"),
-    @NamedQuery(name = "VtraVeiculoTransportador.findByVtraCodigo", query = "SELECT v FROM VtraVeiculoTransportador v WHERE v.vtraCodigo = :vtraCodigo"),
-    @NamedQuery(name = "VtraVeiculoTransportador.findByVtraDataCadastro", query = "SELECT v FROM VtraVeiculoTransportador v WHERE v.vtraDataCadastro = :vtraDataCadastro"),
-    @NamedQuery(name = "VtraVeiculoTransportador.findByVtraImportado", query = "SELECT v FROM VtraVeiculoTransportador v WHERE v.vtraImportado = :vtraImportado"),
-    @NamedQuery(name = "VtraVeiculoTransportador.findByVtraCodigoGr", query = "SELECT v FROM VtraVeiculoTransportador v WHERE v.vtraCodigoGr = :vtraCodigoGr")})
+    @NamedQuery(name = "VtraVeiculoTransportador.findAll", query = "SELECT v FROM VtraVeiculoTransportador v")})
 public class VtraVeiculoTransportador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "vtra_codigo", nullable = false)
+    @Column(name = "vtra_codigo")
     private Integer vtraCodigo;
     @Column(name = "vtra_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)

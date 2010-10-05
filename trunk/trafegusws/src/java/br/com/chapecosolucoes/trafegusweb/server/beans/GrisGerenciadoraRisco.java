@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,36 +21,30 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "gris_gerenciadora_risco", catalog = "trafegus_transc", schema = "public")
+@Table(name = "gris_gerenciadora_risco")
 @NamedQueries({
-    @NamedQuery(name = "GrisGerenciadoraRisco.findAll", query = "SELECT g FROM GrisGerenciadoraRisco g"),
-    @NamedQuery(name = "GrisGerenciadoraRisco.findByGrisPjurPessOrasCodigo", query = "SELECT g FROM GrisGerenciadoraRisco g WHERE g.grisPjurPessOrasCodigo = :grisPjurPessOrasCodigo"),
-    @NamedQuery(name = "GrisGerenciadoraRisco.findByGrisMinhaMatriz", query = "SELECT g FROM GrisGerenciadoraRisco g WHERE g.grisMinhaMatriz = :grisMinhaMatriz")})
+    @NamedQuery(name = "GrisGerenciadoraRisco.findAll", query = "SELECT g FROM GrisGerenciadoraRisco g")})
 public class GrisGerenciadoraRisco implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "gris_pjur_pess_oras_codigo", nullable = false)
+    @Column(name = "gris_pjur_pess_oras_codigo")
     private Integer grisPjurPessOrasCodigo;
     @Column(name = "gris_minha_matriz")
     private Character grisMinhaMatriz;
-    @OneToMany(mappedBy = "grisGerenciadoraRisco")
-    private Collection<SterSinalTerminal> sterSinalTerminalCollection;
-    @OneToMany(mappedBy = "grisGerenciadoraRisco1")
-    private Collection<SterSinalTerminal> sterSinalTerminalCollection1;
-    @JoinColumn(name = "gris_pjur_pess_oras_codigo", referencedColumnName = "pjur_pess_oras_codigo", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "gris_pjur_pess_oras_codigo", referencedColumnName = "pjur_pess_oras_codigo", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private PjurPessoaJuridica pjurPessoaJuridica;
     @OneToMany(mappedBy = "grisGerenciadoraRisco")
-    private Collection<GrisGerenciadoraRisco> grisGerenciadoraRiscoCollection;
+    private Set<GrisGerenciadoraRisco> grisGerenciadoraRiscoSet;
     @JoinColumn(name = "gris_pjur_pess_oras_codigo_matriz", referencedColumnName = "gris_pjur_pess_oras_codigo")
     @ManyToOne
     private GrisGerenciadoraRisco grisGerenciadoraRisco;
     @OneToMany(mappedBy = "grisGerenciadoraRisco")
-    private Collection<ErasEstacaoRastreamento> erasEstacaoRastreamentoCollection;
+    private Set<ErasEstacaoRastreamento> erasEstacaoRastreamentoSet;
 
     public GrisGerenciadoraRisco() {
     }
@@ -75,22 +69,6 @@ public class GrisGerenciadoraRisco implements Serializable {
         this.grisMinhaMatriz = grisMinhaMatriz;
     }
 
-    public Collection<SterSinalTerminal> getSterSinalTerminalCollection() {
-        return sterSinalTerminalCollection;
-    }
-
-    public void setSterSinalTerminalCollection(Collection<SterSinalTerminal> sterSinalTerminalCollection) {
-        this.sterSinalTerminalCollection = sterSinalTerminalCollection;
-    }
-
-    public Collection<SterSinalTerminal> getSterSinalTerminalCollection1() {
-        return sterSinalTerminalCollection1;
-    }
-
-    public void setSterSinalTerminalCollection1(Collection<SterSinalTerminal> sterSinalTerminalCollection1) {
-        this.sterSinalTerminalCollection1 = sterSinalTerminalCollection1;
-    }
-
     public PjurPessoaJuridica getPjurPessoaJuridica() {
         return pjurPessoaJuridica;
     }
@@ -99,12 +77,12 @@ public class GrisGerenciadoraRisco implements Serializable {
         this.pjurPessoaJuridica = pjurPessoaJuridica;
     }
 
-    public Collection<GrisGerenciadoraRisco> getGrisGerenciadoraRiscoCollection() {
-        return grisGerenciadoraRiscoCollection;
+    public Set<GrisGerenciadoraRisco> getGrisGerenciadoraRiscoSet() {
+        return grisGerenciadoraRiscoSet;
     }
 
-    public void setGrisGerenciadoraRiscoCollection(Collection<GrisGerenciadoraRisco> grisGerenciadoraRiscoCollection) {
-        this.grisGerenciadoraRiscoCollection = grisGerenciadoraRiscoCollection;
+    public void setGrisGerenciadoraRiscoSet(Set<GrisGerenciadoraRisco> grisGerenciadoraRiscoSet) {
+        this.grisGerenciadoraRiscoSet = grisGerenciadoraRiscoSet;
     }
 
     public GrisGerenciadoraRisco getGrisGerenciadoraRisco() {
@@ -115,12 +93,12 @@ public class GrisGerenciadoraRisco implements Serializable {
         this.grisGerenciadoraRisco = grisGerenciadoraRisco;
     }
 
-    public Collection<ErasEstacaoRastreamento> getErasEstacaoRastreamentoCollection() {
-        return erasEstacaoRastreamentoCollection;
+    public Set<ErasEstacaoRastreamento> getErasEstacaoRastreamentoSet() {
+        return erasEstacaoRastreamentoSet;
     }
 
-    public void setErasEstacaoRastreamentoCollection(Collection<ErasEstacaoRastreamento> erasEstacaoRastreamentoCollection) {
-        this.erasEstacaoRastreamentoCollection = erasEstacaoRastreamentoCollection;
+    public void setErasEstacaoRastreamentoSet(Set<ErasEstacaoRastreamento> erasEstacaoRastreamentoSet) {
+        this.erasEstacaoRastreamentoSet = erasEstacaoRastreamentoSet;
     }
 
     @Override

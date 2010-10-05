@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,24 +18,22 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "sras_separacao_rastreamento", catalog = "trafegus_transc", schema = "public")
+@Table(name = "sras_separacao_rastreamento")
 @NamedQueries({
-    @NamedQuery(name = "SrasSeparacaoRastreamento.findAll", query = "SELECT s FROM SrasSeparacaoRastreamento s"),
-    @NamedQuery(name = "SrasSeparacaoRastreamento.findBySrasCodigo", query = "SELECT s FROM SrasSeparacaoRastreamento s WHERE s.srasCodigo = :srasCodigo"),
-    @NamedQuery(name = "SrasSeparacaoRastreamento.findBySrasDescricao", query = "SELECT s FROM SrasSeparacaoRastreamento s WHERE s.srasDescricao = :srasDescricao")})
+    @NamedQuery(name = "SrasSeparacaoRastreamento.findAll", query = "SELECT s FROM SrasSeparacaoRastreamento s")})
 public class SrasSeparacaoRastreamento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "sras_codigo", nullable = false)
+    @Column(name = "sras_codigo")
     private Integer srasCodigo;
-    @Column(name = "sras_descricao", length = 50)
+    @Column(name = "sras_descricao")
     private String srasDescricao;
     @OneToMany(mappedBy = "srasSeparacaoRastreamento")
-    private Collection<ErasEstacaoRastreamento> erasEstacaoRastreamentoCollection;
+    private Set<ErasEstacaoRastreamento> erasEstacaoRastreamentoSet;
 
     public SrasSeparacaoRastreamento() {
     }
@@ -60,12 +58,12 @@ public class SrasSeparacaoRastreamento implements Serializable {
         this.srasDescricao = srasDescricao;
     }
 
-    public Collection<ErasEstacaoRastreamento> getErasEstacaoRastreamentoCollection() {
-        return erasEstacaoRastreamentoCollection;
+    public Set<ErasEstacaoRastreamento> getErasEstacaoRastreamentoSet() {
+        return erasEstacaoRastreamentoSet;
     }
 
-    public void setErasEstacaoRastreamentoCollection(Collection<ErasEstacaoRastreamento> erasEstacaoRastreamentoCollection) {
-        this.erasEstacaoRastreamentoCollection = erasEstacaoRastreamentoCollection;
+    public void setErasEstacaoRastreamentoSet(Set<ErasEstacaoRastreamento> erasEstacaoRastreamentoSet) {
+        this.erasEstacaoRastreamentoSet = erasEstacaoRastreamentoSet;
     }
 
     @Override

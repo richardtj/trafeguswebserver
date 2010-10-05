@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,21 +25,17 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "oras_objeto_rastreado", catalog = "trafegus_transc", schema = "public")
+@Table(name = "oras_objeto_rastreado")
 @NamedQueries({
-    @NamedQuery(name = "OrasObjetoRastreado.findAll", query = "SELECT o FROM OrasObjetoRastreado o"),
-    @NamedQuery(name = "OrasObjetoRastreado.findByOrasCodigo", query = "SELECT o FROM OrasObjetoRastreado o WHERE o.orasCodigo = :orasCodigo"),
-    @NamedQuery(name = "OrasObjetoRastreado.findByOrasDataCadastro", query = "SELECT o FROM OrasObjetoRastreado o WHERE o.orasDataCadastro = :orasDataCadastro"),
-    @NamedQuery(name = "OrasObjetoRastreado.findByOrasCodigoGr", query = "SELECT o FROM OrasObjetoRastreado o WHERE o.orasCodigoGr = :orasCodigoGr"),
-    @NamedQuery(name = "OrasObjetoRastreado.findByOrasImportado", query = "SELECT o FROM OrasObjetoRastreado o WHERE o.orasImportado = :orasImportado")})
+    @NamedQuery(name = "OrasObjetoRastreado.findAll", query = "SELECT o FROM OrasObjetoRastreado o")})
 public class OrasObjetoRastreado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "oras_codigo", nullable = false)
+    @Column(name = "oras_codigo")
     private Integer orasCodigo;
     @Column(name = "oras_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -49,27 +45,17 @@ public class OrasObjetoRastreado implements Serializable {
     @Column(name = "oras_importado")
     private Character orasImportado;
     @OneToMany(mappedBy = "orasObjetoRastreado")
-    private Collection<TermTerminal> termTerminalCollection;
+    private Set<TermTerminal> termTerminalSet;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado")
     private VeicVeiculo veicVeiculo;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado")
-    private PessPessoa pessPessoa;
-    @OneToMany(mappedBy = "orasObjetoRastreado")
-    private Collection<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado")
-    private ContContainer contContainer;
     @JoinColumn(name = "oras_pgpg_codigo", referencedColumnName = "pgpg_codigo")
     @ManyToOne
     private PgpgPg pgpgPg;
     @JoinColumn(name = "oras_eobj_codigo", referencedColumnName = "eobj_codigo")
     @ManyToOne
     private EobjEstatusObjeto eobjEstatusObjeto;
-    @OneToMany(mappedBy = "orasObjetoRastreado")
-    private Collection<OrobObjetoRastreadoObs> orobObjetoRastreadoObsCollection;
-    @OneToMany(mappedBy = "orasObjetoRastreado")
-    private Collection<OrteObjetoRastreadoTermina> orteObjetoRastreadoTerminaCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado")
-    private MaloMalote maloMalote;
+    private PessPessoa pessPessoa;
 
     public OrasObjetoRastreado() {
     }
@@ -110,12 +96,12 @@ public class OrasObjetoRastreado implements Serializable {
         this.orasImportado = orasImportado;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection() {
-        return termTerminalCollection;
+    public Set<TermTerminal> getTermTerminalSet() {
+        return termTerminalSet;
     }
 
-    public void setTermTerminalCollection(Collection<TermTerminal> termTerminalCollection) {
-        this.termTerminalCollection = termTerminalCollection;
+    public void setTermTerminalSet(Set<TermTerminal> termTerminalSet) {
+        this.termTerminalSet = termTerminalSet;
     }
 
     public VeicVeiculo getVeicVeiculo() {
@@ -124,30 +110,6 @@ public class OrasObjetoRastreado implements Serializable {
 
     public void setVeicVeiculo(VeicVeiculo veicVeiculo) {
         this.veicVeiculo = veicVeiculo;
-    }
-
-    public PessPessoa getPessPessoa() {
-        return pessPessoa;
-    }
-
-    public void setPessPessoa(PessPessoa pessPessoa) {
-        this.pessPessoa = pessPessoa;
-    }
-
-    public Collection<HtpgHistoricoTrocaPg> getHtpgHistoricoTrocaPgCollection() {
-        return htpgHistoricoTrocaPgCollection;
-    }
-
-    public void setHtpgHistoricoTrocaPgCollection(Collection<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgCollection) {
-        this.htpgHistoricoTrocaPgCollection = htpgHistoricoTrocaPgCollection;
-    }
-
-    public ContContainer getContContainer() {
-        return contContainer;
-    }
-
-    public void setContContainer(ContContainer contContainer) {
-        this.contContainer = contContainer;
     }
 
     public PgpgPg getPgpgPg() {
@@ -166,28 +128,12 @@ public class OrasObjetoRastreado implements Serializable {
         this.eobjEstatusObjeto = eobjEstatusObjeto;
     }
 
-    public Collection<OrobObjetoRastreadoObs> getOrobObjetoRastreadoObsCollection() {
-        return orobObjetoRastreadoObsCollection;
+    public PessPessoa getPessPessoa() {
+        return pessPessoa;
     }
 
-    public void setOrobObjetoRastreadoObsCollection(Collection<OrobObjetoRastreadoObs> orobObjetoRastreadoObsCollection) {
-        this.orobObjetoRastreadoObsCollection = orobObjetoRastreadoObsCollection;
-    }
-
-    public Collection<OrteObjetoRastreadoTermina> getOrteObjetoRastreadoTerminaCollection() {
-        return orteObjetoRastreadoTerminaCollection;
-    }
-
-    public void setOrteObjetoRastreadoTerminaCollection(Collection<OrteObjetoRastreadoTermina> orteObjetoRastreadoTerminaCollection) {
-        this.orteObjetoRastreadoTerminaCollection = orteObjetoRastreadoTerminaCollection;
-    }
-
-    public MaloMalote getMaloMalote() {
-        return maloMalote;
-    }
-
-    public void setMaloMalote(MaloMalote maloMalote) {
-        this.maloMalote = maloMalote;
+    public void setPessPessoa(PessPessoa pessPessoa) {
+        this.pessPessoa = pessPessoa;
     }
 
     @Override

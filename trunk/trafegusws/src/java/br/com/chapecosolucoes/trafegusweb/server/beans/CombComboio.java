@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,24 +23,19 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "comb_comboio", catalog = "trafegus_transc", schema = "public")
+@Table(name = "comb_comboio")
 @NamedQueries({
-    @NamedQuery(name = "CombComboio.findAll", query = "SELECT c FROM CombComboio c"),
-    @NamedQuery(name = "CombComboio.findByCombCodigo", query = "SELECT c FROM CombComboio c WHERE c.combCodigo = :combCodigo"),
-    @NamedQuery(name = "CombComboio.findByCombDescricao", query = "SELECT c FROM CombComboio c WHERE c.combDescricao = :combDescricao"),
-    @NamedQuery(name = "CombComboio.findByCombDataCadastro", query = "SELECT c FROM CombComboio c WHERE c.combDataCadastro = :combDataCadastro"),
-    @NamedQuery(name = "CombComboio.findByCombCodigoGr", query = "SELECT c FROM CombComboio c WHERE c.combCodigoGr = :combCodigoGr"),
-    @NamedQuery(name = "CombComboio.findByCombImportado", query = "SELECT c FROM CombComboio c WHERE c.combImportado = :combImportado")})
+    @NamedQuery(name = "CombComboio.findAll", query = "SELECT c FROM CombComboio c")})
 public class CombComboio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "comb_codigo", nullable = false)
+    @Column(name = "comb_codigo")
     private Integer combCodigo;
-    @Column(name = "comb_descricao", length = 50)
+    @Column(name = "comb_descricao")
     private String combDescricao;
     @Column(name = "comb_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -53,7 +48,7 @@ public class CombComboio implements Serializable {
     @ManyToOne
     private EescEmpresaEscolta eescEmpresaEscolta;
     @OneToMany(mappedBy = "combComboio")
-    private Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection;
+    private Set<VveiViagemVeiculo> vveiViagemVeiculoSet;
 
     public CombComboio() {
     }
@@ -110,12 +105,12 @@ public class CombComboio implements Serializable {
         this.eescEmpresaEscolta = eescEmpresaEscolta;
     }
 
-    public Collection<VveiViagemVeiculo> getVveiViagemVeiculoCollection() {
-        return vveiViagemVeiculoCollection;
+    public Set<VveiViagemVeiculo> getVveiViagemVeiculoSet() {
+        return vveiViagemVeiculoSet;
     }
 
-    public void setVveiViagemVeiculoCollection(Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection) {
-        this.vveiViagemVeiculoCollection = vveiViagemVeiculoCollection;
+    public void setVveiViagemVeiculoSet(Set<VveiViagemVeiculo> vveiViagemVeiculoSet) {
+        this.vveiViagemVeiculoSet = vveiViagemVeiculoSet;
     }
 
     @Override

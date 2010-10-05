@@ -6,9 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -22,44 +21,26 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "usua_usuario", catalog = "trafegus_transc", schema = "public")
+@Table(name = "usua_usuario")
 @NamedQueries({
-    @NamedQuery(name = "UsuaUsuario.findAll", query = "SELECT u FROM UsuaUsuario u"),
-    @NamedQuery(name = "UsuaUsuario.findByUsuaPfisPessOrasCodigo", query = "SELECT u FROM UsuaUsuario u WHERE u.usuaPfisPessOrasCodigo = :usuaPfisPessOrasCodigo"),
-    @NamedQuery(name = "UsuaUsuario.findByUsuaLogin", query = "SELECT u FROM UsuaUsuario u WHERE u.usuaLogin = :usuaLogin"),
-    @NamedQuery(name = "UsuaUsuario.findByUsuaLoginSenha", query = "SELECT u FROM UsuaUsuario u WHERE u.usuaLogin = :usuaLogin and u.usuaSenha = :usuaSenha"),
-    @NamedQuery(name = "UsuaUsuario.findByUsuaSenha", query = "SELECT u FROM UsuaUsuario u WHERE u.usuaSenha = :usuaSenha")})
+    @NamedQuery(name = "UsuaUsuario.findAll", query = "SELECT u FROM UsuaUsuario u")})
 public class UsuaUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "usua_pfis_pess_oras_codigo", nullable = false)
+    @Column(name = "usua_pfis_pess_oras_codigo")
     private Integer usuaPfisPessOrasCodigo;
-    @Column(name = "usua_login", length = 20)
+    @Column(name = "usua_login")
     private String usuaLogin;
-    @Column(name = "usua_senha", length = 20)
+    @Column(name = "usua_senha")
     private String usuaSenha;
-    @OneToMany(mappedBy = "usuaUsuario")
-    private Collection<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuCollection;
-    @OneToMany(mappedBy = "usuaUsuario")
-    private Collection<RmliRecebimentoMensagLivre> rmliRecebimentoMensagLivreCollection;
-    @OneToMany(mappedBy = "usuaUsuario")
-    private Collection<VestViagemEstatus> vestViagemEstatusCollection;
-    @OneToMany(mappedBy = "usuaUsuario")
-    private Collection<PperProblemaPeriferico> pperProblemaPerifericoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuaUsuario")
-    private Collection<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgCollection;
-    @OneToMany(mappedBy = "usuaUsuario")
-    private Collection<VterViagemTerminal> vterViagemTerminalCollection;
-    @OneToMany(mappedBy = "usuaUsuario")
-    private Collection<OrobObjetoRastreadoObs> orobObjetoRastreadoObsCollection;
     @JoinColumn(name = "usua_seto_codigo", referencedColumnName = "seto_codigo")
     @ManyToOne
     private SetoSetor setoSetor;
-    @JoinColumn(name = "usua_pfis_pess_oras_codigo", referencedColumnName = "pfis_pess_oras_codigo", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "usua_pfis_pess_oras_codigo", referencedColumnName = "pfis_pess_oras_codigo", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private PfisPessoaFisica pfisPessoaFisica;
     @JoinColumn(name = "usua_pess_oras_codigo", referencedColumnName = "pess_oras_codigo")
@@ -69,9 +50,7 @@ public class UsuaUsuario implements Serializable {
     @ManyToOne
     private PerfPerfil perfPerfil;
     @OneToMany(mappedBy = "usuaUsuario")
-    private Collection<AusuAcessoUsuario> ausuAcessoUsuarioCollection;
-    @OneToMany(mappedBy = "usuaUsuario")
-    private Collection<EnviEnvio> enviEnvioCollection;
+    private Set<VterViagemTerminal> vterViagemTerminalSet;
 
     public UsuaUsuario() {
     }
@@ -102,62 +81,6 @@ public class UsuaUsuario implements Serializable {
 
     public void setUsuaSenha(String usuaSenha) {
         this.usuaSenha = usuaSenha;
-    }
-
-    public Collection<ErusEstacaoRastreamentoUsu> getErusEstacaoRastreamentoUsuCollection() {
-        return erusEstacaoRastreamentoUsuCollection;
-    }
-
-    public void setErusEstacaoRastreamentoUsuCollection(Collection<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuCollection) {
-        this.erusEstacaoRastreamentoUsuCollection = erusEstacaoRastreamentoUsuCollection;
-    }
-
-    public Collection<RmliRecebimentoMensagLivre> getRmliRecebimentoMensagLivreCollection() {
-        return rmliRecebimentoMensagLivreCollection;
-    }
-
-    public void setRmliRecebimentoMensagLivreCollection(Collection<RmliRecebimentoMensagLivre> rmliRecebimentoMensagLivreCollection) {
-        this.rmliRecebimentoMensagLivreCollection = rmliRecebimentoMensagLivreCollection;
-    }
-
-    public Collection<VestViagemEstatus> getVestViagemEstatusCollection() {
-        return vestViagemEstatusCollection;
-    }
-
-    public void setVestViagemEstatusCollection(Collection<VestViagemEstatus> vestViagemEstatusCollection) {
-        this.vestViagemEstatusCollection = vestViagemEstatusCollection;
-    }
-
-    public Collection<PperProblemaPeriferico> getPperProblemaPerifericoCollection() {
-        return pperProblemaPerifericoCollection;
-    }
-
-    public void setPperProblemaPerifericoCollection(Collection<PperProblemaPeriferico> pperProblemaPerifericoCollection) {
-        this.pperProblemaPerifericoCollection = pperProblemaPerifericoCollection;
-    }
-
-    public Collection<HtpgHistoricoTrocaPg> getHtpgHistoricoTrocaPgCollection() {
-        return htpgHistoricoTrocaPgCollection;
-    }
-
-    public void setHtpgHistoricoTrocaPgCollection(Collection<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgCollection) {
-        this.htpgHistoricoTrocaPgCollection = htpgHistoricoTrocaPgCollection;
-    }
-
-    public Collection<VterViagemTerminal> getVterViagemTerminalCollection() {
-        return vterViagemTerminalCollection;
-    }
-
-    public void setVterViagemTerminalCollection(Collection<VterViagemTerminal> vterViagemTerminalCollection) {
-        this.vterViagemTerminalCollection = vterViagemTerminalCollection;
-    }
-
-    public Collection<OrobObjetoRastreadoObs> getOrobObjetoRastreadoObsCollection() {
-        return orobObjetoRastreadoObsCollection;
-    }
-
-    public void setOrobObjetoRastreadoObsCollection(Collection<OrobObjetoRastreadoObs> orobObjetoRastreadoObsCollection) {
-        this.orobObjetoRastreadoObsCollection = orobObjetoRastreadoObsCollection;
     }
 
     public SetoSetor getSetoSetor() {
@@ -192,20 +115,12 @@ public class UsuaUsuario implements Serializable {
         this.perfPerfil = perfPerfil;
     }
 
-    public Collection<AusuAcessoUsuario> getAusuAcessoUsuarioCollection() {
-        return ausuAcessoUsuarioCollection;
+    public Set<VterViagemTerminal> getVterViagemTerminalSet() {
+        return vterViagemTerminalSet;
     }
 
-    public void setAusuAcessoUsuarioCollection(Collection<AusuAcessoUsuario> ausuAcessoUsuarioCollection) {
-        this.ausuAcessoUsuarioCollection = ausuAcessoUsuarioCollection;
-    }
-
-    public Collection<EnviEnvio> getEnviEnvioCollection() {
-        return enviEnvioCollection;
-    }
-
-    public void setEnviEnvioCollection(Collection<EnviEnvio> enviEnvioCollection) {
-        this.enviEnvioCollection = enviEnvioCollection;
+    public void setVterViagemTerminalSet(Set<VterViagemTerminal> vterViagemTerminalSet) {
+        this.vterViagemTerminalSet = vterViagemTerminalSet;
     }
 
     @Override

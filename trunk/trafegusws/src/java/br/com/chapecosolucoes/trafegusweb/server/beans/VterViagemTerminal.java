@@ -21,27 +21,19 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "vter_viagem_terminal", catalog = "trafegus_transc", schema = "public")
+@Table(name = "vter_viagem_terminal")
 @NamedQueries({
-    @NamedQuery(name = "VterViagemTerminal.findAll", query = "SELECT v FROM VterViagemTerminal v"),
-    @NamedQuery(name = "VterViagemTerminal.findByVterCodigo", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterCodigo = :vterCodigo"),
-    @NamedQuery(name = "VterViagemTerminal.findByVterPrecedencia", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterPrecedencia = :vterPrecedencia"),
-    @NamedQuery(name = "VterViagemTerminal.findByVterTempoSatelital", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterTempoSatelital = :vterTempoSatelital"),
-    @NamedQuery(name = "VterViagemTerminal.findByVterTempoGprs", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterTempoGprs = :vterTempoGprs"),
-    @NamedQuery(name = "VterViagemTerminal.findByVterDataCadastro", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterDataCadastro = :vterDataCadastro"),
-    @NamedQuery(name = "VterViagemTerminal.findByVterCodigoGr", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterCodigoGr = :vterCodigoGr"),
-    @NamedQuery(name = "VterViagemTerminal.findByVterImportado", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterImportado = :vterImportado"),
-    @NamedQuery(name = "VterViagemTerminal.findByVterAtivo", query = "SELECT v FROM VterViagemTerminal v WHERE v.vterAtivo = :vterAtivo")})
+    @NamedQuery(name = "VterViagemTerminal.findAll", query = "SELECT v FROM VterViagemTerminal v")})
 public class VterViagemTerminal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "vter_codigo", nullable = false)
+    @Column(name = "vter_codigo")
     private Integer vterCodigo;
-    @Column(name = "vter_precedencia", length = 10)
+    @Column(name = "vter_precedencia")
     private String vterPrecedencia;
     @Column(name = "vter_tempo_satelital")
     private Integer vterTempoSatelital;

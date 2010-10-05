@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,42 +22,33 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "tran_transportador", catalog = "trafegus_transc", schema = "public")
+@Table(name = "tran_transportador")
 @NamedQueries({
-    @NamedQuery(name = "TranTransportador.findAll", query = "SELECT t FROM TranTransportador t"),
-    @NamedQuery(name = "TranTransportador.findByTranPessOrasCodigo", query = "SELECT t FROM TranTransportador t WHERE t.tranPessOrasCodigo = :tranPessOrasCodigo")})
+    @NamedQuery(name = "TranTransportador.findAll", query = "SELECT t FROM TranTransportador t")})
 public class TranTransportador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "tran_pess_oras_codigo", nullable = false)
+    @Column(name = "tran_pess_oras_codigo")
     private Integer tranPessOrasCodigo;
     @OneToMany(mappedBy = "tranTransportador")
-    private Collection<TlocTransportadorLocal> tlocTransportadorLocalCollection;
+    private Set<VtraVeiculoTransportador> vtraVeiculoTransportadorSet;
     @OneToMany(mappedBy = "tranTransportador")
-    private Collection<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tranTransportador")
-    private Collection<ViagViagem> viagViagemCollection;
-    @OneToMany(mappedBy = "tranTransportador")
-    private Collection<MtraMotoristaTransportador> mtraMotoristaTransportadorCollection;
-    @OneToMany(mappedBy = "tranTransportador")
-    private Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection;
-    @OneToMany(mappedBy = "tranTransportador")
-    private Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection;
-    @OneToMany(mappedBy = "tranTransportador")
-    private Collection<TranTransportador> tranTransportadorCollection;
+    private Set<TranTransportador> tranTransportadorSet;
     @JoinColumn(name = "tran_pess_oras_codigo_matriz", referencedColumnName = "tran_pess_oras_codigo")
     @ManyToOne
     private TranTransportador tranTransportador;
     @JoinColumn(name = "tran_test_codigo", referencedColumnName = "test_codigo")
     @ManyToOne
     private TestTipoEstabelecimento testTipoEstabelecimento;
-    @JoinColumn(name = "tran_pess_oras_codigo", referencedColumnName = "pess_oras_codigo", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "tran_pess_oras_codigo", referencedColumnName = "pess_oras_codigo", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private PessPessoa pessPessoa;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tranTransportador")
+    private Set<ViagViagem> viagViagemSet;
 
     public TranTransportador() {
     }
@@ -74,60 +65,20 @@ public class TranTransportador implements Serializable {
         this.tranPessOrasCodigo = tranPessOrasCodigo;
     }
 
-    public Collection<TlocTransportadorLocal> getTlocTransportadorLocalCollection() {
-        return tlocTransportadorLocalCollection;
+    public Set<VtraVeiculoTransportador> getVtraVeiculoTransportadorSet() {
+        return vtraVeiculoTransportadorSet;
     }
 
-    public void setTlocTransportadorLocalCollection(Collection<TlocTransportadorLocal> tlocTransportadorLocalCollection) {
-        this.tlocTransportadorLocalCollection = tlocTransportadorLocalCollection;
+    public void setVtraVeiculoTransportadorSet(Set<VtraVeiculoTransportador> vtraVeiculoTransportadorSet) {
+        this.vtraVeiculoTransportadorSet = vtraVeiculoTransportadorSet;
     }
 
-    public Collection<TspgTranspSegurPlanoGeren> getTspgTranspSegurPlanoGerenCollection() {
-        return tspgTranspSegurPlanoGerenCollection;
+    public Set<TranTransportador> getTranTransportadorSet() {
+        return tranTransportadorSet;
     }
 
-    public void setTspgTranspSegurPlanoGerenCollection(Collection<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenCollection) {
-        this.tspgTranspSegurPlanoGerenCollection = tspgTranspSegurPlanoGerenCollection;
-    }
-
-    public Collection<ViagViagem> getViagViagemCollection() {
-        return viagViagemCollection;
-    }
-
-    public void setViagViagemCollection(Collection<ViagViagem> viagViagemCollection) {
-        this.viagViagemCollection = viagViagemCollection;
-    }
-
-    public Collection<MtraMotoristaTransportador> getMtraMotoristaTransportadorCollection() {
-        return mtraMotoristaTransportadorCollection;
-    }
-
-    public void setMtraMotoristaTransportadorCollection(Collection<MtraMotoristaTransportador> mtraMotoristaTransportadorCollection) {
-        this.mtraMotoristaTransportadorCollection = mtraMotoristaTransportadorCollection;
-    }
-
-    public Collection<TembTransportadorEmbarcador> getTembTransportadorEmbarcadorCollection() {
-        return tembTransportadorEmbarcadorCollection;
-    }
-
-    public void setTembTransportadorEmbarcadorCollection(Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection) {
-        this.tembTransportadorEmbarcadorCollection = tembTransportadorEmbarcadorCollection;
-    }
-
-    public Collection<VtraVeiculoTransportador> getVtraVeiculoTransportadorCollection() {
-        return vtraVeiculoTransportadorCollection;
-    }
-
-    public void setVtraVeiculoTransportadorCollection(Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection) {
-        this.vtraVeiculoTransportadorCollection = vtraVeiculoTransportadorCollection;
-    }
-
-    public Collection<TranTransportador> getTranTransportadorCollection() {
-        return tranTransportadorCollection;
-    }
-
-    public void setTranTransportadorCollection(Collection<TranTransportador> tranTransportadorCollection) {
-        this.tranTransportadorCollection = tranTransportadorCollection;
+    public void setTranTransportadorSet(Set<TranTransportador> tranTransportadorSet) {
+        this.tranTransportadorSet = tranTransportadorSet;
     }
 
     public TranTransportador getTranTransportador() {
@@ -152,6 +103,14 @@ public class TranTransportador implements Serializable {
 
     public void setPessPessoa(PessPessoa pessPessoa) {
         this.pessPessoa = pessPessoa;
+    }
+
+    public Set<ViagViagem> getViagViagemSet() {
+        return viagViagemSet;
+    }
+
+    public void setViagViagemSet(Set<ViagViagem> viagViagemSet) {
+        this.viagViagemSet = viagViagemSet;
     }
 
     @Override

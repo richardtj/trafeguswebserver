@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,37 +21,28 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "emba_embarcador", catalog = "trafegus_transc", schema = "public")
+@Table(name = "emba_embarcador")
 @NamedQueries({
-    @NamedQuery(name = "EmbaEmbarcador.findAll", query = "SELECT e FROM EmbaEmbarcador e"),
-    @NamedQuery(name = "EmbaEmbarcador.findByEmbaPjurPessOrasCodigo", query = "SELECT e FROM EmbaEmbarcador e WHERE e.embaPjurPessOrasCodigo = :embaPjurPessOrasCodigo")})
+    @NamedQuery(name = "EmbaEmbarcador.findAll", query = "SELECT e FROM EmbaEmbarcador e")})
 public class EmbaEmbarcador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "emba_pjur_pess_oras_codigo", nullable = false)
+    @Column(name = "emba_pjur_pess_oras_codigo")
     private Integer embaPjurPessOrasCodigo;
     @OneToMany(mappedBy = "embaEmbarcador")
-    private Collection<ViagViagem> viagViagemCollection;
-    @OneToMany(mappedBy = "embaEmbarcador")
-    private Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection;
-    @OneToMany(mappedBy = "embaEmbarcador")
-    private Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection;
-    @OneToMany(mappedBy = "embaEmbarcador")
-    private Collection<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenCollection;
-    @OneToMany(mappedBy = "embaEmbarcador")
-    private Collection<ElocEmbarcadorLocal> elocEmbarcadorLocalCollection;
+    private Set<ViagViagem> viagViagemSet;
     @JoinColumn(name = "emba_test_codigo", referencedColumnName = "test_codigo")
     @ManyToOne
     private TestTipoEstabelecimento testTipoEstabelecimento;
-    @JoinColumn(name = "emba_pjur_pess_oras_codigo", referencedColumnName = "pjur_pess_oras_codigo", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "emba_pjur_pess_oras_codigo", referencedColumnName = "pjur_pess_oras_codigo", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private PjurPessoaJuridica pjurPessoaJuridica;
     @OneToMany(mappedBy = "embaEmbarcador")
-    private Collection<EmbaEmbarcador> embaEmbarcadorCollection;
+    private Set<EmbaEmbarcador> embaEmbarcadorSet;
     @JoinColumn(name = "emba_pjur_pess_oras_codigo_matriz", referencedColumnName = "emba_pjur_pess_oras_codigo")
     @ManyToOne
     private EmbaEmbarcador embaEmbarcador;
@@ -71,44 +62,12 @@ public class EmbaEmbarcador implements Serializable {
         this.embaPjurPessOrasCodigo = embaPjurPessOrasCodigo;
     }
 
-    public Collection<ViagViagem> getViagViagemCollection() {
-        return viagViagemCollection;
+    public Set<ViagViagem> getViagViagemSet() {
+        return viagViagemSet;
     }
 
-    public void setViagViagemCollection(Collection<ViagViagem> viagViagemCollection) {
-        this.viagViagemCollection = viagViagemCollection;
-    }
-
-    public Collection<TembTransportadorEmbarcador> getTembTransportadorEmbarcadorCollection() {
-        return tembTransportadorEmbarcadorCollection;
-    }
-
-    public void setTembTransportadorEmbarcadorCollection(Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection) {
-        this.tembTransportadorEmbarcadorCollection = tembTransportadorEmbarcadorCollection;
-    }
-
-    public Collection<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorCollection() {
-        return vembVeiculoEmbarcadorCollection;
-    }
-
-    public void setVembVeiculoEmbarcadorCollection(Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection) {
-        this.vembVeiculoEmbarcadorCollection = vembVeiculoEmbarcadorCollection;
-    }
-
-    public Collection<EspgEmbarcSegurPlanoGeren> getEspgEmbarcSegurPlanoGerenCollection() {
-        return espgEmbarcSegurPlanoGerenCollection;
-    }
-
-    public void setEspgEmbarcSegurPlanoGerenCollection(Collection<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenCollection) {
-        this.espgEmbarcSegurPlanoGerenCollection = espgEmbarcSegurPlanoGerenCollection;
-    }
-
-    public Collection<ElocEmbarcadorLocal> getElocEmbarcadorLocalCollection() {
-        return elocEmbarcadorLocalCollection;
-    }
-
-    public void setElocEmbarcadorLocalCollection(Collection<ElocEmbarcadorLocal> elocEmbarcadorLocalCollection) {
-        this.elocEmbarcadorLocalCollection = elocEmbarcadorLocalCollection;
+    public void setViagViagemSet(Set<ViagViagem> viagViagemSet) {
+        this.viagViagemSet = viagViagemSet;
     }
 
     public TestTipoEstabelecimento getTestTipoEstabelecimento() {
@@ -127,12 +86,12 @@ public class EmbaEmbarcador implements Serializable {
         this.pjurPessoaJuridica = pjurPessoaJuridica;
     }
 
-    public Collection<EmbaEmbarcador> getEmbaEmbarcadorCollection() {
-        return embaEmbarcadorCollection;
+    public Set<EmbaEmbarcador> getEmbaEmbarcadorSet() {
+        return embaEmbarcadorSet;
     }
 
-    public void setEmbaEmbarcadorCollection(Collection<EmbaEmbarcador> embaEmbarcadorCollection) {
-        this.embaEmbarcadorCollection = embaEmbarcadorCollection;
+    public void setEmbaEmbarcadorSet(Set<EmbaEmbarcador> embaEmbarcadorSet) {
+        this.embaEmbarcadorSet = embaEmbarcadorSet;
     }
 
     public EmbaEmbarcador getEmbaEmbarcador() {

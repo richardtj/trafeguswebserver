@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,33 +20,24 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "bair_bairro", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"bair_cida_codigo", "bair_descricao"})})
+@Table(name = "bair_bairro")
 @NamedQueries({
-    @NamedQuery(name = "BairBairro.findAll", query = "SELECT b FROM BairBairro b"),
-    @NamedQuery(name = "BairBairro.findByBairCodigo", query = "SELECT b FROM BairBairro b WHERE b.bairCodigo = :bairCodigo"),
-    @NamedQuery(name = "BairBairro.findByBairDescricao", query = "SELECT b FROM BairBairro b WHERE b.bairDescricao = :bairDescricao"),
-    @NamedQuery(name = "BairBairro.findByBairAbreviacao", query = "SELECT b FROM BairBairro b WHERE b.bairAbreviacao = :bairAbreviacao"),
-    @NamedQuery(name = "BairBairro.findByBairDataCadastro", query = "SELECT b FROM BairBairro b WHERE b.bairDataCadastro = :bairDataCadastro"),
-    @NamedQuery(name = "BairBairro.findByBairCodigoGr", query = "SELECT b FROM BairBairro b WHERE b.bairCodigoGr = :bairCodigoGr"),
-    @NamedQuery(name = "BairBairro.findByBairImportado", query = "SELECT b FROM BairBairro b WHERE b.bairImportado = :bairImportado"),
-    @NamedQuery(name = "BairBairro.findByBairEstaCodigo", query = "SELECT b FROM BairBairro b WHERE b.bairEstaCodigo = :bairEstaCodigo")})
+    @NamedQuery(name = "BairBairro.findAll", query = "SELECT b FROM BairBairro b")})
 public class BairBairro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "bair_codigo", nullable = false)
+    @Column(name = "bair_codigo")
     private Integer bairCodigo;
-    @Column(name = "bair_descricao", length = 100)
+    @Column(name = "bair_descricao")
     private String bairDescricao;
-    @Column(name = "bair_abreviacao", length = 50)
+    @Column(name = "bair_abreviacao")
     private String bairAbreviacao;
     @Column(name = "bair_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -61,7 +52,7 @@ public class BairBairro implements Serializable {
     @ManyToOne
     private CidaCidade cidaCidade;
     @OneToMany(mappedBy = "bairBairro")
-    private Collection<LogrLogradouro> logrLogradouroCollection;
+    private Set<LogrLogradouro> logrLogradouroSet;
 
     public BairBairro() {
     }
@@ -134,12 +125,12 @@ public class BairBairro implements Serializable {
         this.cidaCidade = cidaCidade;
     }
 
-    public Collection<LogrLogradouro> getLogrLogradouroCollection() {
-        return logrLogradouroCollection;
+    public Set<LogrLogradouro> getLogrLogradouroSet() {
+        return logrLogradouroSet;
     }
 
-    public void setLogrLogradouroCollection(Collection<LogrLogradouro> logrLogradouroCollection) {
-        this.logrLogradouroCollection = logrLogradouroCollection;
+    public void setLogrLogradouroSet(Set<LogrLogradouro> logrLogradouroSet) {
+        this.logrLogradouroSet = logrLogradouroSet;
     }
 
     @Override

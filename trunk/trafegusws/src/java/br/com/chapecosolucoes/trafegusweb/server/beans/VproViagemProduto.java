@@ -22,27 +22,21 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "vpro_viagem_produto", catalog = "trafegus_transc", schema = "public")
+@Table(name = "vpro_viagem_produto")
 @NamedQueries({
-    @NamedQuery(name = "VproViagemProduto.findAll", query = "SELECT v FROM VproViagemProduto v"),
-    @NamedQuery(name = "VproViagemProduto.findByVproCodigo", query = "SELECT v FROM VproViagemProduto v WHERE v.vproCodigo = :vproCodigo"),
-    @NamedQuery(name = "VproViagemProduto.findByVproQuantidade", query = "SELECT v FROM VproViagemProduto v WHERE v.vproQuantidade = :vproQuantidade"),
-    @NamedQuery(name = "VproViagemProduto.findByVproValorUnitario", query = "SELECT v FROM VproViagemProduto v WHERE v.vproValorUnitario = :vproValorUnitario"),
-    @NamedQuery(name = "VproViagemProduto.findByVproDataCadastro", query = "SELECT v FROM VproViagemProduto v WHERE v.vproDataCadastro = :vproDataCadastro"),
-    @NamedQuery(name = "VproViagemProduto.findByVproCodigoGr", query = "SELECT v FROM VproViagemProduto v WHERE v.vproCodigoGr = :vproCodigoGr"),
-    @NamedQuery(name = "VproViagemProduto.findByVproImportado", query = "SELECT v FROM VproViagemProduto v WHERE v.vproImportado = :vproImportado")})
+    @NamedQuery(name = "VproViagemProduto.findAll", query = "SELECT v FROM VproViagemProduto v")})
 public class VproViagemProduto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "vpro_codigo", nullable = false)
+    @Column(name = "vpro_codigo")
     private Integer vproCodigo;
     @Column(name = "vpro_quantidade")
     private Integer vproQuantidade;
-    @Column(name = "vpro_valor_unitario", precision = 15, scale = 2)
+    @Column(name = "vpro_valor_unitario")
     private BigDecimal vproValorUnitario;
     @Column(name = "vpro_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)

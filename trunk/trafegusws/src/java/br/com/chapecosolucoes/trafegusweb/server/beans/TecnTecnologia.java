@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,43 +21,31 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "tecn_tecnologia", catalog = "trafegus_transc", schema = "public")
+@Table(name = "tecn_tecnologia")
 @NamedQueries({
-    @NamedQuery(name = "TecnTecnologia.findAll", query = "SELECT t FROM TecnTecnologia t"),
-    @NamedQuery(name = "TecnTecnologia.findByTecnCodigo", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnCodigo = :tecnCodigo"),
-    @NamedQuery(name = "TecnTecnologia.findByTecnDescricao", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnDescricao = :tecnDescricao"),
-    @NamedQuery(name = "TecnTecnologia.findByTecnEnderecoIp", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnEnderecoIp = :tecnEnderecoIp"),
-    @NamedQuery(name = "TecnTecnologia.findByTecnEnderecoIpAlternativo", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnEnderecoIpAlternativo = :tecnEnderecoIpAlternativo"),
-    @NamedQuery(name = "TecnTecnologia.findByTecnPortaEntrada", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnPortaEntrada = :tecnPortaEntrada"),
-    @NamedQuery(name = "TecnTecnologia.findByTecnPortaSaida", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnPortaSaida = :tecnPortaSaida"),
-    @NamedQuery(name = "TecnTecnologia.findByTecnServidor", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnServidor = :tecnServidor"),
-    @NamedQuery(name = "TecnTecnologia.findByTecnCodigoCentral", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnCodigoCentral = :tecnCodigoCentral"),
-    @NamedQuery(name = "TecnTecnologia.findByTecnDataCadastro", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnDataCadastro = :tecnDataCadastro"),
-    @NamedQuery(name = "TecnTecnologia.findByTecnCodigoGr", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnCodigoGr = :tecnCodigoGr"),
-    @NamedQuery(name = "TecnTecnologia.findByTecnImportado", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnImportado = :tecnImportado"),
-    @NamedQuery(name = "TecnTecnologia.findByTecnTolerancia", query = "SELECT t FROM TecnTecnologia t WHERE t.tecnTolerancia = :tecnTolerancia")})
+    @NamedQuery(name = "TecnTecnologia.findAll", query = "SELECT t FROM TecnTecnologia t")})
 public class TecnTecnologia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "tecn_codigo", nullable = false)
+    @Column(name = "tecn_codigo")
     private Integer tecnCodigo;
-    @Column(name = "tecn_descricao", length = 50)
+    @Column(name = "tecn_descricao")
     private String tecnDescricao;
-    @Column(name = "tecn_endereco_ip", length = 15)
+    @Column(name = "tecn_endereco_ip")
     private String tecnEnderecoIp;
-    @Column(name = "tecn_endereco_ip_alternativo", length = 15)
+    @Column(name = "tecn_endereco_ip_alternativo")
     private String tecnEnderecoIpAlternativo;
     @Column(name = "tecn_porta_entrada")
     private Integer tecnPortaEntrada;
     @Column(name = "tecn_porta_saida")
     private Integer tecnPortaSaida;
-    @Column(name = "tecn_servidor", length = 20)
+    @Column(name = "tecn_servidor")
     private String tecnServidor;
-    @Column(name = "tecn_codigo_central", length = 15)
+    @Column(name = "tecn_codigo_central")
     private String tecnCodigoCentral;
     @Column(name = "tecn_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -69,11 +57,9 @@ public class TecnTecnologia implements Serializable {
     @Column(name = "tecn_tolerancia")
     private Integer tecnTolerancia;
     @OneToMany(mappedBy = "tecnTecnologia")
-    private Collection<VtecVersaoTecnologia> vtecVersaoTecnologiaCollection;
+    private Set<CtecContaTecnologia> ctecContaTecnologiaSet;
     @OneToMany(mappedBy = "tecnTecnologia")
-    private Collection<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfCollection;
-    @OneToMany(mappedBy = "tecnTecnologia")
-    private Collection<CtecContaTecnologia> ctecContaTecnologiaCollection;
+    private Set<VtecVersaoTecnologia> vtecVersaoTecnologiaSet;
 
     public TecnTecnologia() {
     }
@@ -178,28 +164,20 @@ public class TecnTecnologia implements Serializable {
         this.tecnTolerancia = tecnTolerancia;
     }
 
-    public Collection<VtecVersaoTecnologia> getVtecVersaoTecnologiaCollection() {
-        return vtecVersaoTecnologiaCollection;
+    public Set<CtecContaTecnologia> getCtecContaTecnologiaSet() {
+        return ctecContaTecnologiaSet;
     }
 
-    public void setVtecVersaoTecnologiaCollection(Collection<VtecVersaoTecnologia> vtecVersaoTecnologiaCollection) {
-        this.vtecVersaoTecnologiaCollection = vtecVersaoTecnologiaCollection;
+    public void setCtecContaTecnologiaSet(Set<CtecContaTecnologia> ctecContaTecnologiaSet) {
+        this.ctecContaTecnologiaSet = ctecContaTecnologiaSet;
     }
 
-    public Collection<SicoServicoIntegracaoConf> getSicoServicoIntegracaoConfCollection() {
-        return sicoServicoIntegracaoConfCollection;
+    public Set<VtecVersaoTecnologia> getVtecVersaoTecnologiaSet() {
+        return vtecVersaoTecnologiaSet;
     }
 
-    public void setSicoServicoIntegracaoConfCollection(Collection<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfCollection) {
-        this.sicoServicoIntegracaoConfCollection = sicoServicoIntegracaoConfCollection;
-    }
-
-    public Collection<CtecContaTecnologia> getCtecContaTecnologiaCollection() {
-        return ctecContaTecnologiaCollection;
-    }
-
-    public void setCtecContaTecnologiaCollection(Collection<CtecContaTecnologia> ctecContaTecnologiaCollection) {
-        this.ctecContaTecnologiaCollection = ctecContaTecnologiaCollection;
+    public void setVtecVersaoTecnologiaSet(Set<VtecVersaoTecnologia> vtecVersaoTecnologiaSet) {
+        this.vtecVersaoTecnologiaSet = vtecVersaoTecnologiaSet;
     }
 
     @Override

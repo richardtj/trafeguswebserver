@@ -21,30 +21,23 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "vtem_viagem_temperatura", catalog = "trafegus_transc", schema = "public")
+@Table(name = "vtem_viagem_temperatura")
 @NamedQueries({
-    @NamedQuery(name = "VtemViagemTemperatura.findAll", query = "SELECT v FROM VtemViagemTemperatura v"),
-    @NamedQuery(name = "VtemViagemTemperatura.findByVtemCodigo", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemCodigo = :vtemCodigo"),
-    @NamedQuery(name = "VtemViagemTemperatura.findByVtemValorMinimo", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemValorMinimo = :vtemValorMinimo"),
-    @NamedQuery(name = "VtemViagemTemperatura.findByVtemValorMaximo", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemValorMaximo = :vtemValorMaximo"),
-    @NamedQuery(name = "VtemViagemTemperatura.findByVtemAtivo", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemAtivo = :vtemAtivo"),
-    @NamedQuery(name = "VtemViagemTemperatura.findByVtemDataCadastro", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemDataCadastro = :vtemDataCadastro"),
-    @NamedQuery(name = "VtemViagemTemperatura.findByVtemImportado", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemImportado = :vtemImportado"),
-    @NamedQuery(name = "VtemViagemTemperatura.findByVtemCodigoGr", query = "SELECT v FROM VtemViagemTemperatura v WHERE v.vtemCodigoGr = :vtemCodigoGr")})
+    @NamedQuery(name = "VtemViagemTemperatura.findAll", query = "SELECT v FROM VtemViagemTemperatura v")})
 public class VtemViagemTemperatura implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "vtem_codigo", nullable = false)
+    @Column(name = "vtem_codigo")
     private Integer vtemCodigo;
     @Column(name = "vtem_valor_minimo")
     private Integer vtemValorMinimo;
     @Column(name = "vtem_valor_maximo")
     private Integer vtemValorMaximo;
-    @Column(name = "vtem_ativo", length = 10)
+    @Column(name = "vtem_ativo")
     private String vtemAtivo;
     @Column(name = "vtem_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)

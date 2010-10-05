@@ -33,7 +33,7 @@ public class TrafegusWS {
     @WebMethod(operationName = "solicitaAcesso")
     public String solicitaAcesso(@WebParam(name = "usuario") String usuario, @WebParam(name = "senha") String senha) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
-        Query q = em.createNamedQuery("UsuaUsuario.findByUsuaLoginSenha");
+        Query q = em.createQuery("SELECT u FROM UsuaUsuario u WHERE u.usuaLogin = :usuaLogin AND u.usuaSenha = :usuaSenha");
         q.setParameter("usuaLogin", usuario);
         q.setParameter("usuaSenha", senha);
         UsuaUsuario result = null;
@@ -43,6 +43,7 @@ public class TrafegusWS {
             result = new UsuaUsuario();
         }
         XStream stream = new XStream();
+        stream.alias("UsuaUsuario", UsuaUsuario.class);
         return stream.toXML(result);
     }
 

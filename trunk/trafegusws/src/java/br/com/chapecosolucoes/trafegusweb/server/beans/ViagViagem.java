@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,36 +24,22 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "viag_viagem", catalog = "trafegus_transc", schema = "public")
+@Table(name = "viag_viagem")
 @NamedQueries({
-    @NamedQuery(name = "ViagViagem.findAll", query = "SELECT v FROM ViagViagem v"),
-    @NamedQuery(name = "ViagViagem.findByViagCodigo", query = "SELECT v FROM ViagViagem v WHERE v.viagCodigo = :viagCodigo"),
-    @NamedQuery(name = "ViagViagem.findByViagDataCadastro", query = "SELECT v FROM ViagViagem v WHERE v.viagDataCadastro = :viagDataCadastro"),
-    @NamedQuery(name = "ViagViagem.findByViagValorCarga", query = "SELECT v FROM ViagViagem v WHERE v.viagValorCarga = :viagValorCarga"),
-    @NamedQuery(name = "ViagViagem.findByViagPrevisaoInicio", query = "SELECT v FROM ViagViagem v WHERE v.viagPrevisaoInicio = :viagPrevisaoInicio"),
-    @NamedQuery(name = "ViagViagem.findByViagPrevisaoFim", query = "SELECT v FROM ViagViagem v WHERE v.viagPrevisaoFim = :viagPrevisaoFim"),
-    @NamedQuery(name = "ViagViagem.findByViagDataInicio", query = "SELECT v FROM ViagViagem v WHERE v.viagDataInicio = :viagDataInicio"),
-    @NamedQuery(name = "ViagViagem.findByViagDataFim", query = "SELECT v FROM ViagViagem v WHERE v.viagDataFim = :viagDataFim"),
-    @NamedQuery(name = "ViagViagem.findByViagDistancia", query = "SELECT v FROM ViagViagem v WHERE v.viagDistancia = :viagDistancia"),
-    @NamedQuery(name = "ViagViagem.findByViagTempoTermForaAreaRisco", query = "SELECT v FROM ViagViagem v WHERE v.viagTempoTermForaAreaRisco = :viagTempoTermForaAreaRisco"),
-    @NamedQuery(name = "ViagViagem.findByViagTempoTermEmAreaRisco", query = "SELECT v FROM ViagViagem v WHERE v.viagTempoTermEmAreaRisco = :viagTempoTermEmAreaRisco"),
-    @NamedQuery(name = "ViagViagem.findByViagTempoTermFimViagem", query = "SELECT v FROM ViagViagem v WHERE v.viagTempoTermFimViagem = :viagTempoTermFimViagem"),
-    @NamedQuery(name = "ViagViagem.findByViagCodigoPai", query = "SELECT v FROM ViagViagem v WHERE v.viagCodigoPai = :viagCodigoPai"),
-    @NamedQuery(name = "ViagViagem.findByViagCodigoGr", query = "SELECT v FROM ViagViagem v WHERE v.viagCodigoGr = :viagCodigoGr"),
-    @NamedQuery(name = "ViagViagem.findByViagImportado", query = "SELECT v FROM ViagViagem v WHERE v.viagImportado = :viagImportado")})
+    @NamedQuery(name = "ViagViagem.findAll", query = "SELECT v FROM ViagViagem v")})
 public class ViagViagem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "viag_codigo", nullable = false)
+    @Column(name = "viag_codigo")
     private Integer viagCodigo;
     @Column(name = "viag_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date viagDataCadastro;
-    @Column(name = "viag_valor_carga", precision = 15, scale = 2)
+    @Column(name = "viag_valor_carga")
     private BigDecimal viagValorCarga;
     @Column(name = "viag_previsao_inicio")
     @Temporal(TemporalType.TIMESTAMP)
@@ -67,7 +53,7 @@ public class ViagViagem implements Serializable {
     @Column(name = "viag_data_fim")
     @Temporal(TemporalType.TIMESTAMP)
     private Date viagDataFim;
-    @Column(name = "viag_distancia", precision = 15, scale = 2)
+    @Column(name = "viag_distancia")
     private BigDecimal viagDistancia;
     @Column(name = "viag_tempo_term_fora_area_risco")
     private Integer viagTempoTermForaAreaRisco;
@@ -82,15 +68,15 @@ public class ViagViagem implements Serializable {
     @Column(name = "viag_importado")
     private Character viagImportado;
     @OneToMany(mappedBy = "viagViagem")
-    private Collection<VrotViagemRota> vrotViagemRotaCollection;
+    private Set<VconViagemConhecimento> vconViagemConhecimentoSet;
     @OneToMany(mappedBy = "viagViagem")
-    private Collection<VestViagemEstatus> vestViagemEstatusCollection;
+    private Set<VrotViagemRota> vrotViagemRotaSet;
     @OneToMany(mappedBy = "viagViagem")
-    private Collection<VtemViagemTemperatura> vtemViagemTemperaturaCollection;
+    private Set<VtemViagemTemperatura> vtemViagemTemperaturaSet;
     @JoinColumn(name = "viag_ttra_codigo", referencedColumnName = "ttra_codigo")
     @ManyToOne
     private TtraTipoTransporte ttraTipoTransporte;
-    @JoinColumn(name = "viag_tran_pess_oras_codigo", referencedColumnName = "tran_pess_oras_codigo", nullable = false)
+    @JoinColumn(name = "viag_tran_pess_oras_codigo", referencedColumnName = "tran_pess_oras_codigo")
     @ManyToOne(optional = false)
     private TranTransportador tranTransportador;
     @JoinColumn(name = "viag_tope_codigo", referencedColumnName = "tope_codigo")
@@ -106,13 +92,11 @@ public class ViagViagem implements Serializable {
     @ManyToOne
     private EmbaEmbarcador embaEmbarcador;
     @OneToMany(mappedBy = "viagViagem")
-    private Collection<VterViagemTerminal> vterViagemTerminalCollection;
+    private Set<VveiViagemVeiculo> vveiViagemVeiculoSet;
     @OneToMany(mappedBy = "viagViagem")
-    private Collection<VconViagemConhecimento> vconViagemConhecimentoCollection;
+    private Set<VterViagemTerminal> vterViagemTerminalSet;
     @OneToMany(mappedBy = "viagViagem")
-    private Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection;
-    @OneToMany(mappedBy = "viagViagem")
-    private Collection<VlocViagemLocal> vlocViagemLocalCollection;
+    private Set<VlocViagemLocal> vlocViagemLocalSet;
 
     public ViagViagem() {
     }
@@ -233,28 +217,28 @@ public class ViagViagem implements Serializable {
         this.viagImportado = viagImportado;
     }
 
-    public Collection<VrotViagemRota> getVrotViagemRotaCollection() {
-        return vrotViagemRotaCollection;
+    public Set<VconViagemConhecimento> getVconViagemConhecimentoSet() {
+        return vconViagemConhecimentoSet;
     }
 
-    public void setVrotViagemRotaCollection(Collection<VrotViagemRota> vrotViagemRotaCollection) {
-        this.vrotViagemRotaCollection = vrotViagemRotaCollection;
+    public void setVconViagemConhecimentoSet(Set<VconViagemConhecimento> vconViagemConhecimentoSet) {
+        this.vconViagemConhecimentoSet = vconViagemConhecimentoSet;
     }
 
-    public Collection<VestViagemEstatus> getVestViagemEstatusCollection() {
-        return vestViagemEstatusCollection;
+    public Set<VrotViagemRota> getVrotViagemRotaSet() {
+        return vrotViagemRotaSet;
     }
 
-    public void setVestViagemEstatusCollection(Collection<VestViagemEstatus> vestViagemEstatusCollection) {
-        this.vestViagemEstatusCollection = vestViagemEstatusCollection;
+    public void setVrotViagemRotaSet(Set<VrotViagemRota> vrotViagemRotaSet) {
+        this.vrotViagemRotaSet = vrotViagemRotaSet;
     }
 
-    public Collection<VtemViagemTemperatura> getVtemViagemTemperaturaCollection() {
-        return vtemViagemTemperaturaCollection;
+    public Set<VtemViagemTemperatura> getVtemViagemTemperaturaSet() {
+        return vtemViagemTemperaturaSet;
     }
 
-    public void setVtemViagemTemperaturaCollection(Collection<VtemViagemTemperatura> vtemViagemTemperaturaCollection) {
-        this.vtemViagemTemperaturaCollection = vtemViagemTemperaturaCollection;
+    public void setVtemViagemTemperaturaSet(Set<VtemViagemTemperatura> vtemViagemTemperaturaSet) {
+        this.vtemViagemTemperaturaSet = vtemViagemTemperaturaSet;
     }
 
     public TtraTipoTransporte getTtraTipoTransporte() {
@@ -305,36 +289,28 @@ public class ViagViagem implements Serializable {
         this.embaEmbarcador = embaEmbarcador;
     }
 
-    public Collection<VterViagemTerminal> getVterViagemTerminalCollection() {
-        return vterViagemTerminalCollection;
+    public Set<VveiViagemVeiculo> getVveiViagemVeiculoSet() {
+        return vveiViagemVeiculoSet;
     }
 
-    public void setVterViagemTerminalCollection(Collection<VterViagemTerminal> vterViagemTerminalCollection) {
-        this.vterViagemTerminalCollection = vterViagemTerminalCollection;
+    public void setVveiViagemVeiculoSet(Set<VveiViagemVeiculo> vveiViagemVeiculoSet) {
+        this.vveiViagemVeiculoSet = vveiViagemVeiculoSet;
     }
 
-    public Collection<VconViagemConhecimento> getVconViagemConhecimentoCollection() {
-        return vconViagemConhecimentoCollection;
+    public Set<VterViagemTerminal> getVterViagemTerminalSet() {
+        return vterViagemTerminalSet;
     }
 
-    public void setVconViagemConhecimentoCollection(Collection<VconViagemConhecimento> vconViagemConhecimentoCollection) {
-        this.vconViagemConhecimentoCollection = vconViagemConhecimentoCollection;
+    public void setVterViagemTerminalSet(Set<VterViagemTerminal> vterViagemTerminalSet) {
+        this.vterViagemTerminalSet = vterViagemTerminalSet;
     }
 
-    public Collection<VveiViagemVeiculo> getVveiViagemVeiculoCollection() {
-        return vveiViagemVeiculoCollection;
+    public Set<VlocViagemLocal> getVlocViagemLocalSet() {
+        return vlocViagemLocalSet;
     }
 
-    public void setVveiViagemVeiculoCollection(Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection) {
-        this.vveiViagemVeiculoCollection = vveiViagemVeiculoCollection;
-    }
-
-    public Collection<VlocViagemLocal> getVlocViagemLocalCollection() {
-        return vlocViagemLocalCollection;
-    }
-
-    public void setVlocViagemLocalCollection(Collection<VlocViagemLocal> vlocViagemLocalCollection) {
-        this.vlocViagemLocalCollection = vlocViagemLocalCollection;
+    public void setVlocViagemLocalSet(Set<VlocViagemLocal> vlocViagemLocalSet) {
+        this.vlocViagemLocalSet = vlocViagemLocalSet;
     }
 
     @Override

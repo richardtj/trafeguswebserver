@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,35 +23,23 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "vtec_versao_tecnologia", catalog = "trafegus_transc", schema = "public")
+@Table(name = "vtec_versao_tecnologia")
 @NamedQueries({
-    @NamedQuery(name = "VtecVersaoTecnologia.findAll", query = "SELECT v FROM VtecVersaoTecnologia v"),
-    @NamedQuery(name = "VtecVersaoTecnologia.findByVtecCodigo", query = "SELECT v FROM VtecVersaoTecnologia v WHERE v.vtecCodigo = :vtecCodigo"),
-    @NamedQuery(name = "VtecVersaoTecnologia.findByVtecDescricao", query = "SELECT v FROM VtecVersaoTecnologia v WHERE v.vtecDescricao = :vtecDescricao"),
-    @NamedQuery(name = "VtecVersaoTecnologia.findByVtecVersao", query = "SELECT v FROM VtecVersaoTecnologia v WHERE v.vtecVersao = :vtecVersao"),
-    @NamedQuery(name = "VtecVersaoTecnologia.findByVtecTipoComunicacao", query = "SELECT v FROM VtecVersaoTecnologia v WHERE v.vtecTipoComunicacao = :vtecTipoComunicacao"),
-    @NamedQuery(name = "VtecVersaoTecnologia.findByVtecTempoSatelitalPadrao", query = "SELECT v FROM VtecVersaoTecnologia v WHERE v.vtecTempoSatelitalPadrao = :vtecTempoSatelitalPadrao"),
-    @NamedQuery(name = "VtecVersaoTecnologia.findByVtecTempoGprsPadrao", query = "SELECT v FROM VtecVersaoTecnologia v WHERE v.vtecTempoGprsPadrao = :vtecTempoGprsPadrao"),
-    @NamedQuery(name = "VtecVersaoTecnologia.findByVtecHomologadoRisco", query = "SELECT v FROM VtecVersaoTecnologia v WHERE v.vtecHomologadoRisco = :vtecHomologadoRisco"),
-    @NamedQuery(name = "VtecVersaoTecnologia.findByVtecHomologadoLogistica", query = "SELECT v FROM VtecVersaoTecnologia v WHERE v.vtecHomologadoLogistica = :vtecHomologadoLogistica"),
-    @NamedQuery(name = "VtecVersaoTecnologia.findByVtecPermiteMensagemLivre", query = "SELECT v FROM VtecVersaoTecnologia v WHERE v.vtecPermiteMensagemLivre = :vtecPermiteMensagemLivre"),
-    @NamedQuery(name = "VtecVersaoTecnologia.findByVtecDataCadastro", query = "SELECT v FROM VtecVersaoTecnologia v WHERE v.vtecDataCadastro = :vtecDataCadastro"),
-    @NamedQuery(name = "VtecVersaoTecnologia.findByVtecCodigoGr", query = "SELECT v FROM VtecVersaoTecnologia v WHERE v.vtecCodigoGr = :vtecCodigoGr"),
-    @NamedQuery(name = "VtecVersaoTecnologia.findByVtecImportado", query = "SELECT v FROM VtecVersaoTecnologia v WHERE v.vtecImportado = :vtecImportado")})
+    @NamedQuery(name = "VtecVersaoTecnologia.findAll", query = "SELECT v FROM VtecVersaoTecnologia v")})
 public class VtecVersaoTecnologia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "vtec_codigo", nullable = false)
+    @Column(name = "vtec_codigo")
     private Integer vtecCodigo;
-    @Column(name = "vtec_descricao", length = 50)
+    @Column(name = "vtec_descricao")
     private String vtecDescricao;
-    @Column(name = "vtec_versao", length = 30)
+    @Column(name = "vtec_versao")
     private String vtecVersao;
-    @Column(name = "vtec_tipo_comunicacao", length = 10)
+    @Column(name = "vtec_tipo_comunicacao")
     private String vtecTipoComunicacao;
     @Column(name = "vtec_tempo_satelital_padrao")
     private Integer vtecTempoSatelitalPadrao;
@@ -71,9 +59,7 @@ public class VtecVersaoTecnologia implements Serializable {
     @Column(name = "vtec_importado")
     private Character vtecImportado;
     @OneToMany(mappedBy = "vtecVersaoTecnologia")
-    private Collection<UrpeUltimoRecPeriferico> urpeUltimoRecPerifericoCollection;
-    @OneToMany(mappedBy = "vtecVersaoTecnologia")
-    private Collection<TermTerminal> termTerminalCollection;
+    private Set<TermTerminal> termTerminalSet;
     @JoinColumn(name = "vtec_tecn_codigo", referencedColumnName = "tecn_codigo")
     @ManyToOne
     private TecnTecnologia tecnTecnologia;
@@ -81,13 +67,7 @@ public class VtecVersaoTecnologia implements Serializable {
     @ManyToOne
     private TcomTipoComunicacao tcomTipoComunicacao;
     @OneToMany(mappedBy = "vtecVersaoTecnologia")
-    private Collection<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiCollection;
-    @OneToMany(mappedBy = "vtecVersaoTecnologia")
-    private Collection<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolCollection;
-    @OneToMany(mappedBy = "vtecVersaoTecnologia")
-    private Collection<PvtePerifericVersaoTecnolo> pvtePerifericVersaoTecnoloCollection;
-    @OneToMany(mappedBy = "vtecVersaoTecnologia")
-    private Collection<GmacGrupoMacro> gmacGrupoMacroCollection;
+    private Set<GmacGrupoMacro> gmacGrupoMacroSet;
 
     public VtecVersaoTecnologia() {
     }
@@ -192,20 +172,12 @@ public class VtecVersaoTecnologia implements Serializable {
         this.vtecImportado = vtecImportado;
     }
 
-    public Collection<UrpeUltimoRecPeriferico> getUrpeUltimoRecPerifericoCollection() {
-        return urpeUltimoRecPerifericoCollection;
+    public Set<TermTerminal> getTermTerminalSet() {
+        return termTerminalSet;
     }
 
-    public void setUrpeUltimoRecPerifericoCollection(Collection<UrpeUltimoRecPeriferico> urpeUltimoRecPerifericoCollection) {
-        this.urpeUltimoRecPerifericoCollection = urpeUltimoRecPerifericoCollection;
-    }
-
-    public Collection<TermTerminal> getTermTerminalCollection() {
-        return termTerminalCollection;
-    }
-
-    public void setTermTerminalCollection(Collection<TermTerminal> termTerminalCollection) {
-        this.termTerminalCollection = termTerminalCollection;
+    public void setTermTerminalSet(Set<TermTerminal> termTerminalSet) {
+        this.termTerminalSet = termTerminalSet;
     }
 
     public TecnTecnologia getTecnTecnologia() {
@@ -224,36 +196,12 @@ public class VtecVersaoTecnologia implements Serializable {
         this.tcomTipoComunicacao = tcomTipoComunicacao;
     }
 
-    public Collection<CvteComandoVersaoTecnologi> getCvteComandoVersaoTecnologiCollection() {
-        return cvteComandoVersaoTecnologiCollection;
+    public Set<GmacGrupoMacro> getGmacGrupoMacroSet() {
+        return gmacGrupoMacroSet;
     }
 
-    public void setCvteComandoVersaoTecnologiCollection(Collection<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiCollection) {
-        this.cvteComandoVersaoTecnologiCollection = cvteComandoVersaoTecnologiCollection;
-    }
-
-    public Collection<SvteSeguradoraVersaoTecnol> getSvteSeguradoraVersaoTecnolCollection() {
-        return svteSeguradoraVersaoTecnolCollection;
-    }
-
-    public void setSvteSeguradoraVersaoTecnolCollection(Collection<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolCollection) {
-        this.svteSeguradoraVersaoTecnolCollection = svteSeguradoraVersaoTecnolCollection;
-    }
-
-    public Collection<PvtePerifericVersaoTecnolo> getPvtePerifericVersaoTecnoloCollection() {
-        return pvtePerifericVersaoTecnoloCollection;
-    }
-
-    public void setPvtePerifericVersaoTecnoloCollection(Collection<PvtePerifericVersaoTecnolo> pvtePerifericVersaoTecnoloCollection) {
-        this.pvtePerifericVersaoTecnoloCollection = pvtePerifericVersaoTecnoloCollection;
-    }
-
-    public Collection<GmacGrupoMacro> getGmacGrupoMacroCollection() {
-        return gmacGrupoMacroCollection;
-    }
-
-    public void setGmacGrupoMacroCollection(Collection<GmacGrupoMacro> gmacGrupoMacroCollection) {
-        this.gmacGrupoMacroCollection = gmacGrupoMacroCollection;
+    public void setGmacGrupoMacroSet(Set<GmacGrupoMacro> gmacGrupoMacroSet) {
+        this.gmacGrupoMacroSet = gmacGrupoMacroSet;
     }
 
     @Override

@@ -21,22 +21,17 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "vrot_viagem_rota", catalog = "trafegus_transc", schema = "public")
+@Table(name = "vrot_viagem_rota")
 @NamedQueries({
-    @NamedQuery(name = "VrotViagemRota.findAll", query = "SELECT v FROM VrotViagemRota v"),
-    @NamedQuery(name = "VrotViagemRota.findByVrotCodigo", query = "SELECT v FROM VrotViagemRota v WHERE v.vrotCodigo = :vrotCodigo"),
-    @NamedQuery(name = "VrotViagemRota.findByVrotDataCadastro", query = "SELECT v FROM VrotViagemRota v WHERE v.vrotDataCadastro = :vrotDataCadastro"),
-    @NamedQuery(name = "VrotViagemRota.findByVrotCodigoGr", query = "SELECT v FROM VrotViagemRota v WHERE v.vrotCodigoGr = :vrotCodigoGr"),
-    @NamedQuery(name = "VrotViagemRota.findByVrotImportado", query = "SELECT v FROM VrotViagemRota v WHERE v.vrotImportado = :vrotImportado"),
-    @NamedQuery(name = "VrotViagemRota.findByVrotAtivo", query = "SELECT v FROM VrotViagemRota v WHERE v.vrotAtivo = :vrotAtivo")})
+    @NamedQuery(name = "VrotViagemRota.findAll", query = "SELECT v FROM VrotViagemRota v")})
 public class VrotViagemRota implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "vrot_codigo", nullable = false)
+    @Column(name = "vrot_codigo")
     private Integer vrotCodigo;
     @Column(name = "vrot_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)

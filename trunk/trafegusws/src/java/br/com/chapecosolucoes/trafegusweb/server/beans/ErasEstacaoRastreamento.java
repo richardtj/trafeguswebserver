@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,26 +23,19 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "eras_estacao_rastreamento", catalog = "trafegus_transc", schema = "public")
+@Table(name = "eras_estacao_rastreamento")
 @NamedQueries({
-    @NamedQuery(name = "ErasEstacaoRastreamento.findAll", query = "SELECT e FROM ErasEstacaoRastreamento e"),
-    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasCodigo", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasCodigo = :erasCodigo"),
-    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasDescricao", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasDescricao = :erasDescricao"),
-    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasMaximoObjetoRastreado", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasMaximoObjetoRastreado = :erasMaximoObjetoRastreado"),
-    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasDataCadastro", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasDataCadastro = :erasDataCadastro"),
-    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasCodigoGr", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasCodigoGr = :erasCodigoGr"),
-    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasImportado", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasImportado = :erasImportado"),
-    @NamedQuery(name = "ErasEstacaoRastreamento.findByErasLayoutMonitor", query = "SELECT e FROM ErasEstacaoRastreamento e WHERE e.erasLayoutMonitor = :erasLayoutMonitor")})
+    @NamedQuery(name = "ErasEstacaoRastreamento.findAll", query = "SELECT e FROM ErasEstacaoRastreamento e")})
 public class ErasEstacaoRastreamento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "eras_codigo", nullable = false)
+    @Column(name = "eras_codigo")
     private Integer erasCodigo;
-    @Column(name = "eras_descricao", length = 50)
+    @Column(name = "eras_descricao")
     private String erasDescricao;
     @Column(name = "eras_maximo_objeto_rastreado")
     private Integer erasMaximoObjetoRastreado;
@@ -53,30 +46,22 @@ public class ErasEstacaoRastreamento implements Serializable {
     private Integer erasCodigoGr;
     @Column(name = "eras_importado")
     private Character erasImportado;
-    @Column(name = "eras_layout_monitor", length = 50000)
+    @Column(name = "eras_layout_monitor")
     private String erasLayoutMonitor;
     @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuCollection;
+    private Set<VtruVeiculoTruck> vtruVeiculoTruckSet;
     @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<VtruVeiculoTruck> vtruVeiculoTruckCollection;
+    private Set<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseSet;
     @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaCollection;
+    private Set<VmotVeiculoMoto> vmotVeiculoMotoSet;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento")
+    private Set<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaSet;
     @JoinColumn(name = "eras_sras_codigo", referencedColumnName = "sras_codigo")
     @ManyToOne
     private SrasSeparacaoRastreamento srasSeparacaoRastreamento;
     @JoinColumn(name = "eras_gris_pjur_pess_oras_codigo", referencedColumnName = "gris_pjur_pess_oras_codigo")
     @ManyToOne
     private GrisGerenciadoraRisco grisGerenciadoraRisco;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<ContContainer> contContainerCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<VmotVeiculoMoto> vmotVeiculoMotoCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<VcavVeiculoCavalo> vcavVeiculoCavaloCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento")
-    private Collection<MaloMalote> maloMaloteCollection;
 
     public ErasEstacaoRastreamento() {
     }
@@ -141,28 +126,36 @@ public class ErasEstacaoRastreamento implements Serializable {
         this.erasLayoutMonitor = erasLayoutMonitor;
     }
 
-    public Collection<ErusEstacaoRastreamentoUsu> getErusEstacaoRastreamentoUsuCollection() {
-        return erusEstacaoRastreamentoUsuCollection;
+    public Set<VtruVeiculoTruck> getVtruVeiculoTruckSet() {
+        return vtruVeiculoTruckSet;
     }
 
-    public void setErusEstacaoRastreamentoUsuCollection(Collection<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuCollection) {
-        this.erusEstacaoRastreamentoUsuCollection = erusEstacaoRastreamentoUsuCollection;
+    public void setVtruVeiculoTruckSet(Set<VtruVeiculoTruck> vtruVeiculoTruckSet) {
+        this.vtruVeiculoTruckSet = vtruVeiculoTruckSet;
     }
 
-    public Collection<VtruVeiculoTruck> getVtruVeiculoTruckCollection() {
-        return vtruVeiculoTruckCollection;
+    public Set<VupaVeiculoUtilitarioPasse> getVupaVeiculoUtilitarioPasseSet() {
+        return vupaVeiculoUtilitarioPasseSet;
     }
 
-    public void setVtruVeiculoTruckCollection(Collection<VtruVeiculoTruck> vtruVeiculoTruckCollection) {
-        this.vtruVeiculoTruckCollection = vtruVeiculoTruckCollection;
+    public void setVupaVeiculoUtilitarioPasseSet(Set<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseSet) {
+        this.vupaVeiculoUtilitarioPasseSet = vupaVeiculoUtilitarioPasseSet;
     }
 
-    public Collection<VucaVeiculoUtilitarioCarga> getVucaVeiculoUtilitarioCargaCollection() {
-        return vucaVeiculoUtilitarioCargaCollection;
+    public Set<VmotVeiculoMoto> getVmotVeiculoMotoSet() {
+        return vmotVeiculoMotoSet;
     }
 
-    public void setVucaVeiculoUtilitarioCargaCollection(Collection<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaCollection) {
-        this.vucaVeiculoUtilitarioCargaCollection = vucaVeiculoUtilitarioCargaCollection;
+    public void setVmotVeiculoMotoSet(Set<VmotVeiculoMoto> vmotVeiculoMotoSet) {
+        this.vmotVeiculoMotoSet = vmotVeiculoMotoSet;
+    }
+
+    public Set<VucaVeiculoUtilitarioCarga> getVucaVeiculoUtilitarioCargaSet() {
+        return vucaVeiculoUtilitarioCargaSet;
+    }
+
+    public void setVucaVeiculoUtilitarioCargaSet(Set<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaSet) {
+        this.vucaVeiculoUtilitarioCargaSet = vucaVeiculoUtilitarioCargaSet;
     }
 
     public SrasSeparacaoRastreamento getSrasSeparacaoRastreamento() {
@@ -179,46 +172,6 @@ public class ErasEstacaoRastreamento implements Serializable {
 
     public void setGrisGerenciadoraRisco(GrisGerenciadoraRisco grisGerenciadoraRisco) {
         this.grisGerenciadoraRisco = grisGerenciadoraRisco;
-    }
-
-    public Collection<ContContainer> getContContainerCollection() {
-        return contContainerCollection;
-    }
-
-    public void setContContainerCollection(Collection<ContContainer> contContainerCollection) {
-        this.contContainerCollection = contContainerCollection;
-    }
-
-    public Collection<VupaVeiculoUtilitarioPasse> getVupaVeiculoUtilitarioPasseCollection() {
-        return vupaVeiculoUtilitarioPasseCollection;
-    }
-
-    public void setVupaVeiculoUtilitarioPasseCollection(Collection<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseCollection) {
-        this.vupaVeiculoUtilitarioPasseCollection = vupaVeiculoUtilitarioPasseCollection;
-    }
-
-    public Collection<VmotVeiculoMoto> getVmotVeiculoMotoCollection() {
-        return vmotVeiculoMotoCollection;
-    }
-
-    public void setVmotVeiculoMotoCollection(Collection<VmotVeiculoMoto> vmotVeiculoMotoCollection) {
-        this.vmotVeiculoMotoCollection = vmotVeiculoMotoCollection;
-    }
-
-    public Collection<VcavVeiculoCavalo> getVcavVeiculoCavaloCollection() {
-        return vcavVeiculoCavaloCollection;
-    }
-
-    public void setVcavVeiculoCavaloCollection(Collection<VcavVeiculoCavalo> vcavVeiculoCavaloCollection) {
-        this.vcavVeiculoCavaloCollection = vcavVeiculoCavaloCollection;
-    }
-
-    public Collection<MaloMalote> getMaloMaloteCollection() {
-        return maloMaloteCollection;
-    }
-
-    public void setMaloMaloteCollection(Collection<MaloMalote> maloMaloteCollection) {
-        this.maloMaloteCollection = maloMaloteCollection;
     }
 
     @Override

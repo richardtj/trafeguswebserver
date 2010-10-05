@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,24 +21,19 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "seto_setor", catalog = "trafegus_transc", schema = "public")
+@Table(name = "seto_setor")
 @NamedQueries({
-    @NamedQuery(name = "SetoSetor.findAll", query = "SELECT s FROM SetoSetor s"),
-    @NamedQuery(name = "SetoSetor.findBySetoCodigo", query = "SELECT s FROM SetoSetor s WHERE s.setoCodigo = :setoCodigo"),
-    @NamedQuery(name = "SetoSetor.findBySetoDescricao", query = "SELECT s FROM SetoSetor s WHERE s.setoDescricao = :setoDescricao"),
-    @NamedQuery(name = "SetoSetor.findBySetoDataCadastro", query = "SELECT s FROM SetoSetor s WHERE s.setoDataCadastro = :setoDataCadastro"),
-    @NamedQuery(name = "SetoSetor.findBySetoCodigoGr", query = "SELECT s FROM SetoSetor s WHERE s.setoCodigoGr = :setoCodigoGr"),
-    @NamedQuery(name = "SetoSetor.findBySetoImportado", query = "SELECT s FROM SetoSetor s WHERE s.setoImportado = :setoImportado")})
+    @NamedQuery(name = "SetoSetor.findAll", query = "SELECT s FROM SetoSetor s")})
 public class SetoSetor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "seto_codigo", nullable = false)
+    @Column(name = "seto_codigo")
     private Integer setoCodigo;
-    @Column(name = "seto_descricao", length = 50)
+    @Column(name = "seto_descricao")
     private String setoDescricao;
     @Column(name = "seto_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -48,7 +43,7 @@ public class SetoSetor implements Serializable {
     @Column(name = "seto_importado")
     private Character setoImportado;
     @OneToMany(mappedBy = "setoSetor")
-    private Collection<UsuaUsuario> usuaUsuarioCollection;
+    private Set<UsuaUsuario> usuaUsuarioSet;
 
     public SetoSetor() {
     }
@@ -97,12 +92,12 @@ public class SetoSetor implements Serializable {
         this.setoImportado = setoImportado;
     }
 
-    public Collection<UsuaUsuario> getUsuaUsuarioCollection() {
-        return usuaUsuarioCollection;
+    public Set<UsuaUsuario> getUsuaUsuarioSet() {
+        return usuaUsuarioSet;
     }
 
-    public void setUsuaUsuarioCollection(Collection<UsuaUsuario> usuaUsuarioCollection) {
-        this.usuaUsuarioCollection = usuaUsuarioCollection;
+    public void setUsuaUsuarioSet(Set<UsuaUsuario> usuaUsuarioSet) {
+        this.usuaUsuarioSet = usuaUsuarioSet;
     }
 
     @Override

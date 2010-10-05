@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,30 +22,23 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "pfva_pg_faixa_valor", catalog = "trafegus_transc", schema = "public")
+@Table(name = "pfva_pg_faixa_valor")
 @NamedQueries({
-    @NamedQuery(name = "PfvaPgFaixaValor.findAll", query = "SELECT p FROM PfvaPgFaixaValor p"),
-    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaCodigo", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaCodigo = :pfvaCodigo"),
-    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaDescricao", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaDescricao = :pfvaDescricao"),
-    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaValorMinimo", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaValorMinimo = :pfvaValorMinimo"),
-    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaValorMaximo", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaValorMaximo = :pfvaValorMaximo"),
-    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaDataCadastro", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaDataCadastro = :pfvaDataCadastro"),
-    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaCodigoGr", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaCodigoGr = :pfvaCodigoGr"),
-    @NamedQuery(name = "PfvaPgFaixaValor.findByPfvaImportado", query = "SELECT p FROM PfvaPgFaixaValor p WHERE p.pfvaImportado = :pfvaImportado")})
+    @NamedQuery(name = "PfvaPgFaixaValor.findAll", query = "SELECT p FROM PfvaPgFaixaValor p")})
 public class PfvaPgFaixaValor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "pfva_codigo", nullable = false)
+    @Column(name = "pfva_codigo")
     private Integer pfvaCodigo;
-    @Column(name = "pfva_descricao", length = 50)
+    @Column(name = "pfva_descricao")
     private String pfvaDescricao;
-    @Column(name = "pfva_valor_minimo", precision = 15, scale = 2)
+    @Column(name = "pfva_valor_minimo")
     private BigDecimal pfvaValorMinimo;
-    @Column(name = "pfva_valor_maximo", precision = 15, scale = 2)
+    @Column(name = "pfva_valor_maximo")
     private BigDecimal pfvaValorMaximo;
     @Column(name = "pfva_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -55,7 +48,7 @@ public class PfvaPgFaixaValor implements Serializable {
     @Column(name = "pfva_importado")
     private Character pfvaImportado;
     @OneToMany(mappedBy = "pfvaPgFaixaValor")
-    private Collection<PgpgPg> pgpgPgCollection;
+    private Set<PgpgPg> pgpgPgSet;
 
     public PfvaPgFaixaValor() {
     }
@@ -120,12 +113,12 @@ public class PfvaPgFaixaValor implements Serializable {
         this.pfvaImportado = pfvaImportado;
     }
 
-    public Collection<PgpgPg> getPgpgPgCollection() {
-        return pgpgPgCollection;
+    public Set<PgpgPg> getPgpgPgSet() {
+        return pgpgPgSet;
     }
 
-    public void setPgpgPgCollection(Collection<PgpgPg> pgpgPgCollection) {
-        this.pgpgPgCollection = pgpgPgCollection;
+    public void setPgpgPgSet(Set<PgpgPg> pgpgPgSet) {
+        this.pgpgPgSet = pgpgPgSet;
     }
 
     @Override

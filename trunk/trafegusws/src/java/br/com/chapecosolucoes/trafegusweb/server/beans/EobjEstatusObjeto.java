@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,31 +18,26 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "eobj_estatus_objeto", catalog = "trafegus_transc", schema = "public")
+@Table(name = "eobj_estatus_objeto")
 @NamedQueries({
-    @NamedQuery(name = "EobjEstatusObjeto.findAll", query = "SELECT e FROM EobjEstatusObjeto e"),
-    @NamedQuery(name = "EobjEstatusObjeto.findByEobjCodigo", query = "SELECT e FROM EobjEstatusObjeto e WHERE e.eobjCodigo = :eobjCodigo"),
-    @NamedQuery(name = "EobjEstatusObjeto.findByEobjDescricao", query = "SELECT e FROM EobjEstatusObjeto e WHERE e.eobjDescricao = :eobjDescricao"),
-    @NamedQuery(name = "EobjEstatusObjeto.findByEobjCodigoGr", query = "SELECT e FROM EobjEstatusObjeto e WHERE e.eobjCodigoGr = :eobjCodigoGr")})
+    @NamedQuery(name = "EobjEstatusObjeto.findAll", query = "SELECT e FROM EobjEstatusObjeto e")})
 public class EobjEstatusObjeto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "eobj_codigo", nullable = false)
+    @Column(name = "eobj_codigo")
     private Integer eobjCodigo;
-    @Column(name = "eobj_descricao", length = 50)
+    @Column(name = "eobj_descricao")
     private String eobjDescricao;
     @Column(name = "eobj_codigo_gr")
     private Integer eobjCodigoGr;
     @OneToMany(mappedBy = "eobjEstatusObjeto")
-    private Collection<OrasObjetoRastreado> orasObjetoRastreadoCollection;
+    private Set<OrasObjetoRastreado> orasObjetoRastreadoSet;
     @OneToMany(mappedBy = "eobjEstatusObjeto")
-    private Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection;
-    @OneToMany(mappedBy = "eobjEstatusObjeto")
-    private Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection;
+    private Set<VtraVeiculoTransportador> vtraVeiculoTransportadorSet;
 
     public EobjEstatusObjeto() {
     }
@@ -75,28 +70,20 @@ public class EobjEstatusObjeto implements Serializable {
         this.eobjCodigoGr = eobjCodigoGr;
     }
 
-    public Collection<OrasObjetoRastreado> getOrasObjetoRastreadoCollection() {
-        return orasObjetoRastreadoCollection;
+    public Set<OrasObjetoRastreado> getOrasObjetoRastreadoSet() {
+        return orasObjetoRastreadoSet;
     }
 
-    public void setOrasObjetoRastreadoCollection(Collection<OrasObjetoRastreado> orasObjetoRastreadoCollection) {
-        this.orasObjetoRastreadoCollection = orasObjetoRastreadoCollection;
+    public void setOrasObjetoRastreadoSet(Set<OrasObjetoRastreado> orasObjetoRastreadoSet) {
+        this.orasObjetoRastreadoSet = orasObjetoRastreadoSet;
     }
 
-    public Collection<VtraVeiculoTransportador> getVtraVeiculoTransportadorCollection() {
-        return vtraVeiculoTransportadorCollection;
+    public Set<VtraVeiculoTransportador> getVtraVeiculoTransportadorSet() {
+        return vtraVeiculoTransportadorSet;
     }
 
-    public void setVtraVeiculoTransportadorCollection(Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection) {
-        this.vtraVeiculoTransportadorCollection = vtraVeiculoTransportadorCollection;
-    }
-
-    public Collection<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorCollection() {
-        return vembVeiculoEmbarcadorCollection;
-    }
-
-    public void setVembVeiculoEmbarcadorCollection(Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection) {
-        this.vembVeiculoEmbarcadorCollection = vembVeiculoEmbarcadorCollection;
+    public void setVtraVeiculoTransportadorSet(Set<VtraVeiculoTransportador> vtraVeiculoTransportadorSet) {
+        this.vtraVeiculoTransportadorSet = vtraVeiculoTransportadorSet;
     }
 
     @Override

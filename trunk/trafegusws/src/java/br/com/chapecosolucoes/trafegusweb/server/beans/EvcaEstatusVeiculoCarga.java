@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,33 +18,28 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "evca_estatus_veiculo_carga", catalog = "trafegus_transc", schema = "public")
+@Table(name = "evca_estatus_veiculo_carga")
 @NamedQueries({
-    @NamedQuery(name = "EvcaEstatusVeiculoCarga.findAll", query = "SELECT e FROM EvcaEstatusVeiculoCarga e"),
-    @NamedQuery(name = "EvcaEstatusVeiculoCarga.findByEvcaCodigo", query = "SELECT e FROM EvcaEstatusVeiculoCarga e WHERE e.evcaCodigo = :evcaCodigo"),
-    @NamedQuery(name = "EvcaEstatusVeiculoCarga.findByEvcaDescricao", query = "SELECT e FROM EvcaEstatusVeiculoCarga e WHERE e.evcaDescricao = :evcaDescricao"),
-    @NamedQuery(name = "EvcaEstatusVeiculoCarga.findByEvcaCodigoGr", query = "SELECT e FROM EvcaEstatusVeiculoCarga e WHERE e.evcaCodigoGr = :evcaCodigoGr")})
+    @NamedQuery(name = "EvcaEstatusVeiculoCarga.findAll", query = "SELECT e FROM EvcaEstatusVeiculoCarga e")})
 public class EvcaEstatusVeiculoCarga implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "evca_codigo", nullable = false)
+    @Column(name = "evca_codigo")
     private Integer evcaCodigo;
-    @Column(name = "evca_descricao", length = 50)
+    @Column(name = "evca_descricao")
     private String evcaDescricao;
     @Column(name = "evca_codigo_gr")
     private Integer evcaCodigoGr;
     @OneToMany(mappedBy = "evcaEstatusVeiculoCarga")
-    private Collection<VcarVeiculoCarreta> vcarVeiculoCarretaCollection;
+    private Set<VtruVeiculoTruck> vtruVeiculoTruckSet;
     @OneToMany(mappedBy = "evcaEstatusVeiculoCarga")
-    private Collection<VtruVeiculoTruck> vtruVeiculoTruckCollection;
+    private Set<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaSet;
     @OneToMany(mappedBy = "evcaEstatusVeiculoCarga")
-    private Collection<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaCollection;
-    @OneToMany(mappedBy = "evcaEstatusVeiculoCarga")
-    private Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection;
+    private Set<VveiViagemVeiculo> vveiViagemVeiculoSet;
 
     public EvcaEstatusVeiculoCarga() {
     }
@@ -77,36 +72,28 @@ public class EvcaEstatusVeiculoCarga implements Serializable {
         this.evcaCodigoGr = evcaCodigoGr;
     }
 
-    public Collection<VcarVeiculoCarreta> getVcarVeiculoCarretaCollection() {
-        return vcarVeiculoCarretaCollection;
+    public Set<VtruVeiculoTruck> getVtruVeiculoTruckSet() {
+        return vtruVeiculoTruckSet;
     }
 
-    public void setVcarVeiculoCarretaCollection(Collection<VcarVeiculoCarreta> vcarVeiculoCarretaCollection) {
-        this.vcarVeiculoCarretaCollection = vcarVeiculoCarretaCollection;
+    public void setVtruVeiculoTruckSet(Set<VtruVeiculoTruck> vtruVeiculoTruckSet) {
+        this.vtruVeiculoTruckSet = vtruVeiculoTruckSet;
     }
 
-    public Collection<VtruVeiculoTruck> getVtruVeiculoTruckCollection() {
-        return vtruVeiculoTruckCollection;
+    public Set<VucaVeiculoUtilitarioCarga> getVucaVeiculoUtilitarioCargaSet() {
+        return vucaVeiculoUtilitarioCargaSet;
     }
 
-    public void setVtruVeiculoTruckCollection(Collection<VtruVeiculoTruck> vtruVeiculoTruckCollection) {
-        this.vtruVeiculoTruckCollection = vtruVeiculoTruckCollection;
+    public void setVucaVeiculoUtilitarioCargaSet(Set<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaSet) {
+        this.vucaVeiculoUtilitarioCargaSet = vucaVeiculoUtilitarioCargaSet;
     }
 
-    public Collection<VucaVeiculoUtilitarioCarga> getVucaVeiculoUtilitarioCargaCollection() {
-        return vucaVeiculoUtilitarioCargaCollection;
+    public Set<VveiViagemVeiculo> getVveiViagemVeiculoSet() {
+        return vveiViagemVeiculoSet;
     }
 
-    public void setVucaVeiculoUtilitarioCargaCollection(Collection<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaCollection) {
-        this.vucaVeiculoUtilitarioCargaCollection = vucaVeiculoUtilitarioCargaCollection;
-    }
-
-    public Collection<VveiViagemVeiculo> getVveiViagemVeiculoCollection() {
-        return vveiViagemVeiculoCollection;
-    }
-
-    public void setVveiViagemVeiculoCollection(Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection) {
-        this.vveiViagemVeiculoCollection = vveiViagemVeiculoCollection;
+    public void setVveiViagemVeiculoSet(Set<VveiViagemVeiculo> vveiViagemVeiculoSet) {
+        this.vveiViagemVeiculoSet = vveiViagemVeiculoSet;
     }
 
     @Override

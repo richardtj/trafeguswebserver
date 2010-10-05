@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,37 +23,25 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "ctec_conta_tecnologia", catalog = "trafegus_transc", schema = "public")
+@Table(name = "ctec_conta_tecnologia")
 @NamedQueries({
-    @NamedQuery(name = "CtecContaTecnologia.findAll", query = "SELECT c FROM CtecContaTecnologia c"),
-    @NamedQuery(name = "CtecContaTecnologia.findByCtecCodigo", query = "SELECT c FROM CtecContaTecnologia c WHERE c.ctecCodigo = :ctecCodigo"),
-    @NamedQuery(name = "CtecContaTecnologia.findByCtecDescricao", query = "SELECT c FROM CtecContaTecnologia c WHERE c.ctecDescricao = :ctecDescricao"),
-    @NamedQuery(name = "CtecContaTecnologia.findByCtecTipoConta", query = "SELECT c FROM CtecContaTecnologia c WHERE c.ctecTipoConta = :ctecTipoConta"),
-    @NamedQuery(name = "CtecContaTecnologia.findByCtecNumero", query = "SELECT c FROM CtecContaTecnologia c WHERE c.ctecNumero = :ctecNumero"),
-    @NamedQuery(name = "CtecContaTecnologia.findByCtecSenha", query = "SELECT c FROM CtecContaTecnologia c WHERE c.ctecSenha = :ctecSenha"),
-    @NamedQuery(name = "CtecContaTecnologia.findByCtecDataCadastro", query = "SELECT c FROM CtecContaTecnologia c WHERE c.ctecDataCadastro = :ctecDataCadastro"),
-    @NamedQuery(name = "CtecContaTecnologia.findByCtecCodigoGr", query = "SELECT c FROM CtecContaTecnologia c WHERE c.ctecCodigoGr = :ctecCodigoGr"),
-    @NamedQuery(name = "CtecContaTecnologia.findByCtecImportado", query = "SELECT c FROM CtecContaTecnologia c WHERE c.ctecImportado = :ctecImportado"),
-    @NamedQuery(name = "CtecContaTecnologia.findByCtecIpIntegracao", query = "SELECT c FROM CtecContaTecnologia c WHERE c.ctecIpIntegracao = :ctecIpIntegracao"),
-    @NamedQuery(name = "CtecContaTecnologia.findByCtecCaminhoAplicacao", query = "SELECT c FROM CtecContaTecnologia c WHERE c.ctecCaminhoAplicacao = :ctecCaminhoAplicacao"),
-    @NamedQuery(name = "CtecContaTecnologia.findByCtecTolerancia", query = "SELECT c FROM CtecContaTecnologia c WHERE c.ctecTolerancia = :ctecTolerancia"),
-    @NamedQuery(name = "CtecContaTecnologia.findByCtecMonitoradoGuardiao", query = "SELECT c FROM CtecContaTecnologia c WHERE c.ctecMonitoradoGuardiao = :ctecMonitoradoGuardiao")})
+    @NamedQuery(name = "CtecContaTecnologia.findAll", query = "SELECT c FROM CtecContaTecnologia c")})
 public class CtecContaTecnologia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "ctec_codigo", nullable = false)
+    @Column(name = "ctec_codigo")
     private Integer ctecCodigo;
-    @Column(name = "ctec_descricao", length = 50)
+    @Column(name = "ctec_descricao")
     private String ctecDescricao;
-    @Column(name = "ctec_tipo_conta", length = 10)
+    @Column(name = "ctec_tipo_conta")
     private String ctecTipoConta;
-    @Column(name = "ctec_numero", length = 20)
+    @Column(name = "ctec_numero")
     private String ctecNumero;
-    @Column(name = "ctec_senha", length = 15)
+    @Column(name = "ctec_senha")
     private String ctecSenha;
     @Column(name = "ctec_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -62,25 +50,21 @@ public class CtecContaTecnologia implements Serializable {
     private Integer ctecCodigoGr;
     @Column(name = "ctec_importado")
     private Character ctecImportado;
-    @Column(name = "ctec_ip_integracao", length = 50)
+    @Column(name = "ctec_ip_integracao")
     private String ctecIpIntegracao;
-    @Column(name = "ctec_caminho_aplicacao", length = 500)
+    @Column(name = "ctec_caminho_aplicacao")
     private String ctecCaminhoAplicacao;
     @Column(name = "ctec_tolerancia")
     private Integer ctecTolerancia;
     @Column(name = "ctec_monitorado_guardiao")
     private Character ctecMonitoradoGuardiao;
     @OneToMany(mappedBy = "ctecContaTecnologia")
-    private Collection<TermTerminal> termTerminalCollection;
-    @OneToMany(mappedBy = "ctecContaTecnologia")
-    private Collection<UlsiUltimoLogServicoInteg> ulsiUltimoLogServicoIntegCollection;
+    private Set<TermTerminal> termTerminalSet;
     @JoinColumn(name = "ctec_tecn_codigo", referencedColumnName = "tecn_codigo")
     @ManyToOne
     private TecnTecnologia tecnTecnologia;
     @OneToMany(mappedBy = "ctecContaTecnologia")
-    private Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection;
-    @OneToMany(mappedBy = "ctecContaTecnologia")
-    private Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection;
+    private Set<VtraVeiculoTransportador> vtraVeiculoTransportadorSet;
 
     public CtecContaTecnologia() {
     }
@@ -185,20 +169,12 @@ public class CtecContaTecnologia implements Serializable {
         this.ctecMonitoradoGuardiao = ctecMonitoradoGuardiao;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection() {
-        return termTerminalCollection;
+    public Set<TermTerminal> getTermTerminalSet() {
+        return termTerminalSet;
     }
 
-    public void setTermTerminalCollection(Collection<TermTerminal> termTerminalCollection) {
-        this.termTerminalCollection = termTerminalCollection;
-    }
-
-    public Collection<UlsiUltimoLogServicoInteg> getUlsiUltimoLogServicoIntegCollection() {
-        return ulsiUltimoLogServicoIntegCollection;
-    }
-
-    public void setUlsiUltimoLogServicoIntegCollection(Collection<UlsiUltimoLogServicoInteg> ulsiUltimoLogServicoIntegCollection) {
-        this.ulsiUltimoLogServicoIntegCollection = ulsiUltimoLogServicoIntegCollection;
+    public void setTermTerminalSet(Set<TermTerminal> termTerminalSet) {
+        this.termTerminalSet = termTerminalSet;
     }
 
     public TecnTecnologia getTecnTecnologia() {
@@ -209,20 +185,12 @@ public class CtecContaTecnologia implements Serializable {
         this.tecnTecnologia = tecnTecnologia;
     }
 
-    public Collection<VtraVeiculoTransportador> getVtraVeiculoTransportadorCollection() {
-        return vtraVeiculoTransportadorCollection;
+    public Set<VtraVeiculoTransportador> getVtraVeiculoTransportadorSet() {
+        return vtraVeiculoTransportadorSet;
     }
 
-    public void setVtraVeiculoTransportadorCollection(Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection) {
-        this.vtraVeiculoTransportadorCollection = vtraVeiculoTransportadorCollection;
-    }
-
-    public Collection<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorCollection() {
-        return vembVeiculoEmbarcadorCollection;
-    }
-
-    public void setVembVeiculoEmbarcadorCollection(Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection) {
-        this.vembVeiculoEmbarcadorCollection = vembVeiculoEmbarcadorCollection;
+    public void setVtraVeiculoTransportadorSet(Set<VtraVeiculoTransportador> vtraVeiculoTransportadorSet) {
+        this.vtraVeiculoTransportadorSet = vtraVeiculoTransportadorSet;
     }
 
     @Override

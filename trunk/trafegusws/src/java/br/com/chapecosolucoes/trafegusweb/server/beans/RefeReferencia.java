@@ -2,12 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,42 +24,29 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "refe_referencia", catalog = "trafegus_transc", schema = "public")
+@Table(name = "refe_referencia")
 @NamedQueries({
-    @NamedQuery(name = "RefeReferencia.findAll", query = "SELECT r FROM RefeReferencia r"),
-    @NamedQuery(name = "RefeReferencia.findByRefeCodigo", query = "SELECT r FROM RefeReferencia r WHERE r.refeCodigo = :refeCodigo"),
-    @NamedQuery(name = "RefeReferencia.findByRefeDescricao", query = "SELECT r FROM RefeReferencia r WHERE r.refeDescricao = :refeDescricao"),
-    @NamedQuery(name = "RefeReferencia.findByRefeLatitude", query = "SELECT r FROM RefeReferencia r WHERE r.refeLatitude = :refeLatitude"),
-    @NamedQuery(name = "RefeReferencia.findByRefeLongitude", query = "SELECT r FROM RefeReferencia r WHERE r.refeLongitude = :refeLongitude"),
-    @NamedQuery(name = "RefeReferencia.findByRefeRaio", query = "SELECT r FROM RefeReferencia r WHERE r.refeRaio = :refeRaio"),
-    @NamedQuery(name = "RefeReferencia.findByRefeKm", query = "SELECT r FROM RefeReferencia r WHERE r.refeKm = :refeKm"),
-    @NamedQuery(name = "RefeReferencia.findByRefeBandeira", query = "SELECT r FROM RefeReferencia r WHERE r.refeBandeira = :refeBandeira"),
-    @NamedQuery(name = "RefeReferencia.findByRefeUtilizadoSistema", query = "SELECT r FROM RefeReferencia r WHERE r.refeUtilizadoSistema = :refeUtilizadoSistema"),
-    @NamedQuery(name = "RefeReferencia.findByRefeDataCadastro", query = "SELECT r FROM RefeReferencia r WHERE r.refeDataCadastro = :refeDataCadastro"),
-    @NamedQuery(name = "RefeReferencia.findByRefeCodigoGr", query = "SELECT r FROM RefeReferencia r WHERE r.refeCodigoGr = :refeCodigoGr"),
-    @NamedQuery(name = "RefeReferencia.findByRefeImportado", query = "SELECT r FROM RefeReferencia r WHERE r.refeImportado = :refeImportado"),
-    @NamedQuery(name = "RefeReferencia.findByRefePessOrasCodigoDono", query = "SELECT r FROM RefeReferencia r WHERE r.refePessOrasCodigoDono = :refePessOrasCodigoDono")})
+    @NamedQuery(name = "RefeReferencia.findAll", query = "SELECT r FROM RefeReferencia r")})
 public class RefeReferencia implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "refe_codigo", nullable = false)
+    @Column(name = "refe_codigo")
     private Integer refeCodigo;
-    @Column(name = "refe_descricao", length = 200)
+    @Column(name = "refe_descricao")
     private String refeDescricao;
-    @Column(name = "refe_latitude", precision = 15, scale = 10)
+    @Column(name = "refe_latitude")
     private BigDecimal refeLatitude;
-    @Column(name = "refe_longitude", precision = 15, scale = 10)
+    @Column(name = "refe_longitude")
     private BigDecimal refeLongitude;
-    @Column(name = "refe_raio", precision = 5, scale = 2)
+    @Column(name = "refe_raio")
     private BigDecimal refeRaio;
-    @Column(name = "refe_km", length = 10)
+    @Column(name = "refe_km")
     private String refeKm;
-    @Column(name = "refe_bandeira", length = 15)
+    @Column(name = "refe_bandeira")
     private String refeBandeira;
     @Column(name = "refe_utilizado_sistema")
     private Character refeUtilizadoSistema;
@@ -71,10 +59,6 @@ public class RefeReferencia implements Serializable {
     private Character refeImportado;
     @Column(name = "refe_pess_oras_codigo_dono")
     private Integer refePessOrasCodigoDono;
-    @OneToMany(mappedBy = "refeReferencia")
-    private Collection<RconReferenciaContato> rconReferenciaContatoCollection;
-    @OneToMany(mappedBy = "refeReferencia")
-    private Collection<TlocTransportadorLocal> tlocTransportadorLocalCollection;
     @JoinColumn(name = "refe_pess_oras_codigo_local", referencedColumnName = "pess_oras_codigo")
     @ManyToOne
     private PessPessoa pessPessoa;
@@ -85,11 +69,7 @@ public class RefeReferencia implements Serializable {
     @ManyToOne
     private CidaCidade cidaCidade;
     @OneToMany(mappedBy = "refeReferencia")
-    private Collection<RponRotaPonto> rponRotaPontoCollection;
-    @OneToMany(mappedBy = "refeReferencia")
-    private Collection<ElocEmbarcadorLocal> elocEmbarcadorLocalCollection;
-    @OneToMany(mappedBy = "refeReferencia")
-    private Collection<VlocViagemLocal> vlocViagemLocalCollection;
+    private Set<VlocViagemLocal> vlocViagemLocalSet;
 
     public RefeReferencia() {
     }
@@ -194,22 +174,6 @@ public class RefeReferencia implements Serializable {
         this.refePessOrasCodigoDono = refePessOrasCodigoDono;
     }
 
-    public Collection<RconReferenciaContato> getRconReferenciaContatoCollection() {
-        return rconReferenciaContatoCollection;
-    }
-
-    public void setRconReferenciaContatoCollection(Collection<RconReferenciaContato> rconReferenciaContatoCollection) {
-        this.rconReferenciaContatoCollection = rconReferenciaContatoCollection;
-    }
-
-    public Collection<TlocTransportadorLocal> getTlocTransportadorLocalCollection() {
-        return tlocTransportadorLocalCollection;
-    }
-
-    public void setTlocTransportadorLocalCollection(Collection<TlocTransportadorLocal> tlocTransportadorLocalCollection) {
-        this.tlocTransportadorLocalCollection = tlocTransportadorLocalCollection;
-    }
-
     public PessPessoa getPessPessoa() {
         return pessPessoa;
     }
@@ -234,28 +198,12 @@ public class RefeReferencia implements Serializable {
         this.cidaCidade = cidaCidade;
     }
 
-    public Collection<RponRotaPonto> getRponRotaPontoCollection() {
-        return rponRotaPontoCollection;
+    public Set<VlocViagemLocal> getVlocViagemLocalSet() {
+        return vlocViagemLocalSet;
     }
 
-    public void setRponRotaPontoCollection(Collection<RponRotaPonto> rponRotaPontoCollection) {
-        this.rponRotaPontoCollection = rponRotaPontoCollection;
-    }
-
-    public Collection<ElocEmbarcadorLocal> getElocEmbarcadorLocalCollection() {
-        return elocEmbarcadorLocalCollection;
-    }
-
-    public void setElocEmbarcadorLocalCollection(Collection<ElocEmbarcadorLocal> elocEmbarcadorLocalCollection) {
-        this.elocEmbarcadorLocalCollection = elocEmbarcadorLocalCollection;
-    }
-
-    public Collection<VlocViagemLocal> getVlocViagemLocalCollection() {
-        return vlocViagemLocalCollection;
-    }
-
-    public void setVlocViagemLocalCollection(Collection<VlocViagemLocal> vlocViagemLocalCollection) {
-        this.vlocViagemLocalCollection = vlocViagemLocalCollection;
+    public void setVlocViagemLocalSet(Set<VlocViagemLocal> vlocViagemLocalSet) {
+        this.vlocViagemLocalSet = vlocViagemLocalSet;
     }
 
     @Override
@@ -282,4 +230,5 @@ public class RefeReferencia implements Serializable {
     public String toString() {
         return "br.com.chapecosolucoes.trafegusweb.server.beans.RefeReferencia[refeCodigo=" + refeCodigo + "]";
     }
+
 }

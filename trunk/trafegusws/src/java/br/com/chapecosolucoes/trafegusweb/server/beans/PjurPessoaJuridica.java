@@ -19,40 +19,33 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "pjur_pessoa_juridica", catalog = "trafegus_transc", schema = "public")
+@Table(name = "pjur_pessoa_juridica")
 @NamedQueries({
-    @NamedQuery(name = "PjurPessoaJuridica.findAll", query = "SELECT p FROM PjurPessoaJuridica p"),
-    @NamedQuery(name = "PjurPessoaJuridica.findByPjurPessOrasCodigo", query = "SELECT p FROM PjurPessoaJuridica p WHERE p.pjurPessOrasCodigo = :pjurPessOrasCodigo"),
-    @NamedQuery(name = "PjurPessoaJuridica.findByPjurCnpj", query = "SELECT p FROM PjurPessoaJuridica p WHERE p.pjurCnpj = :pjurCnpj"),
-    @NamedQuery(name = "PjurPessoaJuridica.findByPjurRazaoSocial", query = "SELECT p FROM PjurPessoaJuridica p WHERE p.pjurRazaoSocial = :pjurRazaoSocial"),
-    @NamedQuery(name = "PjurPessoaJuridica.findByPjurInscricaoEstadual", query = "SELECT p FROM PjurPessoaJuridica p WHERE p.pjurInscricaoEstadual = :pjurInscricaoEstadual"),
-    @NamedQuery(name = "PjurPessoaJuridica.findByPjurSite", query = "SELECT p FROM PjurPessoaJuridica p WHERE p.pjurSite = :pjurSite")})
+    @NamedQuery(name = "PjurPessoaJuridica.findAll", query = "SELECT p FROM PjurPessoaJuridica p")})
 public class PjurPessoaJuridica implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "pjur_pess_oras_codigo", nullable = false)
+    @Column(name = "pjur_pess_oras_codigo")
     private Integer pjurPessOrasCodigo;
-    @Column(name = "pjur_cnpj", length = 30)
+    @Column(name = "pjur_cnpj")
     private String pjurCnpj;
-    @Column(name = "pjur_razao_social", length = 50)
+    @Column(name = "pjur_razao_social")
     private String pjurRazaoSocial;
-    @Column(name = "pjur_inscricao_estadual", length = 30)
+    @Column(name = "pjur_inscricao_estadual")
     private String pjurInscricaoEstadual;
-    @Column(name = "pjur_site", length = 50)
+    @Column(name = "pjur_site")
     private String pjurSite;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pjurPessoaJuridica")
-    private GrisGerenciadoraRisco grisGerenciadoraRisco;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pjurPessoaJuridica")
     private EescEmpresaEscolta eescEmpresaEscolta;
-    @JoinColumn(name = "pjur_pess_oras_codigo", referencedColumnName = "pess_oras_codigo", nullable = false, insertable = false, updatable = false)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pjurPessoaJuridica")
+    private GrisGerenciadoraRisco grisGerenciadoraRisco;
+    @JoinColumn(name = "pjur_pess_oras_codigo", referencedColumnName = "pess_oras_codigo", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private PessPessoa pessPessoa;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pjurPessoaJuridica")
-    private SeguSeguradora seguSeguradora;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pjurPessoaJuridica")
     private EmbaEmbarcador embaEmbarcador;
 
@@ -103,14 +96,6 @@ public class PjurPessoaJuridica implements Serializable {
         this.pjurSite = pjurSite;
     }
 
-    public GrisGerenciadoraRisco getGrisGerenciadoraRisco() {
-        return grisGerenciadoraRisco;
-    }
-
-    public void setGrisGerenciadoraRisco(GrisGerenciadoraRisco grisGerenciadoraRisco) {
-        this.grisGerenciadoraRisco = grisGerenciadoraRisco;
-    }
-
     public EescEmpresaEscolta getEescEmpresaEscolta() {
         return eescEmpresaEscolta;
     }
@@ -119,20 +104,20 @@ public class PjurPessoaJuridica implements Serializable {
         this.eescEmpresaEscolta = eescEmpresaEscolta;
     }
 
+    public GrisGerenciadoraRisco getGrisGerenciadoraRisco() {
+        return grisGerenciadoraRisco;
+    }
+
+    public void setGrisGerenciadoraRisco(GrisGerenciadoraRisco grisGerenciadoraRisco) {
+        this.grisGerenciadoraRisco = grisGerenciadoraRisco;
+    }
+
     public PessPessoa getPessPessoa() {
         return pessPessoa;
     }
 
     public void setPessPessoa(PessPessoa pessPessoa) {
         this.pessPessoa = pessPessoa;
-    }
-
-    public SeguSeguradora getSeguSeguradora() {
-        return seguSeguradora;
-    }
-
-    public void setSeguSeguradora(SeguSeguradora seguSeguradora) {
-        this.seguSeguradora = seguSeguradora;
     }
 
     public EmbaEmbarcador getEmbaEmbarcador() {

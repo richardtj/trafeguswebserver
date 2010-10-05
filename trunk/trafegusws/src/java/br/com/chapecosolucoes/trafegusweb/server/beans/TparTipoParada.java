@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,26 +18,22 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "tpar_tipo_parada", catalog = "trafegus_transc", schema = "public")
+@Table(name = "tpar_tipo_parada")
 @NamedQueries({
-    @NamedQuery(name = "TparTipoParada.findAll", query = "SELECT t FROM TparTipoParada t"),
-    @NamedQuery(name = "TparTipoParada.findByTparCodigo", query = "SELECT t FROM TparTipoParada t WHERE t.tparCodigo = :tparCodigo"),
-    @NamedQuery(name = "TparTipoParada.findByTparDescricao", query = "SELECT t FROM TparTipoParada t WHERE t.tparDescricao = :tparDescricao")})
+    @NamedQuery(name = "TparTipoParada.findAll", query = "SELECT t FROM TparTipoParada t")})
 public class TparTipoParada implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "tpar_codigo", nullable = false)
+    @Column(name = "tpar_codigo")
     private Integer tparCodigo;
-    @Column(name = "tpar_descricao", length = 50)
+    @Column(name = "tpar_descricao")
     private String tparDescricao;
     @OneToMany(mappedBy = "tparTipoParada")
-    private Collection<RponRotaPonto> rponRotaPontoCollection;
-    @OneToMany(mappedBy = "tparTipoParada")
-    private Collection<VlocViagemLocal> vlocViagemLocalCollection;
+    private Set<VlocViagemLocal> vlocViagemLocalSet;
 
     public TparTipoParada() {
     }
@@ -62,20 +58,12 @@ public class TparTipoParada implements Serializable {
         this.tparDescricao = tparDescricao;
     }
 
-    public Collection<RponRotaPonto> getRponRotaPontoCollection() {
-        return rponRotaPontoCollection;
+    public Set<VlocViagemLocal> getVlocViagemLocalSet() {
+        return vlocViagemLocalSet;
     }
 
-    public void setRponRotaPontoCollection(Collection<RponRotaPonto> rponRotaPontoCollection) {
-        this.rponRotaPontoCollection = rponRotaPontoCollection;
-    }
-
-    public Collection<VlocViagemLocal> getVlocViagemLocalCollection() {
-        return vlocViagemLocalCollection;
-    }
-
-    public void setVlocViagemLocalCollection(Collection<VlocViagemLocal> vlocViagemLocalCollection) {
-        this.vlocViagemLocalCollection = vlocViagemLocalCollection;
+    public void setVlocViagemLocalSet(Set<VlocViagemLocal> vlocViagemLocalSet) {
+        this.vlocViagemLocalSet = vlocViagemLocalSet;
     }
 
     @Override

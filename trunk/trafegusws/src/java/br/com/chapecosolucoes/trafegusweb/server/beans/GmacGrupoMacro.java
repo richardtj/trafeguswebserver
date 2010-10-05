@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,25 +23,19 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "gmac_grupo_macro", catalog = "trafegus_transc", schema = "public")
+@Table(name = "gmac_grupo_macro")
 @NamedQueries({
-    @NamedQuery(name = "GmacGrupoMacro.findAll", query = "SELECT g FROM GmacGrupoMacro g"),
-    @NamedQuery(name = "GmacGrupoMacro.findByGmacCodigo", query = "SELECT g FROM GmacGrupoMacro g WHERE g.gmacCodigo = :gmacCodigo"),
-    @NamedQuery(name = "GmacGrupoMacro.findByGmacDescricao", query = "SELECT g FROM GmacGrupoMacro g WHERE g.gmacDescricao = :gmacDescricao"),
-    @NamedQuery(name = "GmacGrupoMacro.findByGmacDataCadastro", query = "SELECT g FROM GmacGrupoMacro g WHERE g.gmacDataCadastro = :gmacDataCadastro"),
-    @NamedQuery(name = "GmacGrupoMacro.findByGmacCodigoGr", query = "SELECT g FROM GmacGrupoMacro g WHERE g.gmacCodigoGr = :gmacCodigoGr"),
-    @NamedQuery(name = "GmacGrupoMacro.findByGmacImportado", query = "SELECT g FROM GmacGrupoMacro g WHERE g.gmacImportado = :gmacImportado"),
-    @NamedQuery(name = "GmacGrupoMacro.findByGmacTipoGrupo", query = "SELECT g FROM GmacGrupoMacro g WHERE g.gmacTipoGrupo = :gmacTipoGrupo")})
+    @NamedQuery(name = "GmacGrupoMacro.findAll", query = "SELECT g FROM GmacGrupoMacro g")})
 public class GmacGrupoMacro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "gmac_codigo", nullable = false)
+    @Column(name = "gmac_codigo")
     private Integer gmacCodigo;
-    @Column(name = "gmac_descricao", length = 50)
+    @Column(name = "gmac_descricao")
     private String gmacDescricao;
     @Column(name = "gmac_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,14 +44,12 @@ public class GmacGrupoMacro implements Serializable {
     private Integer gmacCodigoGr;
     @Column(name = "gmac_importado")
     private Character gmacImportado;
-    @Column(name = "gmac_tipo_grupo", length = 10)
+    @Column(name = "gmac_tipo_grupo")
     private String gmacTipoGrupo;
     @OneToMany(mappedBy = "gmacGrupoMacro")
-    private Collection<TermTerminal> termTerminalCollection;
+    private Set<TermTerminal> termTerminalSet;
     @OneToMany(mappedBy = "gmacGrupoMacro1")
-    private Collection<TermTerminal> termTerminalCollection1;
-    @OneToMany(mappedBy = "gmacGrupoMacro")
-    private Collection<MpadMacroPadrao> mpadMacroPadraoCollection;
+    private Set<TermTerminal> termTerminalSet1;
     @JoinColumn(name = "gmac_vtec_codigo", referencedColumnName = "vtec_codigo")
     @ManyToOne
     private VtecVersaoTecnologia vtecVersaoTecnologia;
@@ -117,28 +109,20 @@ public class GmacGrupoMacro implements Serializable {
         this.gmacTipoGrupo = gmacTipoGrupo;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection() {
-        return termTerminalCollection;
+    public Set<TermTerminal> getTermTerminalSet() {
+        return termTerminalSet;
     }
 
-    public void setTermTerminalCollection(Collection<TermTerminal> termTerminalCollection) {
-        this.termTerminalCollection = termTerminalCollection;
+    public void setTermTerminalSet(Set<TermTerminal> termTerminalSet) {
+        this.termTerminalSet = termTerminalSet;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection1() {
-        return termTerminalCollection1;
+    public Set<TermTerminal> getTermTerminalSet1() {
+        return termTerminalSet1;
     }
 
-    public void setTermTerminalCollection1(Collection<TermTerminal> termTerminalCollection1) {
-        this.termTerminalCollection1 = termTerminalCollection1;
-    }
-
-    public Collection<MpadMacroPadrao> getMpadMacroPadraoCollection() {
-        return mpadMacroPadraoCollection;
-    }
-
-    public void setMpadMacroPadraoCollection(Collection<MpadMacroPadrao> mpadMacroPadraoCollection) {
-        this.mpadMacroPadraoCollection = mpadMacroPadraoCollection;
+    public void setTermTerminalSet1(Set<TermTerminal> termTerminalSet1) {
+        this.termTerminalSet1 = termTerminalSet1;
     }
 
     public VtecVersaoTecnologia getVtecVersaoTecnologia() {

@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,29 +20,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "mvec_modelo_veiculo", catalog = "trafegus_transc", schema = "public", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"mvec_descricao"})})
+@Table(name = "mvec_modelo_veiculo")
 @NamedQueries({
-    @NamedQuery(name = "MvecModeloVeiculo.findAll", query = "SELECT m FROM MvecModeloVeiculo m"),
-    @NamedQuery(name = "MvecModeloVeiculo.findByMvecCodigo", query = "SELECT m FROM MvecModeloVeiculo m WHERE m.mvecCodigo = :mvecCodigo"),
-    @NamedQuery(name = "MvecModeloVeiculo.findByMvecDescricao", query = "SELECT m FROM MvecModeloVeiculo m WHERE m.mvecDescricao = :mvecDescricao"),
-    @NamedQuery(name = "MvecModeloVeiculo.findByMvecDataCadastro", query = "SELECT m FROM MvecModeloVeiculo m WHERE m.mvecDataCadastro = :mvecDataCadastro"),
-    @NamedQuery(name = "MvecModeloVeiculo.findByMvecCodigoGr", query = "SELECT m FROM MvecModeloVeiculo m WHERE m.mvecCodigoGr = :mvecCodigoGr"),
-    @NamedQuery(name = "MvecModeloVeiculo.findByMvecImportado", query = "SELECT m FROM MvecModeloVeiculo m WHERE m.mvecImportado = :mvecImportado")})
+    @NamedQuery(name = "MvecModeloVeiculo.findAll", query = "SELECT m FROM MvecModeloVeiculo m")})
 public class MvecModeloVeiculo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "mvec_codigo", nullable = false)
+    @Column(name = "mvec_codigo")
     private Integer mvecCodigo;
-    @Column(name = "mvec_descricao", length = 50)
+    @Column(name = "mvec_descricao")
     private String mvecDescricao;
     @Column(name = "mvec_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -52,7 +45,7 @@ public class MvecModeloVeiculo implements Serializable {
     @Column(name = "mvec_importado")
     private Character mvecImportado;
     @OneToMany(mappedBy = "mvecModeloVeiculo")
-    private Collection<VeicVeiculo> veicVeiculoCollection;
+    private Set<VeicVeiculo> veicVeiculoSet;
     @JoinColumn(name = "mvec_mvei_codigo", referencedColumnName = "mvei_codigo")
     @ManyToOne
     private MveiMarcaVeiculo mveiMarcaVeiculo;
@@ -104,12 +97,12 @@ public class MvecModeloVeiculo implements Serializable {
         this.mvecImportado = mvecImportado;
     }
 
-    public Collection<VeicVeiculo> getVeicVeiculoCollection() {
-        return veicVeiculoCollection;
+    public Set<VeicVeiculo> getVeicVeiculoSet() {
+        return veicVeiculoSet;
     }
 
-    public void setVeicVeiculoCollection(Collection<VeicVeiculo> veicVeiculoCollection) {
-        this.veicVeiculoCollection = veicVeiculoCollection;
+    public void setVeicVeiculoSet(Set<VeicVeiculo> veicVeiculoSet) {
+        this.veicVeiculoSet = veicVeiculoSet;
     }
 
     public MveiMarcaVeiculo getMveiMarcaVeiculo() {

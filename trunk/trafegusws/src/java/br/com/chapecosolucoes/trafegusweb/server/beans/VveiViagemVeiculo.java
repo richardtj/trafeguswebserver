@@ -21,28 +21,19 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "vvei_viagem_veiculo", catalog = "trafegus_transc", schema = "public")
+@Table(name = "vvei_viagem_veiculo")
 @NamedQueries({
-    @NamedQuery(name = "VveiViagemVeiculo.findAll", query = "SELECT v FROM VveiViagemVeiculo v"),
-    @NamedQuery(name = "VveiViagemVeiculo.findByVveiCodigo", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiCodigo = :vveiCodigo"),
-    @NamedQuery(name = "VveiViagemVeiculo.findByVveiPrecedencia", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiPrecedencia = :vveiPrecedencia"),
-    @NamedQuery(name = "VveiViagemVeiculo.findByVveiDataInicioComboio", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiDataInicioComboio = :vveiDataInicioComboio"),
-    @NamedQuery(name = "VveiViagemVeiculo.findByVveiDataFimComboio", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiDataFimComboio = :vveiDataFimComboio"),
-    @NamedQuery(name = "VveiViagemVeiculo.findByVveiAtivo", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiAtivo = :vveiAtivo"),
-    @NamedQuery(name = "VveiViagemVeiculo.findByVveiSequencia", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiSequencia = :vveiSequencia"),
-    @NamedQuery(name = "VveiViagemVeiculo.findByVveiDataCadastro", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiDataCadastro = :vveiDataCadastro"),
-    @NamedQuery(name = "VveiViagemVeiculo.findByVveiCodigoGr", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiCodigoGr = :vveiCodigoGr"),
-    @NamedQuery(name = "VveiViagemVeiculo.findByVveiImportado", query = "SELECT v FROM VveiViagemVeiculo v WHERE v.vveiImportado = :vveiImportado")})
+    @NamedQuery(name = "VveiViagemVeiculo.findAll", query = "SELECT v FROM VveiViagemVeiculo v")})
 public class VveiViagemVeiculo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "vvei_codigo", nullable = false)
+    @Column(name = "vvei_codigo")
     private Integer vveiCodigo;
-    @Column(name = "vvei_precedencia", length = 10)
+    @Column(name = "vvei_precedencia")
     private String vveiPrecedencia;
     @Column(name = "vvei_data_inicio_comboio")
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,7 +41,7 @@ public class VveiViagemVeiculo implements Serializable {
     @Column(name = "vvei_data_fim_comboio")
     @Temporal(TemporalType.TIMESTAMP)
     private Date vveiDataFimComboio;
-    @Column(name = "vvei_ativo", length = 10)
+    @Column(name = "vvei_ativo")
     private String vveiAtivo;
     @Column(name = "vvei_sequencia")
     private Integer vveiSequencia;

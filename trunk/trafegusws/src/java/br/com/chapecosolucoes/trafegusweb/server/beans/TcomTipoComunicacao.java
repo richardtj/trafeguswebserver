@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,24 +18,22 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "tcom_tipo_comunicacao", catalog = "trafegus_transc", schema = "public")
+@Table(name = "tcom_tipo_comunicacao")
 @NamedQueries({
-    @NamedQuery(name = "TcomTipoComunicacao.findAll", query = "SELECT t FROM TcomTipoComunicacao t"),
-    @NamedQuery(name = "TcomTipoComunicacao.findByTcomCodigo", query = "SELECT t FROM TcomTipoComunicacao t WHERE t.tcomCodigo = :tcomCodigo"),
-    @NamedQuery(name = "TcomTipoComunicacao.findByTcomDescricao", query = "SELECT t FROM TcomTipoComunicacao t WHERE t.tcomDescricao = :tcomDescricao")})
+    @NamedQuery(name = "TcomTipoComunicacao.findAll", query = "SELECT t FROM TcomTipoComunicacao t")})
 public class TcomTipoComunicacao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "tcom_codigo", nullable = false)
+    @Column(name = "tcom_codigo")
     private Integer tcomCodigo;
-    @Column(name = "tcom_descricao", length = 50)
+    @Column(name = "tcom_descricao")
     private String tcomDescricao;
     @OneToMany(mappedBy = "tcomTipoComunicacao")
-    private Collection<VtecVersaoTecnologia> vtecVersaoTecnologiaCollection;
+    private Set<VtecVersaoTecnologia> vtecVersaoTecnologiaSet;
 
     public TcomTipoComunicacao() {
     }
@@ -60,12 +58,12 @@ public class TcomTipoComunicacao implements Serializable {
         this.tcomDescricao = tcomDescricao;
     }
 
-    public Collection<VtecVersaoTecnologia> getVtecVersaoTecnologiaCollection() {
-        return vtecVersaoTecnologiaCollection;
+    public Set<VtecVersaoTecnologia> getVtecVersaoTecnologiaSet() {
+        return vtecVersaoTecnologiaSet;
     }
 
-    public void setVtecVersaoTecnologiaCollection(Collection<VtecVersaoTecnologia> vtecVersaoTecnologiaCollection) {
-        this.vtecVersaoTecnologiaCollection = vtecVersaoTecnologiaCollection;
+    public void setVtecVersaoTecnologiaSet(Set<VtecVersaoTecnologia> vtecVersaoTecnologiaSet) {
+        this.vtecVersaoTecnologiaSet = vtecVersaoTecnologiaSet;
     }
 
     @Override

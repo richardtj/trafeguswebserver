@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,24 +24,17 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "hpmo_historico_pesquisa_motor", catalog = "trafegus_transc", schema = "public")
+@Table(name = "hpmo_historico_pesquisa_motor")
 @NamedQueries({
-    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findAll", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h"),
-    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoCodigo", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoCodigo = :hpmoCodigo"),
-    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoPrazoValidade", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoPrazoValidade = :hpmoPrazoValidade"),
-    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoDataCadastro", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoDataCadastro = :hpmoDataCadastro"),
-    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoCodigoGr", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoCodigoGr = :hpmoCodigoGr"),
-    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoImportado", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoImportado = :hpmoImportado"),
-    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoMensagem", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoMensagem = :hpmoMensagem"),
-    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findByHpmoValorMaximo", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h WHERE h.hpmoValorMaximo = :hpmoValorMaximo")})
+    @NamedQuery(name = "HpmoHistoricoPesquisaMotor.findAll", query = "SELECT h FROM HpmoHistoricoPesquisaMotor h")})
 public class HpmoHistoricoPesquisaMotor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "hpmo_codigo", nullable = false)
+    @Column(name = "hpmo_codigo")
     private Integer hpmoCodigo;
     @Column(name = "hpmo_prazo_validade")
     @Temporal(TemporalType.TIMESTAMP)
@@ -53,14 +46,10 @@ public class HpmoHistoricoPesquisaMotor implements Serializable {
     private Integer hpmoCodigoGr;
     @Column(name = "hpmo_importado")
     private Character hpmoImportado;
-    @Column(name = "hpmo_mensagem", length = 5000)
+    @Column(name = "hpmo_mensagem")
     private String hpmoMensagem;
-    @Column(name = "hpmo_valor_maximo", precision = 15, scale = 2)
+    @Column(name = "hpmo_valor_maximo")
     private BigDecimal hpmoValorMaximo;
-    @OneToMany(mappedBy = "hpmoHistoricoPesquisaMotor")
-    private Collection<ViagViagem> viagViagemCollection;
-    @OneToMany(mappedBy = "hpmoHistoricoPesquisaMotor")
-    private Collection<HpprHistoricoPesquisaProd> hpprHistoricoPesquisaProdCollection;
     @JoinColumn(name = "hpmo_veic_oras_codigo", referencedColumnName = "veic_oras_codigo")
     @ManyToOne
     private VeicVeiculo veicVeiculo;
@@ -73,6 +62,8 @@ public class HpmoHistoricoPesquisaMotor implements Serializable {
     @JoinColumn(name = "hpmo_epmo_codigo", referencedColumnName = "epmo_codigo")
     @ManyToOne
     private EpmoEstatusPesquisaMotoris epmoEstatusPesquisaMotoris;
+    @OneToMany(mappedBy = "hpmoHistoricoPesquisaMotor")
+    private Set<ViagViagem> viagViagemSet;
 
     public HpmoHistoricoPesquisaMotor() {
     }
@@ -137,22 +128,6 @@ public class HpmoHistoricoPesquisaMotor implements Serializable {
         this.hpmoValorMaximo = hpmoValorMaximo;
     }
 
-    public Collection<ViagViagem> getViagViagemCollection() {
-        return viagViagemCollection;
-    }
-
-    public void setViagViagemCollection(Collection<ViagViagem> viagViagemCollection) {
-        this.viagViagemCollection = viagViagemCollection;
-    }
-
-    public Collection<HpprHistoricoPesquisaProd> getHpprHistoricoPesquisaProdCollection() {
-        return hpprHistoricoPesquisaProdCollection;
-    }
-
-    public void setHpprHistoricoPesquisaProdCollection(Collection<HpprHistoricoPesquisaProd> hpprHistoricoPesquisaProdCollection) {
-        this.hpprHistoricoPesquisaProdCollection = hpprHistoricoPesquisaProdCollection;
-    }
-
     public VeicVeiculo getVeicVeiculo() {
         return veicVeiculo;
     }
@@ -183,6 +158,14 @@ public class HpmoHistoricoPesquisaMotor implements Serializable {
 
     public void setEpmoEstatusPesquisaMotoris(EpmoEstatusPesquisaMotoris epmoEstatusPesquisaMotoris) {
         this.epmoEstatusPesquisaMotoris = epmoEstatusPesquisaMotoris;
+    }
+
+    public Set<ViagViagem> getViagViagemSet() {
+        return viagViagemSet;
+    }
+
+    public void setViagViagemSet(Set<ViagViagem> viagViagemSet) {
+        this.viagViagemSet = viagViagemSet;
     }
 
     @Override

@@ -19,20 +19,19 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "vmot_veiculo_moto", catalog = "trafegus_transc", schema = "public")
+@Table(name = "vmot_veiculo_moto")
 @NamedQueries({
-    @NamedQuery(name = "VmotVeiculoMoto.findAll", query = "SELECT v FROM VmotVeiculoMoto v"),
-    @NamedQuery(name = "VmotVeiculoMoto.findByVmotVeicOrasCodigo", query = "SELECT v FROM VmotVeiculoMoto v WHERE v.vmotVeicOrasCodigo = :vmotVeicOrasCodigo")})
+    @NamedQuery(name = "VmotVeiculoMoto.findAll", query = "SELECT v FROM VmotVeiculoMoto v")})
 public class VmotVeiculoMoto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "vmot_veic_oras_codigo", nullable = false)
+    @Column(name = "vmot_veic_oras_codigo")
     private Integer vmotVeicOrasCodigo;
-    @JoinColumn(name = "vmot_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "vmot_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vmot_tope_codigo", referencedColumnName = "tope_codigo")

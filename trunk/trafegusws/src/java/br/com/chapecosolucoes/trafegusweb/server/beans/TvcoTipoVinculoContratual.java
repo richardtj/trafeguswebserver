@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,28 +18,22 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "tvco_tipo_vinculo_contratual", catalog = "trafegus_transc", schema = "public")
+@Table(name = "tvco_tipo_vinculo_contratual")
 @NamedQueries({
-    @NamedQuery(name = "TvcoTipoVinculoContratual.findAll", query = "SELECT t FROM TvcoTipoVinculoContratual t"),
-    @NamedQuery(name = "TvcoTipoVinculoContratual.findByTvcoCodigo", query = "SELECT t FROM TvcoTipoVinculoContratual t WHERE t.tvcoCodigo = :tvcoCodigo"),
-    @NamedQuery(name = "TvcoTipoVinculoContratual.findByTvcoDescricao", query = "SELECT t FROM TvcoTipoVinculoContratual t WHERE t.tvcoDescricao = :tvcoDescricao")})
+    @NamedQuery(name = "TvcoTipoVinculoContratual.findAll", query = "SELECT t FROM TvcoTipoVinculoContratual t")})
 public class TvcoTipoVinculoContratual implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "tvco_codigo", nullable = false)
+    @Column(name = "tvco_codigo")
     private Integer tvcoCodigo;
-    @Column(name = "tvco_descricao", length = 50)
+    @Column(name = "tvco_descricao")
     private String tvcoDescricao;
     @OneToMany(mappedBy = "tvcoTipoVinculoContratual")
-    private Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection;
-    @OneToMany(mappedBy = "tvcoTipoVinculoContratual")
-    private Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection;
-    @OneToMany(mappedBy = "tvcoTipoVinculoContratual")
-    private Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection;
+    private Set<VtraVeiculoTransportador> vtraVeiculoTransportadorSet;
 
     public TvcoTipoVinculoContratual() {
     }
@@ -64,28 +58,12 @@ public class TvcoTipoVinculoContratual implements Serializable {
         this.tvcoDescricao = tvcoDescricao;
     }
 
-    public Collection<TembTransportadorEmbarcador> getTembTransportadorEmbarcadorCollection() {
-        return tembTransportadorEmbarcadorCollection;
+    public Set<VtraVeiculoTransportador> getVtraVeiculoTransportadorSet() {
+        return vtraVeiculoTransportadorSet;
     }
 
-    public void setTembTransportadorEmbarcadorCollection(Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection) {
-        this.tembTransportadorEmbarcadorCollection = tembTransportadorEmbarcadorCollection;
-    }
-
-    public Collection<VtraVeiculoTransportador> getVtraVeiculoTransportadorCollection() {
-        return vtraVeiculoTransportadorCollection;
-    }
-
-    public void setVtraVeiculoTransportadorCollection(Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection) {
-        this.vtraVeiculoTransportadorCollection = vtraVeiculoTransportadorCollection;
-    }
-
-    public Collection<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorCollection() {
-        return vembVeiculoEmbarcadorCollection;
-    }
-
-    public void setVembVeiculoEmbarcadorCollection(Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection) {
-        this.vembVeiculoEmbarcadorCollection = vembVeiculoEmbarcadorCollection;
+    public void setVtraVeiculoTransportadorSet(Set<VtraVeiculoTransportador> vtraVeiculoTransportadorSet) {
+        this.vtraVeiculoTransportadorSet = vtraVeiculoTransportadorSet;
     }
 
     @Override

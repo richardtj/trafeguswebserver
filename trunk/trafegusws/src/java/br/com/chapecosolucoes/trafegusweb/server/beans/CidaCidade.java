@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,27 +23,21 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "cida_cidade", catalog = "trafegus_transc", schema = "public")
+@Table(name = "cida_cidade")
 @NamedQueries({
-    @NamedQuery(name = "CidaCidade.findAll", query = "SELECT c FROM CidaCidade c"),
-    @NamedQuery(name = "CidaCidade.findByCidaCodigo", query = "SELECT c FROM CidaCidade c WHERE c.cidaCodigo = :cidaCodigo"),
-    @NamedQuery(name = "CidaCidade.findByCidaDescricao", query = "SELECT c FROM CidaCidade c WHERE c.cidaDescricao = :cidaDescricao"),
-    @NamedQuery(name = "CidaCidade.findByCidaCepGenerico", query = "SELECT c FROM CidaCidade c WHERE c.cidaCepGenerico = :cidaCepGenerico"),
-    @NamedQuery(name = "CidaCidade.findByCidaDataCadastro", query = "SELECT c FROM CidaCidade c WHERE c.cidaDataCadastro = :cidaDataCadastro"),
-    @NamedQuery(name = "CidaCidade.findByCidaCodigoGr", query = "SELECT c FROM CidaCidade c WHERE c.cidaCodigoGr = :cidaCodigoGr"),
-    @NamedQuery(name = "CidaCidade.findByCidaImportado", query = "SELECT c FROM CidaCidade c WHERE c.cidaImportado = :cidaImportado")})
+    @NamedQuery(name = "CidaCidade.findAll", query = "SELECT c FROM CidaCidade c")})
 public class CidaCidade implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "cida_codigo", nullable = false)
+    @Column(name = "cida_codigo")
     private Integer cidaCodigo;
-    @Column(name = "cida_descricao", length = 100)
+    @Column(name = "cida_descricao")
     private String cidaDescricao;
-    @Column(name = "cida_cep_generico", length = 20)
+    @Column(name = "cida_cep_generico")
     private String cidaCepGenerico;
     @Column(name = "cida_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -53,14 +47,14 @@ public class CidaCidade implements Serializable {
     @Column(name = "cida_importado")
     private Character cidaImportado;
     @OneToMany(mappedBy = "cidaCidade")
-    private Collection<VeicVeiculo> veicVeiculoCollection;
+    private Set<VeicVeiculo> veicVeiculoSet;
+    @OneToMany(mappedBy = "cidaCidade")
+    private Set<RefeReferencia> refeReferenciaSet;
     @JoinColumn(name = "cida_esta_codigo", referencedColumnName = "esta_codigo")
     @ManyToOne
     private EstaEstado estaEstado;
     @OneToMany(mappedBy = "cidaCidade")
-    private Collection<RefeReferencia> refeReferenciaCollection;
-    @OneToMany(mappedBy = "cidaCidade")
-    private Collection<BairBairro> bairBairroCollection;
+    private Set<BairBairro> bairBairroSet;
 
     public CidaCidade() {
     }
@@ -117,12 +111,20 @@ public class CidaCidade implements Serializable {
         this.cidaImportado = cidaImportado;
     }
 
-    public Collection<VeicVeiculo> getVeicVeiculoCollection() {
-        return veicVeiculoCollection;
+    public Set<VeicVeiculo> getVeicVeiculoSet() {
+        return veicVeiculoSet;
     }
 
-    public void setVeicVeiculoCollection(Collection<VeicVeiculo> veicVeiculoCollection) {
-        this.veicVeiculoCollection = veicVeiculoCollection;
+    public void setVeicVeiculoSet(Set<VeicVeiculo> veicVeiculoSet) {
+        this.veicVeiculoSet = veicVeiculoSet;
+    }
+
+    public Set<RefeReferencia> getRefeReferenciaSet() {
+        return refeReferenciaSet;
+    }
+
+    public void setRefeReferenciaSet(Set<RefeReferencia> refeReferenciaSet) {
+        this.refeReferenciaSet = refeReferenciaSet;
     }
 
     public EstaEstado getEstaEstado() {
@@ -133,20 +135,12 @@ public class CidaCidade implements Serializable {
         this.estaEstado = estaEstado;
     }
 
-    public Collection<RefeReferencia> getRefeReferenciaCollection() {
-        return refeReferenciaCollection;
+    public Set<BairBairro> getBairBairroSet() {
+        return bairBairroSet;
     }
 
-    public void setRefeReferenciaCollection(Collection<RefeReferencia> refeReferenciaCollection) {
-        this.refeReferenciaCollection = refeReferenciaCollection;
-    }
-
-    public Collection<BairBairro> getBairBairroCollection() {
-        return bairBairroCollection;
-    }
-
-    public void setBairBairroCollection(Collection<BairBairro> bairBairroCollection) {
-        this.bairBairroCollection = bairBairroCollection;
+    public void setBairBairroSet(Set<BairBairro> bairBairroSet) {
+        this.bairBairroSet = bairBairroSet;
     }
 
     @Override

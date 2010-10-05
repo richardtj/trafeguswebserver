@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,55 +22,48 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "pess_pessoa", catalog = "trafegus_transc", schema = "public")
+@Table(name = "pess_pessoa")
 @NamedQueries({
-    @NamedQuery(name = "PessPessoa.findAll", query = "SELECT p FROM PessPessoa p"),
-    @NamedQuery(name = "PessPessoa.findByPessOrasCodigo", query = "SELECT p FROM PessPessoa p WHERE p.pessOrasCodigo = :pessOrasCodigo"),
-    @NamedQuery(name = "PessPessoa.findByPessNome", query = "SELECT p FROM PessPessoa p WHERE p.pessNome = :pessNome"),
-    @NamedQuery(name = "PessPessoa.findByPessNumero", query = "SELECT p FROM PessPessoa p WHERE p.pessNumero = :pessNumero"),
-    @NamedQuery(name = "PessPessoa.findByPessComplemento", query = "SELECT p FROM PessPessoa p WHERE p.pessComplemento = :pessComplemento"),
-    @NamedQuery(name = "PessPessoa.findByPessTipo", query = "SELECT p FROM PessPessoa p WHERE p.pessTipo = :pessTipo")})
+    @NamedQuery(name = "PessPessoa.findAll", query = "SELECT p FROM PessPessoa p")})
 public class PessPessoa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "pess_oras_codigo", nullable = false)
+    @Column(name = "pess_oras_codigo")
     private Integer pessOrasCodigo;
-    @Column(name = "pess_nome", length = 50)
+    @Column(name = "pess_nome")
     private String pessNome;
-    @Column(name = "pess_numero", length = 10)
+    @Column(name = "pess_numero")
     private String pessNumero;
-    @Column(name = "pess_complemento", length = 50)
+    @Column(name = "pess_complemento")
     private String pessComplemento;
-    @Column(name = "pess_tipo", length = 10)
+    @Column(name = "pess_tipo")
     private String pessTipo;
     @OneToMany(mappedBy = "pessPessoa")
-    private Collection<VeicVeiculo> veicVeiculoCollection;
+    private Set<VeicVeiculo> veicVeiculoSet;
     @OneToMany(mappedBy = "pessPessoa")
-    private Collection<RefeReferencia> refeReferenciaCollection;
-    @JoinColumn(name = "pess_oras_codigo", referencedColumnName = "oras_codigo", nullable = false, insertable = false, updatable = false)
+    private Set<UsuaUsuario> usuaUsuarioSet;
+    @OneToMany(mappedBy = "pessPessoa")
+    private Set<RefeReferencia> refeReferenciaSet;
+    @OneToMany(mappedBy = "pessPessoa")
+    private Set<CrefClasseReferencia> crefClasseReferenciaSet;
+    @JoinColumn(name = "pess_oras_codigo", referencedColumnName = "oras_codigo", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private OrasObjetoRastreado orasObjetoRastreado;
     @JoinColumn(name = "pess_logr_codigo", referencedColumnName = "logr_codigo")
     @ManyToOne
     private LogrLogradouro logrLogradouro;
-    @OneToMany(mappedBy = "pessPessoa")
-    private Collection<PconPessoaContato> pconPessoaContatoCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessPessoa")
-    private PfisPessoaFisica pfisPessoaFisica;
-    @OneToMany(mappedBy = "pessPessoa")
-    private Collection<UsuaUsuario> usuaUsuarioCollection;
-    @OneToMany(mappedBy = "pessPessoa")
-    private Collection<CrefClasseReferencia> crefClasseReferenciaCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessPessoa")
     private TranTransportador tranTransportador;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessPessoa")
     private PjurPessoaJuridica pjurPessoaJuridica;
     @OneToMany(mappedBy = "pessPessoa")
-    private Collection<RotaRota> rotaRotaCollection;
+    private Set<RotaRota> rotaRotaSet;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessPessoa")
+    private PfisPessoaFisica pfisPessoaFisica;
 
     public PessPessoa() {
     }
@@ -119,20 +112,36 @@ public class PessPessoa implements Serializable {
         this.pessTipo = pessTipo;
     }
 
-    public Collection<VeicVeiculo> getVeicVeiculoCollection() {
-        return veicVeiculoCollection;
+    public Set<VeicVeiculo> getVeicVeiculoSet() {
+        return veicVeiculoSet;
     }
 
-    public void setVeicVeiculoCollection(Collection<VeicVeiculo> veicVeiculoCollection) {
-        this.veicVeiculoCollection = veicVeiculoCollection;
+    public void setVeicVeiculoSet(Set<VeicVeiculo> veicVeiculoSet) {
+        this.veicVeiculoSet = veicVeiculoSet;
     }
 
-    public Collection<RefeReferencia> getRefeReferenciaCollection() {
-        return refeReferenciaCollection;
+    public Set<UsuaUsuario> getUsuaUsuarioSet() {
+        return usuaUsuarioSet;
     }
 
-    public void setRefeReferenciaCollection(Collection<RefeReferencia> refeReferenciaCollection) {
-        this.refeReferenciaCollection = refeReferenciaCollection;
+    public void setUsuaUsuarioSet(Set<UsuaUsuario> usuaUsuarioSet) {
+        this.usuaUsuarioSet = usuaUsuarioSet;
+    }
+
+    public Set<RefeReferencia> getRefeReferenciaSet() {
+        return refeReferenciaSet;
+    }
+
+    public void setRefeReferenciaSet(Set<RefeReferencia> refeReferenciaSet) {
+        this.refeReferenciaSet = refeReferenciaSet;
+    }
+
+    public Set<CrefClasseReferencia> getCrefClasseReferenciaSet() {
+        return crefClasseReferenciaSet;
+    }
+
+    public void setCrefClasseReferenciaSet(Set<CrefClasseReferencia> crefClasseReferenciaSet) {
+        this.crefClasseReferenciaSet = crefClasseReferenciaSet;
     }
 
     public OrasObjetoRastreado getOrasObjetoRastreado() {
@@ -151,38 +160,6 @@ public class PessPessoa implements Serializable {
         this.logrLogradouro = logrLogradouro;
     }
 
-    public Collection<PconPessoaContato> getPconPessoaContatoCollection() {
-        return pconPessoaContatoCollection;
-    }
-
-    public void setPconPessoaContatoCollection(Collection<PconPessoaContato> pconPessoaContatoCollection) {
-        this.pconPessoaContatoCollection = pconPessoaContatoCollection;
-    }
-
-    public PfisPessoaFisica getPfisPessoaFisica() {
-        return pfisPessoaFisica;
-    }
-
-    public void setPfisPessoaFisica(PfisPessoaFisica pfisPessoaFisica) {
-        this.pfisPessoaFisica = pfisPessoaFisica;
-    }
-
-    public Collection<UsuaUsuario> getUsuaUsuarioCollection() {
-        return usuaUsuarioCollection;
-    }
-
-    public void setUsuaUsuarioCollection(Collection<UsuaUsuario> usuaUsuarioCollection) {
-        this.usuaUsuarioCollection = usuaUsuarioCollection;
-    }
-
-    public Collection<CrefClasseReferencia> getCrefClasseReferenciaCollection() {
-        return crefClasseReferenciaCollection;
-    }
-
-    public void setCrefClasseReferenciaCollection(Collection<CrefClasseReferencia> crefClasseReferenciaCollection) {
-        this.crefClasseReferenciaCollection = crefClasseReferenciaCollection;
-    }
-
     public TranTransportador getTranTransportador() {
         return tranTransportador;
     }
@@ -199,12 +176,20 @@ public class PessPessoa implements Serializable {
         this.pjurPessoaJuridica = pjurPessoaJuridica;
     }
 
-    public Collection<RotaRota> getRotaRotaCollection() {
-        return rotaRotaCollection;
+    public Set<RotaRota> getRotaRotaSet() {
+        return rotaRotaSet;
     }
 
-    public void setRotaRotaCollection(Collection<RotaRota> rotaRotaCollection) {
-        this.rotaRotaCollection = rotaRotaCollection;
+    public void setRotaRotaSet(Set<RotaRota> rotaRotaSet) {
+        this.rotaRotaSet = rotaRotaSet;
+    }
+
+    public PfisPessoaFisica getPfisPessoaFisica() {
+        return pfisPessoaFisica;
+    }
+
+    public void setPfisPessoaFisica(PfisPessoaFisica pfisPessoaFisica) {
+        this.pfisPessoaFisica = pfisPessoaFisica;
     }
 
     @Override

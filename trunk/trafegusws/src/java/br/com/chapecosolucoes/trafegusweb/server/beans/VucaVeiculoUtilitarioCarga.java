@@ -19,20 +19,19 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "vuca_veiculo_utilitario_carga", catalog = "trafegus_transc", schema = "public")
+@Table(name = "vuca_veiculo_utilitario_carga")
 @NamedQueries({
-    @NamedQuery(name = "VucaVeiculoUtilitarioCarga.findAll", query = "SELECT v FROM VucaVeiculoUtilitarioCarga v"),
-    @NamedQuery(name = "VucaVeiculoUtilitarioCarga.findByVucaVeicOrasCodigo", query = "SELECT v FROM VucaVeiculoUtilitarioCarga v WHERE v.vucaVeicOrasCodigo = :vucaVeicOrasCodigo")})
+    @NamedQuery(name = "VucaVeiculoUtilitarioCarga.findAll", query = "SELECT v FROM VucaVeiculoUtilitarioCarga v")})
 public class VucaVeiculoUtilitarioCarga implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "vuca_veic_oras_codigo", nullable = false)
+    @Column(name = "vuca_veic_oras_codigo")
     private Integer vucaVeicOrasCodigo;
-    @JoinColumn(name = "vuca_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "vuca_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vuca_tope_codigo", referencedColumnName = "tope_codigo")

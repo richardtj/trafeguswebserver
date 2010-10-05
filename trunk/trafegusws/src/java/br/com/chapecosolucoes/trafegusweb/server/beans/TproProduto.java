@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,24 +21,19 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "tpro_produto", catalog = "trafegus_transc", schema = "public")
+@Table(name = "tpro_produto")
 @NamedQueries({
-    @NamedQuery(name = "TproProduto.findAll", query = "SELECT t FROM TproProduto t"),
-    @NamedQuery(name = "TproProduto.findByTproCodigo", query = "SELECT t FROM TproProduto t WHERE t.tproCodigo = :tproCodigo"),
-    @NamedQuery(name = "TproProduto.findByTproDescricao", query = "SELECT t FROM TproProduto t WHERE t.tproDescricao = :tproDescricao"),
-    @NamedQuery(name = "TproProduto.findByTproDataCadastro", query = "SELECT t FROM TproProduto t WHERE t.tproDataCadastro = :tproDataCadastro"),
-    @NamedQuery(name = "TproProduto.findByTproCodigoGr", query = "SELECT t FROM TproProduto t WHERE t.tproCodigoGr = :tproCodigoGr"),
-    @NamedQuery(name = "TproProduto.findByTproImportado", query = "SELECT t FROM TproProduto t WHERE t.tproImportado = :tproImportado")})
+    @NamedQuery(name = "TproProduto.findAll", query = "SELECT t FROM TproProduto t")})
 public class TproProduto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "tpro_codigo", nullable = false)
+    @Column(name = "tpro_codigo")
     private Integer tproCodigo;
-    @Column(name = "tpro_descricao", length = 50)
+    @Column(name = "tpro_descricao")
     private String tproDescricao;
     @Column(name = "tpro_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -48,11 +43,9 @@ public class TproProduto implements Serializable {
     @Column(name = "tpro_importado")
     private Character tproImportado;
     @OneToMany(mappedBy = "tproProduto")
-    private Collection<HpprHistoricoPesquisaProd> hpprHistoricoPesquisaProdCollection;
+    private Set<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorSet;
     @OneToMany(mappedBy = "tproProduto")
-    private Collection<ProdProduto> prodProdutoCollection;
-    @OneToMany(mappedBy = "tproProduto")
-    private Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection;
+    private Set<ProdProduto> prodProdutoSet;
 
     public TproProduto() {
     }
@@ -101,28 +94,20 @@ public class TproProduto implements Serializable {
         this.tproImportado = tproImportado;
     }
 
-    public Collection<HpprHistoricoPesquisaProd> getHpprHistoricoPesquisaProdCollection() {
-        return hpprHistoricoPesquisaProdCollection;
+    public Set<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorSet() {
+        return hpmoHistoricoPesquisaMotorSet;
     }
 
-    public void setHpprHistoricoPesquisaProdCollection(Collection<HpprHistoricoPesquisaProd> hpprHistoricoPesquisaProdCollection) {
-        this.hpprHistoricoPesquisaProdCollection = hpprHistoricoPesquisaProdCollection;
+    public void setHpmoHistoricoPesquisaMotorSet(Set<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorSet) {
+        this.hpmoHistoricoPesquisaMotorSet = hpmoHistoricoPesquisaMotorSet;
     }
 
-    public Collection<ProdProduto> getProdProdutoCollection() {
-        return prodProdutoCollection;
+    public Set<ProdProduto> getProdProdutoSet() {
+        return prodProdutoSet;
     }
 
-    public void setProdProdutoCollection(Collection<ProdProduto> prodProdutoCollection) {
-        this.prodProdutoCollection = prodProdutoCollection;
-    }
-
-    public Collection<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorCollection() {
-        return hpmoHistoricoPesquisaMotorCollection;
-    }
-
-    public void setHpmoHistoricoPesquisaMotorCollection(Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection) {
-        this.hpmoHistoricoPesquisaMotorCollection = hpmoHistoricoPesquisaMotorCollection;
+    public void setProdProdutoSet(Set<ProdProduto> prodProdutoSet) {
+        this.prodProdutoSet = prodProdutoSet;
     }
 
     @Override

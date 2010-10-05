@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,22 +20,21 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "eesc_empresa_escolta", catalog = "trafegus_transc", schema = "public")
+@Table(name = "eesc_empresa_escolta")
 @NamedQueries({
-    @NamedQuery(name = "EescEmpresaEscolta.findAll", query = "SELECT e FROM EescEmpresaEscolta e"),
-    @NamedQuery(name = "EescEmpresaEscolta.findByEescOrasPessPesjCodigo", query = "SELECT e FROM EescEmpresaEscolta e WHERE e.eescOrasPessPesjCodigo = :eescOrasPessPesjCodigo")})
+    @NamedQuery(name = "EescEmpresaEscolta.findAll", query = "SELECT e FROM EescEmpresaEscolta e")})
 public class EescEmpresaEscolta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "eesc_oras_pess_pesj_codigo", nullable = false)
+    @Column(name = "eesc_oras_pess_pesj_codigo")
     private Integer eescOrasPessPesjCodigo;
     @OneToMany(mappedBy = "eescEmpresaEscolta")
-    private Collection<CombComboio> combComboioCollection;
-    @JoinColumn(name = "eesc_oras_pess_pesj_codigo", referencedColumnName = "pjur_pess_oras_codigo", nullable = false, insertable = false, updatable = false)
+    private Set<CombComboio> combComboioSet;
+    @JoinColumn(name = "eesc_oras_pess_pesj_codigo", referencedColumnName = "pjur_pess_oras_codigo", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private PjurPessoaJuridica pjurPessoaJuridica;
 
@@ -54,12 +53,12 @@ public class EescEmpresaEscolta implements Serializable {
         this.eescOrasPessPesjCodigo = eescOrasPessPesjCodigo;
     }
 
-    public Collection<CombComboio> getCombComboioCollection() {
-        return combComboioCollection;
+    public Set<CombComboio> getCombComboioSet() {
+        return combComboioSet;
     }
 
-    public void setCombComboioCollection(Collection<CombComboio> combComboioCollection) {
-        this.combComboioCollection = combComboioCollection;
+    public void setCombComboioSet(Set<CombComboio> combComboioSet) {
+        this.combComboioSet = combComboioSet;
     }
 
     public PjurPessoaJuridica getPjurPessoaJuridica() {

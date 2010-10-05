@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,35 +23,25 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "logr_logradouro", catalog = "trafegus_transc", schema = "public")
+@Table(name = "logr_logradouro")
 @NamedQueries({
-    @NamedQuery(name = "LogrLogradouro.findAll", query = "SELECT l FROM LogrLogradouro l"),
-    @NamedQuery(name = "LogrLogradouro.findByLogrCodigo", query = "SELECT l FROM LogrLogradouro l WHERE l.logrCodigo = :logrCodigo"),
-    @NamedQuery(name = "LogrLogradouro.findByLogrTipoLogradouro", query = "SELECT l FROM LogrLogradouro l WHERE l.logrTipoLogradouro = :logrTipoLogradouro"),
-    @NamedQuery(name = "LogrLogradouro.findByLogrDescricao", query = "SELECT l FROM LogrLogradouro l WHERE l.logrDescricao = :logrDescricao"),
-    @NamedQuery(name = "LogrLogradouro.findByLogrComplemento", query = "SELECT l FROM LogrLogradouro l WHERE l.logrComplemento = :logrComplemento"),
-    @NamedQuery(name = "LogrLogradouro.findByLogrCep", query = "SELECT l FROM LogrLogradouro l WHERE l.logrCep = :logrCep"),
-    @NamedQuery(name = "LogrLogradouro.findByLogrCidaCodigo", query = "SELECT l FROM LogrLogradouro l WHERE l.logrCidaCodigo = :logrCidaCodigo"),
-    @NamedQuery(name = "LogrLogradouro.findByLogrEstaCodigo", query = "SELECT l FROM LogrLogradouro l WHERE l.logrEstaCodigo = :logrEstaCodigo"),
-    @NamedQuery(name = "LogrLogradouro.findByLogrDataCadastro", query = "SELECT l FROM LogrLogradouro l WHERE l.logrDataCadastro = :logrDataCadastro"),
-    @NamedQuery(name = "LogrLogradouro.findByLogrCodigoGr", query = "SELECT l FROM LogrLogradouro l WHERE l.logrCodigoGr = :logrCodigoGr"),
-    @NamedQuery(name = "LogrLogradouro.findByLogrImportado", query = "SELECT l FROM LogrLogradouro l WHERE l.logrImportado = :logrImportado")})
+    @NamedQuery(name = "LogrLogradouro.findAll", query = "SELECT l FROM LogrLogradouro l")})
 public class LogrLogradouro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "logr_codigo", nullable = false)
+    @Column(name = "logr_codigo")
     private Integer logrCodigo;
-    @Column(name = "logr_tipo_logradouro", length = 100)
+    @Column(name = "logr_tipo_logradouro")
     private String logrTipoLogradouro;
-    @Column(name = "logr_descricao", length = 200)
+    @Column(name = "logr_descricao")
     private String logrDescricao;
-    @Column(name = "logr_complemento", length = 100)
+    @Column(name = "logr_complemento")
     private String logrComplemento;
-    @Column(name = "logr_cep", length = 8)
+    @Column(name = "logr_cep")
     private String logrCep;
     @Column(name = "logr_cida_codigo")
     private Integer logrCidaCodigo;
@@ -65,7 +55,7 @@ public class LogrLogradouro implements Serializable {
     @Column(name = "logr_importado")
     private Character logrImportado;
     @OneToMany(mappedBy = "logrLogradouro")
-    private Collection<PessPessoa> pessPessoaCollection;
+    private Set<PessPessoa> pessPessoaSet;
     @JoinColumn(name = "logr_bair_codigo", referencedColumnName = "bair_codigo")
     @ManyToOne
     private BairBairro bairBairro;
@@ -157,12 +147,12 @@ public class LogrLogradouro implements Serializable {
         this.logrImportado = logrImportado;
     }
 
-    public Collection<PessPessoa> getPessPessoaCollection() {
-        return pessPessoaCollection;
+    public Set<PessPessoa> getPessPessoaSet() {
+        return pessPessoaSet;
     }
 
-    public void setPessPessoaCollection(Collection<PessPessoa> pessPessoaCollection) {
-        this.pessPessoaCollection = pessPessoaCollection;
+    public void setPessPessoaSet(Set<PessPessoa> pessPessoaSet) {
+        this.pessPessoaSet = pessPessoaSet;
     }
 
     public BairBairro getBairBairro() {

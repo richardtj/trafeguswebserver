@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,24 +18,22 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "tvei_tipo_veiculo", catalog = "trafegus_transc", schema = "public")
+@Table(name = "tvei_tipo_veiculo")
 @NamedQueries({
-    @NamedQuery(name = "TveiTipoVeiculo.findAll", query = "SELECT t FROM TveiTipoVeiculo t"),
-    @NamedQuery(name = "TveiTipoVeiculo.findByTveiCodigo", query = "SELECT t FROM TveiTipoVeiculo t WHERE t.tveiCodigo = :tveiCodigo"),
-    @NamedQuery(name = "TveiTipoVeiculo.findByTveiDescricao", query = "SELECT t FROM TveiTipoVeiculo t WHERE t.tveiDescricao = :tveiDescricao")})
+    @NamedQuery(name = "TveiTipoVeiculo.findAll", query = "SELECT t FROM TveiTipoVeiculo t")})
 public class TveiTipoVeiculo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "tvei_codigo", nullable = false)
+    @Column(name = "tvei_codigo")
     private Integer tveiCodigo;
-    @Column(name = "tvei_descricao", length = 50)
+    @Column(name = "tvei_descricao")
     private String tveiDescricao;
     @OneToMany(mappedBy = "tveiTipoVeiculo")
-    private Collection<VeicVeiculo> veicVeiculoCollection;
+    private Set<VeicVeiculo> veicVeiculoSet;
 
     public TveiTipoVeiculo() {
     }
@@ -60,12 +58,12 @@ public class TveiTipoVeiculo implements Serializable {
         this.tveiDescricao = tveiDescricao;
     }
 
-    public Collection<VeicVeiculo> getVeicVeiculoCollection() {
-        return veicVeiculoCollection;
+    public Set<VeicVeiculo> getVeicVeiculoSet() {
+        return veicVeiculoSet;
     }
 
-    public void setVeicVeiculoCollection(Collection<VeicVeiculo> veicVeiculoCollection) {
-        this.veicVeiculoCollection = veicVeiculoCollection;
+    public void setVeicVeiculoSet(Set<VeicVeiculo> veicVeiculoSet) {
+        this.veicVeiculoSet = veicVeiculoSet;
     }
 
     @Override

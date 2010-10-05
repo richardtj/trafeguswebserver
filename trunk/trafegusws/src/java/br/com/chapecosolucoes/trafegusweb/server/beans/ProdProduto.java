@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,27 +24,21 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "prod_produto", catalog = "trafegus_transc", schema = "public")
+@Table(name = "prod_produto")
 @NamedQueries({
-    @NamedQuery(name = "ProdProduto.findAll", query = "SELECT p FROM ProdProduto p"),
-    @NamedQuery(name = "ProdProduto.findByProdCodigo", query = "SELECT p FROM ProdProduto p WHERE p.prodCodigo = :prodCodigo"),
-    @NamedQuery(name = "ProdProduto.findByProdDescricao", query = "SELECT p FROM ProdProduto p WHERE p.prodDescricao = :prodDescricao"),
-    @NamedQuery(name = "ProdProduto.findByProdValorUnitario", query = "SELECT p FROM ProdProduto p WHERE p.prodValorUnitario = :prodValorUnitario"),
-    @NamedQuery(name = "ProdProduto.findByProdDataCadastro", query = "SELECT p FROM ProdProduto p WHERE p.prodDataCadastro = :prodDataCadastro"),
-    @NamedQuery(name = "ProdProduto.findByProdCodigoGr", query = "SELECT p FROM ProdProduto p WHERE p.prodCodigoGr = :prodCodigoGr"),
-    @NamedQuery(name = "ProdProduto.findByProdImportado", query = "SELECT p FROM ProdProduto p WHERE p.prodImportado = :prodImportado")})
+    @NamedQuery(name = "ProdProduto.findAll", query = "SELECT p FROM ProdProduto p")})
 public class ProdProduto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "prod_codigo", nullable = false)
+    @Column(name = "prod_codigo")
     private Integer prodCodigo;
-    @Column(name = "prod_descricao", length = 50)
+    @Column(name = "prod_descricao")
     private String prodDescricao;
-    @Column(name = "prod_valor_unitario", precision = 15, scale = 2)
+    @Column(name = "prod_valor_unitario")
     private BigDecimal prodValorUnitario;
     @Column(name = "prod_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -53,11 +47,11 @@ public class ProdProduto implements Serializable {
     private Integer prodCodigoGr;
     @Column(name = "prod_importado")
     private Character prodImportado;
+    @OneToMany(mappedBy = "prodProduto")
+    private Set<VproViagemProduto> vproViagemProdutoSet;
     @JoinColumn(name = "prod_tpro_codigo", referencedColumnName = "tpro_codigo")
     @ManyToOne
     private TproProduto tproProduto;
-    @OneToMany(mappedBy = "prodProduto")
-    private Collection<VproViagemProduto> vproViagemProdutoCollection;
 
     public ProdProduto() {
     }
@@ -114,20 +108,20 @@ public class ProdProduto implements Serializable {
         this.prodImportado = prodImportado;
     }
 
+    public Set<VproViagemProduto> getVproViagemProdutoSet() {
+        return vproViagemProdutoSet;
+    }
+
+    public void setVproViagemProdutoSet(Set<VproViagemProduto> vproViagemProdutoSet) {
+        this.vproViagemProdutoSet = vproViagemProdutoSet;
+    }
+
     public TproProduto getTproProduto() {
         return tproProduto;
     }
 
     public void setTproProduto(TproProduto tproProduto) {
         this.tproProduto = tproProduto;
-    }
-
-    public Collection<VproViagemProduto> getVproViagemProdutoCollection() {
-        return vproViagemProdutoCollection;
-    }
-
-    public void setVproViagemProdutoCollection(Collection<VproViagemProduto> vproViagemProdutoCollection) {
-        this.vproViagemProdutoCollection = vproViagemProdutoCollection;
     }
 
     @Override

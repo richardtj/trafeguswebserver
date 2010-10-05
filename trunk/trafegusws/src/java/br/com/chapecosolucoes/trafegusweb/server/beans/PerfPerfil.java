@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,26 +21,19 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "perf_perfil", catalog = "trafegus_transc", schema = "public")
+@Table(name = "perf_perfil")
 @NamedQueries({
-    @NamedQuery(name = "PerfPerfil.findAll", query = "SELECT p FROM PerfPerfil p"),
-    @NamedQuery(name = "PerfPerfil.findByPerfCodigo", query = "SELECT p FROM PerfPerfil p WHERE p.perfCodigo = :perfCodigo"),
-    @NamedQuery(name = "PerfPerfil.findByPerfDescricao", query = "SELECT p FROM PerfPerfil p WHERE p.perfDescricao = :perfDescricao"),
-    @NamedQuery(name = "PerfPerfil.findByPerfAdministrador", query = "SELECT p FROM PerfPerfil p WHERE p.perfAdministrador = :perfAdministrador"),
-    @NamedQuery(name = "PerfPerfil.findByPerfPermitirCriarUsuario", query = "SELECT p FROM PerfPerfil p WHERE p.perfPermitirCriarUsuario = :perfPermitirCriarUsuario"),
-    @NamedQuery(name = "PerfPerfil.findByPerfDataCadastro", query = "SELECT p FROM PerfPerfil p WHERE p.perfDataCadastro = :perfDataCadastro"),
-    @NamedQuery(name = "PerfPerfil.findByPerfCodigoGr", query = "SELECT p FROM PerfPerfil p WHERE p.perfCodigoGr = :perfCodigoGr"),
-    @NamedQuery(name = "PerfPerfil.findByPerfImportado", query = "SELECT p FROM PerfPerfil p WHERE p.perfImportado = :perfImportado")})
+    @NamedQuery(name = "PerfPerfil.findAll", query = "SELECT p FROM PerfPerfil p")})
 public class PerfPerfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "perf_codigo", nullable = false)
+    @Column(name = "perf_codigo")
     private Integer perfCodigo;
-    @Column(name = "perf_descricao", length = 50)
+    @Column(name = "perf_descricao")
     private String perfDescricao;
     @Column(name = "perf_administrador")
     private Character perfAdministrador;
@@ -54,11 +47,7 @@ public class PerfPerfil implements Serializable {
     @Column(name = "perf_importado")
     private Character perfImportado;
     @OneToMany(mappedBy = "perfPerfil")
-    private Collection<PproPermissaoProduto> pproPermissaoProdutoCollection;
-    @OneToMany(mappedBy = "perfPerfil")
-    private Collection<PtelPermissaoTela> ptelPermissaoTelaCollection;
-    @OneToMany(mappedBy = "perfPerfil")
-    private Collection<UsuaUsuario> usuaUsuarioCollection;
+    private Set<UsuaUsuario> usuaUsuarioSet;
 
     public PerfPerfil() {
     }
@@ -123,28 +112,12 @@ public class PerfPerfil implements Serializable {
         this.perfImportado = perfImportado;
     }
 
-    public Collection<PproPermissaoProduto> getPproPermissaoProdutoCollection() {
-        return pproPermissaoProdutoCollection;
+    public Set<UsuaUsuario> getUsuaUsuarioSet() {
+        return usuaUsuarioSet;
     }
 
-    public void setPproPermissaoProdutoCollection(Collection<PproPermissaoProduto> pproPermissaoProdutoCollection) {
-        this.pproPermissaoProdutoCollection = pproPermissaoProdutoCollection;
-    }
-
-    public Collection<PtelPermissaoTela> getPtelPermissaoTelaCollection() {
-        return ptelPermissaoTelaCollection;
-    }
-
-    public void setPtelPermissaoTelaCollection(Collection<PtelPermissaoTela> ptelPermissaoTelaCollection) {
-        this.ptelPermissaoTelaCollection = ptelPermissaoTelaCollection;
-    }
-
-    public Collection<UsuaUsuario> getUsuaUsuarioCollection() {
-        return usuaUsuarioCollection;
-    }
-
-    public void setUsuaUsuarioCollection(Collection<UsuaUsuario> usuaUsuarioCollection) {
-        this.usuaUsuarioCollection = usuaUsuarioCollection;
+    public void setUsuaUsuarioSet(Set<UsuaUsuario> usuaUsuarioSet) {
+        this.usuaUsuarioSet = usuaUsuarioSet;
     }
 
     @Override

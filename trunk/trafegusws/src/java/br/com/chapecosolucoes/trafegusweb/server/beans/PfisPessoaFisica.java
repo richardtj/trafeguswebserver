@@ -22,39 +22,34 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "pfis_pessoa_fisica", catalog = "trafegus_transc", schema = "public")
+@Table(name = "pfis_pessoa_fisica")
 @NamedQueries({
-    @NamedQuery(name = "PfisPessoaFisica.findAll", query = "SELECT p FROM PfisPessoaFisica p"),
-    @NamedQuery(name = "PfisPessoaFisica.findByPfisPessOrasCodigo", query = "SELECT p FROM PfisPessoaFisica p WHERE p.pfisPessOrasCodigo = :pfisPessOrasCodigo"),
-    @NamedQuery(name = "PfisPessoaFisica.findByPfisRg", query = "SELECT p FROM PfisPessoaFisica p WHERE p.pfisRg = :pfisRg"),
-    @NamedQuery(name = "PfisPessoaFisica.findByPfisCpf", query = "SELECT p FROM PfisPessoaFisica p WHERE p.pfisCpf = :pfisCpf"),
-    @NamedQuery(name = "PfisPessoaFisica.findByPfisDataNascimento", query = "SELECT p FROM PfisPessoaFisica p WHERE p.pfisDataNascimento = :pfisDataNascimento"),
-    @NamedQuery(name = "PfisPessoaFisica.findByPfisSexo", query = "SELECT p FROM PfisPessoaFisica p WHERE p.pfisSexo = :pfisSexo")})
+    @NamedQuery(name = "PfisPessoaFisica.findAll", query = "SELECT p FROM PfisPessoaFisica p")})
 public class PfisPessoaFisica implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "pfis_pess_oras_codigo", nullable = false)
+    @Column(name = "pfis_pess_oras_codigo")
     private Integer pfisPessOrasCodigo;
-    @Column(name = "pfis_rg", length = 20)
+    @Column(name = "pfis_rg")
     private String pfisRg;
-    @Column(name = "pfis_cpf", length = 20)
+    @Column(name = "pfis_cpf")
     private String pfisCpf;
     @Column(name = "pfis_data_nascimento")
     @Temporal(TemporalType.TIMESTAMP)
     private Date pfisDataNascimento;
-    @Column(name = "pfis_sexo", length = 10)
+    @Column(name = "pfis_sexo")
     private String pfisSexo;
-    @JoinColumn(name = "pfis_pess_oras_codigo", referencedColumnName = "pess_oras_codigo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private PessPessoa pessPessoa;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pfisPessoaFisica")
     private UsuaUsuario usuaUsuario;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pfisPessoaFisica")
     private MotoMotorista motoMotorista;
+    @JoinColumn(name = "pfis_pess_oras_codigo", referencedColumnName = "pess_oras_codigo", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private PessPessoa pessPessoa;
 
     public PfisPessoaFisica() {
     }
@@ -103,14 +98,6 @@ public class PfisPessoaFisica implements Serializable {
         this.pfisSexo = pfisSexo;
     }
 
-    public PessPessoa getPessPessoa() {
-        return pessPessoa;
-    }
-
-    public void setPessPessoa(PessPessoa pessPessoa) {
-        this.pessPessoa = pessPessoa;
-    }
-
     public UsuaUsuario getUsuaUsuario() {
         return usuaUsuario;
     }
@@ -125,6 +112,14 @@ public class PfisPessoaFisica implements Serializable {
 
     public void setMotoMotorista(MotoMotorista motoMotorista) {
         this.motoMotorista = motoMotorista;
+    }
+
+    public PessPessoa getPessPessoa() {
+        return pessPessoa;
+    }
+
+    public void setPessPessoa(PessPessoa pessPessoa) {
+        this.pessPessoa = pessPessoa;
     }
 
     @Override

@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,24 +21,19 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Emerson
+ * @author emerson
  */
 @Entity
-@Table(name = "pais_pais", catalog = "trafegus_transc", schema = "public")
+@Table(name = "pais_pais")
 @NamedQueries({
-    @NamedQuery(name = "PaisPais.findAll", query = "SELECT p FROM PaisPais p"),
-    @NamedQuery(name = "PaisPais.findByPaisCodigo", query = "SELECT p FROM PaisPais p WHERE p.paisCodigo = :paisCodigo"),
-    @NamedQuery(name = "PaisPais.findByPaisDescricao", query = "SELECT p FROM PaisPais p WHERE p.paisDescricao = :paisDescricao"),
-    @NamedQuery(name = "PaisPais.findByPaisDataCadastro", query = "SELECT p FROM PaisPais p WHERE p.paisDataCadastro = :paisDataCadastro"),
-    @NamedQuery(name = "PaisPais.findByPaisCodigoGr", query = "SELECT p FROM PaisPais p WHERE p.paisCodigoGr = :paisCodigoGr"),
-    @NamedQuery(name = "PaisPais.findByPaisImportado", query = "SELECT p FROM PaisPais p WHERE p.paisImportado = :paisImportado")})
+    @NamedQuery(name = "PaisPais.findAll", query = "SELECT p FROM PaisPais p")})
 public class PaisPais implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "pais_codigo", nullable = false)
+    @Column(name = "pais_codigo")
     private Integer paisCodigo;
-    @Column(name = "pais_descricao", length = 50)
+    @Column(name = "pais_descricao")
     private String paisDescricao;
     @Column(name = "pais_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
@@ -48,7 +43,7 @@ public class PaisPais implements Serializable {
     @Column(name = "pais_importado")
     private Character paisImportado;
     @OneToMany(mappedBy = "paisPais")
-    private Collection<EstaEstado> estaEstadoCollection;
+    private Set<EstaEstado> estaEstadoSet;
 
     public PaisPais() {
     }
@@ -97,12 +92,12 @@ public class PaisPais implements Serializable {
         this.paisImportado = paisImportado;
     }
 
-    public Collection<EstaEstado> getEstaEstadoCollection() {
-        return estaEstadoCollection;
+    public Set<EstaEstado> getEstaEstadoSet() {
+        return estaEstadoSet;
     }
 
-    public void setEstaEstadoCollection(Collection<EstaEstado> estaEstadoCollection) {
-        this.estaEstadoCollection = estaEstadoCollection;
+    public void setEstaEstadoSet(Set<EstaEstado> estaEstadoSet) {
+        this.estaEstadoSet = estaEstadoSet;
     }
 
     @Override
