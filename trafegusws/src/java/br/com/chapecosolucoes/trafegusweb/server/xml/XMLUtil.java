@@ -29,4 +29,9 @@ public class XMLUtil {
     public String toXML(Object object) {
         return stream.toXML(object);
     }
+
+    public String toXML(String alias, Object object) {
+        stream.alias(alias, object.getClass());
+        return stream.toXML(object);
+    }
 }
