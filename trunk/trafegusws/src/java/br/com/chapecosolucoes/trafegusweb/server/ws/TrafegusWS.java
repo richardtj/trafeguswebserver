@@ -11,6 +11,7 @@ import br.com.chapecosolucoes.trafegusweb.server.beans.TranTransportador;
 import br.com.chapecosolucoes.trafegusweb.server.beans.UsuaUsuario;
 import br.com.chapecosolucoes.trafegusweb.server.beans.VeicVeiculo;
 import br.com.chapecosolucoes.trafegusweb.server.jpa.JPAUtil;
+import br.com.chapecosolucoes.trafegusweb.server.vo.SolicitaAcessoVO;
 import br.com.chapecosolucoes.trafegusweb.server.xml.XMLUtil;
 import java.util.ArrayList;
 import javax.jws.WebMethod;
@@ -35,14 +36,26 @@ public class TrafegusWS {
         Query q = em.createQuery("SELECT u FROM UsuaUsuario u WHERE u.usuaLogin = :usuaLogin AND u.usuaSenha = :usuaSenha");
         q.setParameter("usuaLogin", usuario);
         q.setParameter("usuaSenha", senha);
-        UsuaUsuario result = null;
+        UsuaUsuario usuaUsuario = null;
+
         try {
-            result = (UsuaUsuario) q.getSingleResult();
+            usuaUsuario = (UsuaUsuario) q.getSingleResult();
         } catch (Exception e) {
-            result = new UsuaUsuario();
+            usuaUsuario = new UsuaUsuario();
         }
 
-        return XMLUtil.getIntance().toXML(result);
+        SolicitaAcessoVO solicitaAcessoVO = new SolicitaAcessoVO();
+        solicitaAcessoVO.setCodigo(usuaUsuario.getUsuaPfisPessOrasCodigo());
+        solicitaAcessoVO.setLogin(usuaUsuario.getUsuaLogin());
+        solicitaAcessoVO.setNome(usuaUsuario.getPessPessoa().getPessNome());
+        solicitaAcessoVO.setCodPessoa(usuaUsuario.getPessPessoa().getPessOrasCodigo());
+
+        String result = XMLUtil.getIntance().toXML("SolicitaAcesso", solicitaAcessoVO);
+
+        usuaUsuario = null;
+        solicitaAcessoVO = null;
+
+        return result;
     }
 
     /**
