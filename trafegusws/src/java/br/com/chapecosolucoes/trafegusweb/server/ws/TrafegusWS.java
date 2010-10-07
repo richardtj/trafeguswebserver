@@ -172,4 +172,64 @@ public class TrafegusWS {
         em.getTransaction().commit();
         return XMLUtil.getIntance().toXML(result);
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaListaVeiculos")
+    public String solicitaListaVeiculos(@WebParam(name = "codEmpresa")
+    String codEmpresa, @WebParam(name = "usuario")
+    String usuario, @WebParam(name = "senha")
+    String senha) {
+        //TODO write your implementation code here:
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        Query q = em.createNativeQuery(
+            " SELECT " +
+                " ORAS_Objeto_Rastreado.ORAS_Codigo, " +
+                " ORAS_Objeto_Rastreado.ORAS_Data_Cadastro, " +
+                " VEIC_Veiculo.*, " +
+                " TVEI_Tipo_Veiculo.*, " +
+                " vcar_veiculo_carreta.VCAR_VEIC_ORAS_Codigo, " +
+                " vcav_veiculo_cavalo.VCAV_VEIC_ORAS_Codigo, " +
+                " vmot_veiculo_moto.VMOT_VEIC_ORAS_Codigo, " +
+                " vtru_veiculo_truck.VTRU_VEIC_ORAS_Codigo, " +
+                " vuca_veiculo_utilitario_carga.VUCA_VEIC_ORAS_Codigo, " +
+                " vupa_veiculo_utilitario_passe.VUPA_VEIC_ORAS_Codigo " +
+            " FROM VEIC_Veiculo " +
+                " JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = VEIC_ORAS_Codigo AND ORAS_EOBJ_Codigo = 1) " +
+                " JOIN TVEI_Tipo_Veiculo ON (VEIC_TVEI_Codigo = TVEI_Codigo) " +
+                " JOIN VTRA_Veiculo_Transportador ON (VTRA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo) " +
+                " JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = VTRA_TRAN_PESS_ORAS_Codigo " +
+                " AND TRAN_PESS_ORAS_Codigo = :param01) " +
+                " LEFT JOIN vcar_veiculo_carreta ON (VEIC_ORAS_Codigo = VCAR_VEIC_ORAS_Codigo) " +
+                " LEFT JOIN vcav_veiculo_cavalo ON (VEIC_ORAS_Codigo = VCAV_VEIC_ORAS_Codigo) " +
+                " LEFT JOIN vmot_veiculo_moto ON (VEIC_ORAS_Codigo = VMOT_VEIC_ORAS_Codigo) " +
+                " LEFT JOIN vtru_veiculo_truck ON (VEIC_ORAS_Codigo = VTRU_VEIC_ORAS_Codigo) " +
+                " LEFT JOIN vuca_veiculo_utilitario_carga ON (VEIC_ORAS_Codigo = VUCA_VEIC_ORAS_Codigo) " +
+                " LEFT JOIN vupa_veiculo_utilitario_passe ON (VEIC_ORAS_Codigo = VUPA_VEIC_ORAS_Codigo) " +
+            " ORDER BY VEIC_Veiculo.VEIC_Placa ");
+        q.setParameter("usuaLogin", usuario);
+        q.setParameter("usuaSenha", senha);
+        UsuaUsuario usuaUsuario = null;
+
+        try {
+            usuaUsuario = (UsuaUsuario) q.getSingleResult();
+        } catch (Exception e) {
+            usuaUsuario = new UsuaUsuario();
+        }
+
+        SolicitaAcessoVO solicitaAcessoVO = new SolicitaAcessoVO();
+        solicitaAcessoVO.setCodigo(usuaUsuario.getUsuaPfisPessOrasCodigo());
+        solicitaAcessoVO.setLogin(usuaUsuario.getUsuaLogin());
+        solicitaAcessoVO.setNome(usuaUsuario.getPessPessoa().getPessNome());
+        solicitaAcessoVO.setCodPessoa(usuaUsuario.getPessPessoa().getPessOrasCodigo());
+
+        String result = XMLUtil.getIntance().toXML("SolicitaAcesso", solicitaAcessoVO);
+
+        usuaUsuario = null;
+        solicitaAcessoVO = null;
+
+
+        return result;
+    }
 }
