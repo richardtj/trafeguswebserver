@@ -182,23 +182,7 @@ public class TrafegusWS {
     {
         //TODO write your implementation code here:
         EntityManager em = JPAUtil.getInstance().getEntityManager();
-        Query q = em.createNativeQuery(
-            " SELECT " +
-                " VEIC_Veiculo.veic_placa, " +
-                " TVEI_Tipo_Veiculo.tvei_descricao " +
-            " FROM VEIC_Veiculo " +
-                " JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = VEIC_ORAS_Codigo AND ORAS_EOBJ_Codigo = 1) " +
-                " JOIN TVEI_Tipo_Veiculo ON (VEIC_TVEI_Codigo = TVEI_Codigo) " +
-                " JOIN VTRA_Veiculo_Transportador ON (VTRA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo) " +
-                " JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = VTRA_TRAN_PESS_ORAS_Codigo " +
-                " AND TRAN_PESS_ORAS_Codigo = ? ) " +
-                " LEFT JOIN vcar_veiculo_carreta ON (VEIC_ORAS_Codigo = VCAR_VEIC_ORAS_Codigo) " +
-                " LEFT JOIN vcav_veiculo_cavalo ON (VEIC_ORAS_Codigo = VCAV_VEIC_ORAS_Codigo) " +
-                " LEFT JOIN vmot_veiculo_moto ON (VEIC_ORAS_Codigo = VMOT_VEIC_ORAS_Codigo) " +
-                " LEFT JOIN vtru_veiculo_truck ON (VEIC_ORAS_Codigo = VTRU_VEIC_ORAS_Codigo) " +
-                " LEFT JOIN vuca_veiculo_utilitario_carga ON (VEIC_ORAS_Codigo = VUCA_VEIC_ORAS_Codigo) " +
-                " LEFT JOIN vupa_veiculo_utilitario_passe ON (VEIC_ORAS_Codigo = VUPA_VEIC_ORAS_Codigo) " +
-            " ORDER BY VEIC_Veiculo.VEIC_Placa ");
+        Query q = em.createQuery(" ");
         q.setParameter(1, Integer.parseInt(codEmpresa));
 
         Vector<Object> result = null;
