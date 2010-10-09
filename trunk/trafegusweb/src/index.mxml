@@ -10,6 +10,9 @@
 	<fx:Declarations>
 	</fx:Declarations>
 	<view:MainView left="0" right="0" top="0" bottom="0">
-		
+		<view:layout>
+			<s:BasicLayout/>
+		</view:layout>
 	</view:MainView>
+	<s:Button x="54" y="189" label="Button"/>
 </s:Application>
