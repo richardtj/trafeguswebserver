@@ -14,12 +14,15 @@ import br.com.chapecosolucoes.trafegusweb.server.jpa.JPAUtil;
 import br.com.chapecosolucoes.trafegusweb.server.vo.SolicitaAcessoVO;
 import br.com.chapecosolucoes.trafegusweb.server.xml.XMLUtil;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.xml.ws.RequestWrapper;
+import javax.xml.ws.ResponseWrapper;
 
 /**
  *
@@ -65,8 +68,8 @@ public class TrafegusWS {
     @WebMethod(operationName = "solicitaClassesReferencias")
     public String solicitaClassesReferencias(@WebParam(name = "codEmrpesa") String codEmrpesa) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
-        Query q = em.createQuery("SELECT c FROM CrefClasseReferencia c WHERE c.cref_pess_oras_codigo = :cref_pess_oras_codigo");
-        q.setParameter("cref_pess_oras_codigo", codEmrpesa);
+        Query q = em.createQuery("SELECT c FROM CrefClasseReferencia c WHERE c.pessPessoa.pessOrasCodigo = :pessOrasCodigo");
+        q.setParameter("pessOrasCodigo", codEmrpesa);
 
         ArrayList<CrefClasseReferencia> result = null;
         try {
@@ -178,24 +181,23 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaVeiculos")
-    public String solicitaListaVeiculos(@WebParam(name = "codEmpresa") String codEmpresa)
-    {
+    public String solicitaListaVeiculos(@WebParam(name = "codEmpresa") Integer codEmpresa) {
         //TODO write your implementation code here:
         EntityManager em = JPAUtil.getInstance().getEntityManager();
-        Query q = em.createQuery(" ");
-        q.setParameter(1, Integer.parseInt(codEmpresa));
-
-        Vector<Object> result = null;
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT veic, veicTran, trans FROM VeicVeiculo veic ");
+        sb.append(" left join fetch veic.vtraVeiculoTransportadorCollection as veicTran ");
+        sb.append("");
+        Query q = em.createQuery("SELECT v FROM VeicVeiculo v WHERE v.vtraVeiculoTransportadorCollection.tranTransportador.tranPessOrasCodigo = :tranPessOrasCodigo");
+        q.setParameter(1, codEmpresa);
+        ArrayList<VeicVeiculo> result = null;
         try {
-            result = (Vector<Object>) q.getResultList();
+            result = (ArrayList<VeicVeiculo>) q.getResultList();
         } catch (Exception e) {
-            result = new Vector<Object>();
+            result = new ArrayList<VeicVeiculo>();
         }
-        //String result = XMLUtil.getIntance().toXML("SolicitaAcesso", solicitaAcessoVO);
+        em.getTransaction().commit();
+        return XMLUtil.getIntance().toXML(result);
 
-        //usuaUsuario = null;
-        //solicitaAcessoVO = null;
-
-        return "";
     }
 }
