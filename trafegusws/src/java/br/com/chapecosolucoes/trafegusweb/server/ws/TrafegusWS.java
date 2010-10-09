@@ -21,6 +21,7 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 
@@ -185,10 +186,13 @@ public class TrafegusWS {
         //TODO write your implementation code here:
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT veic, veicTran, trans FROM VeicVeiculo veic ");
+        sb.append(" SELECT veic, veicTran, trans ");
+        sb.append(" FROM VeicVeiculo veic ");
         sb.append(" left join fetch veic.vtraVeiculoTransportadorCollection as veicTran ");
-        sb.append("");
-        Query q = em.createQuery("SELECT v FROM VeicVeiculo v WHERE v.vtraVeiculoTransportadorCollection.tranTransportador.tranPessOrasCodigo = :tranPessOrasCodigo");
+        sb.append(" inner join fetch veicTran.tranTransportador as trans ");
+        sb.append(" WHERE ");
+        sb.append("    veic.vtraVeiculoTransportadorCollection.tranTransportador.tranPessOrasCodigo = :tranPessOrasCodigo ");
+        Query q = em.createQuery(sb.toString());
         q.setParameter(1, codEmpresa);
         ArrayList<VeicVeiculo> result = null;
         try {
