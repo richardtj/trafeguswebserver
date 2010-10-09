@@ -8,7 +8,6 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:Button label="Button"/>
 	<view:MapView>
 	</view:MapView>
 </s:Group>
