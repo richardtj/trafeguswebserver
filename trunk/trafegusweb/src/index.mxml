@@ -9,10 +9,9 @@
 			   xmlns:view="br.com.chapecosolucoes.trafegusweb.client.view.*">
 	<fx:Declarations>
 	</fx:Declarations>
-	<view:MainView left="0" right="0" top="0" bottom="0">
+	<view:MainView left="54" right="-54" top="55" bottom="-55">
 		<view:layout>
 			<s:BasicLayout/>
 		</view:layout>
 	</view:MainView>
-	<s:Button x="54" y="189" label="Button"/>
 </s:Application>

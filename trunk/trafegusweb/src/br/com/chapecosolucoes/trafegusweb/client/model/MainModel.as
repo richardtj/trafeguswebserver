@@ -10,7 +10,7 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		public var dpPosicao:ArrayCollection;
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.vo.DataMsg")]
 		public var dpMensagens:ArrayCollection;
-
+		
 		public var veiculoSelecionado:String;
 
 		public function MainModel(enforcer:SingletonEnforcer)
