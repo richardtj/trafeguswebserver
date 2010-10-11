@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,14 +48,14 @@ public class CpadComandoPadrao implements Serializable {
     private Integer cpadCodigoGr;
     @Column(name = "cpad_importado")
     private Character cpadImportado;
-    @OneToMany(mappedBy = "cpadComandoPadrao", fetch = FetchType.LAZY)
-    private Collection<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoCollection;
-    @OneToMany(mappedBy = "cpadComandoPadrao", fetch = FetchType.LAZY)
-    private Collection<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiCollection;
-    @OneToMany(mappedBy = "cpadComandoPadrao", fetch = FetchType.LAZY)
-    private Collection<AcomAcaoComando> acomAcaoComandoCollection;
-    @OneToMany(mappedBy = "cpadComandoPadrao", fetch = FetchType.LAZY)
-    private Collection<EcomEnvioComando> ecomEnvioComandoCollection;
+    @OneToMany(mappedBy = "cpadComandoPadrao", fetch = FetchType.EAGER)
+    private List<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoList;
+    @OneToMany(mappedBy = "cpadComandoPadrao", fetch = FetchType.EAGER)
+    private List<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiList;
+    @OneToMany(mappedBy = "cpadComandoPadrao", fetch = FetchType.EAGER)
+    private List<AcomAcaoComando> acomAcaoComandoList;
+    @OneToMany(mappedBy = "cpadComandoPadrao", fetch = FetchType.EAGER)
+    private List<EcomEnvioComando> ecomEnvioComandoList;
 
     public CpadComandoPadrao() {
     }
@@ -104,36 +104,36 @@ public class CpadComandoPadrao implements Serializable {
         this.cpadImportado = cpadImportado;
     }
 
-    public Collection<PcpaParametroComandoPadrao> getPcpaParametroComandoPadraoCollection() {
-        return pcpaParametroComandoPadraoCollection;
+    public List<PcpaParametroComandoPadrao> getPcpaParametroComandoPadraoList() {
+        return pcpaParametroComandoPadraoList;
     }
 
-    public void setPcpaParametroComandoPadraoCollection(Collection<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoCollection) {
-        this.pcpaParametroComandoPadraoCollection = pcpaParametroComandoPadraoCollection;
+    public void setPcpaParametroComandoPadraoList(List<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoList) {
+        this.pcpaParametroComandoPadraoList = pcpaParametroComandoPadraoList;
     }
 
-    public Collection<CvteComandoVersaoTecnologi> getCvteComandoVersaoTecnologiCollection() {
-        return cvteComandoVersaoTecnologiCollection;
+    public List<CvteComandoVersaoTecnologi> getCvteComandoVersaoTecnologiList() {
+        return cvteComandoVersaoTecnologiList;
     }
 
-    public void setCvteComandoVersaoTecnologiCollection(Collection<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiCollection) {
-        this.cvteComandoVersaoTecnologiCollection = cvteComandoVersaoTecnologiCollection;
+    public void setCvteComandoVersaoTecnologiList(List<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiList) {
+        this.cvteComandoVersaoTecnologiList = cvteComandoVersaoTecnologiList;
     }
 
-    public Collection<AcomAcaoComando> getAcomAcaoComandoCollection() {
-        return acomAcaoComandoCollection;
+    public List<AcomAcaoComando> getAcomAcaoComandoList() {
+        return acomAcaoComandoList;
     }
 
-    public void setAcomAcaoComandoCollection(Collection<AcomAcaoComando> acomAcaoComandoCollection) {
-        this.acomAcaoComandoCollection = acomAcaoComandoCollection;
+    public void setAcomAcaoComandoList(List<AcomAcaoComando> acomAcaoComandoList) {
+        this.acomAcaoComandoList = acomAcaoComandoList;
     }
 
-    public Collection<EcomEnvioComando> getEcomEnvioComandoCollection() {
-        return ecomEnvioComandoCollection;
+    public List<EcomEnvioComando> getEcomEnvioComandoList() {
+        return ecomEnvioComandoList;
     }
 
-    public void setEcomEnvioComandoCollection(Collection<EcomEnvioComando> ecomEnvioComandoCollection) {
-        this.ecomEnvioComandoCollection = ecomEnvioComandoCollection;
+    public void setEcomEnvioComandoList(List<EcomEnvioComando> ecomEnvioComandoList) {
+        this.ecomEnvioComandoList = ecomEnvioComandoList;
     }
 
     @Override

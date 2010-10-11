@@ -50,13 +50,13 @@ public class VccaVeiculoCavaloCarreta implements Serializable {
     @Column(name = "vcca_importado")
     private Character vccaImportado;
     @JoinColumn(name = "vcca_vcav_veic_oras_codigo", referencedColumnName = "vcav_veic_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VcavVeiculoCavalo vcavVeiculoCavalo;
     @JoinColumn(name = "vcca_vcar_veic_oras_codigo", referencedColumnName = "vcar_veic_oras_codigo")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private VcarVeiculoCarreta vcarVeiculoCarreta;
     @JoinColumn(name = "vcca_cont_oras_codigo", referencedColumnName = "cont_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ContContainer contContainer;
 
     public VccaVeiculoCavaloCarreta() {

@@ -42,7 +42,7 @@ public class SinsServicoInstancia implements Serializable {
     @Column(name = "sins_monitorado_guardiao")
     private Character sinsMonitoradoGuardiao;
     @JoinColumn(name = "sins_ssis_codigo", referencedColumnName = "ssis_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private SsisServicoSistema ssisServicoSistema;
 
     public SinsServicoInstancia() {

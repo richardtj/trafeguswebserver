@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,26 +35,26 @@ public class EmbaEmbarcador implements Serializable {
     @Basic(optional = false)
     @Column(name = "emba_pjur_pess_oras_codigo")
     private Integer embaPjurPessOrasCodigo;
-    @OneToMany(mappedBy = "embaEmbarcador", fetch = FetchType.LAZY)
-    private Collection<ViagViagem> viagViagemCollection;
-    @OneToMany(mappedBy = "embaEmbarcador", fetch = FetchType.LAZY)
-    private Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection;
-    @OneToMany(mappedBy = "embaEmbarcador", fetch = FetchType.LAZY)
-    private Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection;
-    @OneToMany(mappedBy = "embaEmbarcador", fetch = FetchType.LAZY)
-    private Collection<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenCollection;
-    @OneToMany(mappedBy = "embaEmbarcador", fetch = FetchType.LAZY)
-    private Collection<ElocEmbarcadorLocal> elocEmbarcadorLocalCollection;
+    @OneToMany(mappedBy = "embaEmbarcador", fetch = FetchType.EAGER)
+    private List<ViagViagem> viagViagemList;
+    @OneToMany(mappedBy = "embaEmbarcador", fetch = FetchType.EAGER)
+    private List<TembTransportadorEmbarcador> tembTransportadorEmbarcadorList;
+    @OneToMany(mappedBy = "embaEmbarcador", fetch = FetchType.EAGER)
+    private List<VembVeiculoEmbarcador> vembVeiculoEmbarcadorList;
+    @OneToMany(mappedBy = "embaEmbarcador", fetch = FetchType.EAGER)
+    private List<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenList;
+    @OneToMany(mappedBy = "embaEmbarcador", fetch = FetchType.EAGER)
+    private List<ElocEmbarcadorLocal> elocEmbarcadorLocalList;
     @JoinColumn(name = "emba_test_codigo", referencedColumnName = "test_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TestTipoEstabelecimento testTipoEstabelecimento;
     @JoinColumn(name = "emba_pjur_pess_oras_codigo", referencedColumnName = "pjur_pess_oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private PjurPessoaJuridica pjurPessoaJuridica;
-    @OneToMany(mappedBy = "embaEmbarcador", fetch = FetchType.LAZY)
-    private Collection<EmbaEmbarcador> embaEmbarcadorCollection;
+    @OneToMany(mappedBy = "embaEmbarcador", fetch = FetchType.EAGER)
+    private List<EmbaEmbarcador> embaEmbarcadorList;
     @JoinColumn(name = "emba_pjur_pess_oras_codigo_matriz", referencedColumnName = "emba_pjur_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EmbaEmbarcador embaEmbarcador;
 
     public EmbaEmbarcador() {
@@ -72,44 +72,44 @@ public class EmbaEmbarcador implements Serializable {
         this.embaPjurPessOrasCodigo = embaPjurPessOrasCodigo;
     }
 
-    public Collection<ViagViagem> getViagViagemCollection() {
-        return viagViagemCollection;
+    public List<ViagViagem> getViagViagemList() {
+        return viagViagemList;
     }
 
-    public void setViagViagemCollection(Collection<ViagViagem> viagViagemCollection) {
-        this.viagViagemCollection = viagViagemCollection;
+    public void setViagViagemList(List<ViagViagem> viagViagemList) {
+        this.viagViagemList = viagViagemList;
     }
 
-    public Collection<TembTransportadorEmbarcador> getTembTransportadorEmbarcadorCollection() {
-        return tembTransportadorEmbarcadorCollection;
+    public List<TembTransportadorEmbarcador> getTembTransportadorEmbarcadorList() {
+        return tembTransportadorEmbarcadorList;
     }
 
-    public void setTembTransportadorEmbarcadorCollection(Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection) {
-        this.tembTransportadorEmbarcadorCollection = tembTransportadorEmbarcadorCollection;
+    public void setTembTransportadorEmbarcadorList(List<TembTransportadorEmbarcador> tembTransportadorEmbarcadorList) {
+        this.tembTransportadorEmbarcadorList = tembTransportadorEmbarcadorList;
     }
 
-    public Collection<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorCollection() {
-        return vembVeiculoEmbarcadorCollection;
+    public List<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorList() {
+        return vembVeiculoEmbarcadorList;
     }
 
-    public void setVembVeiculoEmbarcadorCollection(Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection) {
-        this.vembVeiculoEmbarcadorCollection = vembVeiculoEmbarcadorCollection;
+    public void setVembVeiculoEmbarcadorList(List<VembVeiculoEmbarcador> vembVeiculoEmbarcadorList) {
+        this.vembVeiculoEmbarcadorList = vembVeiculoEmbarcadorList;
     }
 
-    public Collection<EspgEmbarcSegurPlanoGeren> getEspgEmbarcSegurPlanoGerenCollection() {
-        return espgEmbarcSegurPlanoGerenCollection;
+    public List<EspgEmbarcSegurPlanoGeren> getEspgEmbarcSegurPlanoGerenList() {
+        return espgEmbarcSegurPlanoGerenList;
     }
 
-    public void setEspgEmbarcSegurPlanoGerenCollection(Collection<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenCollection) {
-        this.espgEmbarcSegurPlanoGerenCollection = espgEmbarcSegurPlanoGerenCollection;
+    public void setEspgEmbarcSegurPlanoGerenList(List<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenList) {
+        this.espgEmbarcSegurPlanoGerenList = espgEmbarcSegurPlanoGerenList;
     }
 
-    public Collection<ElocEmbarcadorLocal> getElocEmbarcadorLocalCollection() {
-        return elocEmbarcadorLocalCollection;
+    public List<ElocEmbarcadorLocal> getElocEmbarcadorLocalList() {
+        return elocEmbarcadorLocalList;
     }
 
-    public void setElocEmbarcadorLocalCollection(Collection<ElocEmbarcadorLocal> elocEmbarcadorLocalCollection) {
-        this.elocEmbarcadorLocalCollection = elocEmbarcadorLocalCollection;
+    public void setElocEmbarcadorLocalList(List<ElocEmbarcadorLocal> elocEmbarcadorLocalList) {
+        this.elocEmbarcadorLocalList = elocEmbarcadorLocalList;
     }
 
     public TestTipoEstabelecimento getTestTipoEstabelecimento() {
@@ -128,12 +128,12 @@ public class EmbaEmbarcador implements Serializable {
         this.pjurPessoaJuridica = pjurPessoaJuridica;
     }
 
-    public Collection<EmbaEmbarcador> getEmbaEmbarcadorCollection() {
-        return embaEmbarcadorCollection;
+    public List<EmbaEmbarcador> getEmbaEmbarcadorList() {
+        return embaEmbarcadorList;
     }
 
-    public void setEmbaEmbarcadorCollection(Collection<EmbaEmbarcador> embaEmbarcadorCollection) {
-        this.embaEmbarcadorCollection = embaEmbarcadorCollection;
+    public void setEmbaEmbarcadorList(List<EmbaEmbarcador> embaEmbarcadorList) {
+        this.embaEmbarcadorList = embaEmbarcadorList;
     }
 
     public EmbaEmbarcador getEmbaEmbarcador() {

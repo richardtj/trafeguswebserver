@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,15 +53,15 @@ public class CidaCidade implements Serializable {
     private Integer cidaCodigoGr;
     @Column(name = "cida_importado")
     private Character cidaImportado;
-    @OneToMany(mappedBy = "cidaCidade", fetch = FetchType.LAZY)
-    private Collection<VeicVeiculo> veicVeiculoCollection;
+    @OneToMany(mappedBy = "cidaCidade", fetch = FetchType.EAGER)
+    private List<VeicVeiculo> veicVeiculoList;
     @JoinColumn(name = "cida_esta_codigo", referencedColumnName = "esta_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EstaEstado estaEstado;
-    @OneToMany(mappedBy = "cidaCidade", fetch = FetchType.LAZY)
-    private Collection<RefeReferencia> refeReferenciaCollection;
-    @OneToMany(mappedBy = "cidaCidade", fetch = FetchType.LAZY)
-    private Collection<BairBairro> bairBairroCollection;
+    @OneToMany(mappedBy = "cidaCidade", fetch = FetchType.EAGER)
+    private List<RefeReferencia> refeReferenciaList;
+    @OneToMany(mappedBy = "cidaCidade", fetch = FetchType.EAGER)
+    private List<BairBairro> bairBairroList;
 
     public CidaCidade() {
     }
@@ -118,12 +118,12 @@ public class CidaCidade implements Serializable {
         this.cidaImportado = cidaImportado;
     }
 
-    public Collection<VeicVeiculo> getVeicVeiculoCollection() {
-        return veicVeiculoCollection;
+    public List<VeicVeiculo> getVeicVeiculoList() {
+        return veicVeiculoList;
     }
 
-    public void setVeicVeiculoCollection(Collection<VeicVeiculo> veicVeiculoCollection) {
-        this.veicVeiculoCollection = veicVeiculoCollection;
+    public void setVeicVeiculoList(List<VeicVeiculo> veicVeiculoList) {
+        this.veicVeiculoList = veicVeiculoList;
     }
 
     public EstaEstado getEstaEstado() {
@@ -134,20 +134,20 @@ public class CidaCidade implements Serializable {
         this.estaEstado = estaEstado;
     }
 
-    public Collection<RefeReferencia> getRefeReferenciaCollection() {
-        return refeReferenciaCollection;
+    public List<RefeReferencia> getRefeReferenciaList() {
+        return refeReferenciaList;
     }
 
-    public void setRefeReferenciaCollection(Collection<RefeReferencia> refeReferenciaCollection) {
-        this.refeReferenciaCollection = refeReferenciaCollection;
+    public void setRefeReferenciaList(List<RefeReferencia> refeReferenciaList) {
+        this.refeReferenciaList = refeReferenciaList;
     }
 
-    public Collection<BairBairro> getBairBairroCollection() {
-        return bairBairroCollection;
+    public List<BairBairro> getBairBairroList() {
+        return bairBairroList;
     }
 
-    public void setBairBairroCollection(Collection<BairBairro> bairBairroCollection) {
-        this.bairBairroCollection = bairBairroCollection;
+    public void setBairBairroList(List<BairBairro> bairBairroList) {
+        this.bairBairroList = bairBairroList;
     }
 
     @Override

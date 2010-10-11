@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,8 +35,8 @@ public class TmacTipoMacro implements Serializable {
     private Integer tmacCodigo;
     @Column(name = "tmac_descricao")
     private String tmacDescricao;
-    @OneToMany(mappedBy = "tmacTipoMacro", fetch = FetchType.LAZY)
-    private Collection<MpadMacroPadrao> mpadMacroPadraoCollection;
+    @OneToMany(mappedBy = "tmacTipoMacro", fetch = FetchType.EAGER)
+    private List<MpadMacroPadrao> mpadMacroPadraoList;
 
     public TmacTipoMacro() {
     }
@@ -61,12 +61,12 @@ public class TmacTipoMacro implements Serializable {
         this.tmacDescricao = tmacDescricao;
     }
 
-    public Collection<MpadMacroPadrao> getMpadMacroPadraoCollection() {
-        return mpadMacroPadraoCollection;
+    public List<MpadMacroPadrao> getMpadMacroPadraoList() {
+        return mpadMacroPadraoList;
     }
 
-    public void setMpadMacroPadraoCollection(Collection<MpadMacroPadrao> mpadMacroPadraoCollection) {
-        this.mpadMacroPadraoCollection = mpadMacroPadraoCollection;
+    public void setMpadMacroPadraoList(List<MpadMacroPadrao> mpadMacroPadraoList) {
+        this.mpadMacroPadraoList = mpadMacroPadraoList;
     }
 
     @Override

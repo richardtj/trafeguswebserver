@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,16 +35,16 @@ public class VcavVeiculoCavalo implements Serializable {
     @Basic(optional = false)
     @Column(name = "vcav_veic_oras_codigo")
     private Integer vcavVeicOrasCodigo;
-    @OneToMany(mappedBy = "vcavVeiculoCavalo", fetch = FetchType.LAZY)
-    private Collection<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaCollection;
+    @OneToMany(mappedBy = "vcavVeiculoCavalo", fetch = FetchType.EAGER)
+    private List<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaList;
     @JoinColumn(name = "vcav_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vcav_tope_codigo", referencedColumnName = "tope_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TopeTipoOperacao topeTipoOperacao;
     @JoinColumn(name = "vcav_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
 
     public VcavVeiculoCavalo() {
@@ -62,12 +62,12 @@ public class VcavVeiculoCavalo implements Serializable {
         this.vcavVeicOrasCodigo = vcavVeicOrasCodigo;
     }
 
-    public Collection<VccaVeiculoCavaloCarreta> getVccaVeiculoCavaloCarretaCollection() {
-        return vccaVeiculoCavaloCarretaCollection;
+    public List<VccaVeiculoCavaloCarreta> getVccaVeiculoCavaloCarretaList() {
+        return vccaVeiculoCavaloCarretaList;
     }
 
-    public void setVccaVeiculoCavaloCarretaCollection(Collection<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaCollection) {
-        this.vccaVeiculoCavaloCarretaCollection = vccaVeiculoCavaloCarretaCollection;
+    public void setVccaVeiculoCavaloCarretaList(List<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaList) {
+        this.vccaVeiculoCavaloCarretaList = vccaVeiculoCavaloCarretaList;
     }
 
     public VeicVeiculo getVeicVeiculo() {

@@ -49,10 +49,10 @@ public class PaiaPgAssociaItemAcao implements Serializable {
     @Column(name = "paia_tempo_espera")
     private Integer paiaTempoEspera;
     @JoinColumn(name = "paia_pgai_codigo", referencedColumnName = "pgai_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PgaiPgAssociaItem pgaiPgAssociaItem;
     @JoinColumn(name = "paia_apad_codigo", referencedColumnName = "apad_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public PaiaPgAssociaItemAcao() {

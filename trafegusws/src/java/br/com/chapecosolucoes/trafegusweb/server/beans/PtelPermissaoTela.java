@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -65,10 +65,10 @@ public class PtelPermissaoTela implements Serializable {
     private Integer ptelCodigoGr;
     @Column(name = "ptel_importado")
     private Character ptelImportado;
-    @OneToMany(mappedBy = "ptelPermissaoTela", fetch = FetchType.LAZY)
-    private Collection<PcamPermissaoCampo> pcamPermissaoCampoCollection;
+    @OneToMany(mappedBy = "ptelPermissaoTela", fetch = FetchType.EAGER)
+    private List<PcamPermissaoCampo> pcamPermissaoCampoList;
     @JoinColumn(name = "ptel_perf_codigo", referencedColumnName = "perf_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PerfPerfil perfPerfil;
 
     public PtelPermissaoTela() {
@@ -158,12 +158,12 @@ public class PtelPermissaoTela implements Serializable {
         this.ptelImportado = ptelImportado;
     }
 
-    public Collection<PcamPermissaoCampo> getPcamPermissaoCampoCollection() {
-        return pcamPermissaoCampoCollection;
+    public List<PcamPermissaoCampo> getPcamPermissaoCampoList() {
+        return pcamPermissaoCampoList;
     }
 
-    public void setPcamPermissaoCampoCollection(Collection<PcamPermissaoCampo> pcamPermissaoCampoCollection) {
-        this.pcamPermissaoCampoCollection = pcamPermissaoCampoCollection;
+    public void setPcamPermissaoCampoList(List<PcamPermissaoCampo> pcamPermissaoCampoList) {
+        this.pcamPermissaoCampoList = pcamPermissaoCampoList;
     }
 
     public PerfPerfil getPerfPerfil() {

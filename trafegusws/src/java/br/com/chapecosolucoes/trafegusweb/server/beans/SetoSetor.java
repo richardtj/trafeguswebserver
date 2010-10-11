@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,8 +48,8 @@ public class SetoSetor implements Serializable {
     private Integer setoCodigoGr;
     @Column(name = "seto_importado")
     private Character setoImportado;
-    @OneToMany(mappedBy = "setoSetor", fetch = FetchType.LAZY)
-    private Collection<UsuaUsuario> usuaUsuarioCollection;
+    @OneToMany(mappedBy = "setoSetor", fetch = FetchType.EAGER)
+    private List<UsuaUsuario> usuaUsuarioList;
 
     public SetoSetor() {
     }
@@ -98,12 +98,12 @@ public class SetoSetor implements Serializable {
         this.setoImportado = setoImportado;
     }
 
-    public Collection<UsuaUsuario> getUsuaUsuarioCollection() {
-        return usuaUsuarioCollection;
+    public List<UsuaUsuario> getUsuaUsuarioList() {
+        return usuaUsuarioList;
     }
 
-    public void setUsuaUsuarioCollection(Collection<UsuaUsuario> usuaUsuarioCollection) {
-        this.usuaUsuarioCollection = usuaUsuarioCollection;
+    public void setUsuaUsuarioList(List<UsuaUsuario> usuaUsuarioList) {
+        this.usuaUsuarioList = usuaUsuarioList;
     }
 
     @Override

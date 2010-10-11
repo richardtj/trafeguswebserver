@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,8 +48,8 @@ public class MveiMarcaVeiculo implements Serializable {
     private Integer mveiCodigoGr;
     @Column(name = "mvei_importado")
     private Character mveiImportado;
-    @OneToMany(mappedBy = "mveiMarcaVeiculo", fetch = FetchType.LAZY)
-    private Collection<MvecModeloVeiculo> mvecModeloVeiculoCollection;
+    @OneToMany(mappedBy = "mveiMarcaVeiculo", fetch = FetchType.EAGER)
+    private List<MvecModeloVeiculo> mvecModeloVeiculoList;
 
     public MveiMarcaVeiculo() {
     }
@@ -98,12 +98,12 @@ public class MveiMarcaVeiculo implements Serializable {
         this.mveiImportado = mveiImportado;
     }
 
-    public Collection<MvecModeloVeiculo> getMvecModeloVeiculoCollection() {
-        return mvecModeloVeiculoCollection;
+    public List<MvecModeloVeiculo> getMvecModeloVeiculoList() {
+        return mvecModeloVeiculoList;
     }
 
-    public void setMvecModeloVeiculoCollection(Collection<MvecModeloVeiculo> mvecModeloVeiculoCollection) {
-        this.mvecModeloVeiculoCollection = mvecModeloVeiculoCollection;
+    public void setMvecModeloVeiculoList(List<MvecModeloVeiculo> mvecModeloVeiculoList) {
+        this.mvecModeloVeiculoList = mvecModeloVeiculoList;
     }
 
     @Override

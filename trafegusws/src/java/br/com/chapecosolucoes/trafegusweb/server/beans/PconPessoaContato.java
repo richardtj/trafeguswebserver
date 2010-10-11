@@ -46,10 +46,10 @@ public class PconPessoaContato implements Serializable {
     @Column(name = "pcon_importado")
     private Character pconImportado;
     @JoinColumn(name = "pcon_pess_oras_codigo", referencedColumnName = "pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PessPessoa pessPessoa;
     @JoinColumn(name = "pcon_cona_codigo", referencedColumnName = "cona_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ConaContato conaContato;
 
     public PconPessoaContato() {

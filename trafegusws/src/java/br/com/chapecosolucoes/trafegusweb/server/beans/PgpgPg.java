@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,19 +53,19 @@ public class PgpgPg implements Serializable {
     private Character pgpgImportado;
     @Column(name = "pgpg_validacao_operacao")
     private String pgpgValidacaoOperacao;
-    @OneToMany(mappedBy = "pgpgPg", fetch = FetchType.LAZY)
-    private Collection<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenCollection;
-    @OneToMany(mappedBy = "pgpgPg", fetch = FetchType.LAZY)
-    private Collection<ViagViagem> viagViagemCollection;
-    @OneToMany(mappedBy = "pgpgPg", fetch = FetchType.LAZY)
-    private Collection<PgaiPgAssociaItem> pgaiPgAssociaItemCollection;
+    @OneToMany(mappedBy = "pgpgPg", fetch = FetchType.EAGER)
+    private List<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenList;
+    @OneToMany(mappedBy = "pgpgPg", fetch = FetchType.EAGER)
+    private List<ViagViagem> viagViagemList;
+    @OneToMany(mappedBy = "pgpgPg", fetch = FetchType.EAGER)
+    private List<PgaiPgAssociaItem> pgaiPgAssociaItemList;
     @JoinColumn(name = "pgpg_pfva_codigo", referencedColumnName = "pfva_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PfvaPgFaixaValor pfvaPgFaixaValor;
-    @OneToMany(mappedBy = "pgpgPg", fetch = FetchType.LAZY)
-    private Collection<OrasObjetoRastreado> orasObjetoRastreadoCollection;
-    @OneToMany(mappedBy = "pgpgPg", fetch = FetchType.LAZY)
-    private Collection<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenCollection;
+    @OneToMany(mappedBy = "pgpgPg", fetch = FetchType.EAGER)
+    private List<OrasObjetoRastreado> orasObjetoRastreadoList;
+    @OneToMany(mappedBy = "pgpgPg", fetch = FetchType.EAGER)
+    private List<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenList;
 
     public PgpgPg() {
     }
@@ -122,28 +122,28 @@ public class PgpgPg implements Serializable {
         this.pgpgValidacaoOperacao = pgpgValidacaoOperacao;
     }
 
-    public Collection<TspgTranspSegurPlanoGeren> getTspgTranspSegurPlanoGerenCollection() {
-        return tspgTranspSegurPlanoGerenCollection;
+    public List<TspgTranspSegurPlanoGeren> getTspgTranspSegurPlanoGerenList() {
+        return tspgTranspSegurPlanoGerenList;
     }
 
-    public void setTspgTranspSegurPlanoGerenCollection(Collection<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenCollection) {
-        this.tspgTranspSegurPlanoGerenCollection = tspgTranspSegurPlanoGerenCollection;
+    public void setTspgTranspSegurPlanoGerenList(List<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenList) {
+        this.tspgTranspSegurPlanoGerenList = tspgTranspSegurPlanoGerenList;
     }
 
-    public Collection<ViagViagem> getViagViagemCollection() {
-        return viagViagemCollection;
+    public List<ViagViagem> getViagViagemList() {
+        return viagViagemList;
     }
 
-    public void setViagViagemCollection(Collection<ViagViagem> viagViagemCollection) {
-        this.viagViagemCollection = viagViagemCollection;
+    public void setViagViagemList(List<ViagViagem> viagViagemList) {
+        this.viagViagemList = viagViagemList;
     }
 
-    public Collection<PgaiPgAssociaItem> getPgaiPgAssociaItemCollection() {
-        return pgaiPgAssociaItemCollection;
+    public List<PgaiPgAssociaItem> getPgaiPgAssociaItemList() {
+        return pgaiPgAssociaItemList;
     }
 
-    public void setPgaiPgAssociaItemCollection(Collection<PgaiPgAssociaItem> pgaiPgAssociaItemCollection) {
-        this.pgaiPgAssociaItemCollection = pgaiPgAssociaItemCollection;
+    public void setPgaiPgAssociaItemList(List<PgaiPgAssociaItem> pgaiPgAssociaItemList) {
+        this.pgaiPgAssociaItemList = pgaiPgAssociaItemList;
     }
 
     public PfvaPgFaixaValor getPfvaPgFaixaValor() {
@@ -154,20 +154,20 @@ public class PgpgPg implements Serializable {
         this.pfvaPgFaixaValor = pfvaPgFaixaValor;
     }
 
-    public Collection<OrasObjetoRastreado> getOrasObjetoRastreadoCollection() {
-        return orasObjetoRastreadoCollection;
+    public List<OrasObjetoRastreado> getOrasObjetoRastreadoList() {
+        return orasObjetoRastreadoList;
     }
 
-    public void setOrasObjetoRastreadoCollection(Collection<OrasObjetoRastreado> orasObjetoRastreadoCollection) {
-        this.orasObjetoRastreadoCollection = orasObjetoRastreadoCollection;
+    public void setOrasObjetoRastreadoList(List<OrasObjetoRastreado> orasObjetoRastreadoList) {
+        this.orasObjetoRastreadoList = orasObjetoRastreadoList;
     }
 
-    public Collection<EspgEmbarcSegurPlanoGeren> getEspgEmbarcSegurPlanoGerenCollection() {
-        return espgEmbarcSegurPlanoGerenCollection;
+    public List<EspgEmbarcSegurPlanoGeren> getEspgEmbarcSegurPlanoGerenList() {
+        return espgEmbarcSegurPlanoGerenList;
     }
 
-    public void setEspgEmbarcSegurPlanoGerenCollection(Collection<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenCollection) {
-        this.espgEmbarcSegurPlanoGerenCollection = espgEmbarcSegurPlanoGerenCollection;
+    public void setEspgEmbarcSegurPlanoGerenList(List<EspgEmbarcSegurPlanoGeren> espgEmbarcSegurPlanoGerenList) {
+        this.espgEmbarcSegurPlanoGerenList = espgEmbarcSegurPlanoGerenList;
     }
 
     @Override

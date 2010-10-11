@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,8 +35,8 @@ public class EterEstatusTerminal implements Serializable {
     private Integer eterCodigo;
     @Column(name = "eter_descricao")
     private String eterDescricao;
-    @OneToMany(mappedBy = "eterEstatusTerminal", fetch = FetchType.LAZY)
-    private Collection<TermTerminal> termTerminalCollection;
+    @OneToMany(mappedBy = "eterEstatusTerminal", fetch = FetchType.EAGER)
+    private List<TermTerminal> termTerminalList;
 
     public EterEstatusTerminal() {
     }
@@ -61,12 +61,12 @@ public class EterEstatusTerminal implements Serializable {
         this.eterDescricao = eterDescricao;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection() {
-        return termTerminalCollection;
+    public List<TermTerminal> getTermTerminalList() {
+        return termTerminalList;
     }
 
-    public void setTermTerminalCollection(Collection<TermTerminal> termTerminalCollection) {
-        this.termTerminalCollection = termTerminalCollection;
+    public void setTermTerminalList(List<TermTerminal> termTerminalList) {
+        this.termTerminalList = termTerminalList;
     }
 
     @Override

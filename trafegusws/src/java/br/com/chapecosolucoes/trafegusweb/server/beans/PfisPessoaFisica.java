@@ -50,11 +50,11 @@ public class PfisPessoaFisica implements Serializable {
     @Column(name = "pfis_sexo")
     private String pfisSexo;
     @JoinColumn(name = "pfis_pess_oras_codigo", referencedColumnName = "pess_oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private PessPessoa pessPessoa;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pfisPessoaFisica", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pfisPessoaFisica", fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pfisPessoaFisica", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pfisPessoaFisica", fetch = FetchType.EAGER)
     private MotoMotorista motoMotorista;
 
     public PfisPessoaFisica() {

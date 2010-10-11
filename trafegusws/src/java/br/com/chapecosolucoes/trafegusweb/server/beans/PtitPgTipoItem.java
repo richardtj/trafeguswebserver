@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,8 +35,8 @@ public class PtitPgTipoItem implements Serializable {
     private Integer ptitCodigo;
     @Column(name = "ptit_descricao")
     private String ptitDescricao;
-    @OneToMany(mappedBy = "ptitPgTipoItem", fetch = FetchType.LAZY)
-    private Collection<PitePgItem> pitePgItemCollection;
+    @OneToMany(mappedBy = "ptitPgTipoItem", fetch = FetchType.EAGER)
+    private List<PitePgItem> pitePgItemList;
 
     public PtitPgTipoItem() {
     }
@@ -61,12 +61,12 @@ public class PtitPgTipoItem implements Serializable {
         this.ptitDescricao = ptitDescricao;
     }
 
-    public Collection<PitePgItem> getPitePgItemCollection() {
-        return pitePgItemCollection;
+    public List<PitePgItem> getPitePgItemList() {
+        return pitePgItemList;
     }
 
-    public void setPitePgItemCollection(Collection<PitePgItem> pitePgItemCollection) {
-        this.pitePgItemCollection = pitePgItemCollection;
+    public void setPitePgItemList(List<PitePgItem> pitePgItemList) {
+        this.pitePgItemList = pitePgItemList;
     }
 
     @Override

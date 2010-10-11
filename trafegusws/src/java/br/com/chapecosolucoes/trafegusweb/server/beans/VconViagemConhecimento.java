@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,13 +50,13 @@ public class VconViagemConhecimento implements Serializable {
     private Integer vconCodigoGr;
     @Column(name = "vcon_importado")
     private Character vconImportado;
-    @OneToMany(mappedBy = "vconViagemConhecimento", fetch = FetchType.LAZY)
-    private Collection<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalCollection;
+    @OneToMany(mappedBy = "vconViagemConhecimento", fetch = FetchType.EAGER)
+    private List<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalList;
     @JoinColumn(name = "vcon_vloc_codigo", referencedColumnName = "vloc_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VlocViagemLocal vlocViagemLocal;
     @JoinColumn(name = "vcon_viag_codigo", referencedColumnName = "viag_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ViagViagem viagViagem;
 
     public VconViagemConhecimento() {
@@ -106,12 +106,12 @@ public class VconViagemConhecimento implements Serializable {
         this.vconImportado = vconImportado;
     }
 
-    public Collection<VnfiViagemNotaFiscal> getVnfiViagemNotaFiscalCollection() {
-        return vnfiViagemNotaFiscalCollection;
+    public List<VnfiViagemNotaFiscal> getVnfiViagemNotaFiscalList() {
+        return vnfiViagemNotaFiscalList;
     }
 
-    public void setVnfiViagemNotaFiscalCollection(Collection<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalCollection) {
-        this.vnfiViagemNotaFiscalCollection = vnfiViagemNotaFiscalCollection;
+    public void setVnfiViagemNotaFiscalList(List<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalList) {
+        this.vnfiViagemNotaFiscalList = vnfiViagemNotaFiscalList;
     }
 
     public VlocViagemLocal getVlocViagemLocal() {

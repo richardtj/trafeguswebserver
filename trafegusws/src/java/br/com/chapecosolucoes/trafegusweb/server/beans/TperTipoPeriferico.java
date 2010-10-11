@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,8 +35,8 @@ public class TperTipoPeriferico implements Serializable {
     private Integer tperCodigo;
     @Column(name = "tper_descricao")
     private String tperDescricao;
-    @OneToMany(mappedBy = "tperTipoPeriferico", fetch = FetchType.LAZY)
-    private Collection<PpadPerifericoPadrao> ppadPerifericoPadraoCollection;
+    @OneToMany(mappedBy = "tperTipoPeriferico", fetch = FetchType.EAGER)
+    private List<PpadPerifericoPadrao> ppadPerifericoPadraoList;
 
     public TperTipoPeriferico() {
     }
@@ -61,12 +61,12 @@ public class TperTipoPeriferico implements Serializable {
         this.tperDescricao = tperDescricao;
     }
 
-    public Collection<PpadPerifericoPadrao> getPpadPerifericoPadraoCollection() {
-        return ppadPerifericoPadraoCollection;
+    public List<PpadPerifericoPadrao> getPpadPerifericoPadraoList() {
+        return ppadPerifericoPadraoList;
     }
 
-    public void setPpadPerifericoPadraoCollection(Collection<PpadPerifericoPadrao> ppadPerifericoPadraoCollection) {
-        this.ppadPerifericoPadraoCollection = ppadPerifericoPadraoCollection;
+    public void setPpadPerifericoPadraoList(List<PpadPerifericoPadrao> ppadPerifericoPadraoList) {
+        this.ppadPerifericoPadraoList = ppadPerifericoPadraoList;
     }
 
     @Override

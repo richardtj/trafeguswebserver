@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,10 +35,10 @@ public class TparTipoParada implements Serializable {
     private Integer tparCodigo;
     @Column(name = "tpar_descricao")
     private String tparDescricao;
-    @OneToMany(mappedBy = "tparTipoParada", fetch = FetchType.LAZY)
-    private Collection<RponRotaPonto> rponRotaPontoCollection;
-    @OneToMany(mappedBy = "tparTipoParada", fetch = FetchType.LAZY)
-    private Collection<VlocViagemLocal> vlocViagemLocalCollection;
+    @OneToMany(mappedBy = "tparTipoParada", fetch = FetchType.EAGER)
+    private List<RponRotaPonto> rponRotaPontoList;
+    @OneToMany(mappedBy = "tparTipoParada", fetch = FetchType.EAGER)
+    private List<VlocViagemLocal> vlocViagemLocalList;
 
     public TparTipoParada() {
     }
@@ -63,20 +63,20 @@ public class TparTipoParada implements Serializable {
         this.tparDescricao = tparDescricao;
     }
 
-    public Collection<RponRotaPonto> getRponRotaPontoCollection() {
-        return rponRotaPontoCollection;
+    public List<RponRotaPonto> getRponRotaPontoList() {
+        return rponRotaPontoList;
     }
 
-    public void setRponRotaPontoCollection(Collection<RponRotaPonto> rponRotaPontoCollection) {
-        this.rponRotaPontoCollection = rponRotaPontoCollection;
+    public void setRponRotaPontoList(List<RponRotaPonto> rponRotaPontoList) {
+        this.rponRotaPontoList = rponRotaPontoList;
     }
 
-    public Collection<VlocViagemLocal> getVlocViagemLocalCollection() {
-        return vlocViagemLocalCollection;
+    public List<VlocViagemLocal> getVlocViagemLocalList() {
+        return vlocViagemLocalList;
     }
 
-    public void setVlocViagemLocalCollection(Collection<VlocViagemLocal> vlocViagemLocalCollection) {
-        this.vlocViagemLocalCollection = vlocViagemLocalCollection;
+    public void setVlocViagemLocalList(List<VlocViagemLocal> vlocViagemLocalList) {
+        this.vlocViagemLocalList = vlocViagemLocalList;
     }
 
     @Override

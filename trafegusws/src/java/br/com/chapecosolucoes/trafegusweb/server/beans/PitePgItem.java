@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -56,21 +56,21 @@ public class PitePgItem implements Serializable {
     private Integer piteCodigoGr;
     @Column(name = "pite_importado")
     private Character piteImportado;
-    @OneToMany(mappedBy = "pitePgItem", fetch = FetchType.LAZY)
-    private Collection<PgaiPgAssociaItem> pgaiPgAssociaItemCollection;
-    @OneToMany(mappedBy = "pitePgItem", fetch = FetchType.LAZY)
-    private Collection<PipaPgItemParametro> pipaPgItemParametroCollection;
+    @OneToMany(mappedBy = "pitePgItem", fetch = FetchType.EAGER)
+    private List<PgaiPgAssociaItem> pgaiPgAssociaItemList;
+    @OneToMany(mappedBy = "pitePgItem", fetch = FetchType.EAGER)
+    private List<PipaPgItemParametro> pipaPgItemParametroList;
     @JoinColumn(name = "pite_ptit_codigo", referencedColumnName = "ptit_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PtitPgTipoItem ptitPgTipoItem;
     @JoinColumn(name = "pite_ppad_codigo", referencedColumnName = "ppad_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PpadPerifericoPadrao ppadPerifericoPadrao;
     @JoinColumn(name = "pite_mpad_codigo", referencedColumnName = "mpad_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private MpadMacroPadrao mpadMacroPadrao;
     @JoinColumn(name = "pite_espa_codigo", referencedColumnName = "espa_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EspaEventoSistemaPadrao espaEventoSistemaPadrao;
 
     public PitePgItem() {
@@ -136,20 +136,20 @@ public class PitePgItem implements Serializable {
         this.piteImportado = piteImportado;
     }
 
-    public Collection<PgaiPgAssociaItem> getPgaiPgAssociaItemCollection() {
-        return pgaiPgAssociaItemCollection;
+    public List<PgaiPgAssociaItem> getPgaiPgAssociaItemList() {
+        return pgaiPgAssociaItemList;
     }
 
-    public void setPgaiPgAssociaItemCollection(Collection<PgaiPgAssociaItem> pgaiPgAssociaItemCollection) {
-        this.pgaiPgAssociaItemCollection = pgaiPgAssociaItemCollection;
+    public void setPgaiPgAssociaItemList(List<PgaiPgAssociaItem> pgaiPgAssociaItemList) {
+        this.pgaiPgAssociaItemList = pgaiPgAssociaItemList;
     }
 
-    public Collection<PipaPgItemParametro> getPipaPgItemParametroCollection() {
-        return pipaPgItemParametroCollection;
+    public List<PipaPgItemParametro> getPipaPgItemParametroList() {
+        return pipaPgItemParametroList;
     }
 
-    public void setPipaPgItemParametroCollection(Collection<PipaPgItemParametro> pipaPgItemParametroCollection) {
-        this.pipaPgItemParametroCollection = pipaPgItemParametroCollection;
+    public void setPipaPgItemParametroList(List<PipaPgItemParametro> pipaPgItemParametroList) {
+        this.pipaPgItemParametroList = pipaPgItemParametroList;
     }
 
     public PtitPgTipoItem getPtitPgTipoItem() {

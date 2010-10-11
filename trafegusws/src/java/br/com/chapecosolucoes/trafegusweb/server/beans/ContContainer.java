@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,13 +39,13 @@ public class ContContainer implements Serializable {
     @Column(name = "cont_identificador")
     private String contIdentificador;
     @JoinColumn(name = "cont_oras_codigo", referencedColumnName = "oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
     @JoinColumn(name = "cont_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
-    @OneToMany(mappedBy = "contContainer", fetch = FetchType.LAZY)
-    private Collection<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaCollection;
+    @OneToMany(mappedBy = "contContainer", fetch = FetchType.EAGER)
+    private List<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaList;
 
     public ContContainer() {
     }
@@ -86,12 +86,12 @@ public class ContContainer implements Serializable {
         this.erasEstacaoRastreamento = erasEstacaoRastreamento;
     }
 
-    public Collection<VccaVeiculoCavaloCarreta> getVccaVeiculoCavaloCarretaCollection() {
-        return vccaVeiculoCavaloCarretaCollection;
+    public List<VccaVeiculoCavaloCarreta> getVccaVeiculoCavaloCarretaList() {
+        return vccaVeiculoCavaloCarretaList;
     }
 
-    public void setVccaVeiculoCavaloCarretaCollection(Collection<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaCollection) {
-        this.vccaVeiculoCavaloCarretaCollection = vccaVeiculoCavaloCarretaCollection;
+    public void setVccaVeiculoCavaloCarretaList(List<VccaVeiculoCavaloCarreta> vccaVeiculoCavaloCarretaList) {
+        this.vccaVeiculoCavaloCarretaList = vccaVeiculoCavaloCarretaList;
     }
 
     @Override

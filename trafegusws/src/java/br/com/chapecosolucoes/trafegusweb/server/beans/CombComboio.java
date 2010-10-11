@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,10 +51,10 @@ public class CombComboio implements Serializable {
     @Column(name = "comb_importado")
     private Character combImportado;
     @JoinColumn(name = "comb_eesc_pesj_pess_oras_codigo", referencedColumnName = "eesc_oras_pess_pesj_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EescEmpresaEscolta eescEmpresaEscolta;
-    @OneToMany(mappedBy = "combComboio", fetch = FetchType.LAZY)
-    private Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection;
+    @OneToMany(mappedBy = "combComboio", fetch = FetchType.EAGER)
+    private List<VveiViagemVeiculo> vveiViagemVeiculoList;
 
     public CombComboio() {
     }
@@ -111,12 +111,12 @@ public class CombComboio implements Serializable {
         this.eescEmpresaEscolta = eescEmpresaEscolta;
     }
 
-    public Collection<VveiViagemVeiculo> getVveiViagemVeiculoCollection() {
-        return vveiViagemVeiculoCollection;
+    public List<VveiViagemVeiculo> getVveiViagemVeiculoList() {
+        return vveiViagemVeiculoList;
     }
 
-    public void setVveiViagemVeiculoCollection(Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection) {
-        this.vveiViagemVeiculoCollection = vveiViagemVeiculoCollection;
+    public void setVveiViagemVeiculoList(List<VveiViagemVeiculo> vveiViagemVeiculoList) {
+        this.vveiViagemVeiculoList = vveiViagemVeiculoList;
     }
 
     @Override

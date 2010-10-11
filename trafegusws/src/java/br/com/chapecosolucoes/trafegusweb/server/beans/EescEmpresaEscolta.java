@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,10 +34,10 @@ public class EescEmpresaEscolta implements Serializable {
     @Basic(optional = false)
     @Column(name = "eesc_oras_pess_pesj_codigo")
     private Integer eescOrasPessPesjCodigo;
-    @OneToMany(mappedBy = "eescEmpresaEscolta", fetch = FetchType.LAZY)
-    private Collection<CombComboio> combComboioCollection;
+    @OneToMany(mappedBy = "eescEmpresaEscolta", fetch = FetchType.EAGER)
+    private List<CombComboio> combComboioList;
     @JoinColumn(name = "eesc_oras_pess_pesj_codigo", referencedColumnName = "pjur_pess_oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private PjurPessoaJuridica pjurPessoaJuridica;
 
     public EescEmpresaEscolta() {
@@ -55,12 +55,12 @@ public class EescEmpresaEscolta implements Serializable {
         this.eescOrasPessPesjCodigo = eescOrasPessPesjCodigo;
     }
 
-    public Collection<CombComboio> getCombComboioCollection() {
-        return combComboioCollection;
+    public List<CombComboio> getCombComboioList() {
+        return combComboioList;
     }
 
-    public void setCombComboioCollection(Collection<CombComboio> combComboioCollection) {
-        this.combComboioCollection = combComboioCollection;
+    public void setCombComboioList(List<CombComboio> combComboioList) {
+        this.combComboioList = combComboioList;
     }
 
     public PjurPessoaJuridica getPjurPessoaJuridica() {

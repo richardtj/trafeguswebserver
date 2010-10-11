@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,10 +35,10 @@ public class TlocTipoLocal implements Serializable {
     private Integer tlocCodigo;
     @Column(name = "tloc_descricao")
     private String tlocDescricao;
-    @OneToMany(mappedBy = "tlocTipoLocal", fetch = FetchType.LAZY)
-    private Collection<TlocTransportadorLocal> tlocTransportadorLocalCollection;
-    @OneToMany(mappedBy = "tlocTipoLocal", fetch = FetchType.LAZY)
-    private Collection<ElocEmbarcadorLocal> elocEmbarcadorLocalCollection;
+    @OneToMany(mappedBy = "tlocTipoLocal", fetch = FetchType.EAGER)
+    private List<TlocTransportadorLocal> tlocTransportadorLocalList;
+    @OneToMany(mappedBy = "tlocTipoLocal", fetch = FetchType.EAGER)
+    private List<ElocEmbarcadorLocal> elocEmbarcadorLocalList;
 
     public TlocTipoLocal() {
     }
@@ -63,20 +63,20 @@ public class TlocTipoLocal implements Serializable {
         this.tlocDescricao = tlocDescricao;
     }
 
-    public Collection<TlocTransportadorLocal> getTlocTransportadorLocalCollection() {
-        return tlocTransportadorLocalCollection;
+    public List<TlocTransportadorLocal> getTlocTransportadorLocalList() {
+        return tlocTransportadorLocalList;
     }
 
-    public void setTlocTransportadorLocalCollection(Collection<TlocTransportadorLocal> tlocTransportadorLocalCollection) {
-        this.tlocTransportadorLocalCollection = tlocTransportadorLocalCollection;
+    public void setTlocTransportadorLocalList(List<TlocTransportadorLocal> tlocTransportadorLocalList) {
+        this.tlocTransportadorLocalList = tlocTransportadorLocalList;
     }
 
-    public Collection<ElocEmbarcadorLocal> getElocEmbarcadorLocalCollection() {
-        return elocEmbarcadorLocalCollection;
+    public List<ElocEmbarcadorLocal> getElocEmbarcadorLocalList() {
+        return elocEmbarcadorLocalList;
     }
 
-    public void setElocEmbarcadorLocalCollection(Collection<ElocEmbarcadorLocal> elocEmbarcadorLocalCollection) {
-        this.elocEmbarcadorLocalCollection = elocEmbarcadorLocalCollection;
+    public void setElocEmbarcadorLocalList(List<ElocEmbarcadorLocal> elocEmbarcadorLocalList) {
+        this.elocEmbarcadorLocalList = elocEmbarcadorLocalList;
     }
 
     @Override

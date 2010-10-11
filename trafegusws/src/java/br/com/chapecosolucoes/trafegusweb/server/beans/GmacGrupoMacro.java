@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,14 +53,14 @@ public class GmacGrupoMacro implements Serializable {
     private Character gmacImportado;
     @Column(name = "gmac_tipo_grupo")
     private String gmacTipoGrupo;
-    @OneToMany(mappedBy = "gmacGrupoMacro", fetch = FetchType.LAZY)
-    private Collection<TermTerminal> termTerminalCollection;
-    @OneToMany(mappedBy = "gmacGrupoMacro1", fetch = FetchType.LAZY)
-    private Collection<TermTerminal> termTerminalCollection1;
-    @OneToMany(mappedBy = "gmacGrupoMacro", fetch = FetchType.LAZY)
-    private Collection<MpadMacroPadrao> mpadMacroPadraoCollection;
+    @OneToMany(mappedBy = "gmacGrupoMacro", fetch = FetchType.EAGER)
+    private List<TermTerminal> termTerminalList;
+    @OneToMany(mappedBy = "gmacGrupoMacro1", fetch = FetchType.EAGER)
+    private List<TermTerminal> termTerminalList1;
+    @OneToMany(mappedBy = "gmacGrupoMacro", fetch = FetchType.EAGER)
+    private List<MpadMacroPadrao> mpadMacroPadraoList;
     @JoinColumn(name = "gmac_vtec_codigo", referencedColumnName = "vtec_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VtecVersaoTecnologia vtecVersaoTecnologia;
 
     public GmacGrupoMacro() {
@@ -118,28 +118,28 @@ public class GmacGrupoMacro implements Serializable {
         this.gmacTipoGrupo = gmacTipoGrupo;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection() {
-        return termTerminalCollection;
+    public List<TermTerminal> getTermTerminalList() {
+        return termTerminalList;
     }
 
-    public void setTermTerminalCollection(Collection<TermTerminal> termTerminalCollection) {
-        this.termTerminalCollection = termTerminalCollection;
+    public void setTermTerminalList(List<TermTerminal> termTerminalList) {
+        this.termTerminalList = termTerminalList;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection1() {
-        return termTerminalCollection1;
+    public List<TermTerminal> getTermTerminalList1() {
+        return termTerminalList1;
     }
 
-    public void setTermTerminalCollection1(Collection<TermTerminal> termTerminalCollection1) {
-        this.termTerminalCollection1 = termTerminalCollection1;
+    public void setTermTerminalList1(List<TermTerminal> termTerminalList1) {
+        this.termTerminalList1 = termTerminalList1;
     }
 
-    public Collection<MpadMacroPadrao> getMpadMacroPadraoCollection() {
-        return mpadMacroPadraoCollection;
+    public List<MpadMacroPadrao> getMpadMacroPadraoList() {
+        return mpadMacroPadraoList;
     }
 
-    public void setMpadMacroPadraoCollection(Collection<MpadMacroPadrao> mpadMacroPadraoCollection) {
-        this.mpadMacroPadraoCollection = mpadMacroPadraoCollection;
+    public void setMpadMacroPadraoList(List<MpadMacroPadrao> mpadMacroPadraoList) {
+        this.mpadMacroPadraoList = mpadMacroPadraoList;
     }
 
     public VtecVersaoTecnologia getVtecVersaoTecnologia() {

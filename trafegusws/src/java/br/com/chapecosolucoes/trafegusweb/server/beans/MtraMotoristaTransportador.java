@@ -46,10 +46,10 @@ public class MtraMotoristaTransportador implements Serializable {
     @Column(name = "mtra_importado")
     private Character mtraImportado;
     @JoinColumn(name = "mtra_tran_pess_oras_codigo", referencedColumnName = "tran_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TranTransportador tranTransportador;
     @JoinColumn(name = "mtra_moto_pfis_pess_oras_codigo", referencedColumnName = "moto_pfis_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private MotoMotorista motoMotorista;
 
     public MtraMotoristaTransportador() {

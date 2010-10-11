@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,8 +35,8 @@ public class PenvPeriodicidadeEnvio implements Serializable {
     private Integer penvCodigo;
     @Column(name = "penv_descricao")
     private String penvDescricao;
-    @OneToMany(mappedBy = "penvPeriodicidadeEnvio", fetch = FetchType.LAZY)
-    private Collection<SemeServicoEnvioMensagem> semeServicoEnvioMensagemCollection;
+    @OneToMany(mappedBy = "penvPeriodicidadeEnvio", fetch = FetchType.EAGER)
+    private List<SemeServicoEnvioMensagem> semeServicoEnvioMensagemList;
 
     public PenvPeriodicidadeEnvio() {
     }
@@ -61,12 +61,12 @@ public class PenvPeriodicidadeEnvio implements Serializable {
         this.penvDescricao = penvDescricao;
     }
 
-    public Collection<SemeServicoEnvioMensagem> getSemeServicoEnvioMensagemCollection() {
-        return semeServicoEnvioMensagemCollection;
+    public List<SemeServicoEnvioMensagem> getSemeServicoEnvioMensagemList() {
+        return semeServicoEnvioMensagemList;
     }
 
-    public void setSemeServicoEnvioMensagemCollection(Collection<SemeServicoEnvioMensagem> semeServicoEnvioMensagemCollection) {
-        this.semeServicoEnvioMensagemCollection = semeServicoEnvioMensagemCollection;
+    public void setSemeServicoEnvioMensagemList(List<SemeServicoEnvioMensagem> semeServicoEnvioMensagemList) {
+        this.semeServicoEnvioMensagemList = semeServicoEnvioMensagemList;
     }
 
     @Override

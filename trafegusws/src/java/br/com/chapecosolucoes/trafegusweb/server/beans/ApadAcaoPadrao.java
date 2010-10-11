@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,19 +46,19 @@ public class ApadAcaoPadrao implements Serializable {
     private String apadTipoAcao;
     @Column(name = "apad_tempo_espera")
     private Integer apadTempoEspera;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
     private AlinAcaoLinha alinAcaoLinha;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
     private AbolAcaoBolinha abolAcaoBolinha;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
     private AbeeAcaoBeep abeeAcaoBeep;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
     private AcomAcaoComando acomAcaoComando;
-    @OneToMany(mappedBy = "apadAcaoPadrao", fetch = FetchType.LAZY)
-    private Collection<PaiaPgAssociaItemAcao> paiaPgAssociaItemAcaoCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
+    private List<PaiaPgAssociaItemAcao> paiaPgAssociaItemAcaoList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
     private ApopAcaoPopup apopAcaoPopup;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "apadAcaoPadrao", fetch = FetchType.EAGER)
     private AmacAcaoMacro amacAcaoMacro;
 
     public ApadAcaoPadrao() {
@@ -140,12 +140,12 @@ public class ApadAcaoPadrao implements Serializable {
         this.acomAcaoComando = acomAcaoComando;
     }
 
-    public Collection<PaiaPgAssociaItemAcao> getPaiaPgAssociaItemAcaoCollection() {
-        return paiaPgAssociaItemAcaoCollection;
+    public List<PaiaPgAssociaItemAcao> getPaiaPgAssociaItemAcaoList() {
+        return paiaPgAssociaItemAcaoList;
     }
 
-    public void setPaiaPgAssociaItemAcaoCollection(Collection<PaiaPgAssociaItemAcao> paiaPgAssociaItemAcaoCollection) {
-        this.paiaPgAssociaItemAcaoCollection = paiaPgAssociaItemAcaoCollection;
+    public void setPaiaPgAssociaItemAcaoList(List<PaiaPgAssociaItemAcao> paiaPgAssociaItemAcaoList) {
+        this.paiaPgAssociaItemAcaoList = paiaPgAssociaItemAcaoList;
     }
 
     public ApopAcaoPopup getApopAcaoPopup() {

@@ -74,13 +74,13 @@ public class EsisEventoSistema implements Serializable {
     @Column(name = "esis_desc_tratamento")
     private String esisDescTratamento;
     @JoinColumn(name = "esis_term_codigo", referencedColumnName = "term_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TermTerminal termTerminal;
     @JoinColumn(name = "esis_pgai_codigo", referencedColumnName = "pgai_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PgaiPgAssociaItem pgaiPgAssociaItem;
     @JoinColumn(name = "esis_espa_codigo", referencedColumnName = "espa_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EspaEventoSistemaPadrao espaEventoSistemaPadrao;
 
     public EsisEventoSistema() {

@@ -46,13 +46,13 @@ public class VestViagemEstatus implements Serializable {
     @Column(name = "vest_observacao")
     private String vestObservacao;
     @JoinColumn(name = "vest_viag_codigo", referencedColumnName = "viag_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ViagViagem viagViagem;
     @JoinColumn(name = "vest_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "vest_moti_codigo", referencedColumnName = "moti_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private MotiMotivo motiMotivo;
 
     public VestViagemEstatus() {

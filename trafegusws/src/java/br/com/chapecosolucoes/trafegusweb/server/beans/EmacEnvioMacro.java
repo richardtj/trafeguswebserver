@@ -43,10 +43,10 @@ public class EmacEnvioMacro implements Serializable {
     @Column(name = "emac_mascara")
     private String emacMascara;
     @JoinColumn(name = "emac_mpad_codigo", referencedColumnName = "mpad_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private MpadMacroPadrao mpadMacroPadrao;
     @JoinColumn(name = "emac_envi_codigo", referencedColumnName = "envi_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private EnviEnvio enviEnvio;
 
     public EmacEnvioMacro() {

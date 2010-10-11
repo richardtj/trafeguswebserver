@@ -50,7 +50,7 @@ public class PproPermissaoProduto implements Serializable {
     @Column(name = "ppro_importado")
     private Character pproImportado;
     @JoinColumn(name = "ppro_perf_codigo", referencedColumnName = "perf_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PerfPerfil perfPerfil;
 
     public PproPermissaoProduto() {

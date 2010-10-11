@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -71,24 +71,24 @@ public class VtecVersaoTecnologia implements Serializable {
     private Integer vtecCodigoGr;
     @Column(name = "vtec_importado")
     private Character vtecImportado;
-    @OneToMany(mappedBy = "vtecVersaoTecnologia", fetch = FetchType.LAZY)
-    private Collection<UrpeUltimoRecPeriferico> urpeUltimoRecPerifericoCollection;
-    @OneToMany(mappedBy = "vtecVersaoTecnologia", fetch = FetchType.LAZY)
-    private Collection<TermTerminal> termTerminalCollection;
+    @OneToMany(mappedBy = "vtecVersaoTecnologia", fetch = FetchType.EAGER)
+    private List<UrpeUltimoRecPeriferico> urpeUltimoRecPerifericoList;
+    @OneToMany(mappedBy = "vtecVersaoTecnologia", fetch = FetchType.EAGER)
+    private List<TermTerminal> termTerminalList;
     @JoinColumn(name = "vtec_tecn_codigo", referencedColumnName = "tecn_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TecnTecnologia tecnTecnologia;
     @JoinColumn(name = "vtec_tcom_codigo", referencedColumnName = "tcom_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TcomTipoComunicacao tcomTipoComunicacao;
-    @OneToMany(mappedBy = "vtecVersaoTecnologia", fetch = FetchType.LAZY)
-    private Collection<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiCollection;
-    @OneToMany(mappedBy = "vtecVersaoTecnologia", fetch = FetchType.LAZY)
-    private Collection<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolCollection;
-    @OneToMany(mappedBy = "vtecVersaoTecnologia", fetch = FetchType.LAZY)
-    private Collection<PvtePerifericVersaoTecnolo> pvtePerifericVersaoTecnoloCollection;
-    @OneToMany(mappedBy = "vtecVersaoTecnologia", fetch = FetchType.LAZY)
-    private Collection<GmacGrupoMacro> gmacGrupoMacroCollection;
+    @OneToMany(mappedBy = "vtecVersaoTecnologia", fetch = FetchType.EAGER)
+    private List<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiList;
+    @OneToMany(mappedBy = "vtecVersaoTecnologia", fetch = FetchType.EAGER)
+    private List<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolList;
+    @OneToMany(mappedBy = "vtecVersaoTecnologia", fetch = FetchType.EAGER)
+    private List<PvtePerifericVersaoTecnolo> pvtePerifericVersaoTecnoloList;
+    @OneToMany(mappedBy = "vtecVersaoTecnologia", fetch = FetchType.EAGER)
+    private List<GmacGrupoMacro> gmacGrupoMacroList;
 
     public VtecVersaoTecnologia() {
     }
@@ -193,20 +193,20 @@ public class VtecVersaoTecnologia implements Serializable {
         this.vtecImportado = vtecImportado;
     }
 
-    public Collection<UrpeUltimoRecPeriferico> getUrpeUltimoRecPerifericoCollection() {
-        return urpeUltimoRecPerifericoCollection;
+    public List<UrpeUltimoRecPeriferico> getUrpeUltimoRecPerifericoList() {
+        return urpeUltimoRecPerifericoList;
     }
 
-    public void setUrpeUltimoRecPerifericoCollection(Collection<UrpeUltimoRecPeriferico> urpeUltimoRecPerifericoCollection) {
-        this.urpeUltimoRecPerifericoCollection = urpeUltimoRecPerifericoCollection;
+    public void setUrpeUltimoRecPerifericoList(List<UrpeUltimoRecPeriferico> urpeUltimoRecPerifericoList) {
+        this.urpeUltimoRecPerifericoList = urpeUltimoRecPerifericoList;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection() {
-        return termTerminalCollection;
+    public List<TermTerminal> getTermTerminalList() {
+        return termTerminalList;
     }
 
-    public void setTermTerminalCollection(Collection<TermTerminal> termTerminalCollection) {
-        this.termTerminalCollection = termTerminalCollection;
+    public void setTermTerminalList(List<TermTerminal> termTerminalList) {
+        this.termTerminalList = termTerminalList;
     }
 
     public TecnTecnologia getTecnTecnologia() {
@@ -225,36 +225,36 @@ public class VtecVersaoTecnologia implements Serializable {
         this.tcomTipoComunicacao = tcomTipoComunicacao;
     }
 
-    public Collection<CvteComandoVersaoTecnologi> getCvteComandoVersaoTecnologiCollection() {
-        return cvteComandoVersaoTecnologiCollection;
+    public List<CvteComandoVersaoTecnologi> getCvteComandoVersaoTecnologiList() {
+        return cvteComandoVersaoTecnologiList;
     }
 
-    public void setCvteComandoVersaoTecnologiCollection(Collection<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiCollection) {
-        this.cvteComandoVersaoTecnologiCollection = cvteComandoVersaoTecnologiCollection;
+    public void setCvteComandoVersaoTecnologiList(List<CvteComandoVersaoTecnologi> cvteComandoVersaoTecnologiList) {
+        this.cvteComandoVersaoTecnologiList = cvteComandoVersaoTecnologiList;
     }
 
-    public Collection<SvteSeguradoraVersaoTecnol> getSvteSeguradoraVersaoTecnolCollection() {
-        return svteSeguradoraVersaoTecnolCollection;
+    public List<SvteSeguradoraVersaoTecnol> getSvteSeguradoraVersaoTecnolList() {
+        return svteSeguradoraVersaoTecnolList;
     }
 
-    public void setSvteSeguradoraVersaoTecnolCollection(Collection<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolCollection) {
-        this.svteSeguradoraVersaoTecnolCollection = svteSeguradoraVersaoTecnolCollection;
+    public void setSvteSeguradoraVersaoTecnolList(List<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolList) {
+        this.svteSeguradoraVersaoTecnolList = svteSeguradoraVersaoTecnolList;
     }
 
-    public Collection<PvtePerifericVersaoTecnolo> getPvtePerifericVersaoTecnoloCollection() {
-        return pvtePerifericVersaoTecnoloCollection;
+    public List<PvtePerifericVersaoTecnolo> getPvtePerifericVersaoTecnoloList() {
+        return pvtePerifericVersaoTecnoloList;
     }
 
-    public void setPvtePerifericVersaoTecnoloCollection(Collection<PvtePerifericVersaoTecnolo> pvtePerifericVersaoTecnoloCollection) {
-        this.pvtePerifericVersaoTecnoloCollection = pvtePerifericVersaoTecnoloCollection;
+    public void setPvtePerifericVersaoTecnoloList(List<PvtePerifericVersaoTecnolo> pvtePerifericVersaoTecnoloList) {
+        this.pvtePerifericVersaoTecnoloList = pvtePerifericVersaoTecnoloList;
     }
 
-    public Collection<GmacGrupoMacro> getGmacGrupoMacroCollection() {
-        return gmacGrupoMacroCollection;
+    public List<GmacGrupoMacro> getGmacGrupoMacroList() {
+        return gmacGrupoMacroList;
     }
 
-    public void setGmacGrupoMacroCollection(Collection<GmacGrupoMacro> gmacGrupoMacroCollection) {
-        this.gmacGrupoMacroCollection = gmacGrupoMacroCollection;
+    public void setGmacGrupoMacroList(List<GmacGrupoMacro> gmacGrupoMacroList) {
+        this.gmacGrupoMacroList = gmacGrupoMacroList;
     }
 
     @Override

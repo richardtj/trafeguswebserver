@@ -57,13 +57,13 @@ public class VlevViagemLocalEvento implements Serializable {
     @Column(name = "vlev_importado")
     private Character vlevImportado;
     @JoinColumn(name = "vlev_vloc_codigo", referencedColumnName = "vloc_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VlocViagemLocal vlocViagemLocal;
     @JoinColumn(name = "vlev_tlev_codigo", referencedColumnName = "tlev_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TlevTipoLocalEvento tlevTipoLocalEvento;
     @JoinColumn(name = "vlev_cpat_codigo", referencedColumnName = "cpat_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CpatCelulaPatio cpatCelulaPatio;
 
     public VlevViagemLocalEvento() {

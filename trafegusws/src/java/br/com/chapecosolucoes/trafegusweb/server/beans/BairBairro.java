@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,10 +57,10 @@ public class BairBairro implements Serializable {
     @Column(name = "bair_esta_codigo")
     private Integer bairEstaCodigo;
     @JoinColumn(name = "bair_cida_codigo", referencedColumnName = "cida_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CidaCidade cidaCidade;
-    @OneToMany(mappedBy = "bairBairro", fetch = FetchType.LAZY)
-    private Collection<LogrLogradouro> logrLogradouroCollection;
+    @OneToMany(mappedBy = "bairBairro", fetch = FetchType.EAGER)
+    private List<LogrLogradouro> logrLogradouroList;
 
     public BairBairro() {
     }
@@ -133,12 +133,12 @@ public class BairBairro implements Serializable {
         this.cidaCidade = cidaCidade;
     }
 
-    public Collection<LogrLogradouro> getLogrLogradouroCollection() {
-        return logrLogradouroCollection;
+    public List<LogrLogradouro> getLogrLogradouroList() {
+        return logrLogradouroList;
     }
 
-    public void setLogrLogradouroCollection(Collection<LogrLogradouro> logrLogradouroCollection) {
-        this.logrLogradouroCollection = logrLogradouroCollection;
+    public void setLogrLogradouroList(List<LogrLogradouro> logrLogradouroList) {
+        this.logrLogradouroList = logrLogradouroList;
     }
 
     @Override

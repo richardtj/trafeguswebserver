@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,17 +48,17 @@ public class PgaiPgAssociaItem implements Serializable {
     @Column(name = "pgai_importado")
     private Character pgaiImportado;
     @JoinColumn(name = "pgai_pite_codigo", referencedColumnName = "pite_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PitePgItem pitePgItem;
     @JoinColumn(name = "pgai_pgpg_codigo", referencedColumnName = "pgpg_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PgpgPg pgpgPg;
-    @OneToMany(mappedBy = "pgaiPgAssociaItem", fetch = FetchType.LAZY)
-    private Collection<PaipPgAssociaItemParam> paipPgAssociaItemParamCollection;
-    @OneToMany(mappedBy = "pgaiPgAssociaItem", fetch = FetchType.LAZY)
-    private Collection<EsisEventoSistema> esisEventoSistemaCollection;
-    @OneToMany(mappedBy = "pgaiPgAssociaItem", fetch = FetchType.LAZY)
-    private Collection<PaiaPgAssociaItemAcao> paiaPgAssociaItemAcaoCollection;
+    @OneToMany(mappedBy = "pgaiPgAssociaItem", fetch = FetchType.EAGER)
+    private List<PaipPgAssociaItemParam> paipPgAssociaItemParamList;
+    @OneToMany(mappedBy = "pgaiPgAssociaItem", fetch = FetchType.EAGER)
+    private List<EsisEventoSistema> esisEventoSistemaList;
+    @OneToMany(mappedBy = "pgaiPgAssociaItem", fetch = FetchType.EAGER)
+    private List<PaiaPgAssociaItemAcao> paiaPgAssociaItemAcaoList;
 
     public PgaiPgAssociaItem() {
     }
@@ -115,28 +115,28 @@ public class PgaiPgAssociaItem implements Serializable {
         this.pgpgPg = pgpgPg;
     }
 
-    public Collection<PaipPgAssociaItemParam> getPaipPgAssociaItemParamCollection() {
-        return paipPgAssociaItemParamCollection;
+    public List<PaipPgAssociaItemParam> getPaipPgAssociaItemParamList() {
+        return paipPgAssociaItemParamList;
     }
 
-    public void setPaipPgAssociaItemParamCollection(Collection<PaipPgAssociaItemParam> paipPgAssociaItemParamCollection) {
-        this.paipPgAssociaItemParamCollection = paipPgAssociaItemParamCollection;
+    public void setPaipPgAssociaItemParamList(List<PaipPgAssociaItemParam> paipPgAssociaItemParamList) {
+        this.paipPgAssociaItemParamList = paipPgAssociaItemParamList;
     }
 
-    public Collection<EsisEventoSistema> getEsisEventoSistemaCollection() {
-        return esisEventoSistemaCollection;
+    public List<EsisEventoSistema> getEsisEventoSistemaList() {
+        return esisEventoSistemaList;
     }
 
-    public void setEsisEventoSistemaCollection(Collection<EsisEventoSistema> esisEventoSistemaCollection) {
-        this.esisEventoSistemaCollection = esisEventoSistemaCollection;
+    public void setEsisEventoSistemaList(List<EsisEventoSistema> esisEventoSistemaList) {
+        this.esisEventoSistemaList = esisEventoSistemaList;
     }
 
-    public Collection<PaiaPgAssociaItemAcao> getPaiaPgAssociaItemAcaoCollection() {
-        return paiaPgAssociaItemAcaoCollection;
+    public List<PaiaPgAssociaItemAcao> getPaiaPgAssociaItemAcaoList() {
+        return paiaPgAssociaItemAcaoList;
     }
 
-    public void setPaiaPgAssociaItemAcaoCollection(Collection<PaiaPgAssociaItemAcao> paiaPgAssociaItemAcaoCollection) {
-        this.paiaPgAssociaItemAcaoCollection = paiaPgAssociaItemAcaoCollection;
+    public void setPaiaPgAssociaItemAcaoList(List<PaiaPgAssociaItemAcao> paiaPgAssociaItemAcaoList) {
+        this.paiaPgAssociaItemAcaoList = paiaPgAssociaItemAcaoList;
     }
 
     @Override

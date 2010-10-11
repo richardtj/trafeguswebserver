@@ -46,10 +46,10 @@ public class ErusEstacaoRastreamentoUsu implements Serializable {
     @Column(name = "erus_importado")
     private Character erusImportado;
     @JoinColumn(name = "erus_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "erus_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
 
     public ErusEstacaoRastreamentoUsu() {

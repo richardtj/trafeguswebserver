@@ -46,10 +46,10 @@ public class RconReferenciaContato implements Serializable {
     @Column(name = "rcon_importado")
     private Character rconImportado;
     @JoinColumn(name = "rcon_refe_codigo", referencedColumnName = "refe_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private RefeReferencia refeReferencia;
     @JoinColumn(name = "rcon_cona_codigo", referencedColumnName = "cona_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ConaContato conaContato;
 
     public RconReferenciaContato() {

@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -71,17 +71,17 @@ public class CtecContaTecnologia implements Serializable {
     private Integer ctecTolerancia;
     @Column(name = "ctec_monitorado_guardiao")
     private Character ctecMonitoradoGuardiao;
-    @OneToMany(mappedBy = "ctecContaTecnologia", fetch = FetchType.LAZY)
-    private Collection<TermTerminal> termTerminalCollection;
-    @OneToMany(mappedBy = "ctecContaTecnologia", fetch = FetchType.LAZY)
-    private Collection<UlsiUltimoLogServicoInteg> ulsiUltimoLogServicoIntegCollection;
+    @OneToMany(mappedBy = "ctecContaTecnologia", fetch = FetchType.EAGER)
+    private List<TermTerminal> termTerminalList;
+    @OneToMany(mappedBy = "ctecContaTecnologia", fetch = FetchType.EAGER)
+    private List<UlsiUltimoLogServicoInteg> ulsiUltimoLogServicoIntegList;
     @JoinColumn(name = "ctec_tecn_codigo", referencedColumnName = "tecn_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TecnTecnologia tecnTecnologia;
-    @OneToMany(mappedBy = "ctecContaTecnologia", fetch = FetchType.LAZY)
-    private Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection;
-    @OneToMany(mappedBy = "ctecContaTecnologia", fetch = FetchType.LAZY)
-    private Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection;
+    @OneToMany(mappedBy = "ctecContaTecnologia", fetch = FetchType.EAGER)
+    private List<VtraVeiculoTransportador> vtraVeiculoTransportadorList;
+    @OneToMany(mappedBy = "ctecContaTecnologia", fetch = FetchType.EAGER)
+    private List<VembVeiculoEmbarcador> vembVeiculoEmbarcadorList;
 
     public CtecContaTecnologia() {
     }
@@ -186,20 +186,20 @@ public class CtecContaTecnologia implements Serializable {
         this.ctecMonitoradoGuardiao = ctecMonitoradoGuardiao;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection() {
-        return termTerminalCollection;
+    public List<TermTerminal> getTermTerminalList() {
+        return termTerminalList;
     }
 
-    public void setTermTerminalCollection(Collection<TermTerminal> termTerminalCollection) {
-        this.termTerminalCollection = termTerminalCollection;
+    public void setTermTerminalList(List<TermTerminal> termTerminalList) {
+        this.termTerminalList = termTerminalList;
     }
 
-    public Collection<UlsiUltimoLogServicoInteg> getUlsiUltimoLogServicoIntegCollection() {
-        return ulsiUltimoLogServicoIntegCollection;
+    public List<UlsiUltimoLogServicoInteg> getUlsiUltimoLogServicoIntegList() {
+        return ulsiUltimoLogServicoIntegList;
     }
 
-    public void setUlsiUltimoLogServicoIntegCollection(Collection<UlsiUltimoLogServicoInteg> ulsiUltimoLogServicoIntegCollection) {
-        this.ulsiUltimoLogServicoIntegCollection = ulsiUltimoLogServicoIntegCollection;
+    public void setUlsiUltimoLogServicoIntegList(List<UlsiUltimoLogServicoInteg> ulsiUltimoLogServicoIntegList) {
+        this.ulsiUltimoLogServicoIntegList = ulsiUltimoLogServicoIntegList;
     }
 
     public TecnTecnologia getTecnTecnologia() {
@@ -210,20 +210,20 @@ public class CtecContaTecnologia implements Serializable {
         this.tecnTecnologia = tecnTecnologia;
     }
 
-    public Collection<VtraVeiculoTransportador> getVtraVeiculoTransportadorCollection() {
-        return vtraVeiculoTransportadorCollection;
+    public List<VtraVeiculoTransportador> getVtraVeiculoTransportadorList() {
+        return vtraVeiculoTransportadorList;
     }
 
-    public void setVtraVeiculoTransportadorCollection(Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection) {
-        this.vtraVeiculoTransportadorCollection = vtraVeiculoTransportadorCollection;
+    public void setVtraVeiculoTransportadorList(List<VtraVeiculoTransportador> vtraVeiculoTransportadorList) {
+        this.vtraVeiculoTransportadorList = vtraVeiculoTransportadorList;
     }
 
-    public Collection<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorCollection() {
-        return vembVeiculoEmbarcadorCollection;
+    public List<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorList() {
+        return vembVeiculoEmbarcadorList;
     }
 
-    public void setVembVeiculoEmbarcadorCollection(Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection) {
-        this.vembVeiculoEmbarcadorCollection = vembVeiculoEmbarcadorCollection;
+    public void setVembVeiculoEmbarcadorList(List<VembVeiculoEmbarcador> vembVeiculoEmbarcadorList) {
+        this.vembVeiculoEmbarcadorList = vembVeiculoEmbarcadorList;
     }
 
     @Override

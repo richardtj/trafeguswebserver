@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,8 +35,8 @@ public class TmotTipoMotivo implements Serializable {
     private Integer tmotCodigo;
     @Column(name = "tmot_descricao")
     private String tmotDescricao;
-    @OneToMany(mappedBy = "tmotTipoMotivo", fetch = FetchType.LAZY)
-    private Collection<MotiMotivo> motiMotivoCollection;
+    @OneToMany(mappedBy = "tmotTipoMotivo", fetch = FetchType.EAGER)
+    private List<MotiMotivo> motiMotivoList;
 
     public TmotTipoMotivo() {
     }
@@ -61,12 +61,12 @@ public class TmotTipoMotivo implements Serializable {
         this.tmotDescricao = tmotDescricao;
     }
 
-    public Collection<MotiMotivo> getMotiMotivoCollection() {
-        return motiMotivoCollection;
+    public List<MotiMotivo> getMotiMotivoList() {
+        return motiMotivoList;
     }
 
-    public void setMotiMotivoCollection(Collection<MotiMotivo> motiMotivoCollection) {
-        this.motiMotivoCollection = motiMotivoCollection;
+    public void setMotiMotivoList(List<MotiMotivo> motiMotivoList) {
+        this.motiMotivoList = motiMotivoList;
     }
 
     @Override

@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,10 +35,10 @@ public class TtraTipoTransporte implements Serializable {
     private Integer ttraCodigo;
     @Column(name = "ttra_descricao")
     private String ttraDescricao;
-    @OneToMany(mappedBy = "ttraTipoTransporte", fetch = FetchType.LAZY)
-    private Collection<ViagViagem> viagViagemCollection;
-    @OneToMany(mappedBy = "ttraTipoTransporte", fetch = FetchType.LAZY)
-    private Collection<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolCollection;
+    @OneToMany(mappedBy = "ttraTipoTransporte", fetch = FetchType.EAGER)
+    private List<ViagViagem> viagViagemList;
+    @OneToMany(mappedBy = "ttraTipoTransporte", fetch = FetchType.EAGER)
+    private List<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolList;
 
     public TtraTipoTransporte() {
     }
@@ -63,20 +63,20 @@ public class TtraTipoTransporte implements Serializable {
         this.ttraDescricao = ttraDescricao;
     }
 
-    public Collection<ViagViagem> getViagViagemCollection() {
-        return viagViagemCollection;
+    public List<ViagViagem> getViagViagemList() {
+        return viagViagemList;
     }
 
-    public void setViagViagemCollection(Collection<ViagViagem> viagViagemCollection) {
-        this.viagViagemCollection = viagViagemCollection;
+    public void setViagViagemList(List<ViagViagem> viagViagemList) {
+        this.viagViagemList = viagViagemList;
     }
 
-    public Collection<SvteSeguradoraVersaoTecnol> getSvteSeguradoraVersaoTecnolCollection() {
-        return svteSeguradoraVersaoTecnolCollection;
+    public List<SvteSeguradoraVersaoTecnol> getSvteSeguradoraVersaoTecnolList() {
+        return svteSeguradoraVersaoTecnolList;
     }
 
-    public void setSvteSeguradoraVersaoTecnolCollection(Collection<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolCollection) {
-        this.svteSeguradoraVersaoTecnolCollection = svteSeguradoraVersaoTecnolCollection;
+    public void setSvteSeguradoraVersaoTecnolList(List<SvteSeguradoraVersaoTecnol> svteSeguradoraVersaoTecnolList) {
+        this.svteSeguradoraVersaoTecnolList = svteSeguradoraVersaoTecnolList;
     }
 
     @Override

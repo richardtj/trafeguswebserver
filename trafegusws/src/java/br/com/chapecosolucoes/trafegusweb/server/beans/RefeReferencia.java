@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -72,25 +72,25 @@ public class RefeReferencia implements Serializable {
     private Character refeImportado;
     @Column(name = "refe_pess_oras_codigo_dono")
     private Integer refePessOrasCodigoDono;
-    @OneToMany(mappedBy = "refeReferencia", fetch = FetchType.LAZY)
-    private Collection<RconReferenciaContato> rconReferenciaContatoCollection;
-    @OneToMany(mappedBy = "refeReferencia", fetch = FetchType.LAZY)
-    private Collection<TlocTransportadorLocal> tlocTransportadorLocalCollection;
+    @OneToMany(mappedBy = "refeReferencia", fetch = FetchType.EAGER)
+    private List<RconReferenciaContato> rconReferenciaContatoList;
+    @OneToMany(mappedBy = "refeReferencia", fetch = FetchType.EAGER)
+    private List<TlocTransportadorLocal> tlocTransportadorLocalList;
     @JoinColumn(name = "refe_pess_oras_codigo_local", referencedColumnName = "pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PessPessoa pessPessoa;
     @JoinColumn(name = "refe_cref_codigo", referencedColumnName = "cref_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CrefClasseReferencia crefClasseReferencia;
     @JoinColumn(name = "refe_cida_codigo", referencedColumnName = "cida_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CidaCidade cidaCidade;
-    @OneToMany(mappedBy = "refeReferencia", fetch = FetchType.LAZY)
-    private Collection<RponRotaPonto> rponRotaPontoCollection;
-    @OneToMany(mappedBy = "refeReferencia", fetch = FetchType.LAZY)
-    private Collection<ElocEmbarcadorLocal> elocEmbarcadorLocalCollection;
-    @OneToMany(mappedBy = "refeReferencia", fetch = FetchType.LAZY)
-    private Collection<VlocViagemLocal> vlocViagemLocalCollection;
+    @OneToMany(mappedBy = "refeReferencia", fetch = FetchType.EAGER)
+    private List<RponRotaPonto> rponRotaPontoList;
+    @OneToMany(mappedBy = "refeReferencia", fetch = FetchType.EAGER)
+    private List<ElocEmbarcadorLocal> elocEmbarcadorLocalList;
+    @OneToMany(mappedBy = "refeReferencia", fetch = FetchType.EAGER)
+    private List<VlocViagemLocal> vlocViagemLocalList;
 
     public RefeReferencia() {
     }
@@ -195,20 +195,20 @@ public class RefeReferencia implements Serializable {
         this.refePessOrasCodigoDono = refePessOrasCodigoDono;
     }
 
-    public Collection<RconReferenciaContato> getRconReferenciaContatoCollection() {
-        return rconReferenciaContatoCollection;
+    public List<RconReferenciaContato> getRconReferenciaContatoList() {
+        return rconReferenciaContatoList;
     }
 
-    public void setRconReferenciaContatoCollection(Collection<RconReferenciaContato> rconReferenciaContatoCollection) {
-        this.rconReferenciaContatoCollection = rconReferenciaContatoCollection;
+    public void setRconReferenciaContatoList(List<RconReferenciaContato> rconReferenciaContatoList) {
+        this.rconReferenciaContatoList = rconReferenciaContatoList;
     }
 
-    public Collection<TlocTransportadorLocal> getTlocTransportadorLocalCollection() {
-        return tlocTransportadorLocalCollection;
+    public List<TlocTransportadorLocal> getTlocTransportadorLocalList() {
+        return tlocTransportadorLocalList;
     }
 
-    public void setTlocTransportadorLocalCollection(Collection<TlocTransportadorLocal> tlocTransportadorLocalCollection) {
-        this.tlocTransportadorLocalCollection = tlocTransportadorLocalCollection;
+    public void setTlocTransportadorLocalList(List<TlocTransportadorLocal> tlocTransportadorLocalList) {
+        this.tlocTransportadorLocalList = tlocTransportadorLocalList;
     }
 
     public PessPessoa getPessPessoa() {
@@ -235,28 +235,28 @@ public class RefeReferencia implements Serializable {
         this.cidaCidade = cidaCidade;
     }
 
-    public Collection<RponRotaPonto> getRponRotaPontoCollection() {
-        return rponRotaPontoCollection;
+    public List<RponRotaPonto> getRponRotaPontoList() {
+        return rponRotaPontoList;
     }
 
-    public void setRponRotaPontoCollection(Collection<RponRotaPonto> rponRotaPontoCollection) {
-        this.rponRotaPontoCollection = rponRotaPontoCollection;
+    public void setRponRotaPontoList(List<RponRotaPonto> rponRotaPontoList) {
+        this.rponRotaPontoList = rponRotaPontoList;
     }
 
-    public Collection<ElocEmbarcadorLocal> getElocEmbarcadorLocalCollection() {
-        return elocEmbarcadorLocalCollection;
+    public List<ElocEmbarcadorLocal> getElocEmbarcadorLocalList() {
+        return elocEmbarcadorLocalList;
     }
 
-    public void setElocEmbarcadorLocalCollection(Collection<ElocEmbarcadorLocal> elocEmbarcadorLocalCollection) {
-        this.elocEmbarcadorLocalCollection = elocEmbarcadorLocalCollection;
+    public void setElocEmbarcadorLocalList(List<ElocEmbarcadorLocal> elocEmbarcadorLocalList) {
+        this.elocEmbarcadorLocalList = elocEmbarcadorLocalList;
     }
 
-    public Collection<VlocViagemLocal> getVlocViagemLocalCollection() {
-        return vlocViagemLocalCollection;
+    public List<VlocViagemLocal> getVlocViagemLocalList() {
+        return vlocViagemLocalList;
     }
 
-    public void setVlocViagemLocalCollection(Collection<VlocViagemLocal> vlocViagemLocalCollection) {
-        this.vlocViagemLocalCollection = vlocViagemLocalCollection;
+    public void setVlocViagemLocalList(List<VlocViagemLocal> vlocViagemLocalList) {
+        this.vlocViagemLocalList = vlocViagemLocalList;
     }
 
     @Override

@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,10 +49,10 @@ public class AusuAcessoUsuario implements Serializable {
     @Column(name = "ausu_data_fim_acesso")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ausuDataFimAcesso;
-    @OneToMany(mappedBy = "ausuAcessoUsuario", fetch = FetchType.LAZY)
-    private Collection<AtusAcessoTelaUsuario> atusAcessoTelaUsuarioCollection;
+    @OneToMany(mappedBy = "ausuAcessoUsuario", fetch = FetchType.EAGER)
+    private List<AtusAcessoTelaUsuario> atusAcessoTelaUsuarioList;
     @JoinColumn(name = "ausu_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
 
     public AusuAcessoUsuario() {
@@ -94,12 +94,12 @@ public class AusuAcessoUsuario implements Serializable {
         this.ausuDataFimAcesso = ausuDataFimAcesso;
     }
 
-    public Collection<AtusAcessoTelaUsuario> getAtusAcessoTelaUsuarioCollection() {
-        return atusAcessoTelaUsuarioCollection;
+    public List<AtusAcessoTelaUsuario> getAtusAcessoTelaUsuarioList() {
+        return atusAcessoTelaUsuarioList;
     }
 
-    public void setAtusAcessoTelaUsuarioCollection(Collection<AtusAcessoTelaUsuario> atusAcessoTelaUsuarioCollection) {
-        this.atusAcessoTelaUsuarioCollection = atusAcessoTelaUsuarioCollection;
+    public void setAtusAcessoTelaUsuarioList(List<AtusAcessoTelaUsuario> atusAcessoTelaUsuarioList) {
+        this.atusAcessoTelaUsuarioList = atusAcessoTelaUsuarioList;
     }
 
     public UsuaUsuario getUsuaUsuario() {

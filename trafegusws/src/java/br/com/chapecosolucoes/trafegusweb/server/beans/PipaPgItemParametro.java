@@ -55,13 +55,13 @@ public class PipaPgItemParametro implements Serializable {
     @Column(name = "pipa_importado")
     private Character pipaImportado;
     @JoinColumn(name = "pipa_tval_codigo", referencedColumnName = "tval_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvalTipoValor tvalTipoValor;
     @JoinColumn(name = "pipa_tpar_codigo", referencedColumnName = "tpar_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TparTipoParametro tparTipoParametro;
     @JoinColumn(name = "pipa_pite_codigo", referencedColumnName = "pite_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PitePgItem pitePgItem;
 
     public PipaPgItemParametro() {

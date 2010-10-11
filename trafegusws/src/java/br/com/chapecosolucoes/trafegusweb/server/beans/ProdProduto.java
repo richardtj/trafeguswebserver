@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,10 +55,10 @@ public class ProdProduto implements Serializable {
     @Column(name = "prod_importado")
     private Character prodImportado;
     @JoinColumn(name = "prod_tpro_codigo", referencedColumnName = "tpro_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TproProduto tproProduto;
-    @OneToMany(mappedBy = "prodProduto", fetch = FetchType.LAZY)
-    private Collection<VproViagemProduto> vproViagemProdutoCollection;
+    @OneToMany(mappedBy = "prodProduto", fetch = FetchType.EAGER)
+    private List<VproViagemProduto> vproViagemProdutoList;
 
     public ProdProduto() {
     }
@@ -123,12 +123,12 @@ public class ProdProduto implements Serializable {
         this.tproProduto = tproProduto;
     }
 
-    public Collection<VproViagemProduto> getVproViagemProdutoCollection() {
-        return vproViagemProdutoCollection;
+    public List<VproViagemProduto> getVproViagemProdutoList() {
+        return vproViagemProdutoList;
     }
 
-    public void setVproViagemProdutoCollection(Collection<VproViagemProduto> vproViagemProdutoCollection) {
-        this.vproViagemProdutoCollection = vproViagemProdutoCollection;
+    public void setVproViagemProdutoList(List<VproViagemProduto> vproViagemProdutoList) {
+        this.vproViagemProdutoList = vproViagemProdutoList;
     }
 
     @Override

@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,12 +48,12 @@ public class TproProduto implements Serializable {
     private Integer tproCodigoGr;
     @Column(name = "tpro_importado")
     private Character tproImportado;
-    @OneToMany(mappedBy = "tproProduto", fetch = FetchType.LAZY)
-    private Collection<HpprHistoricoPesquisaProd> hpprHistoricoPesquisaProdCollection;
-    @OneToMany(mappedBy = "tproProduto", fetch = FetchType.LAZY)
-    private Collection<ProdProduto> prodProdutoCollection;
-    @OneToMany(mappedBy = "tproProduto", fetch = FetchType.LAZY)
-    private Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection;
+    @OneToMany(mappedBy = "tproProduto", fetch = FetchType.EAGER)
+    private List<HpprHistoricoPesquisaProd> hpprHistoricoPesquisaProdList;
+    @OneToMany(mappedBy = "tproProduto", fetch = FetchType.EAGER)
+    private List<ProdProduto> prodProdutoList;
+    @OneToMany(mappedBy = "tproProduto", fetch = FetchType.EAGER)
+    private List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList;
 
     public TproProduto() {
     }
@@ -102,28 +102,28 @@ public class TproProduto implements Serializable {
         this.tproImportado = tproImportado;
     }
 
-    public Collection<HpprHistoricoPesquisaProd> getHpprHistoricoPesquisaProdCollection() {
-        return hpprHistoricoPesquisaProdCollection;
+    public List<HpprHistoricoPesquisaProd> getHpprHistoricoPesquisaProdList() {
+        return hpprHistoricoPesquisaProdList;
     }
 
-    public void setHpprHistoricoPesquisaProdCollection(Collection<HpprHistoricoPesquisaProd> hpprHistoricoPesquisaProdCollection) {
-        this.hpprHistoricoPesquisaProdCollection = hpprHistoricoPesquisaProdCollection;
+    public void setHpprHistoricoPesquisaProdList(List<HpprHistoricoPesquisaProd> hpprHistoricoPesquisaProdList) {
+        this.hpprHistoricoPesquisaProdList = hpprHistoricoPesquisaProdList;
     }
 
-    public Collection<ProdProduto> getProdProdutoCollection() {
-        return prodProdutoCollection;
+    public List<ProdProduto> getProdProdutoList() {
+        return prodProdutoList;
     }
 
-    public void setProdProdutoCollection(Collection<ProdProduto> prodProdutoCollection) {
-        this.prodProdutoCollection = prodProdutoCollection;
+    public void setProdProdutoList(List<ProdProduto> prodProdutoList) {
+        this.prodProdutoList = prodProdutoList;
     }
 
-    public Collection<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorCollection() {
-        return hpmoHistoricoPesquisaMotorCollection;
+    public List<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorList() {
+        return hpmoHistoricoPesquisaMotorList;
     }
 
-    public void setHpmoHistoricoPesquisaMotorCollection(Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection) {
-        this.hpmoHistoricoPesquisaMotorCollection = hpmoHistoricoPesquisaMotorCollection;
+    public void setHpmoHistoricoPesquisaMotorList(List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList) {
+        this.hpmoHistoricoPesquisaMotorList = hpmoHistoricoPesquisaMotorList;
     }
 
     @Override

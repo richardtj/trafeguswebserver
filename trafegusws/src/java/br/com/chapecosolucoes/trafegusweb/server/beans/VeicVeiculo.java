@@ -7,7 +7,7 @@ package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -77,43 +77,43 @@ public class VeicVeiculo implements Serializable {
     @Column(name = "veic_frota")
     private String veicFrota;
     @JoinColumn(name = "veic_tvei_codigo", referencedColumnName = "tvei_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TveiTipoVeiculo tveiTipoVeiculo;
     @JoinColumn(name = "veic_pess_oras_codigo_propri", referencedColumnName = "pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PessPessoa pessPessoa;
     @JoinColumn(name = "veic_oras_codigo", referencedColumnName = "oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
     @JoinColumn(name = "veic_mvec_codigo", referencedColumnName = "mvec_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private MvecModeloVeiculo mvecModeloVeiculo;
     @JoinColumn(name = "veic_moto_pfis_pess_oras_codigo", referencedColumnName = "moto_pfis_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private MotoMotorista motoMotorista;
     @JoinColumn(name = "veic_cida_codigo_emplacamento", referencedColumnName = "cida_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CidaCidade cidaCidade;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo", fetch = FetchType.EAGER)
     private VcarVeiculoCarreta vcarVeiculoCarreta;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo", fetch = FetchType.EAGER)
     private VtruVeiculoTruck vtruVeiculoTruck;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo", fetch = FetchType.EAGER)
     private VucaVeiculoUtilitarioCarga vucaVeiculoUtilitarioCarga;
-    @OneToMany(mappedBy = "veicVeiculo", fetch = FetchType.LAZY)
-    private Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "veicVeiculo", fetch = FetchType.EAGER)
+    private List<VtraVeiculoTransportador> vtraVeiculoTransportadorList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo", fetch = FetchType.EAGER)
     private VupaVeiculoUtilitarioPasse vupaVeiculoUtilitarioPasse;
-    @OneToMany(mappedBy = "veicVeiculo", fetch = FetchType.LAZY)
-    private Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "veicVeiculo", fetch = FetchType.EAGER)
+    private List<VembVeiculoEmbarcador> vembVeiculoEmbarcadorList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo", fetch = FetchType.EAGER)
     private VmotVeiculoMoto vmotVeiculoMoto;
-    @OneToMany(mappedBy = "veicVeiculo", fetch = FetchType.LAZY)
-    private Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "veicVeiculo", fetch = FetchType.EAGER)
+    private List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "veicVeiculo", fetch = FetchType.EAGER)
     private VcavVeiculoCavalo vcavVeiculoCavalo;
-    @OneToMany(mappedBy = "veicVeiculo", fetch = FetchType.LAZY)
-    private Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection;
+    @OneToMany(mappedBy = "veicVeiculo", fetch = FetchType.EAGER)
+    private List<VveiViagemVeiculo> vveiViagemVeiculoList;
 
     public VeicVeiculo() {
     }
@@ -306,12 +306,12 @@ public class VeicVeiculo implements Serializable {
         this.vucaVeiculoUtilitarioCarga = vucaVeiculoUtilitarioCarga;
     }
 
-    public Collection<VtraVeiculoTransportador> getVtraVeiculoTransportadorCollection() {
-        return vtraVeiculoTransportadorCollection;
+    public List<VtraVeiculoTransportador> getVtraVeiculoTransportadorList() {
+        return vtraVeiculoTransportadorList;
     }
 
-    public void setVtraVeiculoTransportadorCollection(Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection) {
-        this.vtraVeiculoTransportadorCollection = vtraVeiculoTransportadorCollection;
+    public void setVtraVeiculoTransportadorList(List<VtraVeiculoTransportador> vtraVeiculoTransportadorList) {
+        this.vtraVeiculoTransportadorList = vtraVeiculoTransportadorList;
     }
 
     public VupaVeiculoUtilitarioPasse getVupaVeiculoUtilitarioPasse() {
@@ -322,12 +322,12 @@ public class VeicVeiculo implements Serializable {
         this.vupaVeiculoUtilitarioPasse = vupaVeiculoUtilitarioPasse;
     }
 
-    public Collection<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorCollection() {
-        return vembVeiculoEmbarcadorCollection;
+    public List<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorList() {
+        return vembVeiculoEmbarcadorList;
     }
 
-    public void setVembVeiculoEmbarcadorCollection(Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection) {
-        this.vembVeiculoEmbarcadorCollection = vembVeiculoEmbarcadorCollection;
+    public void setVembVeiculoEmbarcadorList(List<VembVeiculoEmbarcador> vembVeiculoEmbarcadorList) {
+        this.vembVeiculoEmbarcadorList = vembVeiculoEmbarcadorList;
     }
 
     public VmotVeiculoMoto getVmotVeiculoMoto() {
@@ -338,12 +338,12 @@ public class VeicVeiculo implements Serializable {
         this.vmotVeiculoMoto = vmotVeiculoMoto;
     }
 
-    public Collection<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorCollection() {
-        return hpmoHistoricoPesquisaMotorCollection;
+    public List<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorList() {
+        return hpmoHistoricoPesquisaMotorList;
     }
 
-    public void setHpmoHistoricoPesquisaMotorCollection(Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection) {
-        this.hpmoHistoricoPesquisaMotorCollection = hpmoHistoricoPesquisaMotorCollection;
+    public void setHpmoHistoricoPesquisaMotorList(List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList) {
+        this.hpmoHistoricoPesquisaMotorList = hpmoHistoricoPesquisaMotorList;
     }
 
     public VcavVeiculoCavalo getVcavVeiculoCavalo() {
@@ -354,12 +354,12 @@ public class VeicVeiculo implements Serializable {
         this.vcavVeiculoCavalo = vcavVeiculoCavalo;
     }
 
-    public Collection<VveiViagemVeiculo> getVveiViagemVeiculoCollection() {
-        return vveiViagemVeiculoCollection;
+    public List<VveiViagemVeiculo> getVveiViagemVeiculoList() {
+        return vveiViagemVeiculoList;
     }
 
-    public void setVveiViagemVeiculoCollection(Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection) {
-        this.vveiViagemVeiculoCollection = vveiViagemVeiculoCollection;
+    public void setVveiViagemVeiculoList(List<VveiViagemVeiculo> vveiViagemVeiculoList) {
+        this.vveiViagemVeiculoList = vveiViagemVeiculoList;
     }
 
     @Override

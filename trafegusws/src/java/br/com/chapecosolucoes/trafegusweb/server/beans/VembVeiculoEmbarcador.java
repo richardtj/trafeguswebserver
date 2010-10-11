@@ -46,19 +46,19 @@ public class VembVeiculoEmbarcador implements Serializable {
     @Column(name = "vemb_importado")
     private Character vembImportado;
     @JoinColumn(name = "vemb_veic_oras_codigo", referencedColumnName = "veic_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vemb_tvco_codigo", referencedColumnName = "tvco_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvcoTipoVinculoContratual tvcoTipoVinculoContratual;
     @JoinColumn(name = "vemb_eobj_codigo", referencedColumnName = "eobj_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EobjEstatusObjeto eobjEstatusObjeto;
     @JoinColumn(name = "vemb_emba_pjur_pess_oras_codigo", referencedColumnName = "emba_pjur_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EmbaEmbarcador embaEmbarcador;
     @JoinColumn(name = "vemb_ctec_codigo", referencedColumnName = "ctec_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CtecContaTecnologia ctecContaTecnologia;
 
     public VembVeiculoEmbarcador() {

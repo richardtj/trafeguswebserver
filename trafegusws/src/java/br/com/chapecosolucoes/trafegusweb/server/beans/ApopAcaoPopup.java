@@ -45,7 +45,7 @@ public class ApopAcaoPopup implements Serializable {
     @Column(name = "apop_largura")
     private Integer apopLargura;
     @JoinColumn(name = "apop_apad_codigo", referencedColumnName = "apad_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public ApopAcaoPopup() {

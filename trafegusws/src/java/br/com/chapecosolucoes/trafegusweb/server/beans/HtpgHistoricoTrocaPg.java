@@ -46,10 +46,10 @@ public class HtpgHistoricoTrocaPg implements Serializable {
     @Column(name = "htpg_pg_posterior")
     private Integer htpgPgPosterior;
     @JoinColumn(name = "htpg_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "htpg_oras_codigo", referencedColumnName = "oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
 
     public HtpgHistoricoTrocaPg() {

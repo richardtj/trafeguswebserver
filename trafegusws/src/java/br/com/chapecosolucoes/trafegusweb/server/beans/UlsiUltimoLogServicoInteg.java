@@ -51,10 +51,10 @@ public class UlsiUltimoLogServicoInteg implements Serializable {
     @Column(name = "ulsi_estatus")
     private String ulsiEstatus;
     @JoinColumn(name = "ulsi_ssis_codigo", referencedColumnName = "ssis_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private SsisServicoSistema ssisServicoSistema;
     @JoinColumn(name = "ulsi_ctec_codigo", referencedColumnName = "ctec_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CtecContaTecnologia ctecContaTecnologia;
 
     public UlsiUltimoLogServicoInteg() {

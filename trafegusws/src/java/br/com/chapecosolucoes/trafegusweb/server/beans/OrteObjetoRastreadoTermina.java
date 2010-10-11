@@ -50,10 +50,10 @@ public class OrteObjetoRastreadoTermina implements Serializable {
     @Column(name = "orte_importado")
     private Character orteImportado;
     @JoinColumn(name = "orte_term_codigo", referencedColumnName = "term_codigo")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private TermTerminal termTerminal;
     @JoinColumn(name = "orte_oras_codigo", referencedColumnName = "oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
 
     public OrteObjetoRastreadoTermina() {

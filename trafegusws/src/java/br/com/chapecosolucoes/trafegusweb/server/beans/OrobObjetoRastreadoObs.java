@@ -49,10 +49,10 @@ public class OrobObjetoRastreadoObs implements Serializable {
     @Column(name = "orob_importado")
     private Character orobImportado;
     @JoinColumn(name = "orob_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "orob_oras_codigo", referencedColumnName = "oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
 
     public OrobObjetoRastreadoObs() {

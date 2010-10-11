@@ -70,10 +70,10 @@ public class PperProblemaPeriferico implements Serializable {
     @Column(name = "pper_importado")
     private Character pperImportado;
     @JoinColumn(name = "pper_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "pper_ppin_codigo", referencedColumnName = "ppin_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PpinPerifericoPadraoInstal ppinPerifericoPadraoInstal;
 
     public PperProblemaPeriferico() {

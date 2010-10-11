@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,8 +35,8 @@ public class TveiTipoVeiculo implements Serializable {
     private Integer tveiCodigo;
     @Column(name = "tvei_descricao")
     private String tveiDescricao;
-    @OneToMany(mappedBy = "tveiTipoVeiculo", fetch = FetchType.LAZY)
-    private Collection<VeicVeiculo> veicVeiculoCollection;
+    @OneToMany(mappedBy = "tveiTipoVeiculo", fetch = FetchType.EAGER)
+    private List<VeicVeiculo> veicVeiculoList;
 
     public TveiTipoVeiculo() {
     }
@@ -61,12 +61,12 @@ public class TveiTipoVeiculo implements Serializable {
         this.tveiDescricao = tveiDescricao;
     }
 
-    public Collection<VeicVeiculo> getVeicVeiculoCollection() {
-        return veicVeiculoCollection;
+    public List<VeicVeiculo> getVeicVeiculoList() {
+        return veicVeiculoList;
     }
 
-    public void setVeicVeiculoCollection(Collection<VeicVeiculo> veicVeiculoCollection) {
-        this.veicVeiculoCollection = veicVeiculoCollection;
+    public void setVeicVeiculoList(List<VeicVeiculo> veicVeiculoList) {
+        this.veicVeiculoList = veicVeiculoList;
     }
 
     @Override

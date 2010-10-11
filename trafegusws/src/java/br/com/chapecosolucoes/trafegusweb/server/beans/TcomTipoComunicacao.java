@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,8 +35,8 @@ public class TcomTipoComunicacao implements Serializable {
     private Integer tcomCodigo;
     @Column(name = "tcom_descricao")
     private String tcomDescricao;
-    @OneToMany(mappedBy = "tcomTipoComunicacao", fetch = FetchType.LAZY)
-    private Collection<VtecVersaoTecnologia> vtecVersaoTecnologiaCollection;
+    @OneToMany(mappedBy = "tcomTipoComunicacao", fetch = FetchType.EAGER)
+    private List<VtecVersaoTecnologia> vtecVersaoTecnologiaList;
 
     public TcomTipoComunicacao() {
     }
@@ -61,12 +61,12 @@ public class TcomTipoComunicacao implements Serializable {
         this.tcomDescricao = tcomDescricao;
     }
 
-    public Collection<VtecVersaoTecnologia> getVtecVersaoTecnologiaCollection() {
-        return vtecVersaoTecnologiaCollection;
+    public List<VtecVersaoTecnologia> getVtecVersaoTecnologiaList() {
+        return vtecVersaoTecnologiaList;
     }
 
-    public void setVtecVersaoTecnologiaCollection(Collection<VtecVersaoTecnologia> vtecVersaoTecnologiaCollection) {
-        this.vtecVersaoTecnologiaCollection = vtecVersaoTecnologiaCollection;
+    public void setVtecVersaoTecnologiaList(List<VtecVersaoTecnologia> vtecVersaoTecnologiaList) {
+        this.vtecVersaoTecnologiaList = vtecVersaoTecnologiaList;
     }
 
     @Override

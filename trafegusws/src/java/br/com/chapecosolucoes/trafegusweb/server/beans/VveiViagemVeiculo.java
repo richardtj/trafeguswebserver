@@ -63,19 +63,19 @@ public class VveiViagemVeiculo implements Serializable {
     @Column(name = "vvei_importado")
     private Character vveiImportado;
     @JoinColumn(name = "vvei_viag_codigo", referencedColumnName = "viag_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ViagViagem viagViagem;
     @JoinColumn(name = "vvei_veic_oras_codigo", referencedColumnName = "veic_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vvei_moto_pfis_pess_oras_codigo", referencedColumnName = "moto_pfis_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private MotoMotorista motoMotorista;
     @JoinColumn(name = "vvei_evca_codigo", referencedColumnName = "evca_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EvcaEstatusVeiculoCarga evcaEstatusVeiculoCarga;
     @JoinColumn(name = "vvei_comb_codigo", referencedColumnName = "comb_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CombComboio combComboio;
 
     public VveiViagemVeiculo() {

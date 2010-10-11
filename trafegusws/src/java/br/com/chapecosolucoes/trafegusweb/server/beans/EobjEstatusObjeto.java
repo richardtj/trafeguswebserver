@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,12 +38,12 @@ public class EobjEstatusObjeto implements Serializable {
     private String eobjDescricao;
     @Column(name = "eobj_codigo_gr")
     private Integer eobjCodigoGr;
-    @OneToMany(mappedBy = "eobjEstatusObjeto", fetch = FetchType.LAZY)
-    private Collection<OrasObjetoRastreado> orasObjetoRastreadoCollection;
-    @OneToMany(mappedBy = "eobjEstatusObjeto", fetch = FetchType.LAZY)
-    private Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection;
-    @OneToMany(mappedBy = "eobjEstatusObjeto", fetch = FetchType.LAZY)
-    private Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection;
+    @OneToMany(mappedBy = "eobjEstatusObjeto", fetch = FetchType.EAGER)
+    private List<OrasObjetoRastreado> orasObjetoRastreadoList;
+    @OneToMany(mappedBy = "eobjEstatusObjeto", fetch = FetchType.EAGER)
+    private List<VtraVeiculoTransportador> vtraVeiculoTransportadorList;
+    @OneToMany(mappedBy = "eobjEstatusObjeto", fetch = FetchType.EAGER)
+    private List<VembVeiculoEmbarcador> vembVeiculoEmbarcadorList;
 
     public EobjEstatusObjeto() {
     }
@@ -76,28 +76,28 @@ public class EobjEstatusObjeto implements Serializable {
         this.eobjCodigoGr = eobjCodigoGr;
     }
 
-    public Collection<OrasObjetoRastreado> getOrasObjetoRastreadoCollection() {
-        return orasObjetoRastreadoCollection;
+    public List<OrasObjetoRastreado> getOrasObjetoRastreadoList() {
+        return orasObjetoRastreadoList;
     }
 
-    public void setOrasObjetoRastreadoCollection(Collection<OrasObjetoRastreado> orasObjetoRastreadoCollection) {
-        this.orasObjetoRastreadoCollection = orasObjetoRastreadoCollection;
+    public void setOrasObjetoRastreadoList(List<OrasObjetoRastreado> orasObjetoRastreadoList) {
+        this.orasObjetoRastreadoList = orasObjetoRastreadoList;
     }
 
-    public Collection<VtraVeiculoTransportador> getVtraVeiculoTransportadorCollection() {
-        return vtraVeiculoTransportadorCollection;
+    public List<VtraVeiculoTransportador> getVtraVeiculoTransportadorList() {
+        return vtraVeiculoTransportadorList;
     }
 
-    public void setVtraVeiculoTransportadorCollection(Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection) {
-        this.vtraVeiculoTransportadorCollection = vtraVeiculoTransportadorCollection;
+    public void setVtraVeiculoTransportadorList(List<VtraVeiculoTransportador> vtraVeiculoTransportadorList) {
+        this.vtraVeiculoTransportadorList = vtraVeiculoTransportadorList;
     }
 
-    public Collection<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorCollection() {
-        return vembVeiculoEmbarcadorCollection;
+    public List<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorList() {
+        return vembVeiculoEmbarcadorList;
     }
 
-    public void setVembVeiculoEmbarcadorCollection(Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection) {
-        this.vembVeiculoEmbarcadorCollection = vembVeiculoEmbarcadorCollection;
+    public void setVembVeiculoEmbarcadorList(List<VembVeiculoEmbarcador> vembVeiculoEmbarcadorList) {
+        this.vembVeiculoEmbarcadorList = vembVeiculoEmbarcadorList;
     }
 
     @Override

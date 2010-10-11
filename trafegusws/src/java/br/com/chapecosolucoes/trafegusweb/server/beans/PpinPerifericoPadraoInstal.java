@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,13 +47,13 @@ public class PpinPerifericoPadraoInstal implements Serializable {
     private Integer ppinCodigoGr;
     @Column(name = "ppin_importado")
     private Character ppinImportado;
-    @OneToMany(mappedBy = "ppinPerifericoPadraoInstal", fetch = FetchType.LAZY)
-    private Collection<PperProblemaPeriferico> pperProblemaPerifericoCollection;
+    @OneToMany(mappedBy = "ppinPerifericoPadraoInstal", fetch = FetchType.EAGER)
+    private List<PperProblemaPeriferico> pperProblemaPerifericoList;
     @JoinColumn(name = "ppin_term_codigo", referencedColumnName = "term_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TermTerminal termTerminal;
     @JoinColumn(name = "ppin_ppad_codigo", referencedColumnName = "ppad_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PpadPerifericoPadrao ppadPerifericoPadrao;
 
     public PpinPerifericoPadraoInstal() {
@@ -95,12 +95,12 @@ public class PpinPerifericoPadraoInstal implements Serializable {
         this.ppinImportado = ppinImportado;
     }
 
-    public Collection<PperProblemaPeriferico> getPperProblemaPerifericoCollection() {
-        return pperProblemaPerifericoCollection;
+    public List<PperProblemaPeriferico> getPperProblemaPerifericoList() {
+        return pperProblemaPerifericoList;
     }
 
-    public void setPperProblemaPerifericoCollection(Collection<PperProblemaPeriferico> pperProblemaPerifericoCollection) {
-        this.pperProblemaPerifericoCollection = pperProblemaPerifericoCollection;
+    public void setPperProblemaPerifericoList(List<PperProblemaPeriferico> pperProblemaPerifericoList) {
+        this.pperProblemaPerifericoList = pperProblemaPerifericoList;
     }
 
     public TermTerminal getTermTerminal() {

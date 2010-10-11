@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,10 +35,10 @@ public class TestTipoEstabelecimento implements Serializable {
     private Integer testCodigo;
     @Column(name = "test_descricao")
     private String testDescricao;
-    @OneToMany(mappedBy = "testTipoEstabelecimento", fetch = FetchType.LAZY)
-    private Collection<TranTransportador> tranTransportadorCollection;
-    @OneToMany(mappedBy = "testTipoEstabelecimento", fetch = FetchType.LAZY)
-    private Collection<EmbaEmbarcador> embaEmbarcadorCollection;
+    @OneToMany(mappedBy = "testTipoEstabelecimento", fetch = FetchType.EAGER)
+    private List<TranTransportador> tranTransportadorList;
+    @OneToMany(mappedBy = "testTipoEstabelecimento", fetch = FetchType.EAGER)
+    private List<EmbaEmbarcador> embaEmbarcadorList;
 
     public TestTipoEstabelecimento() {
     }
@@ -63,20 +63,20 @@ public class TestTipoEstabelecimento implements Serializable {
         this.testDescricao = testDescricao;
     }
 
-    public Collection<TranTransportador> getTranTransportadorCollection() {
-        return tranTransportadorCollection;
+    public List<TranTransportador> getTranTransportadorList() {
+        return tranTransportadorList;
     }
 
-    public void setTranTransportadorCollection(Collection<TranTransportador> tranTransportadorCollection) {
-        this.tranTransportadorCollection = tranTransportadorCollection;
+    public void setTranTransportadorList(List<TranTransportador> tranTransportadorList) {
+        this.tranTransportadorList = tranTransportadorList;
     }
 
-    public Collection<EmbaEmbarcador> getEmbaEmbarcadorCollection() {
-        return embaEmbarcadorCollection;
+    public List<EmbaEmbarcador> getEmbaEmbarcadorList() {
+        return embaEmbarcadorList;
     }
 
-    public void setEmbaEmbarcadorCollection(Collection<EmbaEmbarcador> embaEmbarcadorCollection) {
-        this.embaEmbarcadorCollection = embaEmbarcadorCollection;
+    public void setEmbaEmbarcadorList(List<EmbaEmbarcador> embaEmbarcadorList) {
+        this.embaEmbarcadorList = embaEmbarcadorList;
     }
 
     @Override

@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -60,12 +60,12 @@ public class EspaEventoSistemaPadrao implements Serializable {
     @Column(name = "espa_prioridade")
     private String espaPrioridade;
     @JoinColumn(name = "espa_tval_codigo", referencedColumnName = "tval_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvalTipoValor tvalTipoValor;
-    @OneToMany(mappedBy = "espaEventoSistemaPadrao", fetch = FetchType.LAZY)
-    private Collection<EsisEventoSistema> esisEventoSistemaCollection;
-    @OneToMany(mappedBy = "espaEventoSistemaPadrao", fetch = FetchType.LAZY)
-    private Collection<PitePgItem> pitePgItemCollection;
+    @OneToMany(mappedBy = "espaEventoSistemaPadrao", fetch = FetchType.EAGER)
+    private List<EsisEventoSistema> esisEventoSistemaList;
+    @OneToMany(mappedBy = "espaEventoSistemaPadrao", fetch = FetchType.EAGER)
+    private List<PitePgItem> pitePgItemList;
 
     public EspaEventoSistemaPadrao() {
     }
@@ -146,20 +146,20 @@ public class EspaEventoSistemaPadrao implements Serializable {
         this.tvalTipoValor = tvalTipoValor;
     }
 
-    public Collection<EsisEventoSistema> getEsisEventoSistemaCollection() {
-        return esisEventoSistemaCollection;
+    public List<EsisEventoSistema> getEsisEventoSistemaList() {
+        return esisEventoSistemaList;
     }
 
-    public void setEsisEventoSistemaCollection(Collection<EsisEventoSistema> esisEventoSistemaCollection) {
-        this.esisEventoSistemaCollection = esisEventoSistemaCollection;
+    public void setEsisEventoSistemaList(List<EsisEventoSistema> esisEventoSistemaList) {
+        this.esisEventoSistemaList = esisEventoSistemaList;
     }
 
-    public Collection<PitePgItem> getPitePgItemCollection() {
-        return pitePgItemCollection;
+    public List<PitePgItem> getPitePgItemList() {
+        return pitePgItemList;
     }
 
-    public void setPitePgItemCollection(Collection<PitePgItem> pitePgItemCollection) {
-        this.pitePgItemCollection = pitePgItemCollection;
+    public void setPitePgItemList(List<PitePgItem> pitePgItemList) {
+        this.pitePgItemList = pitePgItemList;
     }
 
     @Override

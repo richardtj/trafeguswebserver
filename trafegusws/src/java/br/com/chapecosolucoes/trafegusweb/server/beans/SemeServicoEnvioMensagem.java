@@ -72,10 +72,10 @@ public class SemeServicoEnvioMensagem implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date semeDataEnvio;
     @JoinColumn(name = "seme_penv_codigo", referencedColumnName = "penv_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PenvPeriodicidadeEnvio penvPeriodicidadeEnvio;
     @JoinColumn(name = "seme_leme_codigo", referencedColumnName = "leme_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private LemeListaEnvioMensagem lemeListaEnvioMensagem;
 
     public SemeServicoEnvioMensagem() {

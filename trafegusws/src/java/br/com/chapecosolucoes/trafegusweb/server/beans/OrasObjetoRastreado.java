@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -49,27 +49,27 @@ public class OrasObjetoRastreado implements Serializable {
     private Integer orasCodigoGr;
     @Column(name = "oras_importado")
     private Character orasImportado;
-    @OneToMany(mappedBy = "orasObjetoRastreado", fetch = FetchType.LAZY)
-    private Collection<TermTerminal> termTerminalCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "orasObjetoRastreado", fetch = FetchType.EAGER)
+    private List<TermTerminal> termTerminalList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado", fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado", fetch = FetchType.EAGER)
     private PessPessoa pessPessoa;
-    @OneToMany(mappedBy = "orasObjetoRastreado", fetch = FetchType.LAZY)
-    private Collection<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "orasObjetoRastreado", fetch = FetchType.EAGER)
+    private List<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado", fetch = FetchType.EAGER)
     private ContContainer contContainer;
     @JoinColumn(name = "oras_pgpg_codigo", referencedColumnName = "pgpg_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PgpgPg pgpgPg;
     @JoinColumn(name = "oras_eobj_codigo", referencedColumnName = "eobj_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EobjEstatusObjeto eobjEstatusObjeto;
-    @OneToMany(mappedBy = "orasObjetoRastreado", fetch = FetchType.LAZY)
-    private Collection<OrobObjetoRastreadoObs> orobObjetoRastreadoObsCollection;
-    @OneToMany(mappedBy = "orasObjetoRastreado", fetch = FetchType.LAZY)
-    private Collection<OrteObjetoRastreadoTermina> orteObjetoRastreadoTerminaCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "orasObjetoRastreado", fetch = FetchType.EAGER)
+    private List<OrobObjetoRastreadoObs> orobObjetoRastreadoObsList;
+    @OneToMany(mappedBy = "orasObjetoRastreado", fetch = FetchType.EAGER)
+    private List<OrteObjetoRastreadoTermina> orteObjetoRastreadoTerminaList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orasObjetoRastreado", fetch = FetchType.EAGER)
     private MaloMalote maloMalote;
 
     public OrasObjetoRastreado() {
@@ -111,12 +111,12 @@ public class OrasObjetoRastreado implements Serializable {
         this.orasImportado = orasImportado;
     }
 
-    public Collection<TermTerminal> getTermTerminalCollection() {
-        return termTerminalCollection;
+    public List<TermTerminal> getTermTerminalList() {
+        return termTerminalList;
     }
 
-    public void setTermTerminalCollection(Collection<TermTerminal> termTerminalCollection) {
-        this.termTerminalCollection = termTerminalCollection;
+    public void setTermTerminalList(List<TermTerminal> termTerminalList) {
+        this.termTerminalList = termTerminalList;
     }
 
     public VeicVeiculo getVeicVeiculo() {
@@ -135,12 +135,12 @@ public class OrasObjetoRastreado implements Serializable {
         this.pessPessoa = pessPessoa;
     }
 
-    public Collection<HtpgHistoricoTrocaPg> getHtpgHistoricoTrocaPgCollection() {
-        return htpgHistoricoTrocaPgCollection;
+    public List<HtpgHistoricoTrocaPg> getHtpgHistoricoTrocaPgList() {
+        return htpgHistoricoTrocaPgList;
     }
 
-    public void setHtpgHistoricoTrocaPgCollection(Collection<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgCollection) {
-        this.htpgHistoricoTrocaPgCollection = htpgHistoricoTrocaPgCollection;
+    public void setHtpgHistoricoTrocaPgList(List<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgList) {
+        this.htpgHistoricoTrocaPgList = htpgHistoricoTrocaPgList;
     }
 
     public ContContainer getContContainer() {
@@ -167,20 +167,20 @@ public class OrasObjetoRastreado implements Serializable {
         this.eobjEstatusObjeto = eobjEstatusObjeto;
     }
 
-    public Collection<OrobObjetoRastreadoObs> getOrobObjetoRastreadoObsCollection() {
-        return orobObjetoRastreadoObsCollection;
+    public List<OrobObjetoRastreadoObs> getOrobObjetoRastreadoObsList() {
+        return orobObjetoRastreadoObsList;
     }
 
-    public void setOrobObjetoRastreadoObsCollection(Collection<OrobObjetoRastreadoObs> orobObjetoRastreadoObsCollection) {
-        this.orobObjetoRastreadoObsCollection = orobObjetoRastreadoObsCollection;
+    public void setOrobObjetoRastreadoObsList(List<OrobObjetoRastreadoObs> orobObjetoRastreadoObsList) {
+        this.orobObjetoRastreadoObsList = orobObjetoRastreadoObsList;
     }
 
-    public Collection<OrteObjetoRastreadoTermina> getOrteObjetoRastreadoTerminaCollection() {
-        return orteObjetoRastreadoTerminaCollection;
+    public List<OrteObjetoRastreadoTermina> getOrteObjetoRastreadoTerminaList() {
+        return orteObjetoRastreadoTerminaList;
     }
 
-    public void setOrteObjetoRastreadoTerminaCollection(Collection<OrteObjetoRastreadoTermina> orteObjetoRastreadoTerminaCollection) {
-        this.orteObjetoRastreadoTerminaCollection = orteObjetoRastreadoTerminaCollection;
+    public void setOrteObjetoRastreadoTerminaList(List<OrteObjetoRastreadoTermina> orteObjetoRastreadoTerminaList) {
+        this.orteObjetoRastreadoTerminaList = orteObjetoRastreadoTerminaList;
     }
 
     public MaloMalote getMaloMalote() {

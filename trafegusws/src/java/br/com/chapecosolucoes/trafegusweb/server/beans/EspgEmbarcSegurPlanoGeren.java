@@ -46,13 +46,13 @@ public class EspgEmbarcSegurPlanoGeren implements Serializable {
     @Column(name = "espg_importado")
     private Character espgImportado;
     @JoinColumn(name = "espg_segu_pjur_pess_oras_codigo", referencedColumnName = "segu_pjur_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private SeguSeguradora seguSeguradora;
     @JoinColumn(name = "espg_pgpg_codigo", referencedColumnName = "pgpg_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PgpgPg pgpgPg;
     @JoinColumn(name = "espg_emba_pjur_pess_oras_codigo", referencedColumnName = "emba_pjur_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EmbaEmbarcador embaEmbarcador;
 
     public EspgEmbarcSegurPlanoGeren() {
