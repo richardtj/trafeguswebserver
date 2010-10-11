@@ -55,7 +55,7 @@ public class VtemViagemTemperatura implements Serializable {
     @Column(name = "vtem_codigo_gr")
     private Integer vtemCodigoGr;
     @JoinColumn(name = "vtem_viag_codigo", referencedColumnName = "viag_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ViagViagem viagViagem;
 
     public VtemViagemTemperatura() {

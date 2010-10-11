@@ -55,13 +55,13 @@ public class PaipPgAssociaItemParam implements Serializable {
     @Column(name = "paip_descricao")
     private String paipDescricao;
     @JoinColumn(name = "paip_tval_codigo", referencedColumnName = "tval_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvalTipoValor tvalTipoValor;
     @JoinColumn(name = "paip_tpar_codigo", referencedColumnName = "tpar_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TparTipoParametro tparTipoParametro;
     @JoinColumn(name = "paip_pgai_codigo", referencedColumnName = "pgai_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PgaiPgAssociaItem pgaiPgAssociaItem;
 
     public PaipPgAssociaItemParam() {

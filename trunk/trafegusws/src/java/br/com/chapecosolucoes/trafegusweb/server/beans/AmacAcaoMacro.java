@@ -34,10 +34,10 @@ public class AmacAcaoMacro implements Serializable {
     @Column(name = "amac_apad_codigo")
     private Integer amacApadCodigo;
     @JoinColumn(name = "amac_mpad_codigo", referencedColumnName = "mpad_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private MpadMacroPadrao mpadMacroPadrao;
     @JoinColumn(name = "amac_apad_codigo", referencedColumnName = "apad_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public AmacAcaoMacro() {

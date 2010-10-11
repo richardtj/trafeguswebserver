@@ -55,7 +55,7 @@ public class PcamPermissaoCampo implements Serializable {
     @Column(name = "pcam_importado")
     private Character pcamImportado;
     @JoinColumn(name = "pcam_ptel_codigo", referencedColumnName = "ptel_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PtelPermissaoTela ptelPermissaoTela;
 
     public PcamPermissaoCampo() {

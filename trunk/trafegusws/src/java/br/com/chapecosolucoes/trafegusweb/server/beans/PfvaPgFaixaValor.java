@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,8 +55,8 @@ public class PfvaPgFaixaValor implements Serializable {
     private Integer pfvaCodigoGr;
     @Column(name = "pfva_importado")
     private Character pfvaImportado;
-    @OneToMany(mappedBy = "pfvaPgFaixaValor", fetch = FetchType.LAZY)
-    private Collection<PgpgPg> pgpgPgCollection;
+    @OneToMany(mappedBy = "pfvaPgFaixaValor", fetch = FetchType.EAGER)
+    private List<PgpgPg> pgpgPgList;
 
     public PfvaPgFaixaValor() {
     }
@@ -121,12 +121,12 @@ public class PfvaPgFaixaValor implements Serializable {
         this.pfvaImportado = pfvaImportado;
     }
 
-    public Collection<PgpgPg> getPgpgPgCollection() {
-        return pgpgPgCollection;
+    public List<PgpgPg> getPgpgPgList() {
+        return pgpgPgList;
     }
 
-    public void setPgpgPgCollection(Collection<PgpgPg> pgpgPgCollection) {
-        this.pgpgPgCollection = pgpgPgCollection;
+    public void setPgpgPgList(List<PgpgPg> pgpgPgList) {
+        this.pgpgPgList = pgpgPgList;
     }
 
     @Override

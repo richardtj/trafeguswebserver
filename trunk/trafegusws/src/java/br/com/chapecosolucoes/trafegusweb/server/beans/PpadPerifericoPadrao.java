@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,16 +51,16 @@ public class PpadPerifericoPadrao implements Serializable {
     @Column(name = "ppad_importado")
     private Character ppadImportado;
     @JoinColumn(name = "ppad_tper_codigo", referencedColumnName = "tper_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TperTipoPeriferico tperTipoPeriferico;
-    @OneToMany(mappedBy = "ppadPerifericoPadrao", fetch = FetchType.LAZY)
-    private Collection<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoCollection;
-    @OneToMany(mappedBy = "ppadPerifericoPadrao", fetch = FetchType.LAZY)
-    private Collection<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalCollection;
-    @OneToMany(mappedBy = "ppadPerifericoPadrao", fetch = FetchType.LAZY)
-    private Collection<PitePgItem> pitePgItemCollection;
-    @OneToMany(mappedBy = "ppadPerifericoPadrao", fetch = FetchType.LAZY)
-    private Collection<PvtePerifericVersaoTecnolo> pvtePerifericVersaoTecnoloCollection;
+    @OneToMany(mappedBy = "ppadPerifericoPadrao", fetch = FetchType.EAGER)
+    private List<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoList;
+    @OneToMany(mappedBy = "ppadPerifericoPadrao", fetch = FetchType.EAGER)
+    private List<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalList;
+    @OneToMany(mappedBy = "ppadPerifericoPadrao", fetch = FetchType.EAGER)
+    private List<PitePgItem> pitePgItemList;
+    @OneToMany(mappedBy = "ppadPerifericoPadrao", fetch = FetchType.EAGER)
+    private List<PvtePerifericVersaoTecnolo> pvtePerifericVersaoTecnoloList;
 
     public PpadPerifericoPadrao() {
     }
@@ -117,36 +117,36 @@ public class PpadPerifericoPadrao implements Serializable {
         this.tperTipoPeriferico = tperTipoPeriferico;
     }
 
-    public Collection<EppaEventoPerifericoPadrao> getEppaEventoPerifericoPadraoCollection() {
-        return eppaEventoPerifericoPadraoCollection;
+    public List<EppaEventoPerifericoPadrao> getEppaEventoPerifericoPadraoList() {
+        return eppaEventoPerifericoPadraoList;
     }
 
-    public void setEppaEventoPerifericoPadraoCollection(Collection<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoCollection) {
-        this.eppaEventoPerifericoPadraoCollection = eppaEventoPerifericoPadraoCollection;
+    public void setEppaEventoPerifericoPadraoList(List<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoList) {
+        this.eppaEventoPerifericoPadraoList = eppaEventoPerifericoPadraoList;
     }
 
-    public Collection<PpinPerifericoPadraoInstal> getPpinPerifericoPadraoInstalCollection() {
-        return ppinPerifericoPadraoInstalCollection;
+    public List<PpinPerifericoPadraoInstal> getPpinPerifericoPadraoInstalList() {
+        return ppinPerifericoPadraoInstalList;
     }
 
-    public void setPpinPerifericoPadraoInstalCollection(Collection<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalCollection) {
-        this.ppinPerifericoPadraoInstalCollection = ppinPerifericoPadraoInstalCollection;
+    public void setPpinPerifericoPadraoInstalList(List<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalList) {
+        this.ppinPerifericoPadraoInstalList = ppinPerifericoPadraoInstalList;
     }
 
-    public Collection<PitePgItem> getPitePgItemCollection() {
-        return pitePgItemCollection;
+    public List<PitePgItem> getPitePgItemList() {
+        return pitePgItemList;
     }
 
-    public void setPitePgItemCollection(Collection<PitePgItem> pitePgItemCollection) {
-        this.pitePgItemCollection = pitePgItemCollection;
+    public void setPitePgItemList(List<PitePgItem> pitePgItemList) {
+        this.pitePgItemList = pitePgItemList;
     }
 
-    public Collection<PvtePerifericVersaoTecnolo> getPvtePerifericVersaoTecnoloCollection() {
-        return pvtePerifericVersaoTecnoloCollection;
+    public List<PvtePerifericVersaoTecnolo> getPvtePerifericVersaoTecnoloList() {
+        return pvtePerifericVersaoTecnoloList;
     }
 
-    public void setPvtePerifericVersaoTecnoloCollection(Collection<PvtePerifericVersaoTecnolo> pvtePerifericVersaoTecnoloCollection) {
-        this.pvtePerifericVersaoTecnoloCollection = pvtePerifericVersaoTecnoloCollection;
+    public void setPvtePerifericVersaoTecnoloList(List<PvtePerifericVersaoTecnolo> pvtePerifericVersaoTecnoloList) {
+        this.pvtePerifericVersaoTecnoloList = pvtePerifericVersaoTecnoloList;
     }
 
     @Override

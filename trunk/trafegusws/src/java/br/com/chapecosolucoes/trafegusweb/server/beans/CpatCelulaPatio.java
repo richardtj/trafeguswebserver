@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,8 +48,8 @@ public class CpatCelulaPatio implements Serializable {
     private Integer cpatCodigoGr;
     @Column(name = "cpat_importado")
     private Character cpatImportado;
-    @OneToMany(mappedBy = "cpatCelulaPatio", fetch = FetchType.LAZY)
-    private Collection<VlevViagemLocalEvento> vlevViagemLocalEventoCollection;
+    @OneToMany(mappedBy = "cpatCelulaPatio", fetch = FetchType.EAGER)
+    private List<VlevViagemLocalEvento> vlevViagemLocalEventoList;
 
     public CpatCelulaPatio() {
     }
@@ -98,12 +98,12 @@ public class CpatCelulaPatio implements Serializable {
         this.cpatImportado = cpatImportado;
     }
 
-    public Collection<VlevViagemLocalEvento> getVlevViagemLocalEventoCollection() {
-        return vlevViagemLocalEventoCollection;
+    public List<VlevViagemLocalEvento> getVlevViagemLocalEventoList() {
+        return vlevViagemLocalEventoList;
     }
 
-    public void setVlevViagemLocalEventoCollection(Collection<VlevViagemLocalEvento> vlevViagemLocalEventoCollection) {
-        this.vlevViagemLocalEventoCollection = vlevViagemLocalEventoCollection;
+    public void setVlevViagemLocalEventoList(List<VlevViagemLocalEvento> vlevViagemLocalEventoList) {
+        this.vlevViagemLocalEventoList = vlevViagemLocalEventoList;
     }
 
     @Override

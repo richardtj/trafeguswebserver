@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,10 +38,10 @@ public class EpmoEstatusPesquisaMotoris implements Serializable {
     private String epmoDescricao;
     @Column(name = "epmo_codigo_gr")
     private Integer epmoCodigoGr;
-    @OneToMany(mappedBy = "epmoEstatusPesquisaMotoris", fetch = FetchType.LAZY)
-    private Collection<MotoMotorista> motoMotoristaCollection;
-    @OneToMany(mappedBy = "epmoEstatusPesquisaMotoris", fetch = FetchType.LAZY)
-    private Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection;
+    @OneToMany(mappedBy = "epmoEstatusPesquisaMotoris", fetch = FetchType.EAGER)
+    private List<MotoMotorista> motoMotoristaList;
+    @OneToMany(mappedBy = "epmoEstatusPesquisaMotoris", fetch = FetchType.EAGER)
+    private List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList;
 
     public EpmoEstatusPesquisaMotoris() {
     }
@@ -74,20 +74,20 @@ public class EpmoEstatusPesquisaMotoris implements Serializable {
         this.epmoCodigoGr = epmoCodigoGr;
     }
 
-    public Collection<MotoMotorista> getMotoMotoristaCollection() {
-        return motoMotoristaCollection;
+    public List<MotoMotorista> getMotoMotoristaList() {
+        return motoMotoristaList;
     }
 
-    public void setMotoMotoristaCollection(Collection<MotoMotorista> motoMotoristaCollection) {
-        this.motoMotoristaCollection = motoMotoristaCollection;
+    public void setMotoMotoristaList(List<MotoMotorista> motoMotoristaList) {
+        this.motoMotoristaList = motoMotoristaList;
     }
 
-    public Collection<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorCollection() {
-        return hpmoHistoricoPesquisaMotorCollection;
+    public List<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorList() {
+        return hpmoHistoricoPesquisaMotorList;
     }
 
-    public void setHpmoHistoricoPesquisaMotorCollection(Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection) {
-        this.hpmoHistoricoPesquisaMotorCollection = hpmoHistoricoPesquisaMotorCollection;
+    public void setHpmoHistoricoPesquisaMotorList(List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList) {
+        this.hpmoHistoricoPesquisaMotorList = hpmoHistoricoPesquisaMotorList;
     }
 
     @Override

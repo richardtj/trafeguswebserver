@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -36,28 +36,28 @@ public class TranTransportador implements Serializable {
     @Basic(optional = false)
     @Column(name = "tran_pess_oras_codigo")
     private Integer tranPessOrasCodigo;
-    @OneToMany(mappedBy = "tranTransportador", fetch = FetchType.LAZY)
-    private Collection<TlocTransportadorLocal> tlocTransportadorLocalCollection;
-    @OneToMany(mappedBy = "tranTransportador", fetch = FetchType.LAZY)
-    private Collection<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tranTransportador", fetch = FetchType.LAZY)
-    private Collection<ViagViagem> viagViagemCollection;
-    @OneToMany(mappedBy = "tranTransportador", fetch = FetchType.LAZY)
-    private Collection<MtraMotoristaTransportador> mtraMotoristaTransportadorCollection;
-    @OneToMany(mappedBy = "tranTransportador", fetch = FetchType.LAZY)
-    private Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection;
-    @OneToMany(mappedBy = "tranTransportador", fetch = FetchType.LAZY)
-    private Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection;
-    @OneToMany(mappedBy = "tranTransportador", fetch = FetchType.LAZY)
-    private Collection<TranTransportador> tranTransportadorCollection;
+    @OneToMany(mappedBy = "tranTransportador", fetch = FetchType.EAGER)
+    private List<TlocTransportadorLocal> tlocTransportadorLocalList;
+    @OneToMany(mappedBy = "tranTransportador", fetch = FetchType.EAGER)
+    private List<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tranTransportador", fetch = FetchType.EAGER)
+    private List<ViagViagem> viagViagemList;
+    @OneToMany(mappedBy = "tranTransportador", fetch = FetchType.EAGER)
+    private List<MtraMotoristaTransportador> mtraMotoristaTransportadorList;
+    @OneToMany(mappedBy = "tranTransportador", fetch = FetchType.EAGER)
+    private List<TembTransportadorEmbarcador> tembTransportadorEmbarcadorList;
+    @OneToMany(mappedBy = "tranTransportador", fetch = FetchType.EAGER)
+    private List<VtraVeiculoTransportador> vtraVeiculoTransportadorList;
+    @OneToMany(mappedBy = "tranTransportador", fetch = FetchType.EAGER)
+    private List<TranTransportador> tranTransportadorList;
     @JoinColumn(name = "tran_pess_oras_codigo_matriz", referencedColumnName = "tran_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TranTransportador tranTransportador;
     @JoinColumn(name = "tran_test_codigo", referencedColumnName = "test_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TestTipoEstabelecimento testTipoEstabelecimento;
     @JoinColumn(name = "tran_pess_oras_codigo", referencedColumnName = "pess_oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private PessPessoa pessPessoa;
 
     public TranTransportador() {
@@ -75,60 +75,60 @@ public class TranTransportador implements Serializable {
         this.tranPessOrasCodigo = tranPessOrasCodigo;
     }
 
-    public Collection<TlocTransportadorLocal> getTlocTransportadorLocalCollection() {
-        return tlocTransportadorLocalCollection;
+    public List<TlocTransportadorLocal> getTlocTransportadorLocalList() {
+        return tlocTransportadorLocalList;
     }
 
-    public void setTlocTransportadorLocalCollection(Collection<TlocTransportadorLocal> tlocTransportadorLocalCollection) {
-        this.tlocTransportadorLocalCollection = tlocTransportadorLocalCollection;
+    public void setTlocTransportadorLocalList(List<TlocTransportadorLocal> tlocTransportadorLocalList) {
+        this.tlocTransportadorLocalList = tlocTransportadorLocalList;
     }
 
-    public Collection<TspgTranspSegurPlanoGeren> getTspgTranspSegurPlanoGerenCollection() {
-        return tspgTranspSegurPlanoGerenCollection;
+    public List<TspgTranspSegurPlanoGeren> getTspgTranspSegurPlanoGerenList() {
+        return tspgTranspSegurPlanoGerenList;
     }
 
-    public void setTspgTranspSegurPlanoGerenCollection(Collection<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenCollection) {
-        this.tspgTranspSegurPlanoGerenCollection = tspgTranspSegurPlanoGerenCollection;
+    public void setTspgTranspSegurPlanoGerenList(List<TspgTranspSegurPlanoGeren> tspgTranspSegurPlanoGerenList) {
+        this.tspgTranspSegurPlanoGerenList = tspgTranspSegurPlanoGerenList;
     }
 
-    public Collection<ViagViagem> getViagViagemCollection() {
-        return viagViagemCollection;
+    public List<ViagViagem> getViagViagemList() {
+        return viagViagemList;
     }
 
-    public void setViagViagemCollection(Collection<ViagViagem> viagViagemCollection) {
-        this.viagViagemCollection = viagViagemCollection;
+    public void setViagViagemList(List<ViagViagem> viagViagemList) {
+        this.viagViagemList = viagViagemList;
     }
 
-    public Collection<MtraMotoristaTransportador> getMtraMotoristaTransportadorCollection() {
-        return mtraMotoristaTransportadorCollection;
+    public List<MtraMotoristaTransportador> getMtraMotoristaTransportadorList() {
+        return mtraMotoristaTransportadorList;
     }
 
-    public void setMtraMotoristaTransportadorCollection(Collection<MtraMotoristaTransportador> mtraMotoristaTransportadorCollection) {
-        this.mtraMotoristaTransportadorCollection = mtraMotoristaTransportadorCollection;
+    public void setMtraMotoristaTransportadorList(List<MtraMotoristaTransportador> mtraMotoristaTransportadorList) {
+        this.mtraMotoristaTransportadorList = mtraMotoristaTransportadorList;
     }
 
-    public Collection<TembTransportadorEmbarcador> getTembTransportadorEmbarcadorCollection() {
-        return tembTransportadorEmbarcadorCollection;
+    public List<TembTransportadorEmbarcador> getTembTransportadorEmbarcadorList() {
+        return tembTransportadorEmbarcadorList;
     }
 
-    public void setTembTransportadorEmbarcadorCollection(Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection) {
-        this.tembTransportadorEmbarcadorCollection = tembTransportadorEmbarcadorCollection;
+    public void setTembTransportadorEmbarcadorList(List<TembTransportadorEmbarcador> tembTransportadorEmbarcadorList) {
+        this.tembTransportadorEmbarcadorList = tembTransportadorEmbarcadorList;
     }
 
-    public Collection<VtraVeiculoTransportador> getVtraVeiculoTransportadorCollection() {
-        return vtraVeiculoTransportadorCollection;
+    public List<VtraVeiculoTransportador> getVtraVeiculoTransportadorList() {
+        return vtraVeiculoTransportadorList;
     }
 
-    public void setVtraVeiculoTransportadorCollection(Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection) {
-        this.vtraVeiculoTransportadorCollection = vtraVeiculoTransportadorCollection;
+    public void setVtraVeiculoTransportadorList(List<VtraVeiculoTransportador> vtraVeiculoTransportadorList) {
+        this.vtraVeiculoTransportadorList = vtraVeiculoTransportadorList;
     }
 
-    public Collection<TranTransportador> getTranTransportadorCollection() {
-        return tranTransportadorCollection;
+    public List<TranTransportador> getTranTransportadorList() {
+        return tranTransportadorList;
     }
 
-    public void setTranTransportadorCollection(Collection<TranTransportador> tranTransportadorCollection) {
-        this.tranTransportadorCollection = tranTransportadorCollection;
+    public void setTranTransportadorList(List<TranTransportador> tranTransportadorList) {
+        this.tranTransportadorList = tranTransportadorList;
     }
 
     public TranTransportador getTranTransportador() {

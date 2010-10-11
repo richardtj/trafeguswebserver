@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,12 +35,12 @@ public class TvcoTipoVinculoContratual implements Serializable {
     private Integer tvcoCodigo;
     @Column(name = "tvco_descricao")
     private String tvcoDescricao;
-    @OneToMany(mappedBy = "tvcoTipoVinculoContratual", fetch = FetchType.LAZY)
-    private Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection;
-    @OneToMany(mappedBy = "tvcoTipoVinculoContratual", fetch = FetchType.LAZY)
-    private Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection;
-    @OneToMany(mappedBy = "tvcoTipoVinculoContratual", fetch = FetchType.LAZY)
-    private Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection;
+    @OneToMany(mappedBy = "tvcoTipoVinculoContratual", fetch = FetchType.EAGER)
+    private List<TembTransportadorEmbarcador> tembTransportadorEmbarcadorList;
+    @OneToMany(mappedBy = "tvcoTipoVinculoContratual", fetch = FetchType.EAGER)
+    private List<VtraVeiculoTransportador> vtraVeiculoTransportadorList;
+    @OneToMany(mappedBy = "tvcoTipoVinculoContratual", fetch = FetchType.EAGER)
+    private List<VembVeiculoEmbarcador> vembVeiculoEmbarcadorList;
 
     public TvcoTipoVinculoContratual() {
     }
@@ -65,28 +65,28 @@ public class TvcoTipoVinculoContratual implements Serializable {
         this.tvcoDescricao = tvcoDescricao;
     }
 
-    public Collection<TembTransportadorEmbarcador> getTembTransportadorEmbarcadorCollection() {
-        return tembTransportadorEmbarcadorCollection;
+    public List<TembTransportadorEmbarcador> getTembTransportadorEmbarcadorList() {
+        return tembTransportadorEmbarcadorList;
     }
 
-    public void setTembTransportadorEmbarcadorCollection(Collection<TembTransportadorEmbarcador> tembTransportadorEmbarcadorCollection) {
-        this.tembTransportadorEmbarcadorCollection = tembTransportadorEmbarcadorCollection;
+    public void setTembTransportadorEmbarcadorList(List<TembTransportadorEmbarcador> tembTransportadorEmbarcadorList) {
+        this.tembTransportadorEmbarcadorList = tembTransportadorEmbarcadorList;
     }
 
-    public Collection<VtraVeiculoTransportador> getVtraVeiculoTransportadorCollection() {
-        return vtraVeiculoTransportadorCollection;
+    public List<VtraVeiculoTransportador> getVtraVeiculoTransportadorList() {
+        return vtraVeiculoTransportadorList;
     }
 
-    public void setVtraVeiculoTransportadorCollection(Collection<VtraVeiculoTransportador> vtraVeiculoTransportadorCollection) {
-        this.vtraVeiculoTransportadorCollection = vtraVeiculoTransportadorCollection;
+    public void setVtraVeiculoTransportadorList(List<VtraVeiculoTransportador> vtraVeiculoTransportadorList) {
+        this.vtraVeiculoTransportadorList = vtraVeiculoTransportadorList;
     }
 
-    public Collection<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorCollection() {
-        return vembVeiculoEmbarcadorCollection;
+    public List<VembVeiculoEmbarcador> getVembVeiculoEmbarcadorList() {
+        return vembVeiculoEmbarcadorList;
     }
 
-    public void setVembVeiculoEmbarcadorCollection(Collection<VembVeiculoEmbarcador> vembVeiculoEmbarcadorCollection) {
-        this.vembVeiculoEmbarcadorCollection = vembVeiculoEmbarcadorCollection;
+    public void setVembVeiculoEmbarcadorList(List<VembVeiculoEmbarcador> vembVeiculoEmbarcadorList) {
+        this.vembVeiculoEmbarcadorList = vembVeiculoEmbarcadorList;
     }
 
     @Override

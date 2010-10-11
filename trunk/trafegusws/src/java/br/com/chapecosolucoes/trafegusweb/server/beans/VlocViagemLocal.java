@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,20 +57,20 @@ public class VlocViagemLocal implements Serializable {
     private Character vlocImportado;
     @Column(name = "vloc_descricao")
     private String vlocDescricao;
-    @OneToMany(mappedBy = "vlocViagemLocal", fetch = FetchType.LAZY)
-    private Collection<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalCollection;
-    @OneToMany(mappedBy = "vlocViagemLocal", fetch = FetchType.LAZY)
-    private Collection<VlevViagemLocalEvento> vlevViagemLocalEventoCollection;
-    @OneToMany(mappedBy = "vlocViagemLocal", fetch = FetchType.LAZY)
-    private Collection<VconViagemConhecimento> vconViagemConhecimentoCollection;
+    @OneToMany(mappedBy = "vlocViagemLocal", fetch = FetchType.EAGER)
+    private List<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalList;
+    @OneToMany(mappedBy = "vlocViagemLocal", fetch = FetchType.EAGER)
+    private List<VlevViagemLocalEvento> vlevViagemLocalEventoList;
+    @OneToMany(mappedBy = "vlocViagemLocal", fetch = FetchType.EAGER)
+    private List<VconViagemConhecimento> vconViagemConhecimentoList;
     @JoinColumn(name = "vloc_viag_codigo", referencedColumnName = "viag_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ViagViagem viagViagem;
     @JoinColumn(name = "vloc_tpar_codigo", referencedColumnName = "tpar_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TparTipoParada tparTipoParada;
     @JoinColumn(name = "vloc_refe_codigo", referencedColumnName = "refe_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private RefeReferencia refeReferencia;
 
     public VlocViagemLocal() {
@@ -136,28 +136,28 @@ public class VlocViagemLocal implements Serializable {
         this.vlocDescricao = vlocDescricao;
     }
 
-    public Collection<VnfiViagemNotaFiscal> getVnfiViagemNotaFiscalCollection() {
-        return vnfiViagemNotaFiscalCollection;
+    public List<VnfiViagemNotaFiscal> getVnfiViagemNotaFiscalList() {
+        return vnfiViagemNotaFiscalList;
     }
 
-    public void setVnfiViagemNotaFiscalCollection(Collection<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalCollection) {
-        this.vnfiViagemNotaFiscalCollection = vnfiViagemNotaFiscalCollection;
+    public void setVnfiViagemNotaFiscalList(List<VnfiViagemNotaFiscal> vnfiViagemNotaFiscalList) {
+        this.vnfiViagemNotaFiscalList = vnfiViagemNotaFiscalList;
     }
 
-    public Collection<VlevViagemLocalEvento> getVlevViagemLocalEventoCollection() {
-        return vlevViagemLocalEventoCollection;
+    public List<VlevViagemLocalEvento> getVlevViagemLocalEventoList() {
+        return vlevViagemLocalEventoList;
     }
 
-    public void setVlevViagemLocalEventoCollection(Collection<VlevViagemLocalEvento> vlevViagemLocalEventoCollection) {
-        this.vlevViagemLocalEventoCollection = vlevViagemLocalEventoCollection;
+    public void setVlevViagemLocalEventoList(List<VlevViagemLocalEvento> vlevViagemLocalEventoList) {
+        this.vlevViagemLocalEventoList = vlevViagemLocalEventoList;
     }
 
-    public Collection<VconViagemConhecimento> getVconViagemConhecimentoCollection() {
-        return vconViagemConhecimentoCollection;
+    public List<VconViagemConhecimento> getVconViagemConhecimentoList() {
+        return vconViagemConhecimentoList;
     }
 
-    public void setVconViagemConhecimentoCollection(Collection<VconViagemConhecimento> vconViagemConhecimentoCollection) {
-        this.vconViagemConhecimentoCollection = vconViagemConhecimentoCollection;
+    public void setVconViagemConhecimentoList(List<VconViagemConhecimento> vconViagemConhecimentoList) {
+        this.vconViagemConhecimentoList = vconViagemConhecimentoList;
     }
 
     public ViagViagem getViagViagem() {

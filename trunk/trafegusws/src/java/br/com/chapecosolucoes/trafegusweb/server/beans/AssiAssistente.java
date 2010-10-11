@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,8 +51,8 @@ public class AssiAssistente implements Serializable {
     private Integer assiCodigoGr;
     @Column(name = "assi_importado")
     private Character assiImportado;
-    @OneToMany(mappedBy = "assiAssistente", fetch = FetchType.LAZY)
-    private Collection<AssdAssistenteDetalhe> assdAssistenteDetalheCollection;
+    @OneToMany(mappedBy = "assiAssistente", fetch = FetchType.EAGER)
+    private List<AssdAssistenteDetalhe> assdAssistenteDetalheList;
 
     public AssiAssistente() {
     }
@@ -109,12 +109,12 @@ public class AssiAssistente implements Serializable {
         this.assiImportado = assiImportado;
     }
 
-    public Collection<AssdAssistenteDetalhe> getAssdAssistenteDetalheCollection() {
-        return assdAssistenteDetalheCollection;
+    public List<AssdAssistenteDetalhe> getAssdAssistenteDetalheList() {
+        return assdAssistenteDetalheList;
     }
 
-    public void setAssdAssistenteDetalheCollection(Collection<AssdAssistenteDetalhe> assdAssistenteDetalheCollection) {
-        this.assdAssistenteDetalheCollection = assdAssistenteDetalheCollection;
+    public void setAssdAssistenteDetalheList(List<AssdAssistenteDetalhe> assdAssistenteDetalheList) {
+        this.assdAssistenteDetalheList = assdAssistenteDetalheList;
     }
 
     @Override

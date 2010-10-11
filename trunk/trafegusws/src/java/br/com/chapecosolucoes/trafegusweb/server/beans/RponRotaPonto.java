@@ -59,13 +59,13 @@ public class RponRotaPonto implements Serializable {
     @Column(name = "rpon_importado")
     private Character rponImportado;
     @JoinColumn(name = "rpon_tpar_codigo", referencedColumnName = "tpar_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TparTipoParada tparTipoParada;
     @JoinColumn(name = "rpon_rota_codigo", referencedColumnName = "rota_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private RotaRota rotaRota;
     @JoinColumn(name = "rpon_refe_codigo", referencedColumnName = "refe_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private RefeReferencia refeReferencia;
 
     public RponRotaPonto() {

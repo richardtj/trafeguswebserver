@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,10 +37,10 @@ public class MotiMotivo implements Serializable {
     private Integer motiCodigo;
     @Column(name = "moti_descricao")
     private String motiDescricao;
-    @OneToMany(mappedBy = "motiMotivo", fetch = FetchType.LAZY)
-    private Collection<VestViagemEstatus> vestViagemEstatusCollection;
+    @OneToMany(mappedBy = "motiMotivo", fetch = FetchType.EAGER)
+    private List<VestViagemEstatus> vestViagemEstatusList;
     @JoinColumn(name = "moti_tmot_codigo", referencedColumnName = "tmot_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TmotTipoMotivo tmotTipoMotivo;
 
     public MotiMotivo() {
@@ -66,12 +66,12 @@ public class MotiMotivo implements Serializable {
         this.motiDescricao = motiDescricao;
     }
 
-    public Collection<VestViagemEstatus> getVestViagemEstatusCollection() {
-        return vestViagemEstatusCollection;
+    public List<VestViagemEstatus> getVestViagemEstatusList() {
+        return vestViagemEstatusList;
     }
 
-    public void setVestViagemEstatusCollection(Collection<VestViagemEstatus> vestViagemEstatusCollection) {
-        this.vestViagemEstatusCollection = vestViagemEstatusCollection;
+    public void setVestViagemEstatusList(List<VestViagemEstatus> vestViagemEstatusList) {
+        this.vestViagemEstatusList = vestViagemEstatusList;
     }
 
     public TmotTipoMotivo getTmotTipoMotivo() {

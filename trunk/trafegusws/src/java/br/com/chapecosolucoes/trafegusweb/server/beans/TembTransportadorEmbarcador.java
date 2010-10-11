@@ -46,13 +46,13 @@ public class TembTransportadorEmbarcador implements Serializable {
     @Column(name = "temb_importado")
     private Character tembImportado;
     @JoinColumn(name = "tvco_codigo", referencedColumnName = "tvco_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvcoTipoVinculoContratual tvcoTipoVinculoContratual;
     @JoinColumn(name = "temb_tran_pess_oras_codigo", referencedColumnName = "tran_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TranTransportador tranTransportador;
     @JoinColumn(name = "temb_emb_pjur_pess_oras_codigo", referencedColumnName = "emba_pjur_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EmbaEmbarcador embaEmbarcador;
 
     public TembTransportadorEmbarcador() {

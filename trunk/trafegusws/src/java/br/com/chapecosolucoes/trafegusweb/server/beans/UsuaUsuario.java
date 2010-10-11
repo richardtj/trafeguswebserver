@@ -2,10 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,7 +33,6 @@ import javax.persistence.Table;
     @NamedQuery(name = "UsuaUsuario.findByUsuaLogin", query = "SELECT u FROM UsuaUsuario u WHERE u.usuaLogin = :usuaLogin"),
     @NamedQuery(name = "UsuaUsuario.findByUsuaSenha", query = "SELECT u FROM UsuaUsuario u WHERE u.usuaSenha = :usuaSenha")})
 public class UsuaUsuario implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -42,36 +42,36 @@ public class UsuaUsuario implements Serializable {
     private String usuaLogin;
     @Column(name = "usua_senha")
     private String usuaSenha;
-    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.LAZY)
-    private Collection<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuCollection;
-    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.LAZY)
-    private Collection<RmliRecebimentoMensagLivre> rmliRecebimentoMensagLivreCollection;
-    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.LAZY)
-    private Collection<VestViagemEstatus> vestViagemEstatusCollection;
-    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.LAZY)
-    private Collection<PperProblemaPeriferico> pperProblemaPerifericoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuaUsuario", fetch = FetchType.LAZY)
-    private Collection<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgCollection;
-    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.LAZY)
-    private Collection<VterViagemTerminal> vterViagemTerminalCollection;
-    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.LAZY)
-    private Collection<OrobObjetoRastreadoObs> orobObjetoRastreadoObsCollection;
+    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.EAGER)
+    private List<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuList;
+    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.EAGER)
+    private List<RmliRecebimentoMensagLivre> rmliRecebimentoMensagLivreList;
+    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.EAGER)
+    private List<VestViagemEstatus> vestViagemEstatusList;
+    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.EAGER)
+    private List<PperProblemaPeriferico> pperProblemaPerifericoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuaUsuario", fetch = FetchType.EAGER)
+    private List<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgList;
+    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.EAGER)
+    private List<VterViagemTerminal> vterViagemTerminalList;
+    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.EAGER)
+    private List<OrobObjetoRastreadoObs> orobObjetoRastreadoObsList;
     @JoinColumn(name = "usua_seto_codigo", referencedColumnName = "seto_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private SetoSetor setoSetor;
     @JoinColumn(name = "usua_pfis_pess_oras_codigo", referencedColumnName = "pfis_pess_oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private PfisPessoaFisica pfisPessoaFisica;
     @JoinColumn(name = "usua_pess_oras_codigo", referencedColumnName = "pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PessPessoa pessPessoa;
     @JoinColumn(name = "usua_perf_codigo", referencedColumnName = "perf_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PerfPerfil perfPerfil;
-    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.LAZY)
-    private Collection<AusuAcessoUsuario> ausuAcessoUsuarioCollection;
-    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.LAZY)
-    private Collection<EnviEnvio> enviEnvioCollection;
+    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.EAGER)
+    private List<AusuAcessoUsuario> ausuAcessoUsuarioList;
+    @OneToMany(mappedBy = "usuaUsuario", fetch = FetchType.EAGER)
+    private List<EnviEnvio> enviEnvioList;
 
     public UsuaUsuario() {
     }
@@ -104,60 +104,60 @@ public class UsuaUsuario implements Serializable {
         this.usuaSenha = usuaSenha;
     }
 
-    public Collection<ErusEstacaoRastreamentoUsu> getErusEstacaoRastreamentoUsuCollection() {
-        return erusEstacaoRastreamentoUsuCollection;
+    public List<ErusEstacaoRastreamentoUsu> getErusEstacaoRastreamentoUsuList() {
+        return erusEstacaoRastreamentoUsuList;
     }
 
-    public void setErusEstacaoRastreamentoUsuCollection(Collection<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuCollection) {
-        this.erusEstacaoRastreamentoUsuCollection = erusEstacaoRastreamentoUsuCollection;
+    public void setErusEstacaoRastreamentoUsuList(List<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuList) {
+        this.erusEstacaoRastreamentoUsuList = erusEstacaoRastreamentoUsuList;
     }
 
-    public Collection<RmliRecebimentoMensagLivre> getRmliRecebimentoMensagLivreCollection() {
-        return rmliRecebimentoMensagLivreCollection;
+    public List<RmliRecebimentoMensagLivre> getRmliRecebimentoMensagLivreList() {
+        return rmliRecebimentoMensagLivreList;
     }
 
-    public void setRmliRecebimentoMensagLivreCollection(Collection<RmliRecebimentoMensagLivre> rmliRecebimentoMensagLivreCollection) {
-        this.rmliRecebimentoMensagLivreCollection = rmliRecebimentoMensagLivreCollection;
+    public void setRmliRecebimentoMensagLivreList(List<RmliRecebimentoMensagLivre> rmliRecebimentoMensagLivreList) {
+        this.rmliRecebimentoMensagLivreList = rmliRecebimentoMensagLivreList;
     }
 
-    public Collection<VestViagemEstatus> getVestViagemEstatusCollection() {
-        return vestViagemEstatusCollection;
+    public List<VestViagemEstatus> getVestViagemEstatusList() {
+        return vestViagemEstatusList;
     }
 
-    public void setVestViagemEstatusCollection(Collection<VestViagemEstatus> vestViagemEstatusCollection) {
-        this.vestViagemEstatusCollection = vestViagemEstatusCollection;
+    public void setVestViagemEstatusList(List<VestViagemEstatus> vestViagemEstatusList) {
+        this.vestViagemEstatusList = vestViagemEstatusList;
     }
 
-    public Collection<PperProblemaPeriferico> getPperProblemaPerifericoCollection() {
-        return pperProblemaPerifericoCollection;
+    public List<PperProblemaPeriferico> getPperProblemaPerifericoList() {
+        return pperProblemaPerifericoList;
     }
 
-    public void setPperProblemaPerifericoCollection(Collection<PperProblemaPeriferico> pperProblemaPerifericoCollection) {
-        this.pperProblemaPerifericoCollection = pperProblemaPerifericoCollection;
+    public void setPperProblemaPerifericoList(List<PperProblemaPeriferico> pperProblemaPerifericoList) {
+        this.pperProblemaPerifericoList = pperProblemaPerifericoList;
     }
 
-    public Collection<HtpgHistoricoTrocaPg> getHtpgHistoricoTrocaPgCollection() {
-        return htpgHistoricoTrocaPgCollection;
+    public List<HtpgHistoricoTrocaPg> getHtpgHistoricoTrocaPgList() {
+        return htpgHistoricoTrocaPgList;
     }
 
-    public void setHtpgHistoricoTrocaPgCollection(Collection<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgCollection) {
-        this.htpgHistoricoTrocaPgCollection = htpgHistoricoTrocaPgCollection;
+    public void setHtpgHistoricoTrocaPgList(List<HtpgHistoricoTrocaPg> htpgHistoricoTrocaPgList) {
+        this.htpgHistoricoTrocaPgList = htpgHistoricoTrocaPgList;
     }
 
-    public Collection<VterViagemTerminal> getVterViagemTerminalCollection() {
-        return vterViagemTerminalCollection;
+    public List<VterViagemTerminal> getVterViagemTerminalList() {
+        return vterViagemTerminalList;
     }
 
-    public void setVterViagemTerminalCollection(Collection<VterViagemTerminal> vterViagemTerminalCollection) {
-        this.vterViagemTerminalCollection = vterViagemTerminalCollection;
+    public void setVterViagemTerminalList(List<VterViagemTerminal> vterViagemTerminalList) {
+        this.vterViagemTerminalList = vterViagemTerminalList;
     }
 
-    public Collection<OrobObjetoRastreadoObs> getOrobObjetoRastreadoObsCollection() {
-        return orobObjetoRastreadoObsCollection;
+    public List<OrobObjetoRastreadoObs> getOrobObjetoRastreadoObsList() {
+        return orobObjetoRastreadoObsList;
     }
 
-    public void setOrobObjetoRastreadoObsCollection(Collection<OrobObjetoRastreadoObs> orobObjetoRastreadoObsCollection) {
-        this.orobObjetoRastreadoObsCollection = orobObjetoRastreadoObsCollection;
+    public void setOrobObjetoRastreadoObsList(List<OrobObjetoRastreadoObs> orobObjetoRastreadoObsList) {
+        this.orobObjetoRastreadoObsList = orobObjetoRastreadoObsList;
     }
 
     public SetoSetor getSetoSetor() {
@@ -192,20 +192,20 @@ public class UsuaUsuario implements Serializable {
         this.perfPerfil = perfPerfil;
     }
 
-    public Collection<AusuAcessoUsuario> getAusuAcessoUsuarioCollection() {
-        return ausuAcessoUsuarioCollection;
+    public List<AusuAcessoUsuario> getAusuAcessoUsuarioList() {
+        return ausuAcessoUsuarioList;
     }
 
-    public void setAusuAcessoUsuarioCollection(Collection<AusuAcessoUsuario> ausuAcessoUsuarioCollection) {
-        this.ausuAcessoUsuarioCollection = ausuAcessoUsuarioCollection;
+    public void setAusuAcessoUsuarioList(List<AusuAcessoUsuario> ausuAcessoUsuarioList) {
+        this.ausuAcessoUsuarioList = ausuAcessoUsuarioList;
     }
 
-    public Collection<EnviEnvio> getEnviEnvioCollection() {
-        return enviEnvioCollection;
+    public List<EnviEnvio> getEnviEnvioList() {
+        return enviEnvioList;
     }
 
-    public void setEnviEnvioCollection(Collection<EnviEnvio> enviEnvioCollection) {
-        this.enviEnvioCollection = enviEnvioCollection;
+    public void setEnviEnvioList(List<EnviEnvio> enviEnvioList) {
+        this.enviEnvioList = enviEnvioList;
     }
 
     @Override
@@ -232,4 +232,5 @@ public class UsuaUsuario implements Serializable {
     public String toString() {
         return "br.com.chapecosolucoes.trafegusweb.server.beans.UsuaUsuario[usuaPfisPessOrasCodigo=" + usuaPfisPessOrasCodigo + "]";
     }
+
 }

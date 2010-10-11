@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,10 +53,10 @@ public class CrefClasseReferencia implements Serializable {
     private Integer crefCodigoGr;
     @Column(name = "cref_importado")
     private Character crefImportado;
-    @OneToMany(mappedBy = "crefClasseReferencia", fetch = FetchType.LAZY)
-    private Collection<RefeReferencia> refeReferenciaCollection;
+    @OneToMany(mappedBy = "crefClasseReferencia", fetch = FetchType.EAGER)
+    private List<RefeReferencia> refeReferenciaList;
     @JoinColumn(name = "cref_pess_oras_codigo", referencedColumnName = "pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PessPessoa pessPessoa;
 
     public CrefClasseReferencia() {
@@ -114,12 +114,12 @@ public class CrefClasseReferencia implements Serializable {
         this.crefImportado = crefImportado;
     }
 
-    public Collection<RefeReferencia> getRefeReferenciaCollection() {
-        return refeReferenciaCollection;
+    public List<RefeReferencia> getRefeReferenciaList() {
+        return refeReferenciaList;
     }
 
-    public void setRefeReferenciaCollection(Collection<RefeReferencia> refeReferenciaCollection) {
-        this.refeReferenciaCollection = refeReferenciaCollection;
+    public void setRefeReferenciaList(List<RefeReferencia> refeReferenciaList) {
+        this.refeReferenciaList = refeReferenciaList;
     }
 
     public PessPessoa getPessPessoa() {

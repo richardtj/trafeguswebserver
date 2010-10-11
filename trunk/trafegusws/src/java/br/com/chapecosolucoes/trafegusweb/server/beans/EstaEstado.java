@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,10 +53,10 @@ public class EstaEstado implements Serializable {
     private Integer estaCodigoGr;
     @Column(name = "esta_importado")
     private Character estaImportado;
-    @OneToMany(mappedBy = "estaEstado", fetch = FetchType.LAZY)
-    private Collection<CidaCidade> cidaCidadeCollection;
+    @OneToMany(mappedBy = "estaEstado", fetch = FetchType.EAGER)
+    private List<CidaCidade> cidaCidadeList;
     @JoinColumn(name = "esta_pais_codigo", referencedColumnName = "pais_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PaisPais paisPais;
 
     public EstaEstado() {
@@ -114,12 +114,12 @@ public class EstaEstado implements Serializable {
         this.estaImportado = estaImportado;
     }
 
-    public Collection<CidaCidade> getCidaCidadeCollection() {
-        return cidaCidadeCollection;
+    public List<CidaCidade> getCidaCidadeList() {
+        return cidaCidadeList;
     }
 
-    public void setCidaCidadeCollection(Collection<CidaCidade> cidaCidadeCollection) {
-        this.cidaCidadeCollection = cidaCidadeCollection;
+    public void setCidaCidadeList(List<CidaCidade> cidaCidadeList) {
+        this.cidaCidadeList = cidaCidadeList;
     }
 
     public PaisPais getPaisPais() {

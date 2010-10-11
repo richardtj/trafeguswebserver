@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,12 +54,12 @@ public class PerfPerfil implements Serializable {
     private Integer perfCodigoGr;
     @Column(name = "perf_importado")
     private Character perfImportado;
-    @OneToMany(mappedBy = "perfPerfil", fetch = FetchType.LAZY)
-    private Collection<PproPermissaoProduto> pproPermissaoProdutoCollection;
-    @OneToMany(mappedBy = "perfPerfil", fetch = FetchType.LAZY)
-    private Collection<PtelPermissaoTela> ptelPermissaoTelaCollection;
-    @OneToMany(mappedBy = "perfPerfil", fetch = FetchType.LAZY)
-    private Collection<UsuaUsuario> usuaUsuarioCollection;
+    @OneToMany(mappedBy = "perfPerfil", fetch = FetchType.EAGER)
+    private List<PproPermissaoProduto> pproPermissaoProdutoList;
+    @OneToMany(mappedBy = "perfPerfil", fetch = FetchType.EAGER)
+    private List<PtelPermissaoTela> ptelPermissaoTelaList;
+    @OneToMany(mappedBy = "perfPerfil", fetch = FetchType.EAGER)
+    private List<UsuaUsuario> usuaUsuarioList;
 
     public PerfPerfil() {
     }
@@ -124,28 +124,28 @@ public class PerfPerfil implements Serializable {
         this.perfImportado = perfImportado;
     }
 
-    public Collection<PproPermissaoProduto> getPproPermissaoProdutoCollection() {
-        return pproPermissaoProdutoCollection;
+    public List<PproPermissaoProduto> getPproPermissaoProdutoList() {
+        return pproPermissaoProdutoList;
     }
 
-    public void setPproPermissaoProdutoCollection(Collection<PproPermissaoProduto> pproPermissaoProdutoCollection) {
-        this.pproPermissaoProdutoCollection = pproPermissaoProdutoCollection;
+    public void setPproPermissaoProdutoList(List<PproPermissaoProduto> pproPermissaoProdutoList) {
+        this.pproPermissaoProdutoList = pproPermissaoProdutoList;
     }
 
-    public Collection<PtelPermissaoTela> getPtelPermissaoTelaCollection() {
-        return ptelPermissaoTelaCollection;
+    public List<PtelPermissaoTela> getPtelPermissaoTelaList() {
+        return ptelPermissaoTelaList;
     }
 
-    public void setPtelPermissaoTelaCollection(Collection<PtelPermissaoTela> ptelPermissaoTelaCollection) {
-        this.ptelPermissaoTelaCollection = ptelPermissaoTelaCollection;
+    public void setPtelPermissaoTelaList(List<PtelPermissaoTela> ptelPermissaoTelaList) {
+        this.ptelPermissaoTelaList = ptelPermissaoTelaList;
     }
 
-    public Collection<UsuaUsuario> getUsuaUsuarioCollection() {
-        return usuaUsuarioCollection;
+    public List<UsuaUsuario> getUsuaUsuarioList() {
+        return usuaUsuarioList;
     }
 
-    public void setUsuaUsuarioCollection(Collection<UsuaUsuario> usuaUsuarioCollection) {
-        this.usuaUsuarioCollection = usuaUsuarioCollection;
+    public void setUsuaUsuarioList(List<UsuaUsuario> usuaUsuarioList) {
+        this.usuaUsuarioList = usuaUsuarioList;
     }
 
     @Override

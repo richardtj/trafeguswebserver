@@ -52,10 +52,10 @@ public class UrpeUltimoRecPeriferico implements Serializable {
     @Column(name = "urpe_importado")
     private Character urpeImportado;
     @JoinColumn(name = "urpe_vtec_codigo", referencedColumnName = "vtec_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VtecVersaoTecnologia vtecVersaoTecnologia;
     @JoinColumn(name = "urpe_eppa_codigo", referencedColumnName = "eppa_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EppaEventoPerifericoPadrao eppaEventoPerifericoPadrao;
 
     public UrpeUltimoRecPeriferico() {

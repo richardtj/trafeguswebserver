@@ -37,12 +37,12 @@ public class VcarVeiculoCarreta implements Serializable {
     @Column(name = "vcar_numero_palets")
     private Integer vcarNumeroPalets;
     @JoinColumn(name = "vcar_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vcar_evca_codigo", referencedColumnName = "evca_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EvcaEstatusVeiculoCarga evcaEstatusVeiculoCarga;
-    @OneToOne(mappedBy = "vcarVeiculoCarreta", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "vcarVeiculoCarreta", fetch = FetchType.EAGER)
     private VccaVeiculoCavaloCarreta vccaVeiculoCavaloCarreta;
 
     public VcarVeiculoCarreta() {

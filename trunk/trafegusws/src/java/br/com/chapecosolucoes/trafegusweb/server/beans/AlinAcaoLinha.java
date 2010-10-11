@@ -36,7 +36,7 @@ public class AlinAcaoLinha implements Serializable {
     @Column(name = "alin_cor_fundo")
     private Integer alinCorFundo;
     @JoinColumn(name = "alin_apad_codigo", referencedColumnName = "apad_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public AlinAcaoLinha() {

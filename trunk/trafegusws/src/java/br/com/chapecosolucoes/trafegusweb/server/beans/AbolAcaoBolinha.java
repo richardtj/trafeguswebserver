@@ -36,7 +36,7 @@ public class AbolAcaoBolinha implements Serializable {
     @Column(name = "abol_cor")
     private Integer abolCor;
     @JoinColumn(name = "abol_apad_codigo", referencedColumnName = "apad_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public AbolAcaoBolinha() {

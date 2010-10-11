@@ -34,16 +34,16 @@ public class VtruVeiculoTruck implements Serializable {
     @Column(name = "vtru_veic_oras_codigo")
     private Integer vtruVeicOrasCodigo;
     @JoinColumn(name = "vtru_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vtru_tope_codigo", referencedColumnName = "tope_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TopeTipoOperacao topeTipoOperacao;
     @JoinColumn(name = "vtru_evca_codigo", referencedColumnName = "evca_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EvcaEstatusVeiculoCarga evcaEstatusVeiculoCarga;
     @JoinColumn(name = "vtru_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
 
     public VtruVeiculoTruck() {

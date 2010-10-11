@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -69,12 +69,12 @@ public class TecnTecnologia implements Serializable {
     private Character tecnImportado;
     @Column(name = "tecn_tolerancia")
     private Integer tecnTolerancia;
-    @OneToMany(mappedBy = "tecnTecnologia", fetch = FetchType.LAZY)
-    private Collection<VtecVersaoTecnologia> vtecVersaoTecnologiaCollection;
-    @OneToMany(mappedBy = "tecnTecnologia", fetch = FetchType.LAZY)
-    private Collection<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfCollection;
-    @OneToMany(mappedBy = "tecnTecnologia", fetch = FetchType.LAZY)
-    private Collection<CtecContaTecnologia> ctecContaTecnologiaCollection;
+    @OneToMany(mappedBy = "tecnTecnologia", fetch = FetchType.EAGER)
+    private List<VtecVersaoTecnologia> vtecVersaoTecnologiaList;
+    @OneToMany(mappedBy = "tecnTecnologia", fetch = FetchType.EAGER)
+    private List<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfList;
+    @OneToMany(mappedBy = "tecnTecnologia", fetch = FetchType.EAGER)
+    private List<CtecContaTecnologia> ctecContaTecnologiaList;
 
     public TecnTecnologia() {
     }
@@ -179,28 +179,28 @@ public class TecnTecnologia implements Serializable {
         this.tecnTolerancia = tecnTolerancia;
     }
 
-    public Collection<VtecVersaoTecnologia> getVtecVersaoTecnologiaCollection() {
-        return vtecVersaoTecnologiaCollection;
+    public List<VtecVersaoTecnologia> getVtecVersaoTecnologiaList() {
+        return vtecVersaoTecnologiaList;
     }
 
-    public void setVtecVersaoTecnologiaCollection(Collection<VtecVersaoTecnologia> vtecVersaoTecnologiaCollection) {
-        this.vtecVersaoTecnologiaCollection = vtecVersaoTecnologiaCollection;
+    public void setVtecVersaoTecnologiaList(List<VtecVersaoTecnologia> vtecVersaoTecnologiaList) {
+        this.vtecVersaoTecnologiaList = vtecVersaoTecnologiaList;
     }
 
-    public Collection<SicoServicoIntegracaoConf> getSicoServicoIntegracaoConfCollection() {
-        return sicoServicoIntegracaoConfCollection;
+    public List<SicoServicoIntegracaoConf> getSicoServicoIntegracaoConfList() {
+        return sicoServicoIntegracaoConfList;
     }
 
-    public void setSicoServicoIntegracaoConfCollection(Collection<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfCollection) {
-        this.sicoServicoIntegracaoConfCollection = sicoServicoIntegracaoConfCollection;
+    public void setSicoServicoIntegracaoConfList(List<SicoServicoIntegracaoConf> sicoServicoIntegracaoConfList) {
+        this.sicoServicoIntegracaoConfList = sicoServicoIntegracaoConfList;
     }
 
-    public Collection<CtecContaTecnologia> getCtecContaTecnologiaCollection() {
-        return ctecContaTecnologiaCollection;
+    public List<CtecContaTecnologia> getCtecContaTecnologiaList() {
+        return ctecContaTecnologiaList;
     }
 
-    public void setCtecContaTecnologiaCollection(Collection<CtecContaTecnologia> ctecContaTecnologiaCollection) {
-        this.ctecContaTecnologiaCollection = ctecContaTecnologiaCollection;
+    public void setCtecContaTecnologiaList(List<CtecContaTecnologia> ctecContaTecnologiaList) {
+        this.ctecContaTecnologiaList = ctecContaTecnologiaList;
     }
 
     @Override

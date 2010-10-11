@@ -49,10 +49,10 @@ public class VrotViagemRota implements Serializable {
     @Column(name = "vrot_ativo")
     private Character vrotAtivo;
     @JoinColumn(name = "vrot_viag_codigo", referencedColumnName = "viag_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ViagViagem viagViagem;
     @JoinColumn(name = "vrot_rota_codigo", referencedColumnName = "rota_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private RotaRota rotaRota;
 
     public VrotViagemRota() {

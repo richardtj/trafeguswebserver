@@ -49,13 +49,13 @@ public class TlocTransportadorLocal implements Serializable {
     @Column(name = "tloc_importado")
     private Character tlocImportado;
     @JoinColumn(name = "tloc_tran_pess_oras_codigo", referencedColumnName = "tran_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TranTransportador tranTransportador;
     @JoinColumn(name = "tloc_tloc_codigo", referencedColumnName = "tloc_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TlocTipoLocal tlocTipoLocal;
     @JoinColumn(name = "tloc_refe_codigo", referencedColumnName = "refe_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private RefeReferencia refeReferencia;
 
     public TlocTransportadorLocal() {

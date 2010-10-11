@@ -39,10 +39,10 @@ public class LemcListaEnvioMsgContato implements Serializable {
     @Column(name = "lemc_destinatario")
     private String lemcDestinatario;
     @JoinColumn(name = "lemc_tenv_codigo", referencedColumnName = "tenv_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TenvTipoEnvio tenvTipoEnvio;
     @JoinColumn(name = "leme_codigo", referencedColumnName = "leme_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private LemeListaEnvioMensagem lemeListaEnvioMensagem;
 
     public LemcListaEnvioMsgContato() {

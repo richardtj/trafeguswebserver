@@ -44,13 +44,13 @@ public class SterSinalTerminal implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date sterDataExclusaoSinal;
     @JoinColumn(name = "ster_term_codigo", referencedColumnName = "term_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TermTerminal termTerminal;
     @JoinColumn(name = "ster_gris_pjur_pess_oras_destino", referencedColumnName = "gris_pjur_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private GrisGerenciadoraRisco grisGerenciadoraRisco;
     @JoinColumn(name = "ster_gris_pjur_pess_oras_origem", referencedColumnName = "gris_pjur_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private GrisGerenciadoraRisco grisGerenciadoraRisco1;
 
     public SterSinalTerminal() {

@@ -42,10 +42,10 @@ public class SicoServicoIntegracaoConf implements Serializable {
     @Column(name = "sico_nome_executavel")
     private String sicoNomeExecutavel;
     @JoinColumn(name = "sico_tecn_codigo", referencedColumnName = "tecn_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TecnTecnologia tecnTecnologia;
     @JoinColumn(name = "sico_ssis_codigo", referencedColumnName = "ssis_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private SsisServicoSistema ssisServicoSistema;
 
     public SicoServicoIntegracaoConf() {

@@ -34,13 +34,13 @@ public class VupaVeiculoUtilitarioPasse implements Serializable {
     @Column(name = "vupa_veic_oras_codigo")
     private Integer vupaVeicOrasCodigo;
     @JoinColumn(name = "vupa_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vupa_tope_codigo", referencedColumnName = "tope_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TopeTipoOperacao topeTipoOperacao;
     @JoinColumn(name = "vupa_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
 
     public VupaVeiculoUtilitarioPasse() {

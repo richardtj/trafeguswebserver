@@ -39,7 +39,7 @@ public class PcenParametroComandoEnvio implements Serializable {
     @Column(name = "pcen_valor")
     private String pcenValor;
     @JoinColumn(name = "pcen_envi_codigo", referencedColumnName = "ecom_envi_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EcomEnvioComando ecomEnvioComando;
 
     public PcenParametroComandoEnvio() {

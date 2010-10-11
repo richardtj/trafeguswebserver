@@ -46,19 +46,19 @@ public class VtraVeiculoTransportador implements Serializable {
     @Column(name = "vtra_codigo_gr")
     private Integer vtraCodigoGr;
     @JoinColumn(name = "vtra_veic_oras_codigo", referencedColumnName = "veic_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vtra_tvco_codigo", referencedColumnName = "tvco_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvcoTipoVinculoContratual tvcoTipoVinculoContratual;
     @JoinColumn(name = "vtra_tran_pess_oras_codigo", referencedColumnName = "tran_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TranTransportador tranTransportador;
     @JoinColumn(name = "vtra_eobj_codigo", referencedColumnName = "eobj_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EobjEstatusObjeto eobjEstatusObjeto;
     @JoinColumn(name = "vtra_ctec_codigo", referencedColumnName = "ctec_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CtecContaTecnologia ctecContaTecnologia;
 
     public VtraVeiculoTransportador() {

@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,8 +38,8 @@ public class TlevTipoLocalEvento implements Serializable {
     private String tlevDescricao;
     @Column(name = "tlev_sequencia")
     private Integer tlevSequencia;
-    @OneToMany(mappedBy = "tlevTipoLocalEvento", fetch = FetchType.LAZY)
-    private Collection<VlevViagemLocalEvento> vlevViagemLocalEventoCollection;
+    @OneToMany(mappedBy = "tlevTipoLocalEvento", fetch = FetchType.EAGER)
+    private List<VlevViagemLocalEvento> vlevViagemLocalEventoList;
 
     public TlevTipoLocalEvento() {
     }
@@ -72,12 +72,12 @@ public class TlevTipoLocalEvento implements Serializable {
         this.tlevSequencia = tlevSequencia;
     }
 
-    public Collection<VlevViagemLocalEvento> getVlevViagemLocalEventoCollection() {
-        return vlevViagemLocalEventoCollection;
+    public List<VlevViagemLocalEvento> getVlevViagemLocalEventoList() {
+        return vlevViagemLocalEventoList;
     }
 
-    public void setVlevViagemLocalEventoCollection(Collection<VlevViagemLocalEvento> vlevViagemLocalEventoCollection) {
-        this.vlevViagemLocalEventoCollection = vlevViagemLocalEventoCollection;
+    public void setVlevViagemLocalEventoList(List<VlevViagemLocalEvento> vlevViagemLocalEventoList) {
+        this.vlevViagemLocalEventoList = vlevViagemLocalEventoList;
     }
 
     @Override

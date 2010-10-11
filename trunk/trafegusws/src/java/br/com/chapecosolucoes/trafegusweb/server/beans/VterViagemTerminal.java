@@ -58,13 +58,13 @@ public class VterViagemTerminal implements Serializable {
     @Column(name = "vter_ativo")
     private Character vterAtivo;
     @JoinColumn(name = "vter_viag_codigo", referencedColumnName = "viag_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ViagViagem viagViagem;
     @JoinColumn(name = "vter_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "vter_term_codigo", referencedColumnName = "term_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TermTerminal termTerminal;
 
     public VterViagemTerminal() {

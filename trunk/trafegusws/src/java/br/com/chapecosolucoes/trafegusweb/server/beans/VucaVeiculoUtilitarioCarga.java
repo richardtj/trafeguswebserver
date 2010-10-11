@@ -34,16 +34,16 @@ public class VucaVeiculoUtilitarioCarga implements Serializable {
     @Column(name = "vuca_veic_oras_codigo")
     private Integer vucaVeicOrasCodigo;
     @JoinColumn(name = "vuca_veic_oras_codigo", referencedColumnName = "veic_oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private VeicVeiculo veicVeiculo;
     @JoinColumn(name = "vuca_tope_codigo", referencedColumnName = "tope_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TopeTipoOperacao topeTipoOperacao;
     @JoinColumn(name = "vuca_evca_codigo", referencedColumnName = "evca_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EvcaEstatusVeiculoCarga evcaEstatusVeiculoCarga;
     @JoinColumn(name = "vuca_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
 
     public VucaVeiculoUtilitarioCarga() {

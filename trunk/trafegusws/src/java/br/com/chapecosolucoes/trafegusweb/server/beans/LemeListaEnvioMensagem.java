@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,10 +51,10 @@ public class LemeListaEnvioMensagem implements Serializable {
     @Column(name = "leme_data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lemeDataCadastro;
-    @OneToMany(mappedBy = "lemeListaEnvioMensagem", fetch = FetchType.LAZY)
-    private Collection<SemeServicoEnvioMensagem> semeServicoEnvioMensagemCollection;
-    @OneToMany(mappedBy = "lemeListaEnvioMensagem", fetch = FetchType.LAZY)
-    private Collection<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoCollection;
+    @OneToMany(mappedBy = "lemeListaEnvioMensagem", fetch = FetchType.EAGER)
+    private List<SemeServicoEnvioMensagem> semeServicoEnvioMensagemList;
+    @OneToMany(mappedBy = "lemeListaEnvioMensagem", fetch = FetchType.EAGER)
+    private List<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoList;
 
     public LemeListaEnvioMensagem() {
     }
@@ -111,20 +111,20 @@ public class LemeListaEnvioMensagem implements Serializable {
         this.lemeDataCadastro = lemeDataCadastro;
     }
 
-    public Collection<SemeServicoEnvioMensagem> getSemeServicoEnvioMensagemCollection() {
-        return semeServicoEnvioMensagemCollection;
+    public List<SemeServicoEnvioMensagem> getSemeServicoEnvioMensagemList() {
+        return semeServicoEnvioMensagemList;
     }
 
-    public void setSemeServicoEnvioMensagemCollection(Collection<SemeServicoEnvioMensagem> semeServicoEnvioMensagemCollection) {
-        this.semeServicoEnvioMensagemCollection = semeServicoEnvioMensagemCollection;
+    public void setSemeServicoEnvioMensagemList(List<SemeServicoEnvioMensagem> semeServicoEnvioMensagemList) {
+        this.semeServicoEnvioMensagemList = semeServicoEnvioMensagemList;
     }
 
-    public Collection<LemcListaEnvioMsgContato> getLemcListaEnvioMsgContatoCollection() {
-        return lemcListaEnvioMsgContatoCollection;
+    public List<LemcListaEnvioMsgContato> getLemcListaEnvioMsgContatoList() {
+        return lemcListaEnvioMsgContatoList;
     }
 
-    public void setLemcListaEnvioMsgContatoCollection(Collection<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoCollection) {
-        this.lemcListaEnvioMsgContatoCollection = lemcListaEnvioMsgContatoCollection;
+    public void setLemcListaEnvioMsgContatoList(List<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoList) {
+        this.lemcListaEnvioMsgContatoList = lemcListaEnvioMsgContatoList;
     }
 
     @Override

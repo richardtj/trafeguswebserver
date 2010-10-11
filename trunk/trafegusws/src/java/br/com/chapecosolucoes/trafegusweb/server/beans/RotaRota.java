@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -60,12 +60,12 @@ public class RotaRota implements Serializable {
     private Character rotaImportado;
     @Column(name = "rota_coordenadaspipe")
     private String rotaCoordenadaspipe;
-    @OneToMany(mappedBy = "rotaRota", fetch = FetchType.LAZY)
-    private Collection<VrotViagemRota> vrotViagemRotaCollection;
-    @OneToMany(mappedBy = "rotaRota", fetch = FetchType.LAZY)
-    private Collection<RponRotaPonto> rponRotaPontoCollection;
+    @OneToMany(mappedBy = "rotaRota", fetch = FetchType.EAGER)
+    private List<VrotViagemRota> vrotViagemRotaList;
+    @OneToMany(mappedBy = "rotaRota", fetch = FetchType.EAGER)
+    private List<RponRotaPonto> rponRotaPontoList;
     @JoinColumn(name = "rota_pess_oras_codigo_dono", referencedColumnName = "pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PessPessoa pessPessoa;
 
     public RotaRota() {
@@ -139,20 +139,20 @@ public class RotaRota implements Serializable {
         this.rotaCoordenadaspipe = rotaCoordenadaspipe;
     }
 
-    public Collection<VrotViagemRota> getVrotViagemRotaCollection() {
-        return vrotViagemRotaCollection;
+    public List<VrotViagemRota> getVrotViagemRotaList() {
+        return vrotViagemRotaList;
     }
 
-    public void setVrotViagemRotaCollection(Collection<VrotViagemRota> vrotViagemRotaCollection) {
-        this.vrotViagemRotaCollection = vrotViagemRotaCollection;
+    public void setVrotViagemRotaList(List<VrotViagemRota> vrotViagemRotaList) {
+        this.vrotViagemRotaList = vrotViagemRotaList;
     }
 
-    public Collection<RponRotaPonto> getRponRotaPontoCollection() {
-        return rponRotaPontoCollection;
+    public List<RponRotaPonto> getRponRotaPontoList() {
+        return rponRotaPontoList;
     }
 
-    public void setRponRotaPontoCollection(Collection<RponRotaPonto> rponRotaPontoCollection) {
-        this.rponRotaPontoCollection = rponRotaPontoCollection;
+    public void setRponRotaPontoList(List<RponRotaPonto> rponRotaPontoList) {
+        this.rponRotaPontoList = rponRotaPontoList;
     }
 
     public PessPessoa getPessPessoa() {

@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,8 +35,8 @@ public class TenvTipoEnvio implements Serializable {
     private Integer tenvCodigo;
     @Column(name = "tenv_descricao")
     private String tenvDescricao;
-    @OneToMany(mappedBy = "tenvTipoEnvio", fetch = FetchType.LAZY)
-    private Collection<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoCollection;
+    @OneToMany(mappedBy = "tenvTipoEnvio", fetch = FetchType.EAGER)
+    private List<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoList;
 
     public TenvTipoEnvio() {
     }
@@ -61,12 +61,12 @@ public class TenvTipoEnvio implements Serializable {
         this.tenvDescricao = tenvDescricao;
     }
 
-    public Collection<LemcListaEnvioMsgContato> getLemcListaEnvioMsgContatoCollection() {
-        return lemcListaEnvioMsgContatoCollection;
+    public List<LemcListaEnvioMsgContato> getLemcListaEnvioMsgContatoList() {
+        return lemcListaEnvioMsgContatoList;
     }
 
-    public void setLemcListaEnvioMsgContatoCollection(Collection<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoCollection) {
-        this.lemcListaEnvioMsgContatoCollection = lemcListaEnvioMsgContatoCollection;
+    public void setLemcListaEnvioMsgContatoList(List<LemcListaEnvioMsgContato> lemcListaEnvioMsgContatoList) {
+        this.lemcListaEnvioMsgContatoList = lemcListaEnvioMsgContatoList;
     }
 
     @Override

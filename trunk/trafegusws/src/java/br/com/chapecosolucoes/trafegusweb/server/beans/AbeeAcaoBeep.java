@@ -42,7 +42,7 @@ public class AbeeAcaoBeep implements Serializable {
     @Column(name = "abee_tempo_esperando")
     private Integer abeeTempoEsperando;
     @JoinColumn(name = "abee_apad_codigo", referencedColumnName = "apad_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public AbeeAcaoBeep() {

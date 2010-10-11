@@ -53,10 +53,10 @@ public class VproViagemProduto implements Serializable {
     @Column(name = "vpro_importado")
     private Character vproImportado;
     @JoinColumn(name = "vpro_vnfi_codigo", referencedColumnName = "vnfi_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VnfiViagemNotaFiscal vnfiViagemNotaFiscal;
     @JoinColumn(name = "vpro_prod_codigo", referencedColumnName = "prod_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ProdProduto prodProduto;
 
     public VproViagemProduto() {

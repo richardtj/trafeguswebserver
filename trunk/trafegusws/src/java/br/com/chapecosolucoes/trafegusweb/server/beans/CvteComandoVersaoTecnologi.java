@@ -46,10 +46,10 @@ public class CvteComandoVersaoTecnologi implements Serializable {
     @Column(name = "cvte_importado")
     private Character cvteImportado;
     @JoinColumn(name = "cvte_vtec_codigo", referencedColumnName = "vtec_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VtecVersaoTecnologia vtecVersaoTecnologia;
     @JoinColumn(name = "cvte_cpad_codigo", referencedColumnName = "cpad_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CpadComandoPadrao cpadComandoPadrao;
 
     public CvteComandoVersaoTecnologi() {

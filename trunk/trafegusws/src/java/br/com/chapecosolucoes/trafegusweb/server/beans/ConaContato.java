@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -66,10 +66,10 @@ public class ConaContato implements Serializable {
     private String conaRadio;
     @Column(name = "cona_texto")
     private String conaTexto;
-    @OneToMany(mappedBy = "conaContato", fetch = FetchType.LAZY)
-    private Collection<RconReferenciaContato> rconReferenciaContatoCollection;
-    @OneToMany(mappedBy = "conaContato", fetch = FetchType.LAZY)
-    private Collection<PconPessoaContato> pconPessoaContatoCollection;
+    @OneToMany(mappedBy = "conaContato", fetch = FetchType.EAGER)
+    private List<RconReferenciaContato> rconReferenciaContatoList;
+    @OneToMany(mappedBy = "conaContato", fetch = FetchType.EAGER)
+    private List<PconPessoaContato> pconPessoaContatoList;
 
     public ConaContato() {
     }
@@ -166,20 +166,20 @@ public class ConaContato implements Serializable {
         this.conaTexto = conaTexto;
     }
 
-    public Collection<RconReferenciaContato> getRconReferenciaContatoCollection() {
-        return rconReferenciaContatoCollection;
+    public List<RconReferenciaContato> getRconReferenciaContatoList() {
+        return rconReferenciaContatoList;
     }
 
-    public void setRconReferenciaContatoCollection(Collection<RconReferenciaContato> rconReferenciaContatoCollection) {
-        this.rconReferenciaContatoCollection = rconReferenciaContatoCollection;
+    public void setRconReferenciaContatoList(List<RconReferenciaContato> rconReferenciaContatoList) {
+        this.rconReferenciaContatoList = rconReferenciaContatoList;
     }
 
-    public Collection<PconPessoaContato> getPconPessoaContatoCollection() {
-        return pconPessoaContatoCollection;
+    public List<PconPessoaContato> getPconPessoaContatoList() {
+        return pconPessoaContatoList;
     }
 
-    public void setPconPessoaContatoCollection(Collection<PconPessoaContato> pconPessoaContatoCollection) {
-        this.pconPessoaContatoCollection = pconPessoaContatoCollection;
+    public void setPconPessoaContatoList(List<PconPessoaContato> pconPessoaContatoList) {
+        this.pconPessoaContatoList = pconPessoaContatoList;
     }
 
     @Override

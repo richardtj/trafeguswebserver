@@ -46,7 +46,7 @@ public class AtusAcessoTelaUsuario implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date atusDataCadastro;
     @JoinColumn(name = "atus_uaus_codigo", referencedColumnName = "ausu_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private AusuAcessoUsuario ausuAcessoUsuario;
 
     public AtusAcessoTelaUsuario() {

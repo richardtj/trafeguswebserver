@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,8 +35,8 @@ public class SrasSeparacaoRastreamento implements Serializable {
     private Integer srasCodigo;
     @Column(name = "sras_descricao")
     private String srasDescricao;
-    @OneToMany(mappedBy = "srasSeparacaoRastreamento", fetch = FetchType.LAZY)
-    private Collection<ErasEstacaoRastreamento> erasEstacaoRastreamentoCollection;
+    @OneToMany(mappedBy = "srasSeparacaoRastreamento", fetch = FetchType.EAGER)
+    private List<ErasEstacaoRastreamento> erasEstacaoRastreamentoList;
 
     public SrasSeparacaoRastreamento() {
     }
@@ -61,12 +61,12 @@ public class SrasSeparacaoRastreamento implements Serializable {
         this.srasDescricao = srasDescricao;
     }
 
-    public Collection<ErasEstacaoRastreamento> getErasEstacaoRastreamentoCollection() {
-        return erasEstacaoRastreamentoCollection;
+    public List<ErasEstacaoRastreamento> getErasEstacaoRastreamentoList() {
+        return erasEstacaoRastreamentoList;
     }
 
-    public void setErasEstacaoRastreamentoCollection(Collection<ErasEstacaoRastreamento> erasEstacaoRastreamentoCollection) {
-        this.erasEstacaoRastreamentoCollection = erasEstacaoRastreamentoCollection;
+    public void setErasEstacaoRastreamentoList(List<ErasEstacaoRastreamento> erasEstacaoRastreamentoList) {
+        this.erasEstacaoRastreamentoList = erasEstacaoRastreamentoList;
     }
 
     @Override

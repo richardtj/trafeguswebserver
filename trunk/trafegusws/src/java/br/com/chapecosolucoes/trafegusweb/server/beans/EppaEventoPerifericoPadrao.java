@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,13 +53,13 @@ public class EppaEventoPerifericoPadrao implements Serializable {
     private Integer eppaCodigoGr;
     @Column(name = "eppa_importado")
     private Character eppaImportado;
-    @OneToMany(mappedBy = "eppaEventoPerifericoPadrao", fetch = FetchType.LAZY)
-    private Collection<UrpeUltimoRecPeriferico> urpeUltimoRecPerifericoCollection;
+    @OneToMany(mappedBy = "eppaEventoPerifericoPadrao", fetch = FetchType.EAGER)
+    private List<UrpeUltimoRecPeriferico> urpeUltimoRecPerifericoList;
     @JoinColumn(name = "eppa_tval_codigo", referencedColumnName = "tval_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvalTipoValor tvalTipoValor;
     @JoinColumn(name = "eppa_ppad_codigo", referencedColumnName = "ppad_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PpadPerifericoPadrao ppadPerifericoPadrao;
 
     public EppaEventoPerifericoPadrao() {
@@ -117,12 +117,12 @@ public class EppaEventoPerifericoPadrao implements Serializable {
         this.eppaImportado = eppaImportado;
     }
 
-    public Collection<UrpeUltimoRecPeriferico> getUrpeUltimoRecPerifericoCollection() {
-        return urpeUltimoRecPerifericoCollection;
+    public List<UrpeUltimoRecPeriferico> getUrpeUltimoRecPerifericoList() {
+        return urpeUltimoRecPerifericoList;
     }
 
-    public void setUrpeUltimoRecPerifericoCollection(Collection<UrpeUltimoRecPeriferico> urpeUltimoRecPerifericoCollection) {
-        this.urpeUltimoRecPerifericoCollection = urpeUltimoRecPerifericoCollection;
+    public void setUrpeUltimoRecPerifericoList(List<UrpeUltimoRecPeriferico> urpeUltimoRecPerifericoList) {
+        this.urpeUltimoRecPerifericoList = urpeUltimoRecPerifericoList;
     }
 
     public TvalTipoValor getTvalTipoValor() {

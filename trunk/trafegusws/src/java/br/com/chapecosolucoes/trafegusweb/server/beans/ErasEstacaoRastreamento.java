@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -56,28 +56,28 @@ public class ErasEstacaoRastreamento implements Serializable {
     private Character erasImportado;
     @Column(name = "eras_layout_monitor")
     private String erasLayoutMonitor;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.LAZY)
-    private Collection<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.LAZY)
-    private Collection<VtruVeiculoTruck> vtruVeiculoTruckCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.LAZY)
-    private Collection<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaCollection;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuList;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<VtruVeiculoTruck> vtruVeiculoTruckList;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaList;
     @JoinColumn(name = "eras_sras_codigo", referencedColumnName = "sras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private SrasSeparacaoRastreamento srasSeparacaoRastreamento;
     @JoinColumn(name = "eras_gris_pjur_pess_oras_codigo", referencedColumnName = "gris_pjur_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private GrisGerenciadoraRisco grisGerenciadoraRisco;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.LAZY)
-    private Collection<ContContainer> contContainerCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.LAZY)
-    private Collection<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.LAZY)
-    private Collection<VmotVeiculoMoto> vmotVeiculoMotoCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.LAZY)
-    private Collection<VcavVeiculoCavalo> vcavVeiculoCavaloCollection;
-    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.LAZY)
-    private Collection<MaloMalote> maloMaloteCollection;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<ContContainer> contContainerList;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseList;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<VmotVeiculoMoto> vmotVeiculoMotoList;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<VcavVeiculoCavalo> vcavVeiculoCavaloList;
+    @OneToMany(mappedBy = "erasEstacaoRastreamento", fetch = FetchType.EAGER)
+    private List<MaloMalote> maloMaloteList;
 
     public ErasEstacaoRastreamento() {
     }
@@ -142,28 +142,28 @@ public class ErasEstacaoRastreamento implements Serializable {
         this.erasLayoutMonitor = erasLayoutMonitor;
     }
 
-    public Collection<ErusEstacaoRastreamentoUsu> getErusEstacaoRastreamentoUsuCollection() {
-        return erusEstacaoRastreamentoUsuCollection;
+    public List<ErusEstacaoRastreamentoUsu> getErusEstacaoRastreamentoUsuList() {
+        return erusEstacaoRastreamentoUsuList;
     }
 
-    public void setErusEstacaoRastreamentoUsuCollection(Collection<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuCollection) {
-        this.erusEstacaoRastreamentoUsuCollection = erusEstacaoRastreamentoUsuCollection;
+    public void setErusEstacaoRastreamentoUsuList(List<ErusEstacaoRastreamentoUsu> erusEstacaoRastreamentoUsuList) {
+        this.erusEstacaoRastreamentoUsuList = erusEstacaoRastreamentoUsuList;
     }
 
-    public Collection<VtruVeiculoTruck> getVtruVeiculoTruckCollection() {
-        return vtruVeiculoTruckCollection;
+    public List<VtruVeiculoTruck> getVtruVeiculoTruckList() {
+        return vtruVeiculoTruckList;
     }
 
-    public void setVtruVeiculoTruckCollection(Collection<VtruVeiculoTruck> vtruVeiculoTruckCollection) {
-        this.vtruVeiculoTruckCollection = vtruVeiculoTruckCollection;
+    public void setVtruVeiculoTruckList(List<VtruVeiculoTruck> vtruVeiculoTruckList) {
+        this.vtruVeiculoTruckList = vtruVeiculoTruckList;
     }
 
-    public Collection<VucaVeiculoUtilitarioCarga> getVucaVeiculoUtilitarioCargaCollection() {
-        return vucaVeiculoUtilitarioCargaCollection;
+    public List<VucaVeiculoUtilitarioCarga> getVucaVeiculoUtilitarioCargaList() {
+        return vucaVeiculoUtilitarioCargaList;
     }
 
-    public void setVucaVeiculoUtilitarioCargaCollection(Collection<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaCollection) {
-        this.vucaVeiculoUtilitarioCargaCollection = vucaVeiculoUtilitarioCargaCollection;
+    public void setVucaVeiculoUtilitarioCargaList(List<VucaVeiculoUtilitarioCarga> vucaVeiculoUtilitarioCargaList) {
+        this.vucaVeiculoUtilitarioCargaList = vucaVeiculoUtilitarioCargaList;
     }
 
     public SrasSeparacaoRastreamento getSrasSeparacaoRastreamento() {
@@ -182,44 +182,44 @@ public class ErasEstacaoRastreamento implements Serializable {
         this.grisGerenciadoraRisco = grisGerenciadoraRisco;
     }
 
-    public Collection<ContContainer> getContContainerCollection() {
-        return contContainerCollection;
+    public List<ContContainer> getContContainerList() {
+        return contContainerList;
     }
 
-    public void setContContainerCollection(Collection<ContContainer> contContainerCollection) {
-        this.contContainerCollection = contContainerCollection;
+    public void setContContainerList(List<ContContainer> contContainerList) {
+        this.contContainerList = contContainerList;
     }
 
-    public Collection<VupaVeiculoUtilitarioPasse> getVupaVeiculoUtilitarioPasseCollection() {
-        return vupaVeiculoUtilitarioPasseCollection;
+    public List<VupaVeiculoUtilitarioPasse> getVupaVeiculoUtilitarioPasseList() {
+        return vupaVeiculoUtilitarioPasseList;
     }
 
-    public void setVupaVeiculoUtilitarioPasseCollection(Collection<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseCollection) {
-        this.vupaVeiculoUtilitarioPasseCollection = vupaVeiculoUtilitarioPasseCollection;
+    public void setVupaVeiculoUtilitarioPasseList(List<VupaVeiculoUtilitarioPasse> vupaVeiculoUtilitarioPasseList) {
+        this.vupaVeiculoUtilitarioPasseList = vupaVeiculoUtilitarioPasseList;
     }
 
-    public Collection<VmotVeiculoMoto> getVmotVeiculoMotoCollection() {
-        return vmotVeiculoMotoCollection;
+    public List<VmotVeiculoMoto> getVmotVeiculoMotoList() {
+        return vmotVeiculoMotoList;
     }
 
-    public void setVmotVeiculoMotoCollection(Collection<VmotVeiculoMoto> vmotVeiculoMotoCollection) {
-        this.vmotVeiculoMotoCollection = vmotVeiculoMotoCollection;
+    public void setVmotVeiculoMotoList(List<VmotVeiculoMoto> vmotVeiculoMotoList) {
+        this.vmotVeiculoMotoList = vmotVeiculoMotoList;
     }
 
-    public Collection<VcavVeiculoCavalo> getVcavVeiculoCavaloCollection() {
-        return vcavVeiculoCavaloCollection;
+    public List<VcavVeiculoCavalo> getVcavVeiculoCavaloList() {
+        return vcavVeiculoCavaloList;
     }
 
-    public void setVcavVeiculoCavaloCollection(Collection<VcavVeiculoCavalo> vcavVeiculoCavaloCollection) {
-        this.vcavVeiculoCavaloCollection = vcavVeiculoCavaloCollection;
+    public void setVcavVeiculoCavaloList(List<VcavVeiculoCavalo> vcavVeiculoCavaloList) {
+        this.vcavVeiculoCavaloList = vcavVeiculoCavaloList;
     }
 
-    public Collection<MaloMalote> getMaloMaloteCollection() {
-        return maloMaloteCollection;
+    public List<MaloMalote> getMaloMaloteList() {
+        return maloMaloteList;
     }
 
-    public void setMaloMaloteCollection(Collection<MaloMalote> maloMaloteCollection) {
-        this.maloMaloteCollection = maloMaloteCollection;
+    public void setMaloMaloteList(List<MaloMalote> maloMaloteList) {
+        this.maloMaloteList = maloMaloteList;
     }
 
     @Override

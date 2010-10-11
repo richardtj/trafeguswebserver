@@ -50,10 +50,10 @@ public class HpprHistoricoPesquisaProd implements Serializable {
     @Column(name = "hppr_importado")
     private Character hpprImportado;
     @JoinColumn(name = "hppr_tpro_codigo", referencedColumnName = "tpro_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TproProduto tproProduto;
     @JoinColumn(name = "hppr_hpmo_codigo", referencedColumnName = "hpmo_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private HpmoHistoricoPesquisaMotor hpmoHistoricoPesquisaMotor;
 
     public HpprHistoricoPesquisaProd() {

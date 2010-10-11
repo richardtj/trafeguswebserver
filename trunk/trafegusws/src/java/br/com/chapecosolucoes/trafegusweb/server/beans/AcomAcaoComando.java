@@ -34,10 +34,10 @@ public class AcomAcaoComando implements Serializable {
     @Column(name = "acom_apad_codigo")
     private Integer acomApadCodigo;
     @JoinColumn(name = "acom_cpad_codigo", referencedColumnName = "cpad_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CpadComandoPadrao cpadComandoPadrao;
     @JoinColumn(name = "acom_apad_codigo", referencedColumnName = "apad_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private ApadAcaoPadrao apadAcaoPadrao;
 
     public AcomAcaoComando() {

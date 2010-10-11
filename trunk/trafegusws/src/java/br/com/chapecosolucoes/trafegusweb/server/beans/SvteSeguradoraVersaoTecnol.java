@@ -46,13 +46,13 @@ public class SvteSeguradoraVersaoTecnol implements Serializable {
     @Column(name = "svte_importado")
     private Character svteImportado;
     @JoinColumn(name = "svte_vtec_codigo", referencedColumnName = "vtec_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VtecVersaoTecnologia vtecVersaoTecnologia;
     @JoinColumn(name = "svte_ttra_codigo", referencedColumnName = "ttra_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TtraTipoTransporte ttraTipoTransporte;
     @JoinColumn(name = "svte_segu_pjur_pess_oras_codigo", referencedColumnName = "segu_pjur_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private SeguSeguradora seguSeguradora;
 
     public SvteSeguradoraVersaoTecnol() {

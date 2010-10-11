@@ -39,10 +39,10 @@ public class PcpaParametroComandoPadrao implements Serializable {
     @Column(name = "pcpa_valor")
     private String pcpaValor;
     @JoinColumn(name = "pcpa_tval_codigo", referencedColumnName = "tval_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TvalTipoValor tvalTipoValor;
     @JoinColumn(name = "pcpa_cpad_codigo", referencedColumnName = "cpad_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CpadComandoPadrao cpadComandoPadrao;
 
     public PcpaParametroComandoPadrao() {

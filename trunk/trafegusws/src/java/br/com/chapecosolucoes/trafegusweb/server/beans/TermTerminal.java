@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,35 +64,35 @@ public class TermTerminal implements Serializable {
     @Column(name = "term_ativo_ws")
     private Character termAtivoWs;
     @JoinColumn(name = "term_vtec_codigo", referencedColumnName = "vtec_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VtecVersaoTecnologia vtecVersaoTecnologia;
     @JoinColumn(name = "term_oras_codigo", referencedColumnName = "oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
     @JoinColumn(name = "term_gmac_central_veiculo", referencedColumnName = "gmac_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private GmacGrupoMacro gmacGrupoMacro;
     @JoinColumn(name = "term_gmac_veiculo_central", referencedColumnName = "gmac_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private GmacGrupoMacro gmacGrupoMacro1;
     @JoinColumn(name = "term_eter_codigo", referencedColumnName = "eter_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EterEstatusTerminal eterEstatusTerminal;
     @JoinColumn(name = "term_ctec_codigo", referencedColumnName = "ctec_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CtecContaTecnologia ctecContaTecnologia;
-    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.LAZY)
-    private Collection<SterSinalTerminal> sterSinalTerminalCollection;
-    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.LAZY)
-    private Collection<EsisEventoSistema> esisEventoSistemaCollection;
-    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.LAZY)
-    private Collection<VterViagemTerminal> vterViagemTerminalCollection;
-    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.LAZY)
-    private Collection<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalCollection;
-    @OneToOne(mappedBy = "termTerminal", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.EAGER)
+    private List<SterSinalTerminal> sterSinalTerminalList;
+    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.EAGER)
+    private List<EsisEventoSistema> esisEventoSistemaList;
+    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.EAGER)
+    private List<VterViagemTerminal> vterViagemTerminalList;
+    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.EAGER)
+    private List<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalList;
+    @OneToOne(mappedBy = "termTerminal", fetch = FetchType.EAGER)
     private OrteObjetoRastreadoTermina orteObjetoRastreadoTermina;
-    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.LAZY)
-    private Collection<EnviEnvio> enviEnvioCollection;
+    @OneToMany(mappedBy = "termTerminal", fetch = FetchType.EAGER)
+    private List<EnviEnvio> enviEnvioList;
 
     public TermTerminal() {
     }
@@ -221,36 +221,36 @@ public class TermTerminal implements Serializable {
         this.ctecContaTecnologia = ctecContaTecnologia;
     }
 
-    public Collection<SterSinalTerminal> getSterSinalTerminalCollection() {
-        return sterSinalTerminalCollection;
+    public List<SterSinalTerminal> getSterSinalTerminalList() {
+        return sterSinalTerminalList;
     }
 
-    public void setSterSinalTerminalCollection(Collection<SterSinalTerminal> sterSinalTerminalCollection) {
-        this.sterSinalTerminalCollection = sterSinalTerminalCollection;
+    public void setSterSinalTerminalList(List<SterSinalTerminal> sterSinalTerminalList) {
+        this.sterSinalTerminalList = sterSinalTerminalList;
     }
 
-    public Collection<EsisEventoSistema> getEsisEventoSistemaCollection() {
-        return esisEventoSistemaCollection;
+    public List<EsisEventoSistema> getEsisEventoSistemaList() {
+        return esisEventoSistemaList;
     }
 
-    public void setEsisEventoSistemaCollection(Collection<EsisEventoSistema> esisEventoSistemaCollection) {
-        this.esisEventoSistemaCollection = esisEventoSistemaCollection;
+    public void setEsisEventoSistemaList(List<EsisEventoSistema> esisEventoSistemaList) {
+        this.esisEventoSistemaList = esisEventoSistemaList;
     }
 
-    public Collection<VterViagemTerminal> getVterViagemTerminalCollection() {
-        return vterViagemTerminalCollection;
+    public List<VterViagemTerminal> getVterViagemTerminalList() {
+        return vterViagemTerminalList;
     }
 
-    public void setVterViagemTerminalCollection(Collection<VterViagemTerminal> vterViagemTerminalCollection) {
-        this.vterViagemTerminalCollection = vterViagemTerminalCollection;
+    public void setVterViagemTerminalList(List<VterViagemTerminal> vterViagemTerminalList) {
+        this.vterViagemTerminalList = vterViagemTerminalList;
     }
 
-    public Collection<PpinPerifericoPadraoInstal> getPpinPerifericoPadraoInstalCollection() {
-        return ppinPerifericoPadraoInstalCollection;
+    public List<PpinPerifericoPadraoInstal> getPpinPerifericoPadraoInstalList() {
+        return ppinPerifericoPadraoInstalList;
     }
 
-    public void setPpinPerifericoPadraoInstalCollection(Collection<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalCollection) {
-        this.ppinPerifericoPadraoInstalCollection = ppinPerifericoPadraoInstalCollection;
+    public void setPpinPerifericoPadraoInstalList(List<PpinPerifericoPadraoInstal> ppinPerifericoPadraoInstalList) {
+        this.ppinPerifericoPadraoInstalList = ppinPerifericoPadraoInstalList;
     }
 
     public OrteObjetoRastreadoTermina getOrteObjetoRastreadoTermina() {
@@ -261,12 +261,12 @@ public class TermTerminal implements Serializable {
         this.orteObjetoRastreadoTermina = orteObjetoRastreadoTermina;
     }
 
-    public Collection<EnviEnvio> getEnviEnvioCollection() {
-        return enviEnvioCollection;
+    public List<EnviEnvio> getEnviEnvioList() {
+        return enviEnvioList;
     }
 
-    public void setEnviEnvioCollection(Collection<EnviEnvio> enviEnvioCollection) {
-        this.enviEnvioCollection = enviEnvioCollection;
+    public void setEnviEnvioList(List<EnviEnvio> enviEnvioList) {
+        this.enviEnvioList = enviEnvioList;
     }
 
     @Override

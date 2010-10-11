@@ -46,13 +46,13 @@ public class TspgTranspSegurPlanoGeren implements Serializable {
     @Column(name = "tspg_importado")
     private Character tspgImportado;
     @JoinColumn(name = "tspg_pess_oras_codigo", referencedColumnName = "tran_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TranTransportador tranTransportador;
     @JoinColumn(name = "tspg_segu_pjur_pess_oras_codigo", referencedColumnName = "segu_pjur_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private SeguSeguradora seguSeguradora;
     @JoinColumn(name = "tspg_pgpg_codigo", referencedColumnName = "pgpg_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PgpgPg pgpgPg;
 
     public TspgTranspSegurPlanoGeren() {

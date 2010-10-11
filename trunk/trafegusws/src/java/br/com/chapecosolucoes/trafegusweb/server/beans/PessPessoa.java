@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -48,30 +48,30 @@ public class PessPessoa implements Serializable {
     private String pessComplemento;
     @Column(name = "pess_tipo")
     private String pessTipo;
-    @OneToMany(mappedBy = "pessPessoa", fetch = FetchType.LAZY)
-    private Collection<VeicVeiculo> veicVeiculoCollection;
-    @OneToMany(mappedBy = "pessPessoa", fetch = FetchType.LAZY)
-    private Collection<RefeReferencia> refeReferenciaCollection;
+    @OneToMany(mappedBy = "pessPessoa", fetch = FetchType.EAGER)
+    private List<VeicVeiculo> veicVeiculoList;
+    @OneToMany(mappedBy = "pessPessoa", fetch = FetchType.EAGER)
+    private List<RefeReferencia> refeReferenciaList;
     @JoinColumn(name = "pess_oras_codigo", referencedColumnName = "oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
     @JoinColumn(name = "pess_logr_codigo", referencedColumnName = "logr_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private LogrLogradouro logrLogradouro;
-    @OneToMany(mappedBy = "pessPessoa", fetch = FetchType.LAZY)
-    private Collection<PconPessoaContato> pconPessoaContatoCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessPessoa", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pessPessoa", fetch = FetchType.EAGER)
+    private List<PconPessoaContato> pconPessoaContatoList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessPessoa", fetch = FetchType.EAGER)
     private PfisPessoaFisica pfisPessoaFisica;
-    @OneToMany(mappedBy = "pessPessoa", fetch = FetchType.LAZY)
-    private Collection<UsuaUsuario> usuaUsuarioCollection;
-    @OneToMany(mappedBy = "pessPessoa", fetch = FetchType.LAZY)
-    private Collection<CrefClasseReferencia> crefClasseReferenciaCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessPessoa", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pessPessoa", fetch = FetchType.EAGER)
+    private List<UsuaUsuario> usuaUsuarioList;
+    @OneToMany(mappedBy = "pessPessoa", fetch = FetchType.EAGER)
+    private List<CrefClasseReferencia> crefClasseReferenciaList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessPessoa", fetch = FetchType.EAGER)
     private TranTransportador tranTransportador;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessPessoa", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pessPessoa", fetch = FetchType.EAGER)
     private PjurPessoaJuridica pjurPessoaJuridica;
-    @OneToMany(mappedBy = "pessPessoa", fetch = FetchType.LAZY)
-    private Collection<RotaRota> rotaRotaCollection;
+    @OneToMany(mappedBy = "pessPessoa", fetch = FetchType.EAGER)
+    private List<RotaRota> rotaRotaList;
 
     public PessPessoa() {
     }
@@ -120,20 +120,20 @@ public class PessPessoa implements Serializable {
         this.pessTipo = pessTipo;
     }
 
-    public Collection<VeicVeiculo> getVeicVeiculoCollection() {
-        return veicVeiculoCollection;
+    public List<VeicVeiculo> getVeicVeiculoList() {
+        return veicVeiculoList;
     }
 
-    public void setVeicVeiculoCollection(Collection<VeicVeiculo> veicVeiculoCollection) {
-        this.veicVeiculoCollection = veicVeiculoCollection;
+    public void setVeicVeiculoList(List<VeicVeiculo> veicVeiculoList) {
+        this.veicVeiculoList = veicVeiculoList;
     }
 
-    public Collection<RefeReferencia> getRefeReferenciaCollection() {
-        return refeReferenciaCollection;
+    public List<RefeReferencia> getRefeReferenciaList() {
+        return refeReferenciaList;
     }
 
-    public void setRefeReferenciaCollection(Collection<RefeReferencia> refeReferenciaCollection) {
-        this.refeReferenciaCollection = refeReferenciaCollection;
+    public void setRefeReferenciaList(List<RefeReferencia> refeReferenciaList) {
+        this.refeReferenciaList = refeReferenciaList;
     }
 
     public OrasObjetoRastreado getOrasObjetoRastreado() {
@@ -152,12 +152,12 @@ public class PessPessoa implements Serializable {
         this.logrLogradouro = logrLogradouro;
     }
 
-    public Collection<PconPessoaContato> getPconPessoaContatoCollection() {
-        return pconPessoaContatoCollection;
+    public List<PconPessoaContato> getPconPessoaContatoList() {
+        return pconPessoaContatoList;
     }
 
-    public void setPconPessoaContatoCollection(Collection<PconPessoaContato> pconPessoaContatoCollection) {
-        this.pconPessoaContatoCollection = pconPessoaContatoCollection;
+    public void setPconPessoaContatoList(List<PconPessoaContato> pconPessoaContatoList) {
+        this.pconPessoaContatoList = pconPessoaContatoList;
     }
 
     public PfisPessoaFisica getPfisPessoaFisica() {
@@ -168,20 +168,20 @@ public class PessPessoa implements Serializable {
         this.pfisPessoaFisica = pfisPessoaFisica;
     }
 
-    public Collection<UsuaUsuario> getUsuaUsuarioCollection() {
-        return usuaUsuarioCollection;
+    public List<UsuaUsuario> getUsuaUsuarioList() {
+        return usuaUsuarioList;
     }
 
-    public void setUsuaUsuarioCollection(Collection<UsuaUsuario> usuaUsuarioCollection) {
-        this.usuaUsuarioCollection = usuaUsuarioCollection;
+    public void setUsuaUsuarioList(List<UsuaUsuario> usuaUsuarioList) {
+        this.usuaUsuarioList = usuaUsuarioList;
     }
 
-    public Collection<CrefClasseReferencia> getCrefClasseReferenciaCollection() {
-        return crefClasseReferenciaCollection;
+    public List<CrefClasseReferencia> getCrefClasseReferenciaList() {
+        return crefClasseReferenciaList;
     }
 
-    public void setCrefClasseReferenciaCollection(Collection<CrefClasseReferencia> crefClasseReferenciaCollection) {
-        this.crefClasseReferenciaCollection = crefClasseReferenciaCollection;
+    public void setCrefClasseReferenciaList(List<CrefClasseReferencia> crefClasseReferenciaList) {
+        this.crefClasseReferenciaList = crefClasseReferenciaList;
     }
 
     public TranTransportador getTranTransportador() {
@@ -200,12 +200,12 @@ public class PessPessoa implements Serializable {
         this.pjurPessoaJuridica = pjurPessoaJuridica;
     }
 
-    public Collection<RotaRota> getRotaRotaCollection() {
-        return rotaRotaCollection;
+    public List<RotaRota> getRotaRotaList() {
+        return rotaRotaList;
     }
 
-    public void setRotaRotaCollection(Collection<RotaRota> rotaRotaCollection) {
-        this.rotaRotaCollection = rotaRotaCollection;
+    public void setRotaRotaList(List<RotaRota> rotaRotaList) {
+        this.rotaRotaList = rotaRotaList;
     }
 
     @Override

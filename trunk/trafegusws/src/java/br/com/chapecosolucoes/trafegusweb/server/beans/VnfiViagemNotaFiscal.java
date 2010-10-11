@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,13 +55,13 @@ public class VnfiViagemNotaFiscal implements Serializable {
     @Column(name = "vnfi_importado")
     private Character vnfiImportado;
     @JoinColumn(name = "vnfi_vloc_codigo", referencedColumnName = "vloc_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VlocViagemLocal vlocViagemLocal;
     @JoinColumn(name = "vnfi_vcon_codigo", referencedColumnName = "vcon_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VconViagemConhecimento vconViagemConhecimento;
-    @OneToMany(mappedBy = "vnfiViagemNotaFiscal", fetch = FetchType.LAZY)
-    private Collection<VproViagemProduto> vproViagemProdutoCollection;
+    @OneToMany(mappedBy = "vnfiViagemNotaFiscal", fetch = FetchType.EAGER)
+    private List<VproViagemProduto> vproViagemProdutoList;
 
     public VnfiViagemNotaFiscal() {
     }
@@ -134,12 +134,12 @@ public class VnfiViagemNotaFiscal implements Serializable {
         this.vconViagemConhecimento = vconViagemConhecimento;
     }
 
-    public Collection<VproViagemProduto> getVproViagemProdutoCollection() {
-        return vproViagemProdutoCollection;
+    public List<VproViagemProduto> getVproViagemProdutoList() {
+        return vproViagemProdutoList;
     }
 
-    public void setVproViagemProdutoCollection(Collection<VproViagemProduto> vproViagemProdutoCollection) {
-        this.vproViagemProdutoCollection = vproViagemProdutoCollection;
+    public void setVproViagemProdutoList(List<VproViagemProduto> vproViagemProdutoList) {
+        this.vproViagemProdutoList = vproViagemProdutoList;
     }
 
     @Override

@@ -45,16 +45,16 @@ public class PjurPessoaJuridica implements Serializable {
     private String pjurInscricaoEstadual;
     @Column(name = "pjur_site")
     private String pjurSite;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pjurPessoaJuridica", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pjurPessoaJuridica", fetch = FetchType.EAGER)
     private GrisGerenciadoraRisco grisGerenciadoraRisco;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pjurPessoaJuridica", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pjurPessoaJuridica", fetch = FetchType.EAGER)
     private EescEmpresaEscolta eescEmpresaEscolta;
     @JoinColumn(name = "pjur_pess_oras_codigo", referencedColumnName = "pess_oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private PessPessoa pessPessoa;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pjurPessoaJuridica", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pjurPessoaJuridica", fetch = FetchType.EAGER)
     private SeguSeguradora seguSeguradora;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pjurPessoaJuridica", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pjurPessoaJuridica", fetch = FetchType.EAGER)
     private EmbaEmbarcador embaEmbarcador;
 
     public PjurPessoaJuridica() {

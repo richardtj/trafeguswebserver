@@ -7,8 +7,8 @@ package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -82,38 +82,38 @@ public class ViagViagem implements Serializable {
     private Integer viagCodigoGr;
     @Column(name = "viag_importado")
     private Character viagImportado;
-    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.LAZY)
-    private Collection<VrotViagemRota> vrotViagemRotaCollection;
-    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.LAZY)
-    private Collection<VestViagemEstatus> vestViagemEstatusCollection;
-    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.LAZY)
-    private Collection<VtemViagemTemperatura> vtemViagemTemperaturaCollection;
+    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.EAGER)
+    private List<VrotViagemRota> vrotViagemRotaList;
+    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.EAGER)
+    private List<VestViagemEstatus> vestViagemEstatusList;
+    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.EAGER)
+    private List<VtemViagemTemperatura> vtemViagemTemperaturaList;
     @JoinColumn(name = "viag_ttra_codigo", referencedColumnName = "ttra_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TtraTipoTransporte ttraTipoTransporte;
     @JoinColumn(name = "viag_tran_pess_oras_codigo", referencedColumnName = "tran_pess_oras_codigo")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private TranTransportador tranTransportador;
     @JoinColumn(name = "viag_tope_codigo", referencedColumnName = "tope_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TopeTipoOperacao topeTipoOperacao;
     @JoinColumn(name = "viag_pgpg_codigo", referencedColumnName = "pgpg_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PgpgPg pgpgPg;
     @JoinColumn(name = "viag_hpmo_codigo", referencedColumnName = "hpmo_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private HpmoHistoricoPesquisaMotor hpmoHistoricoPesquisaMotor;
     @JoinColumn(name = "viag_emba_pjur_pess_oras_codigo", referencedColumnName = "emba_pjur_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EmbaEmbarcador embaEmbarcador;
-    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.LAZY)
-    private Collection<VterViagemTerminal> vterViagemTerminalCollection;
-    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.LAZY)
-    private Collection<VconViagemConhecimento> vconViagemConhecimentoCollection;
-    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.LAZY)
-    private Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection;
-    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.LAZY)
-    private Collection<VlocViagemLocal> vlocViagemLocalCollection;
+    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.EAGER)
+    private List<VterViagemTerminal> vterViagemTerminalList;
+    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.EAGER)
+    private List<VconViagemConhecimento> vconViagemConhecimentoList;
+    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.EAGER)
+    private List<VveiViagemVeiculo> vveiViagemVeiculoList;
+    @OneToMany(mappedBy = "viagViagem", fetch = FetchType.EAGER)
+    private List<VlocViagemLocal> vlocViagemLocalList;
 
     public ViagViagem() {
     }
@@ -234,28 +234,28 @@ public class ViagViagem implements Serializable {
         this.viagImportado = viagImportado;
     }
 
-    public Collection<VrotViagemRota> getVrotViagemRotaCollection() {
-        return vrotViagemRotaCollection;
+    public List<VrotViagemRota> getVrotViagemRotaList() {
+        return vrotViagemRotaList;
     }
 
-    public void setVrotViagemRotaCollection(Collection<VrotViagemRota> vrotViagemRotaCollection) {
-        this.vrotViagemRotaCollection = vrotViagemRotaCollection;
+    public void setVrotViagemRotaList(List<VrotViagemRota> vrotViagemRotaList) {
+        this.vrotViagemRotaList = vrotViagemRotaList;
     }
 
-    public Collection<VestViagemEstatus> getVestViagemEstatusCollection() {
-        return vestViagemEstatusCollection;
+    public List<VestViagemEstatus> getVestViagemEstatusList() {
+        return vestViagemEstatusList;
     }
 
-    public void setVestViagemEstatusCollection(Collection<VestViagemEstatus> vestViagemEstatusCollection) {
-        this.vestViagemEstatusCollection = vestViagemEstatusCollection;
+    public void setVestViagemEstatusList(List<VestViagemEstatus> vestViagemEstatusList) {
+        this.vestViagemEstatusList = vestViagemEstatusList;
     }
 
-    public Collection<VtemViagemTemperatura> getVtemViagemTemperaturaCollection() {
-        return vtemViagemTemperaturaCollection;
+    public List<VtemViagemTemperatura> getVtemViagemTemperaturaList() {
+        return vtemViagemTemperaturaList;
     }
 
-    public void setVtemViagemTemperaturaCollection(Collection<VtemViagemTemperatura> vtemViagemTemperaturaCollection) {
-        this.vtemViagemTemperaturaCollection = vtemViagemTemperaturaCollection;
+    public void setVtemViagemTemperaturaList(List<VtemViagemTemperatura> vtemViagemTemperaturaList) {
+        this.vtemViagemTemperaturaList = vtemViagemTemperaturaList;
     }
 
     public TtraTipoTransporte getTtraTipoTransporte() {
@@ -306,36 +306,36 @@ public class ViagViagem implements Serializable {
         this.embaEmbarcador = embaEmbarcador;
     }
 
-    public Collection<VterViagemTerminal> getVterViagemTerminalCollection() {
-        return vterViagemTerminalCollection;
+    public List<VterViagemTerminal> getVterViagemTerminalList() {
+        return vterViagemTerminalList;
     }
 
-    public void setVterViagemTerminalCollection(Collection<VterViagemTerminal> vterViagemTerminalCollection) {
-        this.vterViagemTerminalCollection = vterViagemTerminalCollection;
+    public void setVterViagemTerminalList(List<VterViagemTerminal> vterViagemTerminalList) {
+        this.vterViagemTerminalList = vterViagemTerminalList;
     }
 
-    public Collection<VconViagemConhecimento> getVconViagemConhecimentoCollection() {
-        return vconViagemConhecimentoCollection;
+    public List<VconViagemConhecimento> getVconViagemConhecimentoList() {
+        return vconViagemConhecimentoList;
     }
 
-    public void setVconViagemConhecimentoCollection(Collection<VconViagemConhecimento> vconViagemConhecimentoCollection) {
-        this.vconViagemConhecimentoCollection = vconViagemConhecimentoCollection;
+    public void setVconViagemConhecimentoList(List<VconViagemConhecimento> vconViagemConhecimentoList) {
+        this.vconViagemConhecimentoList = vconViagemConhecimentoList;
     }
 
-    public Collection<VveiViagemVeiculo> getVveiViagemVeiculoCollection() {
-        return vveiViagemVeiculoCollection;
+    public List<VveiViagemVeiculo> getVveiViagemVeiculoList() {
+        return vveiViagemVeiculoList;
     }
 
-    public void setVveiViagemVeiculoCollection(Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection) {
-        this.vveiViagemVeiculoCollection = vveiViagemVeiculoCollection;
+    public void setVveiViagemVeiculoList(List<VveiViagemVeiculo> vveiViagemVeiculoList) {
+        this.vveiViagemVeiculoList = vveiViagemVeiculoList;
     }
 
-    public Collection<VlocViagemLocal> getVlocViagemLocalCollection() {
-        return vlocViagemLocalCollection;
+    public List<VlocViagemLocal> getVlocViagemLocalList() {
+        return vlocViagemLocalList;
     }
 
-    public void setVlocViagemLocalCollection(Collection<VlocViagemLocal> vlocViagemLocalCollection) {
-        this.vlocViagemLocalCollection = vlocViagemLocalCollection;
+    public void setVlocViagemLocalList(List<VlocViagemLocal> vlocViagemLocalList) {
+        this.vlocViagemLocalList = vlocViagemLocalList;
     }
 
     @Override

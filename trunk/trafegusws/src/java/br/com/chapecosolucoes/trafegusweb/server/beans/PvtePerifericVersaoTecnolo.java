@@ -46,10 +46,10 @@ public class PvtePerifericVersaoTecnolo implements Serializable {
     @Column(name = "pvte_importado")
     private Character pvteImportado;
     @JoinColumn(name = "pvte_vtec_codigo", referencedColumnName = "vtec_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VtecVersaoTecnologia vtecVersaoTecnologia;
     @JoinColumn(name = "pvte_ppad_codigo", referencedColumnName = "ppad_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PpadPerifericoPadrao ppadPerifericoPadrao;
 
     public PvtePerifericVersaoTecnolo() {

@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -65,10 +65,10 @@ public class LogrLogradouro implements Serializable {
     private Integer logrCodigoGr;
     @Column(name = "logr_importado")
     private Character logrImportado;
-    @OneToMany(mappedBy = "logrLogradouro", fetch = FetchType.LAZY)
-    private Collection<PessPessoa> pessPessoaCollection;
+    @OneToMany(mappedBy = "logrLogradouro", fetch = FetchType.EAGER)
+    private List<PessPessoa> pessPessoaList;
     @JoinColumn(name = "logr_bair_codigo", referencedColumnName = "bair_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private BairBairro bairBairro;
 
     public LogrLogradouro() {
@@ -158,12 +158,12 @@ public class LogrLogradouro implements Serializable {
         this.logrImportado = logrImportado;
     }
 
-    public Collection<PessPessoa> getPessPessoaCollection() {
-        return pessPessoaCollection;
+    public List<PessPessoa> getPessPessoaList() {
+        return pessPessoaList;
     }
 
-    public void setPessPessoaCollection(Collection<PessPessoa> pessPessoaCollection) {
-        this.pessPessoaCollection = pessPessoaCollection;
+    public void setPessPessoaList(List<PessPessoa> pessPessoaList) {
+        this.pessPessoaList = pessPessoaList;
     }
 
     public BairBairro getBairBairro() {

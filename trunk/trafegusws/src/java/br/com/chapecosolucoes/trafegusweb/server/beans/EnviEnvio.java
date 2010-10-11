@@ -60,17 +60,17 @@ public class EnviEnvio implements Serializable {
     private String enviEstatusIgnicao;
     @Column(name = "envi_vinculo_externo")
     private String enviVinculoExterno;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "enviEnvio", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "enviEnvio", fetch = FetchType.EAGER)
     private EmacEnvioMacro emacEnvioMacro;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "enviEnvio", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "enviEnvio", fetch = FetchType.EAGER)
     private EcomEnvioComando ecomEnvioComando;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "enviEnvio", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "enviEnvio", fetch = FetchType.EAGER)
     private EmliEnvioMensagemLivre emliEnvioMensagemLivre;
     @JoinColumn(name = "envi_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
     @JoinColumn(name = "envi_term_codigo", referencedColumnName = "term_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TermTerminal termTerminal;
 
     public EnviEnvio() {

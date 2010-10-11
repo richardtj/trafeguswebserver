@@ -64,7 +64,7 @@ public class AssdAssistenteDetalhe implements Serializable {
     @Column(name = "assd_importado")
     private Character assdImportado;
     @JoinColumn(name = "assd_assi_codigo", referencedColumnName = "assi_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private AssiAssistente assiAssistente;
 
     public AssdAssistenteDetalhe() {

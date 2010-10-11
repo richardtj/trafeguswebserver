@@ -6,7 +6,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,16 +35,16 @@ public class TvalTipoValor implements Serializable {
     private Integer tvalCodigo;
     @Column(name = "tval_descricao")
     private String tvalDescricao;
-    @OneToMany(mappedBy = "tvalTipoValor", fetch = FetchType.LAZY)
-    private Collection<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoCollection;
-    @OneToMany(mappedBy = "tvalTipoValor", fetch = FetchType.LAZY)
-    private Collection<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoCollection;
-    @OneToMany(mappedBy = "tvalTipoValor", fetch = FetchType.LAZY)
-    private Collection<PaipPgAssociaItemParam> paipPgAssociaItemParamCollection;
-    @OneToMany(mappedBy = "tvalTipoValor", fetch = FetchType.LAZY)
-    private Collection<EspaEventoSistemaPadrao> espaEventoSistemaPadraoCollection;
-    @OneToMany(mappedBy = "tvalTipoValor", fetch = FetchType.LAZY)
-    private Collection<PipaPgItemParametro> pipaPgItemParametroCollection;
+    @OneToMany(mappedBy = "tvalTipoValor", fetch = FetchType.EAGER)
+    private List<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoList;
+    @OneToMany(mappedBy = "tvalTipoValor", fetch = FetchType.EAGER)
+    private List<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoList;
+    @OneToMany(mappedBy = "tvalTipoValor", fetch = FetchType.EAGER)
+    private List<PaipPgAssociaItemParam> paipPgAssociaItemParamList;
+    @OneToMany(mappedBy = "tvalTipoValor", fetch = FetchType.EAGER)
+    private List<EspaEventoSistemaPadrao> espaEventoSistemaPadraoList;
+    @OneToMany(mappedBy = "tvalTipoValor", fetch = FetchType.EAGER)
+    private List<PipaPgItemParametro> pipaPgItemParametroList;
 
     public TvalTipoValor() {
     }
@@ -69,44 +69,44 @@ public class TvalTipoValor implements Serializable {
         this.tvalDescricao = tvalDescricao;
     }
 
-    public Collection<PcpaParametroComandoPadrao> getPcpaParametroComandoPadraoCollection() {
-        return pcpaParametroComandoPadraoCollection;
+    public List<PcpaParametroComandoPadrao> getPcpaParametroComandoPadraoList() {
+        return pcpaParametroComandoPadraoList;
     }
 
-    public void setPcpaParametroComandoPadraoCollection(Collection<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoCollection) {
-        this.pcpaParametroComandoPadraoCollection = pcpaParametroComandoPadraoCollection;
+    public void setPcpaParametroComandoPadraoList(List<PcpaParametroComandoPadrao> pcpaParametroComandoPadraoList) {
+        this.pcpaParametroComandoPadraoList = pcpaParametroComandoPadraoList;
     }
 
-    public Collection<EppaEventoPerifericoPadrao> getEppaEventoPerifericoPadraoCollection() {
-        return eppaEventoPerifericoPadraoCollection;
+    public List<EppaEventoPerifericoPadrao> getEppaEventoPerifericoPadraoList() {
+        return eppaEventoPerifericoPadraoList;
     }
 
-    public void setEppaEventoPerifericoPadraoCollection(Collection<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoCollection) {
-        this.eppaEventoPerifericoPadraoCollection = eppaEventoPerifericoPadraoCollection;
+    public void setEppaEventoPerifericoPadraoList(List<EppaEventoPerifericoPadrao> eppaEventoPerifericoPadraoList) {
+        this.eppaEventoPerifericoPadraoList = eppaEventoPerifericoPadraoList;
     }
 
-    public Collection<PaipPgAssociaItemParam> getPaipPgAssociaItemParamCollection() {
-        return paipPgAssociaItemParamCollection;
+    public List<PaipPgAssociaItemParam> getPaipPgAssociaItemParamList() {
+        return paipPgAssociaItemParamList;
     }
 
-    public void setPaipPgAssociaItemParamCollection(Collection<PaipPgAssociaItemParam> paipPgAssociaItemParamCollection) {
-        this.paipPgAssociaItemParamCollection = paipPgAssociaItemParamCollection;
+    public void setPaipPgAssociaItemParamList(List<PaipPgAssociaItemParam> paipPgAssociaItemParamList) {
+        this.paipPgAssociaItemParamList = paipPgAssociaItemParamList;
     }
 
-    public Collection<EspaEventoSistemaPadrao> getEspaEventoSistemaPadraoCollection() {
-        return espaEventoSistemaPadraoCollection;
+    public List<EspaEventoSistemaPadrao> getEspaEventoSistemaPadraoList() {
+        return espaEventoSistemaPadraoList;
     }
 
-    public void setEspaEventoSistemaPadraoCollection(Collection<EspaEventoSistemaPadrao> espaEventoSistemaPadraoCollection) {
-        this.espaEventoSistemaPadraoCollection = espaEventoSistemaPadraoCollection;
+    public void setEspaEventoSistemaPadraoList(List<EspaEventoSistemaPadrao> espaEventoSistemaPadraoList) {
+        this.espaEventoSistemaPadraoList = espaEventoSistemaPadraoList;
     }
 
-    public Collection<PipaPgItemParametro> getPipaPgItemParametroCollection() {
-        return pipaPgItemParametroCollection;
+    public List<PipaPgItemParametro> getPipaPgItemParametroList() {
+        return pipaPgItemParametroList;
     }
 
-    public void setPipaPgItemParametroCollection(Collection<PipaPgItemParametro> pipaPgItemParametroCollection) {
-        this.pipaPgItemParametroCollection = pipaPgItemParametroCollection;
+    public void setPipaPgItemParametroList(List<PipaPgItemParametro> pipaPgItemParametroList) {
+        this.pipaPgItemParametroList = pipaPgItemParametroList;
     }
 
     @Override

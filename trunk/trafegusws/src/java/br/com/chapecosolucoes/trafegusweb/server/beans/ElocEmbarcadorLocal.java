@@ -50,13 +50,13 @@ public class ElocEmbarcadorLocal implements Serializable {
     @Column(name = "eloc_importado")
     private Character elocImportado;
     @JoinColumn(name = "eloc_tloc_codigo", referencedColumnName = "tloc_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TlocTipoLocal tlocTipoLocal;
     @JoinColumn(name = "eloc_refe_codigo", referencedColumnName = "refe_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private RefeReferencia refeReferencia;
     @JoinColumn(name = "eloc_emba_pjur_pess_oras_codigo", referencedColumnName = "emba_pjur_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EmbaEmbarcador embaEmbarcador;
 
     public ElocEmbarcadorLocal() {

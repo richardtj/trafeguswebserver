@@ -6,8 +6,8 @@
 package br.com.chapecosolucoes.trafegusweb.server.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -62,20 +62,20 @@ public class MotoMotorista implements Serializable {
     @Column(name = "moto_validade_pesquisa")
     @Temporal(TemporalType.TIMESTAMP)
     private Date motoValidadePesquisa;
-    @OneToMany(mappedBy = "motoMotorista", fetch = FetchType.LAZY)
-    private Collection<VeicVeiculo> veicVeiculoCollection;
-    @OneToMany(mappedBy = "motoMotorista", fetch = FetchType.LAZY)
-    private Collection<MtraMotoristaTransportador> mtraMotoristaTransportadorCollection;
+    @OneToMany(mappedBy = "motoMotorista", fetch = FetchType.EAGER)
+    private List<VeicVeiculo> veicVeiculoList;
+    @OneToMany(mappedBy = "motoMotorista", fetch = FetchType.EAGER)
+    private List<MtraMotoristaTransportador> mtraMotoristaTransportadorList;
     @JoinColumn(name = "moto_pfis_pess_oras_codigo", referencedColumnName = "pfis_pess_oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private PfisPessoaFisica pfisPessoaFisica;
     @JoinColumn(name = "moto_epmo_codigo", referencedColumnName = "epmo_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EpmoEstatusPesquisaMotoris epmoEstatusPesquisaMotoris;
-    @OneToMany(mappedBy = "motoMotorista", fetch = FetchType.LAZY)
-    private Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection;
-    @OneToMany(mappedBy = "motoMotorista", fetch = FetchType.LAZY)
-    private Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection;
+    @OneToMany(mappedBy = "motoMotorista", fetch = FetchType.EAGER)
+    private List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList;
+    @OneToMany(mappedBy = "motoMotorista", fetch = FetchType.EAGER)
+    private List<VveiViagemVeiculo> vveiViagemVeiculoList;
 
     public MotoMotorista() {
     }
@@ -148,20 +148,20 @@ public class MotoMotorista implements Serializable {
         this.motoValidadePesquisa = motoValidadePesquisa;
     }
 
-    public Collection<VeicVeiculo> getVeicVeiculoCollection() {
-        return veicVeiculoCollection;
+    public List<VeicVeiculo> getVeicVeiculoList() {
+        return veicVeiculoList;
     }
 
-    public void setVeicVeiculoCollection(Collection<VeicVeiculo> veicVeiculoCollection) {
-        this.veicVeiculoCollection = veicVeiculoCollection;
+    public void setVeicVeiculoList(List<VeicVeiculo> veicVeiculoList) {
+        this.veicVeiculoList = veicVeiculoList;
     }
 
-    public Collection<MtraMotoristaTransportador> getMtraMotoristaTransportadorCollection() {
-        return mtraMotoristaTransportadorCollection;
+    public List<MtraMotoristaTransportador> getMtraMotoristaTransportadorList() {
+        return mtraMotoristaTransportadorList;
     }
 
-    public void setMtraMotoristaTransportadorCollection(Collection<MtraMotoristaTransportador> mtraMotoristaTransportadorCollection) {
-        this.mtraMotoristaTransportadorCollection = mtraMotoristaTransportadorCollection;
+    public void setMtraMotoristaTransportadorList(List<MtraMotoristaTransportador> mtraMotoristaTransportadorList) {
+        this.mtraMotoristaTransportadorList = mtraMotoristaTransportadorList;
     }
 
     public PfisPessoaFisica getPfisPessoaFisica() {
@@ -180,20 +180,20 @@ public class MotoMotorista implements Serializable {
         this.epmoEstatusPesquisaMotoris = epmoEstatusPesquisaMotoris;
     }
 
-    public Collection<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorCollection() {
-        return hpmoHistoricoPesquisaMotorCollection;
+    public List<HpmoHistoricoPesquisaMotor> getHpmoHistoricoPesquisaMotorList() {
+        return hpmoHistoricoPesquisaMotorList;
     }
 
-    public void setHpmoHistoricoPesquisaMotorCollection(Collection<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorCollection) {
-        this.hpmoHistoricoPesquisaMotorCollection = hpmoHistoricoPesquisaMotorCollection;
+    public void setHpmoHistoricoPesquisaMotorList(List<HpmoHistoricoPesquisaMotor> hpmoHistoricoPesquisaMotorList) {
+        this.hpmoHistoricoPesquisaMotorList = hpmoHistoricoPesquisaMotorList;
     }
 
-    public Collection<VveiViagemVeiculo> getVveiViagemVeiculoCollection() {
-        return vveiViagemVeiculoCollection;
+    public List<VveiViagemVeiculo> getVveiViagemVeiculoList() {
+        return vveiViagemVeiculoList;
     }
 
-    public void setVveiViagemVeiculoCollection(Collection<VveiViagemVeiculo> vveiViagemVeiculoCollection) {
-        this.vveiViagemVeiculoCollection = vveiViagemVeiculoCollection;
+    public void setVveiViagemVeiculoList(List<VveiViagemVeiculo> vveiViagemVeiculoList) {
+        this.vveiViagemVeiculoList = vveiViagemVeiculoList;
     }
 
     @Override

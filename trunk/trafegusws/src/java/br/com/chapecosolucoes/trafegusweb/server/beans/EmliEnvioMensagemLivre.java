@@ -36,7 +36,7 @@ public class EmliEnvioMensagemLivre implements Serializable {
     @Column(name = "emli_texto")
     private String emliTexto;
     @JoinColumn(name = "emli_envi_codigo", referencedColumnName = "envi_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private EnviEnvio enviEnvio;
 
     public EmliEnvioMensagemLivre() {

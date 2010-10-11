@@ -47,7 +47,7 @@ public class RmliRecebimentoMensagLivre implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date rmliDataComputadorBordo;
     @JoinColumn(name = "rmli_usua_pfis_pess_oras_codigo", referencedColumnName = "usua_pfis_pess_oras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuaUsuario usuaUsuario;
 
     public RmliRecebimentoMensagLivre() {

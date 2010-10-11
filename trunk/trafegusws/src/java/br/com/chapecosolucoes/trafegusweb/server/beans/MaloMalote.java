@@ -37,10 +37,10 @@ public class MaloMalote implements Serializable {
     @Column(name = "malo_identificador")
     private String maloIdentificador;
     @JoinColumn(name = "malo_oras_codigo", referencedColumnName = "oras_codigo", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private OrasObjetoRastreado orasObjetoRastreado;
     @JoinColumn(name = "malo_eras_codigo", referencedColumnName = "eras_codigo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ErasEstacaoRastreamento erasEstacaoRastreamento;
 
     public MaloMalote() {
