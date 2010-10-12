@@ -63,7 +63,7 @@ public class Conexao {
             Element row = doc.createElement("Row");
             results.appendChild(row);
             for (int ii = 1; ii <= colCount; ii++) {
-                String columnName = rsmd.getColumnName(ii);
+                String columnName = rsmd.getColumnLabel(ii);
                 Object value = resultSet.getObject(ii);
                 Element node = doc.createElement(columnName.toLowerCase());
                 if (value != null) {
