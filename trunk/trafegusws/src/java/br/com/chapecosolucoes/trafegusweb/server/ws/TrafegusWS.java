@@ -20,16 +20,44 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaAcesso")
-    public String solicitaAcesso(@WebParam(name = "usuario") String usuario, @WebParam(name = "senha") String senha) {
-        return "";
+    public String solicitaAcesso(@WebParam(name = "usuario") String usuario, @WebParam(name = "senha") String senha) throws Exception {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(" SELECT");
+        sb.append("       USUA_PFIS_PESS_ORAS_CODIGO,");
+        sb.append("       USUA_PESS_ORAS_CODIGO,");
+        sb.append("       USUA_LOGIN,");
+        sb.append("       USUA_PERF_CODIGO,");
+        sb.append("       USUA.PESS_NOME AS NOMEUSUARIO,");
+        sb.append("       TRAN.PESS_NOME AS NOMETRANSPORTADOR");
+        sb.append("  FROM");
+        sb.append("       USUA_USUARIO");
+        sb.append("  JOIN PESS_PESSOA AS USUA ON (USUA.PESS_ORAS_CODIGO = USUA_PFIS_PESS_ORAS_CODIGO)");
+        sb.append("  JOIN ORAS_OBJETO_RASTREADO AS ORAS1 ON (ORAS1.ORAS_CODIGO = USUA.PESS_ORAS_CODIGO AND ORAS1.ORAS_EOBJ_CODIGO = 1)");
+        sb.append("  JOIN PESS_PESSOA AS TRAN ON (TRAN.PESS_ORAS_CODIGO = USUA_PESS_ORAS_CODIGO)");
+        sb.append("  JOIN ORAS_OBJETO_RASTREADO AS ORAS2 ON (ORAS2.ORAS_CODIGO = TRAN.PESS_ORAS_CODIGO AND ORAS2.ORAS_EOBJ_CODIGO = 1)");
+        sb.append(" WHERE");
+        sb.append("       UPPER(USUA_LOGIN) = UPPER('").append(usuario).append("')");
+        sb.append("   AND UPPER(USUA_SENHA) = UPPER('").append(senha).append("')");
+        sb.append(" LIMIT 1        ");
+        return Conexao.getInstance().queryToXML(sb.toString());
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaClassesReferencias")
-    public String solicitaClassesReferencias(@WebParam(name = "codEmrpesa") String codEmrpesa) {
-        return "";
+    public String solicitaClassesReferencias(@WebParam(name = "codEmrpesa") String codEmrpesa) throws Exception {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(" SELECT cref_codigo,");
+        sb.append("     cref_descricao,");
+        sb.append("     cref_pess_oras_codigo,");
+        sb.append("     cref_classe_sistema");
+        sb.append(" FROM cref_classe_referencia");
+        sb.append(" WHERE(cref_pess_oras_codigo IS NULL OR cref_pess_oras_codigo = '").append(codEmrpesa.toString()).append("')");
+
+        return Conexao.getInstance().queryToXML(sb.toString());
     }
 
     /**
@@ -95,7 +123,7 @@ public class TrafegusWS {
         sb.append("     LEFT JOIN VUCA_VEICULO_UTILITARIO_CARGA ON (VEIC_ORAS_CODIGO = VUCA_VEIC_ORAS_CODIGO)");
         sb.append("     LEFT JOIN VUPA_VEICULO_UTILITARIO_PASSE ON (VEIC_ORAS_CODIGO = VUPA_VEIC_ORAS_CODIGO)");
         sb.append(" ORDER BY VEIC_VEICULO.VEIC_PLACA ");
-        return Conexao.getInstance().queryToXML(Conexao.getInstance().executeQuery(sb.toString()));
+        return Conexao.getInstance().queryToXML(sb.toString());
 
     }
 }
