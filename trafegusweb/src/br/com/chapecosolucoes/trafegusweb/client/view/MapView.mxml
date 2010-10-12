@@ -2,7 +2,6 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
-		 width="400" height="300"
 		 initialize="init()"
 		 xmlns:maps="com.google.maps.*">
 	<s:layout>
@@ -14,6 +13,7 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.controller.MapController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
 			
 			import com.google.maps.LatLng;
@@ -25,22 +25,20 @@
 				controller = new MapController();
 				controller.view = this;
 			}
-			public function posVeiculosArray(value:ArrayCollection):void
+			public function set posicaoVeiculosArray(value:ArrayCollection):void
 			{
 				map.clearOverlays();
-				
 				for each (var posVeiculoVO:PosicaoVeiculoVO in value)
 				{
 					map.addOverlay(this.controller.createMarker(posVeiculoVO));
 				}
 				map.setCenter(new LatLng(-15.779413016690475, -47.929744720458984), 4);
-				
 			}
 			
-			public function setPosicaoVeiculoVO(value:PosicaoVeiculoVO):void
+			public function set posicaoVeiculoVO(value:PosicaoVeiculoVO):void
 			{
-				/*this._posVeiculo = value
-				map.setCenter(this._posVeiculo.latLong, 15);*/
+				MainModel.getInstance().posicaoVeiculoVO = value;
+				map.setCenter(MainModel.getInstance().posicaoVeiculoVO.latLong, 15);
 			}
 		]]>
 	</fx:Script>

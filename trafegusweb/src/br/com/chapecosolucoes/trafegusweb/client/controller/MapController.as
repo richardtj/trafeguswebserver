@@ -20,10 +20,10 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 		}
 		public var view:MapView;
-		[Embed(source="/assets/caminhao_verde.png")]
+		[Embed(source="assets/caminhao_verde.png")]
 		private var IconeCaminhaoVerde:Class;
 		
-		[Embed(source="/assets/caminhao_amarelo.png")]
+		[Embed(source="assets/caminhao_amarelo.png")]
 		private var IconeCaminhaoAmarelo:Class;
 		public function onMapReady(e:Event):void
 		{
@@ -34,12 +34,13 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function createMarker(posicaoVeiculoVO:PosicaoVeiculoVO):Marker
 		{
-			var makerOp:MarkerOptions = new MarkerOptions();
-			if (posicaoVeiculoVO.ignition == 0)
+			//var makerOp:MarkerOptions = new MarkerOptions();
+			/*if (posicaoVeiculoVO.ignition == 0)
 				makerOp.icon = new IconeCaminhaoAmarelo();
 			else
-				makerOp.icon = new IconeCaminhaoVerde();
-			var marker:Marker = new Marker(posicaoVeiculoVO.latLong, makerOp);
+				makerOp.icon = new IconeCaminhaoVerde();*/
+			//var marker:Marker = new Marker(posicaoVeiculoVO.latLong, makerOp);
+			var marker:Marker = new Marker(posicaoVeiculoVO.latLong);
 			var tooltip:TooltipOverlay = new TooltipOverlay(posicaoVeiculoVO.latLong, posicaoVeiculoVO.gpsDescSis);
 			marker.addEventListener(MapMouseEvent.CLICK, function(e:MapMouseEvent):void
 			{
