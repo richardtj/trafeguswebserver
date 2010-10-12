@@ -4,8 +4,6 @@
  */
 package br.com.chapecosolucoes.trafegusweb.server.vo;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 /**
  *
  * @author Emerson
