@@ -108,7 +108,7 @@ public class TrafegusWS {
         StringBuilder sb = new StringBuilder();
 
         sb.append(" SELECT ORAS_OBJETO_RASTREADO.ORAS_CODIGO,");
-        sb.append("       VEIC_VEICULO.VEIC_PLACA,");
+        sb.append("       VEIC_VEICULO.VEIC_PLACA AS VEHICLEPLATE,");
         sb.append("       TVEI_TIPO_VEICULO.TVEI_DESCRICAO");
         sb.append(" FROM VEIC_VEICULO");
         sb.append("     JOIN ORAS_OBJETO_RASTREADO ON (ORAS_CODIGO = VEIC_ORAS_CODIGO AND");
