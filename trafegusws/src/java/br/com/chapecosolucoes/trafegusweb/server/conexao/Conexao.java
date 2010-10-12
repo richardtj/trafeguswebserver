@@ -65,7 +65,7 @@ public class Conexao {
             for (int ii = 1; ii <= colCount; ii++) {
                 String columnName = rsmd.getColumnName(ii);
                 Object value = resultSet.getObject(ii);
-                Element node = doc.createElement(columnName);
+                Element node = doc.createElement(columnName.toLowerCase());
                 if (value != null) {
                     node.appendChild(doc.createTextNode(value.toString()));
                 } else {
@@ -96,5 +96,9 @@ public class Conexao {
 
     public Connection getConnection() {
         return this.connection;
+    }
+
+    public String queryToXML(String sql) throws Exception {
+        return this.queryToXML(this.executeQuery(sql));
     }
 }
