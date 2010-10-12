@@ -12,6 +12,7 @@ import br.com.chapecosolucoes.trafegusweb.server.beans.UsuaUsuario;
 import br.com.chapecosolucoes.trafegusweb.server.beans.VeicVeiculo;
 import br.com.chapecosolucoes.trafegusweb.server.jpa.JPAUtil;
 import br.com.chapecosolucoes.trafegusweb.server.vo.SolicitaAcessoVO;
+import br.com.chapecosolucoes.trafegusweb.server.vo.SolicitaListaVeiculosVO;
 import br.com.chapecosolucoes.trafegusweb.server.xml.XMLUtil;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.SingleValueConverter;
@@ -185,59 +186,28 @@ public class TrafegusWS {
         //TODO write your implementation code here:
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT ");
-        sb.append("          ORAS_Objeto_Rastreado.ORAS_Codigo, ");
-        sb.append("          ORAS_Objeto_Rastreado.ORAS_Data_Cadastro, ");
-        sb.append("          VEIC_Veiculo.*, ");
-        sb.append("          TVEI_Tipo_Veiculo.*, ");
-        sb.append("          vcar_veiculo_carreta.VCAR_VEIC_ORAS_Codigo, ");
-        sb.append("          vcav_veiculo_cavalo.VCAV_VEIC_ORAS_Codigo, ");
-        sb.append("          vmot_veiculo_moto.VMOT_VEIC_ORAS_Codigo, ");
-        sb.append("          vtru_veiculo_truck.VTRU_VEIC_ORAS_Codigo, ");
-        sb.append("          vuca_veiculo_utilitario_carga.VUCA_VEIC_ORAS_Codigo, ");
-        sb.append("          vupa_veiculo_utilitario_passe.VUPA_VEIC_ORAS_Codigo ");
-        sb.append("     FROM VEIC_Veiculo ");
-        sb.append("     JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = VEIC_ORAS_Codigo AND ORAS_EOBJ_Codigo = 1) ");
-        sb.append("     JOIN TVEI_Tipo_Veiculo ON (VEIC_TVEI_Codigo = TVEI_Codigo) ");
-        sb.append("     JOIN VTRA_Veiculo_Transportador ON (VTRA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo) ");
-        sb.append("     JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = VTRA_TRAN_PESS_ORAS_Codigo ");
-        sb.append("      AND TRAN_PESS_ORAS_Codigo = " + codEmpresa.toString() + ") ");
-        sb.append(" LEFT JOIN vcar_veiculo_carreta ON (VEIC_ORAS_Codigo = VCAR_VEIC_ORAS_Codigo) ");
-        sb.append(" LEFT JOIN vcav_veiculo_cavalo ON (VEIC_ORAS_Codigo = VCAV_VEIC_ORAS_Codigo) ");
-        sb.append(" LEFT JOIN vmot_veiculo_moto ON (VEIC_ORAS_Codigo = VMOT_VEIC_ORAS_Codigo) ");
-        sb.append(" LEFT JOIN vtru_veiculo_truck ON (VEIC_ORAS_Codigo = VTRU_VEIC_ORAS_Codigo) ");
-        sb.append(" LEFT JOIN vuca_veiculo_utilitario_carga ON (VEIC_ORAS_Codigo = VUCA_VEIC_ORAS_Codigo) ");
-        sb.append(" LEFT JOIN vupa_veiculo_utilitario_passe ON (VEIC_ORAS_Codigo = VUPA_VEIC_ORAS_Codigo) ");
-        sb.append(" ORDER BY VEIC_Veiculo.VEIC_Placa ");
-        Query q = em.createNativeQuery(sb.toString());
-        List<Object> list = q.getResultList();
-        XStream stream = new XStream(new Dom4JDriver());
-        stream.registerConverter(new SingleValueConverter() {
 
-            public String toString(Object o) {
-                if (o == null) {
-                    return "";
-                }
-                return o.toString();
-            }
+        sb.append(" SELECT ORAS_OBJETO_RASTREADO.ORAS_CODIGO,");
+        sb.append("       VEIC_VEICULO.VEIC_PLACA,");
+        sb.append("       TVEI_TIPO_VEICULO.TVEI_DESCRICAO");
+        sb.append(" FROM VEIC_VEICULO");
+        sb.append("     JOIN ORAS_OBJETO_RASTREADO ON (ORAS_CODIGO = VEIC_ORAS_CODIGO AND");
+        sb.append("     ORAS_EOBJ_CODIGO = 1)");
+        sb.append("     JOIN TVEI_TIPO_VEICULO ON (VEIC_TVEI_CODIGO = TVEI_CODIGO)");
+        sb.append("     JOIN VTRA_VEICULO_TRANSPORTADOR ON (VTRA_VEIC_ORAS_CODIGO = VEIC_ORAS_CODIGO)");
+        sb.append("     JOIN TRAN_TRANSPORTADOR ON (TRAN_PESS_ORAS_CODIGO = VTRA_TRAN_PESS_ORAS_CODIGO AND TRAN_PESS_ORAS_CODIGO = ?)");
+        sb.append("     LEFT JOIN VCAR_VEICULO_CARRETA ON (VEIC_ORAS_CODIGO = VCAR_VEIC_ORAS_CODIGO)");
+        sb.append("     LEFT JOIN VCAV_VEICULO_CAVALO ON (VEIC_ORAS_CODIGO = VCAV_VEIC_ORAS_CODIGO)");
+        sb.append("     LEFT JOIN VMOT_VEICULO_MOTO ON (VEIC_ORAS_CODIGO = VMOT_VEIC_ORAS_CODIGO)");
+        sb.append("     LEFT JOIN VTRU_VEICULO_TRUCK ON (VEIC_ORAS_CODIGO = VTRU_VEIC_ORAS_CODIGO)");
+        sb.append("     LEFT JOIN VUCA_VEICULO_UTILITARIO_CARGA ON (VEIC_ORAS_CODIGO = VUCA_VEIC_ORAS_CODIGO)");
+        sb.append("     LEFT JOIN VUPA_VEICULO_UTILITARIO_PASSE ON (VEIC_ORAS_CODIGO = VUPA_VEIC_ORAS_CODIGO)");
+        sb.append(" ORDER BY VEIC_VEICULO.VEIC_PLACA ");
 
-            public Object fromString(String string) {
-                if (string == null) {
-                    return "";
-                }
-                return string;
-            }
-
-            public boolean canConvert(Class type) {
-                return true;
-            }
-        });
-        String result = stream.toXML(list);
-  //      Iterator it = list.iterator();
-//        while (it.hasNext()) {
-//            it.next()
-//        }
-        return result;
+        Query q = em.createNativeQuery(sb.toString(), "selectVeiculos");
+        q.setParameter(1, codEmpresa);
+        ArrayList<SolicitaListaVeiculosVO> l = (ArrayList<SolicitaListaVeiculosVO>) q.getResultList();
+        return XMLUtil.getIntance().toXML(l);
 
     }
 }
