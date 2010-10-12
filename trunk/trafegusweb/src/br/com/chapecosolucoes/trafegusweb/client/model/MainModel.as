@@ -1,5 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.model
 {
+	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
+	
 	import mx.collections.ArrayCollection;
 
 	[Bindable]
@@ -12,6 +14,10 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		public var dpMensagens:ArrayCollection;
 		
 		public var veiculoSelecionado:String;
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO")]
+		public var posVeiculosArray:ArrayCollection;
+		
+		public var posicaoVeiculoVO:PosicaoVeiculoVO;
 
 		public function MainModel(enforcer:SingletonEnforcer)
 		{
