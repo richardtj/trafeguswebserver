@@ -11,6 +11,7 @@ import javax.persistence.EntityResult;
 import javax.persistence.FieldResult;
 import javax.persistence.SqlResultSetMapping;
 
+
 /**
  *
  * @author estevan
