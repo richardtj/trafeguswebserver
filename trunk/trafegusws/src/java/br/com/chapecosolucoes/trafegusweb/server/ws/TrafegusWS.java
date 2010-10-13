@@ -5,7 +5,6 @@
 package br.com.chapecosolucoes.trafegusweb.server.ws;
 
 import br.com.chapecosolucoes.trafegusweb.server.conexao.Conexao;
-import com.sun.xml.rpc.processor.modeler.j2ee.xml.resAuthType;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
