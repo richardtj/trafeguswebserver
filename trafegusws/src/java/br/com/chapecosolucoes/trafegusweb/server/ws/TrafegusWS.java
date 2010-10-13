@@ -5,6 +5,7 @@
 package br.com.chapecosolucoes.trafegusweb.server.ws;
 
 import br.com.chapecosolucoes.trafegusweb.server.conexao.Conexao;
+import com.sun.xml.rpc.processor.modeler.j2ee.xml.resAuthType;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -96,24 +97,92 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaRefencias")
-    public String solicitaRefencias(@WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "codClasseReferencia") Integer codClasseReferencia) {
-        return "";
+    public String solicitaRefencias(@WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "codClasseReferencia") Integer codClasseReferencia) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT CREF_CODIGO,");
+        sb.append("        CREF_DESCRICAO,");
+        sb.append("        CREF_PESS_ORAS_CODIGO,");
+        sb.append("        CREF_CLASSE_SISTEMA,");
+        sb.append("        CREF_DATA_CADASTRO,");
+        sb.append("        REFE_CODIGO,");
+        sb.append("        REFE_DESCRICAO,");
+        sb.append("        REFE_LATITUDE,");
+        sb.append("        REFE_LONGITUDE,");
+        sb.append("        REFE_CREF_CODIGO,");
+        sb.append("        REFE_RAIO,");
+        sb.append("        REFE_KM,");
+        sb.append("        REFE_BANDEIRA,");
+        sb.append("        REFE_UTILIZADO_SISTEMA,");
+        sb.append("        REFE_DATA_CADASTRO");
+        sb.append(" FROM");
+        sb.append("        CREF_CLASSE_REFERENCIA");
+        sb.append(" JOIN REFE_REFERENCIA ON (REFE_CREF_CODIGO = CREF_CODIGO)");
+        sb.append(" WHERE");
+        sb.append("        (CREF_PESS_ORAS_CODIGO IS NULL OR CREF_PESS_ORAS_CODIGO = '").append(codEmpresa.toString()).append("')");
+        if (!codClasseReferencia.equals(new Integer(0))) {
+            sb.append("          AND CREF_CODIGO = '").append(codClasseReferencia.toString()).append("'");
+        }
+        sb.append(" ORDER BY REFE_DESCRICAO");
+        return Conexao.getInstance().queryToXML(sb.toString());
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosVeiculo")
-    public String solicitaDadosVeiculo(@WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "placaVeiculo") String placaVeiculo) {
-        return "";
+    public String solicitaDadosVeiculo(@WebParam(name = "placaVeiculo") String placaVeiculo) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
+        sb.append("         ORAS_Objeto_Rastreado.ORAS_Data_Cadastro,");
+        sb.append("         VEIC_Veiculo.*,");
+        sb.append("         TVEI_Tipo_Veiculo.*,");
+        sb.append("         vcar_veiculo_carreta.VCAR_VEIC_ORAS_Codigo,");
+        sb.append("         vcav_veiculo_cavalo.VCAV_VEIC_ORAS_Codigo,");
+        sb.append("         vmot_veiculo_moto.VMOT_VEIC_ORAS_Codigo,");
+        sb.append("         vtru_veiculo_truck.VTRU_VEIC_ORAS_Codigo,");
+        sb.append("         vuca_veiculo_utilitario_carga.VUCA_VEIC_ORAS_Codigo,");
+        sb.append("         vupa_veiculo_utilitario_passe.VUPA_VEIC_ORAS_Codigo");
+        sb.append("    FROM VEIC_Veiculo");
+        sb.append("    JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = VEIC_ORAS_Codigo AND ORAS_EOBJ_Codigo = 1)");
+        sb.append("    JOIN TVEI_Tipo_Veiculo ON (VEIC_TVEI_Codigo = TVEI_Codigo)");
+        sb.append("    JOIN VTRA_Veiculo_Transportador ON (VTRA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
+        sb.append("    JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = VTRA_TRAN_PESS_ORAS_Codigo)");
+        sb.append(" LEFT JOIN vcar_veiculo_carreta ON (VEIC_ORAS_Codigo = VCAR_VEIC_ORAS_Codigo)");
+        sb.append(" LEFT JOIN vcav_veiculo_cavalo ON (VEIC_ORAS_Codigo = VCAV_VEIC_ORAS_Codigo)");
+        sb.append(" LEFT JOIN vmot_veiculo_moto ON (VEIC_ORAS_Codigo = VMOT_VEIC_ORAS_Codigo)");
+        sb.append(" LEFT JOIN vtru_veiculo_truck ON (VEIC_ORAS_Codigo = VTRU_VEIC_ORAS_Codigo)");
+        sb.append(" LEFT JOIN vuca_veiculo_utilitario_carga ON (VEIC_ORAS_Codigo = VUCA_VEIC_ORAS_Codigo)");
+        sb.append(" LEFT JOIN vupa_veiculo_utilitario_passe ON (VEIC_ORAS_Codigo = VUPA_VEIC_ORAS_Codigo)");
+        sb.append(" WHERE");
+        sb.append("    TRIM(VEIC_Veiculo.VEIC_Placa) = '").append(placaVeiculo.trim()).append("'");
+        return Conexao.getInstance().queryToXML(sb.toString());
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosTransportador")
-    public String solicitaDadosTransportador(@WebParam(name = "codTransportador") String codTransportador) {
-        return "";
+    public String solicitaDadosTransportador(@WebParam(name = "codTransportador") String codTransportador) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT TRAN_Transportador.TRAN_PESS_ORAS_Codigo,");
+        sb.append("         TEST_Tipo_Estabelecimento.*,");
+        sb.append("         PESS_Pessoa.PESS_Nome,");
+        sb.append("         PFIS_Pessoa_Fisica.PFIS_RG,");
+        sb.append("         PFIS_Pessoa_Fisica.PFIS_CPF,          ");
+        sb.append("         PFIS_Pessoa_Fisica.PFIS_Data_Nascimento,          ");
+        sb.append("         PFIS_Pessoa_Fisica.PFIS_Sexo,");
+        sb.append("         PJUR_Pessoa_juridica.PJUR_CNPJ,");
+        sb.append("         PJUR_Pessoa_juridica.PJUR_Razao_Social,");
+        sb.append("         PJUR_Pessoa_juridica.PJUR_Inscricao_Estadual,");
+        sb.append("         PJUR_Pessoa_juridica.PJUR_Site");
+        sb.append("    FROM TRAN_Transportador");
+        sb.append("    JOIN PESS_Pessoa ON (PESS_ORAS_Codigo = TRAN_PESS_ORAS_Codigo)");
+        sb.append("    JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = PESS_ORAS_Codigo AND ORAS_EOBJ_Codigo = 1)");
+        sb.append("    JOIN TEST_Tipo_Estabelecimento ON (TEST_Codigo = TRAN_TEST_codigo)");
+        sb.append(" LEFT JOIN PFIS_Pessoa_Fisica ON (PFIS_PESS_ORAS_Codigo = PESS_ORAS_Codigo)");
+        sb.append(" LEFT JOIN PJUR_Pessoa_juridica ON (PJUR_PESS_ORAS_Codigo = PESS_ORAS_Codigo)");
+        sb.append(" WHERE TRAN_Transportador.TRAN_PESS_ORAS_Codigo = '").append(codTransportador).append("'");
+        return Conexao.getInstance().queryToXML(sb.toString());
     }
 
     /**

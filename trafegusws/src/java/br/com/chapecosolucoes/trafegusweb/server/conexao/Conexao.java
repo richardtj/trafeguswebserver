@@ -55,12 +55,12 @@ public class Conexao {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.newDocument();
-        Element results = doc.createElement("Results");
+        Element results = doc.createElement("results");
         doc.appendChild(results);
         ResultSetMetaData rsmd = resultSet.getMetaData();
         int colCount = rsmd.getColumnCount();
         while (resultSet.next()) {
-            Element row = doc.createElement("Row");
+            Element row = doc.createElement("row");
             results.appendChild(row);
             for (int ii = 1; ii <= colCount; ii++) {
                 String columnName = rsmd.getColumnLabel(ii);
