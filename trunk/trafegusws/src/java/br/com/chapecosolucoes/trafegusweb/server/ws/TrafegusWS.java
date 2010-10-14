@@ -209,6 +209,78 @@ public class TrafegusWS {
     public String solicitaListaVeiculos(@WebParam(name = "codEmpresa") Integer codEmpresa) throws Exception {
         StringBuilder sb = new StringBuilder();
 
+        sb.append("<results>");
+        sb.append("<row>");
+        sb.append("<vehicleplate>");
+        sb.append("MMM2222");
+        sb.append("</vehicleplate>");
+        sb.append("<ignition>");
+        sb.append("1");
+        sb.append("</ignition>");
+        sb.append("<gpslatitude>");
+        sb.append("-23.600921822310834");
+        sb.append("</gpslatitude>");
+        sb.append("<gpslongitude>");
+        sb.append("-46.636619567871094");
+        sb.append("</gpslongitude>");
+        sb.append("<gpsdescsis>");
+        sb.append("Avenida domingos de moraes");
+        sb.append("</gpsdescsis>");
+        sb.append("</row>");
+        sb.append("<row>");
+        sb.append("<vehicleplate>");
+        sb.append("MMM1111");
+        sb.append("</vehicleplate>");
+        sb.append("<ignition>");
+        sb.append("0");
+        sb.append("</ignition>");
+        sb.append("<gpslatitude>");
+        sb.append("-23.601622474699155");
+        sb.append("</gpslatitude>");
+        sb.append("<gpslongitude>");
+        sb.append("-46.634581089019775");
+        sb.append("</gpslongitude>");
+        sb.append("<gpsdescsis>");
+        sb.append("Avenida domingos de moraes");
+        sb.append("</gpsdescsis>");
+        sb.append("</row>");
+        sb.append("<row>");
+        sb.append("<vehicleplate>");
+        sb.append("MMM3333");
+        sb.append("</vehicleplate>");
+        sb.append("<ignition>");
+        sb.append("1");
+        sb.append("</ignition>");
+        sb.append("<gpslatitude>");
+        sb.append("-23.601622474699155");
+        sb.append("</gpslatitude>");
+        sb.append("<gpslongitude>");
+        sb.append("-46.63076162338257");
+        sb.append("</gpslongitude>");
+        sb.append("<gpsdescsis>");
+        sb.append("Avenida domingos de moraes");
+        sb.append("</gpsdescsis>");
+        sb.append("</row>");
+        sb.append("<row>");
+        sb.append("<vehicleplate>");
+        sb.append("MMM4444");
+        sb.append("</vehicleplate>");
+        sb.append("<ignition>");
+        sb.append("1");
+        sb.append("</ignition>");
+        sb.append("<gpslatitude>");
+        sb.append("-23.60177977674657");
+        sb.append("</gpslatitude>");
+        sb.append("<gpslongitude>");
+        sb.append("-46.62702798843384");
+        sb.append("</gpslongitude>");
+        sb.append("<gpsdescsis>");
+        sb.append("Avenida domingos de moraes");
+        sb.append("</gpsdescsis>");
+        sb.append("</row>");
+        sb.append("</results>");
+        return sb.toString();
+        /*
         sb.append(" SELECT ORAS_OBJETO_RASTREADO.ORAS_CODIGO,");
         sb.append("       VEIC_VEICULO.VEIC_PLACA AS VEHICLEPLATE,");
         sb.append("       TVEI_TIPO_VEICULO.TVEI_DESCRICAO");
@@ -225,7 +297,10 @@ public class TrafegusWS {
         sb.append("     LEFT JOIN VUCA_VEICULO_UTILITARIO_CARGA ON (VEIC_ORAS_CODIGO = VUCA_VEIC_ORAS_CODIGO)");
         sb.append("     LEFT JOIN VUPA_VEICULO_UTILITARIO_PASSE ON (VEIC_ORAS_CODIGO = VUPA_VEIC_ORAS_CODIGO)");
         sb.append(" ORDER BY VEIC_VEICULO.VEIC_PLACA ");
-        return Conexao.getInstance().queryToXML(sb.toString());
+        
+         */
+        //return Conexao.getInstance().queryToXML(sb.toString());
+
     }
 
     /**
