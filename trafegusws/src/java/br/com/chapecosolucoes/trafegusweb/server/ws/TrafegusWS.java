@@ -209,76 +209,6 @@ public class TrafegusWS {
     public String solicitaListaVeiculos(@WebParam(name = "codEmpresa") Integer codEmpresa) throws Exception {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("<results>");
-        sb.append("<row>");
-        sb.append("<vehicleplate>");
-        sb.append("MMM2222");
-        sb.append("</vehicleplate>");
-        sb.append("<ignition>");
-        sb.append("1");
-        sb.append("</ignition>");
-        sb.append("<gpslatitude>");
-        sb.append("-23.600921822310834");
-        sb.append("</gpslatitude>");
-        sb.append("<gpslongitude>");
-        sb.append("-46.636619567871094");
-        sb.append("</gpslongitude>");
-        sb.append("<gpsdescsis>");
-        sb.append("Avenida domingos de moraes");
-        sb.append("</gpsdescsis>");
-        sb.append("</row>");
-        sb.append("<row>");
-        sb.append("<vehicleplate>");
-        sb.append("MMM1111");
-        sb.append("</vehicleplate>");
-        sb.append("<ignition>");
-        sb.append("0");
-        sb.append("</ignition>");
-        sb.append("<gpslatitude>");
-        sb.append("-23.601622474699155");
-        sb.append("</gpslatitude>");
-        sb.append("<gpslongitude>");
-        sb.append("-46.634581089019775");
-        sb.append("</gpslongitude>");
-        sb.append("<gpsdescsis>");
-        sb.append("Avenida domingos de moraes");
-        sb.append("</gpsdescsis>");
-        sb.append("</row>");
-        sb.append("<row>");
-        sb.append("<vehicleplate>");
-        sb.append("MMM3333");
-        sb.append("</vehicleplate>");
-        sb.append("<ignition>");
-        sb.append("1");
-        sb.append("</ignition>");
-        sb.append("<gpslatitude>");
-        sb.append("-23.601622474699155");
-        sb.append("</gpslatitude>");
-        sb.append("<gpslongitude>");
-        sb.append("-46.63076162338257");
-        sb.append("</gpslongitude>");
-        sb.append("<gpsdescsis>");
-        sb.append("Avenida domingos de moraes");
-        sb.append("</gpsdescsis>");
-        sb.append("</row>");
-        sb.append("<row>");
-        sb.append("<vehicleplate>");
-        sb.append("MMM4444");
-        sb.append("</vehicleplate>");
-        sb.append("<ignition>");
-        sb.append("1");
-        sb.append("</ignition>");
-        sb.append("<gpslatitude>");
-        sb.append("-23.60177977674657");
-        sb.append("</gpslatitude>");
-        sb.append("<gpslongitude>");
-        sb.append("-46.62702798843384");
-        sb.append("</gpslongitude>");
-        sb.append("<gpsdescsis>");
-        sb.append("Avenida domingos de moraes");
-        sb.append("</gpsdescsis>");
-        sb.append("</row>");
-        sb.append("</results>");
         return sb.toString();
         /*
         sb.append(" SELECT ORAS_OBJETO_RASTREADO.ORAS_CODIGO,");
@@ -319,6 +249,39 @@ public class TrafegusWS {
         sb.append(" FROM ROTA_ROTA");
         sb.append(" WHERE ROTA_PESS_ORAS_CODIGO_DONO = ").append(codEmpresa.toString());
         sb.append(" ORDER BY ROTA_DESCRICAO");
+        return Conexao.getInstance().queryToXML(sb.toString());
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaDadosGrid")
+    public String solicitaDadosGrid(@WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT VEIC_ORAS_CODIGO,");
+        sb.append("        VEIC_PLACA,");
+        sb.append("        VEIC_ANO_FABRICACAO,");
+        sb.append("        VEIC_ANO_MODELO,");
+        sb.append("        VEIC_RENAVAM,");
+        sb.append("        VEIC_CHASSI,");
+        sb.append("        VEIC_COR,");
+        sb.append("        VEIC_FROTA,");
+        sb.append("        RPOS_RECE_CODIGO,");
+        sb.append("        RPOS_DESCRICAO_INTEGRADA,");
+        sb.append("        RPOS_DESCRICAO_SISTEMA,");
+        sb.append("        RPOS_LATITUDE,");
+        sb.append("        RPOS_LONGITUDE,");
+        sb.append("        RPOS_DATA_COMPUTADOR_BORDO,");
+        sb.append("        VEIC_ORAS_CODIGO,");
+        sb.append("        RPOS_RECE_CODIGO");
+        sb.append("   FROM RPOS_RECEBIMENTO_POSICAO");
+        sb.append("   JOIN RECE_RECEBIMENTO ON (RECE_CODIGO = RPOS_RECE_CODIGO)");
+        sb.append("   JOIN TERM_TERMINAL ON (TERM_NUMERO_TERMINAL = RECE_TERM_NUMERO_TERMINAL AND TERM_VTEC_CODIGO = RECE_VTEC_CODIGO AND TERM_ATIVO_WS = 'S')");
+        sb.append("   JOIN ORTE_OBJETO_RASTREADO_TERMINA ON (ORTE_TERM_CODIGO = TERM_CODIGO AND ORTE_SEQUENCIA = 'P')");
+        sb.append("   JOIN ORAS_OBJETO_RASTREADO ON (ORAS_CODIGO = ORTE_ORAS_CODIGO)");
+        sb.append("   JOIN VEIC_VEICULO ON (VEIC_ORAS_CODIGO = ORAS_CODIGO)");
+        sb.append(" ORDER BY VEIC_PLACA, RPOS_DATA_COMPUTADOR_BORDO");
+        sb.append(" LIMIT 10");
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 }
