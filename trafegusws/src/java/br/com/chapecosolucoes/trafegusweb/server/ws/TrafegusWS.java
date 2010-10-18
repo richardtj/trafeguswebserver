@@ -283,4 +283,42 @@ public class TrafegusWS {
         sb.append(" ORDER BY VEIC_Placa");
         return Conexao.getInstance().queryToXML(sb.toString());
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "SolicitaHistoricoPosicoes")
+    public String SolicitaHistoricoPosicoes(@WebParam(name = "codEmpresa") String codEmpresa,
+            @WebParam(name = "placaVeiculo") String placaVeiculo,
+            @WebParam(name = "posInicial") Integer posInicial,
+            @WebParam(name = "qtdRegistros") Integer qtdRegistros,
+            @WebParam(name = "somenteTerminalPrincipal") boolean somenteTerminalPrincipal) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT VEIC_ORAS_Codigo,");
+        sb.append("        VEIC_Placa,");
+        sb.append("        VEIC_Ano_Fabricacao,");
+        sb.append("        VEIC_Ano_Modelo,");
+        sb.append("        VEIC_Renavam,");
+        sb.append("        VEIC_Chassi,");
+        sb.append("        VEIC_Cor,");
+        sb.append("        VEIC_Frota,");
+        sb.append("        RPOS_RECE_Codigo,");
+        sb.append("        RPOS_VTEC_Codigo,");
+        sb.append("        RPOS_TERM_Numero_Terminal,");
+        sb.append("        RPOS_Descricao_Integrada,");
+        sb.append("        RPOS_Descricao_Sistema,");
+        sb.append("        RPOS_Latitude,");
+        sb.append("        RPOS_Longitude,");
+        sb.append("        RPOS_Data_Cadastro,");
+        sb.append("        RPOS_Data_Computador_Bordo");
+        sb.append("   FROM RPOS_Recebimento_Posicao");
+        sb.append("   JOIN RECE_Recebimento ON (RECE_Codigo = RPOS_RECE_Codigo)");
+        sb.append("   JOIN TERM_Terminal ON (TERM_Numero_Terminal = RECE_TERM_Numero_Terminal AND TERM_VTEC_Codigo = RECE_VTEC_Codigo AND TERM_Ativo_WS = 'S')");
+        sb.append("   JOIN ORTE_Objeto_Rastreado_Termina ON (ORTE_TERM_Codigo = TERM_Codigo AND ORTE_Sequencia = 'P')");
+        sb.append("   JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = ORTE_ORAS_Codigo)");
+        sb.append("   JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = ORAS_Codigo)   ");
+        sb.append(" ORDER BY VEIC_Placa,");
+        sb.append("        RPOS_Data_Computador_Bordo");
+        return Conexao.getInstance().queryToXML(sb.toString());
+    }
 }
