@@ -258,30 +258,29 @@ public class TrafegusWS {
     @WebMethod(operationName = "solicitaDadosGrid")
     public String solicitaDadosGrid(@WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT VEIC_ORAS_CODIGO,");
-        sb.append("        VEIC_PLACA,");
-        sb.append("        VEIC_ANO_FABRICACAO,");
-        sb.append("        VEIC_ANO_MODELO,");
-        sb.append("        VEIC_RENAVAM,");
-        sb.append("        VEIC_CHASSI,");
-        sb.append("        VEIC_COR,");
-        sb.append("        VEIC_FROTA,");
-        sb.append("        RPOS_RECE_CODIGO,");
-        sb.append("        RPOS_DESCRICAO_INTEGRADA,");
-        sb.append("        RPOS_DESCRICAO_SISTEMA,");
-        sb.append("        RPOS_LATITUDE,");
-        sb.append("        RPOS_LONGITUDE,");
-        sb.append("        RPOS_DATA_COMPUTADOR_BORDO,");
-        sb.append("        VEIC_ORAS_CODIGO,");
-        sb.append("        RPOS_RECE_CODIGO");
-        sb.append("   FROM RPOS_RECEBIMENTO_POSICAO");
-        sb.append("   JOIN RECE_RECEBIMENTO ON (RECE_CODIGO = RPOS_RECE_CODIGO)");
-        sb.append("   JOIN TERM_TERMINAL ON (TERM_NUMERO_TERMINAL = RECE_TERM_NUMERO_TERMINAL AND TERM_VTEC_CODIGO = RECE_VTEC_CODIGO AND TERM_ATIVO_WS = 'S')");
-        sb.append("   JOIN ORTE_OBJETO_RASTREADO_TERMINA ON (ORTE_TERM_CODIGO = TERM_CODIGO AND ORTE_SEQUENCIA = 'P')");
-        sb.append("   JOIN ORAS_OBJETO_RASTREADO ON (ORAS_CODIGO = ORTE_ORAS_CODIGO)");
-        sb.append("   JOIN VEIC_VEICULO ON (VEIC_ORAS_CODIGO = ORAS_CODIGO)");
-        sb.append(" ORDER BY VEIC_PLACA, RPOS_DATA_COMPUTADOR_BORDO");
-        sb.append(" LIMIT 10");
+        sb.append(" SELECT VEIC_ORAS_Codigo,");
+        sb.append("        VEIC_Placa,");
+        sb.append("        VEIC_Ano_Fabricacao,");
+        sb.append("        VEIC_Ano_Modelo,");
+        sb.append("        VEIC_Renavam,");
+        sb.append("        VEIC_Chassi,");
+        sb.append("        VEIC_Cor,");
+        sb.append("        VEIC_Frota,");
+        sb.append("        UPOS_RECE_Codigo,");
+        sb.append("        UPOS_VTEC_Codigo,");
+        sb.append("        UPOS_TERM_Numero_Terminal,");
+        sb.append("        UPOS_Descricao_Integracao,");
+        sb.append("        UPOS_Descricao_Sistema,");
+        sb.append("        UPOS_Latitude,");
+        sb.append("        UPOS_Longitude,");
+        sb.append("        UPOS_Data_Cadastro,");
+        sb.append("        UPOS_Data_Comp_Bordo");
+        sb.append("   FROM UPOS_Ultima_Posicao");
+        sb.append("   JOIN TERM_Terminal ON (TERM_Numero_Terminal = UPOS_TERM_Numero_Terminal AND TERM_VTEC_Codigo = UPOS_VTEC_Codigo AND TERM_Ativo_WS = 'S')");
+        sb.append("   JOIN ORTE_Objeto_Rastreado_Termina ON (ORTE_TERM_Codigo = TERM_Codigo AND ORTE_Sequencia = 'P')");
+        sb.append("   JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = ORTE_ORAS_Codigo)");
+        sb.append("   JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = ORAS_Codigo)");
+        sb.append(" ORDER BY VEIC_Placa");
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 }
