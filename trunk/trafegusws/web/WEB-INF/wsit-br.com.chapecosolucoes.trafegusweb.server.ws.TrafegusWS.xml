@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+ <definitions 
+ xmlns="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="TrafegusWSService" targetNamespace="http://ws.server.trafegusweb.chapecosolucoes.com.br/" xmlns:tns="http://ws.server.trafegusweb.chapecosolucoes.com.br/"
+ >
+    <message name="solicitaAcesso"/>
+    <message name="solicitaAcessoResponse"/>
+    <message name="Exception"/>
+    <message name="solicitaClassesReferencias"/>
+    <message name="solicitaClassesReferenciasResponse"/>
+    <message name="solicitaDadosMotorista"/>
+    <message name="solicitaDadosMotoristaResponse"/>
+    <message name="solicitaRefencias"/>
+    <message name="solicitaRefenciasResponse"/>
+    <message name="solicitaDadosVeiculo"/>
+    <message name="solicitaDadosVeiculoResponse"/>
+    <message name="solicitaDadosTransportador"/>
+    <message name="solicitaDadosTransportadorResponse"/>
+    <message name="solicitaDadosRota"/>
+    <message name="solicitaDadosRotaResponse"/>
+    <message name="solicitaListaVeiculos"/>
+    <message name="solicitaListaVeiculosResponse"/>
+    <message name="solicitaListaRotas"/>
+    <message name="solicitaListaRotasResponse"/>
+    <message name="solicitaDadosGrid"/>
+    <message name="solicitaDadosGridResponse"/>
+    <message name="SolicitaHistoricoPosicoes"/>
+    <message name="SolicitaHistoricoPosicoesResponse"/>
+    <portType name="TrafegusWS">
+        <operation name="solicitaAcesso">
+            <input message="tns:solicitaAcesso"/>
+            <output message="tns:solicitaAcessoResponse"/>
+            <fault name="Exception" message="tns:Exception"/>
+        </operation>
+        <operation name="solicitaClassesReferencias">
+            <input message="tns:solicitaClassesReferencias"/>
+            <output message="tns:solicitaClassesReferenciasResponse"/>
+            <fault name="Exception" message="tns:Exception"/>
+        </operation>
+        <operation name="solicitaDadosMotorista">
+            <input message="tns:solicitaDadosMotorista"/>
+            <output message="tns:solicitaDadosMotoristaResponse"/>
+            <fault name="Exception" message="tns:Exception"/>
+        </operation>
+        <operation name="solicitaRefencias">
+            <input message="tns:solicitaRefencias"/>
+            <output message="tns:solicitaRefenciasResponse"/>
+            <fault name="Exception" message="tns:Exception"/>
+        </operation>
+        <operation name="solicitaDadosVeiculo">
+            <input message="tns:solicitaDadosVeiculo"/>
+            <output message="tns:solicitaDadosVeiculoResponse"/>
+            <fault name="Exception" message="tns:Exception"/>
+        </operation>
+        <operation name="solicitaDadosTransportador">
+            <input message="tns:solicitaDadosTransportador"/>
+            <output message="tns:solicitaDadosTransportadorResponse"/>
+            <fault name="Exception" message="tns:Exception"/>
+        </operation>
+        <operation name="solicitaDadosRota">
+            <input message="tns:solicitaDadosRota"/>
+            <output message="tns:solicitaDadosRotaResponse"/>
+            <fault name="Exception" message="tns:Exception"/>
+        </operation>
+        <operation name="solicitaListaVeiculos">
+            <input message="tns:solicitaListaVeiculos"/>
+            <output message="tns:solicitaListaVeiculosResponse"/>
+            <fault name="Exception" message="tns:Exception"/>
+        </operation>
+        <operation name="solicitaListaRotas">
+            <input message="tns:solicitaListaRotas"/>
+            <output message="tns:solicitaListaRotasResponse"/>
+            <fault name="Exception" message="tns:Exception"/>
+        </operation>
+        <operation name="solicitaDadosGrid">
+            <input message="tns:solicitaDadosGrid"/>
+            <output message="tns:solicitaDadosGridResponse"/>
+            <fault name="Exception" message="tns:Exception"/>
+        </operation>
+        <operation name="SolicitaHistoricoPosicoes">
+            <input message="tns:SolicitaHistoricoPosicoes"/>
+            <output message="tns:SolicitaHistoricoPosicoesResponse"/>
+            <fault name="Exception" message="tns:Exception"/>
+        </operation>
+    </portType>
+    <binding name="TrafegusWSPortBinding" type="tns:TrafegusWS">
+        <operation name="solicitaAcesso">
+            <input/>
+            <output/>
+            <fault name="Exception"/>
+        </operation>
+        <operation name="solicitaClassesReferencias">
+            <input/>
+            <output/>
+            <fault name="Exception"/>
+        </operation>
+        <operation name="solicitaDadosMotorista">
+            <input/>
+            <output/>
+            <fault name="Exception"/>
+        </operation>
+        <operation name="solicitaRefencias">
+            <input/>
+            <output/>
+            <fault name="Exception"/>
+        </operation>
+        <operation name="solicitaDadosVeiculo">
+            <input/>
+            <output/>
+            <fault name="Exception"/>
+        </operation>
+        <operation name="solicitaDadosTransportador">
+            <input/>
+            <output/>
+            <fault name="Exception"/>
+        </operation>
+        <operation name="solicitaDadosRota">
+            <input/>
+            <output/>
+            <fault name="Exception"/>
+        </operation>
+        <operation name="solicitaListaVeiculos">
+            <input/>
+            <output/>
+            <fault name="Exception"/>
+        </operation>
+        <operation name="solicitaListaRotas">
+            <input/>
+            <output/>
+            <fault name="Exception"/>
+        </operation>
+        <operation name="solicitaDadosGrid">
+            <input/>
+            <output/>
+            <fault name="Exception"/>
+        </operation>
+        <operation name="SolicitaHistoricoPosicoes">
+            <input/>
+            <output/>
+            <fault name="Exception"/>
+        </operation>
+    </binding>
+    <service name="TrafegusWSService">
+        <port name="TrafegusWSPort" binding="tns:TrafegusWSPortBinding"/>
+    </service>
+</definitions>
