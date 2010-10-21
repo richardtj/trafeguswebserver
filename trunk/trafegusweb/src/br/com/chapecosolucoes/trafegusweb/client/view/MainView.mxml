@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:view="br.com.chapecosolucoes.trafegusweb.client.view.*"
+		 initialize="init()" 
+		 xmlns:containers="com.iwobanas.containers.*">
+	<s:layout>
+		<s:HorizontalLayout clipAndEnableScrolling="true"/>
+	</s:layout>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.controller.MainController;
+			private var controller:MainController;
+			private function init():void
+			{
+				controller = new MainController();
+				controller.view = this;
+			}
+		]]>
+	</fx:Script>
+	<containers:CollapsiblePanel height="100%" title="Veiculos">
+		<containers:layout>
+			<s:VerticalLayout paddingRight="10" paddingLeft="10" paddingTop="10" paddingBottom="10"/>
+		</containers:layout>
+		<view:VehiclesView 
+			id="vehiclesView" 
+			height="100%" 
+			vehiclesReceivedEvent="this.controller.vehiclesReceivedEventHandler(event)"
+			vehicleSelectedEvent="this.controller.vehicleSelectedEventHandler(event)"/>
+	</containers:CollapsiblePanel>
+	<mx:VDividedBox height="100%" width="100%">
+		<view:MapView id="map" width="100%" height="75%"/>
+		<view:DetailsView id="details" width="100%" height="25%" 
+		  	routeReceivedEvent="this.controller.routeReceivedEventHandler(event)"/>
+	</mx:VDividedBox>
+</s:Group>
