@@ -2,6 +2,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.events.DetailsEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesHistoricEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MainView;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
@@ -36,7 +37,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			this.view.map.posicaoVeiculoVO(MainModel.getInstance().posicaoVeiculoVO);
 			this.view.details.posicaoVeiculoVO(MainModel.getInstance().posicaoVeiculoVO);
 		}
-		public function routeReceivedEventHandler(event:DetailsEvent):void
+		public function routeReceivedEventHandler(event:VehiclesHistoricEvent):void
 		{
 			this.view.map.rotaVeiculo(MainModel.getInstance().historicoPosicoesVeiculosArray);
 		}
