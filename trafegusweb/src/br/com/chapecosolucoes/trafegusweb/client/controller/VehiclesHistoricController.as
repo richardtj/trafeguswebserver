@@ -1,8 +1,14 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesHistoricEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.VehiclesHistoricView;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.HistoricoPosicoesVeiculoVO;
+	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
+	import mx.collections.ArrayCollection;
 	import mx.collections.XMLListCollection;
+	import mx.rpc.events.ResultEvent;
 
 	public class VehiclesHistoricController
 	{
@@ -27,7 +33,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				var dataPos:HistoricoPosicoesVeiculoVO = new HistoricoPosicoesVeiculoVO(obj);
 				MainModel.getInstance().historicoPosicoesVeiculosArray.addItem(dataPos);
 			}
-			this.view.dispatchEvent(new DetailsEvent(DetailsEvent.ROUTE_RECEIVED_EVENT));
+			this.view.dispatchEvent(new VehiclesHistoricEvent(VehiclesHistoricEvent.ROUTE_RECEIVED_EVENT,true));
 		}
 	}
 }
