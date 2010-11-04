@@ -38,6 +38,7 @@
 								   dataField="truck"/>
 				<mx:DataGridColumn headerText="Carreta"
 								   dataField="carreta"/>
+				<!--itemRenderer="mx.controls.ComboBox"-->
 				<mx:DataGridColumn headerText="Posição"
 								   dataField="gpsDescSis"/>
 				<mx:DataGridColumn headerText="Ignicao"
