@@ -2,7 +2,8 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 initialize="init()" xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+		 initialize="init()" 
+		 xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
 	<s:layout>
 		<s:VerticalLayout/>
 	</s:layout>
@@ -32,26 +33,26 @@
 					 height="100%">
 			<mx:columns>
 				<mx:DataGridColumn headerText="Versao"
-								   dataField="versao"/>
+								   dataField="versaoTecnologia"/>
 				<mx:DataGridColumn headerText="Terminal"
-								   dataField="terminal"/>
+								   dataField="numeroTerminal"/>
 				<mx:DataGridColumn headerText="Truck"
-								   dataField="truck"/>
+								   dataField="vehiclePlate"/>
 				<mx:DataGridColumn headerText="Carreta"
 								   dataField="carreta"/>
 				<!--itemRenderer="mx.controls.ComboBox"-->
 				<mx:DataGridColumn headerText="Posição"
 								   dataField="gpsDescSis"/>
 				<mx:DataGridColumn headerText="Ignicao"
-								   dataField="ignicao"/>
+								   dataField="ignition"/>
 				<mx:DataGridColumn headerText="Tipo veiculo"
 								   dataField="tipoVeiculo"/>
 				<mx:DataGridColumn headerText="Viagem"
-								   dataField="viagem"/>
+								   dataField="statusViagem"/>
 				<mx:DataGridColumn headerText="Atraso"
-								   dataField="atraso"/>
+								   dataField="statusAtraso"/>
 				<mx:DataGridColumn headerText="Motorista"
-								   dataField="motorista"/>
+								   dataField="motoristaPrincipal"/>
 				<mx:DataGridColumn headerText="Embarcador"
 								   dataField="embarcador"/>
 			</mx:columns>
