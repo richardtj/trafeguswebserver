@@ -259,11 +259,11 @@ public class TrafegusWS {
     public String solicitaDadosGrid(@WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(" SELECT VEIC_Placa as placa,");
-        sb.append("     URPE_Valor as ignicao,");
+        sb.append(" SELECT VEIC_Placa as vehicleplate,");
+        sb.append("     URPE_Valor as ignition,");
         sb.append("     UPOS_Descricao_Sistema AS posicao,");
-        sb.append("     UPOS_Longitude AS latitude,");
-        sb.append("     UPOS_Latitude AS longitude,");
+        sb.append("     UPOS_Longitude AS gpslatitude,");
+        sb.append("     UPOS_Latitude AS gpslongitude,");
         sb.append("     VTEC_Descricao as versaoTecnologia,");
         sb.append("     TERM_Numero_Terminal as numeroTerminal,");
         sb.append("     PESS_Nome as embarcador,");
