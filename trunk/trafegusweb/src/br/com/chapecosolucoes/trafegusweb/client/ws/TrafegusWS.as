@@ -1,6 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.ws
 {
-	import br.com.chapecosolucoes.trafegusweb.client.config.Config;
+	import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
 	
 	import flash.events.Event;
@@ -31,22 +31,10 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				throw new Error("Utilize o metodo getIntance()");
 			}
 			this.webservice = new WebService();
-			this.webservice.wsdl = "http://localhost:8080/trafegusws/TrafegusWS?wsdl";
+			this.webservice.wsdl = UsuarioLogado.getInstance().wsdl;
 			this.webservice.loadWSDL();
 		}
 		
-		protected function preinitializeHandler(event:FlexEvent):void
-		{
-			var req:URLRequest = new URLRequest("config.xml");
-			var loader:URLLoader = new URLLoader(req);
-			loader.addEventListener(Event.COMPLETE, xmlConfigLoaderComplete);
-			
-			function xmlConfigLoaderComplete(e:Event):void
-			{
-				Config.getInstance().wsdl = XML(loader.data).wsdl;
-			}
-		}
-
 		public static function getIntance():TrafegusWS
 		{
 			if (instance == null)
