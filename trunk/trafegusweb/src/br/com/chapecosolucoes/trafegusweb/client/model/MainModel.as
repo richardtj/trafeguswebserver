@@ -25,7 +25,7 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		{
 			if (enforcer == null)
 			{
-				throw new Error("Só pode haver uma instância de UserModel");
+				throw new Error("Só pode haver uma instância de [MainModel]");
 			}
 		}
 
