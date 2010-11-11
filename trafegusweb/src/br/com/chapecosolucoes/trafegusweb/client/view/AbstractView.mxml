@@ -52,7 +52,7 @@
 				<mx:DataGridColumn headerText="Atraso"
 								   dataField="statusAtraso"/>
 				<mx:DataGridColumn headerText="Motorista"
-								   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.DriverItemRenderer"
+								   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DriverItemRendererView"
 								   dataField="motoristaPrincipal"/>
 				<mx:DataGridColumn headerText="Embarcador"
 								   dataField="embarcador"/>
