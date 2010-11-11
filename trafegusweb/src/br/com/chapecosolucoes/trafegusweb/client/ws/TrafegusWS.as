@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.ws
 {
 	import br.com.chapecosolucoes.trafegusweb.client.config.Config;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
 	
 	import flash.events.Event;
 	import flash.net.URLLoader;
@@ -85,20 +86,20 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 		{
 			var operation:Operation = createOperation("solicitaListaVeiculos");
 			operation.addEventListener(ResultEvent.RESULT, handler);
-			operation.send(1453);
+			operation.send(1457);
 		}
 		
 		public function solicitaDadosGrid(handler:Function):void
 		{
 			var operation:Operation = createOperation("solicitaDadosGrid");
 			operation.addEventListener(ResultEvent.RESULT, handler);
-			operation.send(1453);
+			operation.send(1457);
 		}
 		
-		public function solicitaHistoricoPosicoes(handler:Function):void{
+		public function solicitaHistoricoPosicoes(handler:Function,params:PosicaoVeiculoVO):void{
 			var operation:Operation = createOperation("SolicitaHistoricoPosicoes");
 			operation.addEventListener(ResultEvent.RESULT, handler);
-			operation.send(1453,"AHU7915",0,30,false);
+			operation.send(1457,params.vehiclePlate,0,30,false);
 		}
 	}
 }
