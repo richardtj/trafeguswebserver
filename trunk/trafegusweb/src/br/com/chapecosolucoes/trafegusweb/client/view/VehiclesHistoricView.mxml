@@ -27,7 +27,7 @@
 			}
 			public function posicaoVeiculoVO(value:PosicaoVeiculoVO):void
 			{
-				this.controller.solicitaHistoricoPosicoes();
+				this.controller.solicitaHistoricoPosicoes(value);
 			}
 		]]>
 	</fx:Script>
