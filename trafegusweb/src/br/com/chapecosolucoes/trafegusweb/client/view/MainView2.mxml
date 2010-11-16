@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx" 
+	xmlns:resize="flex.utils.ui.resize.*" 
+	xmlns:view="br.com.chapecosolucoes.trafegusweb.client.view.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Style>
+		/* Example of how to style the resize handle. */
+		@namespace resize "flex.utils.ui.resize.*";
+		resize|ResizableBox {
+			resizeHandleColor: #00ff00;
+			resizeHandleAlpha: 1;
+			backgroundColor: #ddffdd;
+			backgroundAlpha: 0.3;
+			borderThickness: 1;
+			borderStyle: solid;
+			borderColor: #000000;
+			color: #ffffff;
+		}
+		
+		resize|ResizablePanel, resize|ResizableWindow {
+			title-style-name: "title";	
+		}
+		
+		.title {
+			color: #ffffff;
+			font-weight: bold;			
+		}
+		
+	</fx:Style>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.controller.MainController;
+			private var controller:MainController;
+			private function init():void
+			{
+				controller = new MainController();
+				controller.view = this;
+			}
+		]]>
+	</fx:Script>
+	<resize:ResizableWindow 
+		id="window" x="0" y="0" width="20%" height="100%" 
+		minWidth="200" minHeight="200"
+		movable="true" resizable="true" 
+		title="ResizableWindow" status="Movable too" showCloseButton="true" 
+		bringToFrontOnMove="true" bringToFrontOnResize="true" titleIcon="@Embed(source='assets/check.png')" 
+		verticalScrollPolicy="off" horizontalScrollPolicy="off"
+		moveHandleColor="#ffffff" resizeHandleColor="#ffffff" verticalGap="2">
+		<view:VehiclesView 
+			id="vehiclesView" 
+			height="100%" 
+			width="100%"
+			vehiclesReceivedEvent="this.controller.vehiclesReceivedEventHandler(event)"
+			vehicleSelectedEvent="this.controller.vehicleSelectedEventHandler(event)"/>
+	</resize:ResizableWindow>
+	<resize:ResizableWindow 
+		id="window2" x="255" y="0" width="80%" height="50%"
+		minWidth="300" minHeight="300"
+		movable="true" resizable="true" 
+		title="ResizableWindow" status="Movable too" showCloseButton="true" 
+		bringToFrontOnMove="true" bringToFrontOnResize="true" titleIcon="@Embed(source='assets/check.png')" 
+		verticalScrollPolicy="off" horizontalScrollPolicy="off"
+		moveHandleColor="#ffffff" resizeHandleColor="#ffffff" verticalGap="2">
+		<view:MapView id="map" width="100%" height="100%"/>
+	</resize:ResizableWindow>
+	<resize:ResizableWindow 
+		id="window3" x="255" y="190" width="80%" height="50%"
+		minWidth="300" minHeight="300"
+		movable="true" resizable="true" 
+		title="ResizableWindow" status="Movable too" showCloseButton="true" 
+		bringToFrontOnMove="true" bringToFrontOnResize="true" titleIcon="@Embed(source='assets/check.png')" 
+		verticalScrollPolicy="off" horizontalScrollPolicy="off"
+		moveHandleColor="#ffffff" resizeHandleColor="#ffffff" verticalGap="2">
+		<view:DetailsView 
+			id="details" width="100%" height="100%"
+			routeReceivedEvent="this.controller.routeReceivedEventHandler(event)"/>
+	</resize:ResizableWindow>
+</mx:Canvas>
