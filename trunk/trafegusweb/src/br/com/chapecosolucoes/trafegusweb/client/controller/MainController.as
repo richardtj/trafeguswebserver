@@ -5,6 +5,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesHistoricEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MainView;
+	import br.com.chapecosolucoes.trafegusweb.client.view.MainView2;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
 	
 	import com.google.maps.LatLng;
@@ -16,7 +17,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public function MainController()
 		{
 		}
-		public var view:MainView;
+		public var view:MainView2;
 		public function addPoint():void
 		{
 			var obj:Object = new Object();
