@@ -4,7 +4,9 @@
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	xmlns:mx="library://ns.adobe.com/flex/mx" 
 	xmlns:resize="flex.utils.ui.resize.*" 
-	xmlns:view="br.com.chapecosolucoes.trafegusweb.client.view.*">
+	xmlns:view="br.com.chapecosolucoes.trafegusweb.client.view.*"
+	initialize="init()"
+	creationComplete="creationComplete()">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -35,19 +37,78 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.controller.MainController;
+			
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			import mx.events.MenuEvent;
+			
+			import org.osmf.layout.AbsoluteLayoutFacet;
 			private var controller:MainController;
+			public var xml:XML;
 			private function init():void
 			{
 				controller = new MainController();
 				controller.view = this;
 			}
+			public function creationComplete()
+			{
+				xml = 
+				<XMLList>
+					<menuitem label="Exibir">
+						<menuitem label="Veiculos" 
+								  type="check" toggled="true"/>
+						<menuitem label="Detalhes" 
+								  type="check" toggled="true"/>
+						<menuitem label="Mapa" 
+								  type="check" toggled="true"/>
+					</menuitem>
+				</XMLList>;
+				this.myMenuBar.dataProvider = xml;
+			}
+			public function itemClickedHandler(event:MenuEvent):void
+			{
+				if(event.label == "Veiculos")
+				{
+					veiculos.visible = !veiculos.visible; 
+				}
+				if(event.label == "Mapa")
+				{
+					mapa.visible = !mapa.visible;	
+				}
+				if(event.label == "Detalhes")
+				{
+					detalhes.visible = !detalhes.visible;
+				}
+			}
+			public function closeEventHandler(event:CloseEvent):void
+			{
+				if(event.target.id.toString() == "veiculos")
+				{
+					veiculos.visible = !veiculos.visible; 
+				}
+				if(event.target.id.toString() == "mapa")
+				{
+					mapa.visible = !mapa.visible;	
+				}
+				if(event.target.id.toString() == "detalhes")
+				{
+					detalhes.visible = !detalhes.visible;
+				}
+			}
 		]]>
 	</fx:Script>
+	<mx:MenuBar 
+		id="myMenuBar" 
+		labelField="@label" 
+		showRoot="false" 
+		width="100%" 
+		x="0" y="0"
+		itemClick="itemClickedHandler(event)"/>
 	<resize:ResizableWindow 
-		id="window" x="0" y="0" width="20%" height="100%" 
+		id="veiculos" x="0" y="20" width="20%" height="100%" 
 		minWidth="200" minHeight="200"
-		movable="true" resizable="true" 
-		title="ResizableWindow" status="Movable too" showCloseButton="true" 
+		movable="true" resizable="true" close="closeEventHandler(event)"
+		title="Veiculos" status="" showCloseButton="true" 
 		bringToFrontOnMove="true" bringToFrontOnResize="true" titleIcon="@Embed(source='assets/check.png')" 
 		verticalScrollPolicy="off" horizontalScrollPolicy="off"
 		moveHandleColor="#ffffff" resizeHandleColor="#ffffff" verticalGap="2">
@@ -59,20 +120,20 @@
 			vehicleSelectedEvent="this.controller.vehicleSelectedEventHandler(event)"/>
 	</resize:ResizableWindow>
 	<resize:ResizableWindow 
-		id="window2" x="255" y="0" width="80%" height="50%"
-		minWidth="300" minHeight="300"
-		movable="true" resizable="true" 
-		title="ResizableWindow" status="Movable too" showCloseButton="true" 
+		id="mapa" x="272" y="20" width="80%" height="50%"
+		minWidth="300" minHeight="272"
+		movable="true" resizable="true" close="closeEventHandler(event)"
+		title="Mapa" status="" showCloseButton="true" 
 		bringToFrontOnMove="true" bringToFrontOnResize="true" titleIcon="@Embed(source='assets/check.png')" 
 		verticalScrollPolicy="off" horizontalScrollPolicy="off"
 		moveHandleColor="#ffffff" resizeHandleColor="#ffffff" verticalGap="2">
 		<view:MapView id="map" width="100%" height="100%"/>
 	</resize:ResizableWindow>
 	<resize:ResizableWindow 
-		id="window3" x="255" y="190" width="80%" height="50%"
-		minWidth="300" minHeight="300"
-		movable="true" resizable="true" 
-		title="ResizableWindow" status="Movable too" showCloseButton="true" 
+		id="detalhes" x="272" y="274" width="80%" height="50%"
+		minWidth="300" minHeight="272"
+		movable="true" resizable="true" close="closeEventHandler(event)"
+		title="Detalhes" status="" showCloseButton="true" 
 		bringToFrontOnMove="true" bringToFrontOnResize="true" titleIcon="@Embed(source='assets/check.png')" 
 		verticalScrollPolicy="off" horizontalScrollPolicy="off"
 		moveHandleColor="#ffffff" resizeHandleColor="#ffffff" verticalGap="2">
