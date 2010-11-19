@@ -89,6 +89,13 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.send(1457,params.vehiclePlate,0,30,false);
 		}
+		
+		public function solicitaDadosMotorista(handler:Function,params:String):void
+		{
+			var operation:Operation = createOperation("solicitaDadosMotorista");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.send(1457,params);
+		}
 	}
 }
 

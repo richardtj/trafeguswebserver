@@ -4,62 +4,81 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   layout="vertical"
 			   showCloseButton="true"
+			   creationCompleteEffect="{dissolve,iris}"
+			   removedEffect="{dissolve,iris}"
+			   initialize="init()"
+			   creationComplete="creationComplete()"
 			   close="closeHandler()"
 			   title="Dados do Motorista">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.controller.DriverDetailsController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;			
 			import mx.managers.PopUpManager;
-			 private function closeHandler():void
-			 {
-				 PopUpManager.removePopUp(this);
-			 }
+			public var cpfMotoristaPrincipal:String;
+			private var controller:DriverDetailsController;
+			private function closeHandler():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			private function init():void
+			{
+				this.controller = new DriverDetailsController();
+				this.controller.view = this;
+			}
+			private function creationComplete():void
+			{
+				this.controller.solicitaDadosMotorista(this.cpfMotoristaPrincipal);
+			}
 		]]>
 	</fx:Script>
 	<mx:Form width="100%" height="100%">
 		<mx:FormItem label="Código">
-			<s:Label enabled="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.codigo}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="Data cadastro">
-			<s:Label enabled="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.dataCadastro}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:HRule width="60%"/>
 		<mx:FormItem label="Nome">
-			<s:Label enabled="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.nome}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="RG">
-			<s:Label enabled="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.rg}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="CPF">
-			<s:Label enabled="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.cpf}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="Sexo">
-			<s:Label enabled="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.sexo}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:HRule width="60%"/>
 		<mx:FormItem label="Código">
-			<s:Label enabled="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.codigoCNH}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="Número CNH">
-			<s:Label enabled="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.numeroCNH}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="Categoria CNH">
-			<s:Label enabled="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.categoriaCNH}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="Validade CNH">
-			<s:Label enabled="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.validadeCNH}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:HRule width="60%"/>
 		<mx:FormItem label="Treinado">
-			<s:Label enabled="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.treinado}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="Ultimo treinamento">
-			<s:Label enabled="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.ultimoTreinamento}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="Validade pesquisa">
-			<s:Label enabled="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.validadePesquisa}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 	</mx:Form>
 </mx:TitleWindow>

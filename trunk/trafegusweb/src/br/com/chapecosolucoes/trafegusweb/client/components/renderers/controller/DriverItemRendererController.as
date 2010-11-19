@@ -5,6 +5,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 	
 	import flash.display.DisplayObject;
 	
+	import mx.core.Application;
+	import mx.core.FlexGlobals;
 	import mx.core.IFlexDisplayObject;
 	import mx.managers.PopUpManager;
 
@@ -14,10 +16,12 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 		{
 		}
 		public var view:DriverItemRendererView;
-		public function popUp():void
+		public function popUp(param:String):void
 		{
 			var driverDetails:DriverDetails = new DriverDetails();
-			PopUpManager.addPopUp(driverDetails,DisplayObject(this.view));
+			driverDetails.cpfMotoristaPrincipal = param;
+			PopUpManager.addPopUp(driverDetails,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.centerPopUp(driverDetails);
 		}
 	}
 }
