@@ -114,8 +114,6 @@
 			}
 			private function closeApp(event:CloseEvent):void
 			{
-				//var urlString:String = "javascript:self.close();";
-				//var urlString:String = "javascript:window.opener = self; self.close();";
 				/**
 				 * For this to work in Firefox,
 				 * Type in "about:config" in firefox address bar

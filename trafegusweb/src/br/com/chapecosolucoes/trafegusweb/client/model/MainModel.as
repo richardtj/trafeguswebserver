@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.model
 {
+	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosMotoristaVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
 	
 	import mx.collections.ArrayCollection;
@@ -20,6 +21,8 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		public var historicoPosicoesVeiculosArray:ArrayCollection;
 		
 		public var posicaoVeiculoVO:PosicaoVeiculoVO;
+		
+		public var dadosMotoristaVO:DadosMotoristaVO = new DadosMotoristaVO();
 
 		public function MainModel(enforcer:SingletonEnforcer)
 		{
