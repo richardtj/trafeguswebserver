@@ -33,7 +33,7 @@ public class Conexao {
 
     private Conexao() throws Exception {
         Class.forName("org.postgresql.Driver").newInstance();
-        this.connection = DriverManager.getConnection("jdbc:postgresql://200.180.96.112:5432/desenvolvimento", "postgres", "postgres");
+        this.connection = DriverManager.getConnection("jdbc:postgresql://172.1.2.110:5432/desenvolvimento", "postgres", "postgres");
     }
 
     public static Conexao getInstance() throws Exception {
