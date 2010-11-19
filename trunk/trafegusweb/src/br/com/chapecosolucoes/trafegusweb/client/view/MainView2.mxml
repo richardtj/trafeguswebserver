@@ -9,6 +9,8 @@
 	creationComplete="creationComplete()">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Fade id="fadeOut" duration="1000" alphaFrom="1.0" alphaTo="0.0"/>
+		<mx:Fade id="fadeIn" duration="1000" alphaFrom="0.0" alphaTo="1.0"/>
 	</fx:Declarations>
 	<fx:Style>
 		/* Example of how to style the resize handle. */
@@ -54,6 +56,10 @@
 			{
 				xml = 
 				<XMLList>
+					<menuitem label="Arquivo">
+						<menuitem label="Salvar"/>
+						<menuitem label="Sair"/>
+					</menuitem>
 					<menuitem label="Exibir">
 						<menuitem label="Veiculos" 
 								  type="check" toggled="true"/>
@@ -79,20 +85,47 @@
 				{
 					detalhes.visible = !detalhes.visible;
 				}
+				if(event.label == "Salvar")
+				{
+					Alert.show("Configurações salvas com sucesso","Sucesso");
+				}
+				if(event.label == "Sair")
+				{
+					Alert.show("Deseja sair da aplicação","Sair",Alert.OK | Alert.CANCEL,this,this.closeApp);
+				}
 			}
 			public function closeEventHandler(event:CloseEvent):void
 			{
 				if(event.target.id.toString() == "veiculos")
 				{
-					veiculos.visible = !veiculos.visible; 
+					veiculos.visible = !veiculos.visible;
+					myMenuBar.menuBarItems[1].data.menuitem[0].@toggled = "false";
 				}
 				if(event.target.id.toString() == "mapa")
 				{
-					mapa.visible = !mapa.visible;	
+					mapa.visible = !mapa.visible;
+					myMenuBar.menuBarItems[1].data.menuitem[2].@toggled = "false";
 				}
 				if(event.target.id.toString() == "detalhes")
 				{
 					detalhes.visible = !detalhes.visible;
+					myMenuBar.menuBarItems[1].data.menuitem[1].@toggled = "false";
+				}
+			}
+			private function closeApp(event:CloseEvent):void
+			{
+				//var urlString:String = "javascript:self.close();";
+				//var urlString:String = "javascript:window.opener = self; self.close();";
+				/**
+				 * For this to work in Firefox,
+				 * Type in "about:config" in firefox address bar
+				 * set dom.allow_scripts_to_close_windows to true.
+				 */
+				if(event.detail == Alert.OK)
+				{
+					var urlString:String = "javascript:window.close();";
+					var request:URLRequest = new URLRequest(urlString);
+					navigateToURL(request, "_self");
 				}
 			}
 		]]>
@@ -108,7 +141,7 @@
 		id="veiculos" x="0" y="20" width="20%" height="100%" 
 		minWidth="200" minHeight="200"
 		movable="true" resizable="true" close="closeEventHandler(event)"
-		title="Veiculos" status="" showCloseButton="true" 
+		title="Veiculos" status="" showCloseButton="true" hideEffect="{fadeOut}" showEffect="{fadeIn}"
 		bringToFrontOnMove="true" bringToFrontOnResize="true" titleIcon="@Embed(source='assets/check.png')" 
 		verticalScrollPolicy="off" horizontalScrollPolicy="off"
 		moveHandleColor="#ffffff" resizeHandleColor="#ffffff" verticalGap="2">
@@ -123,7 +156,7 @@
 		id="mapa" x="272" y="20" width="80%" height="50%"
 		minWidth="300" minHeight="272"
 		movable="true" resizable="true" close="closeEventHandler(event)"
-		title="Mapa" status="" showCloseButton="true" 
+		title="Mapa" status="" showCloseButton="true" hideEffect="{fadeOut}" showEffect="{fadeIn}"
 		bringToFrontOnMove="true" bringToFrontOnResize="true" titleIcon="@Embed(source='assets/check.png')" 
 		verticalScrollPolicy="off" horizontalScrollPolicy="off"
 		moveHandleColor="#ffffff" resizeHandleColor="#ffffff" verticalGap="2">
@@ -133,7 +166,7 @@
 		id="detalhes" x="272" y="274" width="80%" height="50%"
 		minWidth="300" minHeight="272"
 		movable="true" resizable="true" close="closeEventHandler(event)"
-		title="Detalhes" status="" showCloseButton="true" 
+		title="Detalhes" status="" showCloseButton="true" hideEffect="{fadeOut}" showEffect="{fadeIn}" 
 		bringToFrontOnMove="true" bringToFrontOnResize="true" titleIcon="@Embed(source='assets/check.png')" 
 		verticalScrollPolicy="off" horizontalScrollPolicy="off"
 		moveHandleColor="#ffffff" resizeHandleColor="#ffffff" verticalGap="2">
