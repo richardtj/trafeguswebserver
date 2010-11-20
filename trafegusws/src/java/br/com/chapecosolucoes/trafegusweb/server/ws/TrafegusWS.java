@@ -30,12 +30,13 @@ public class TrafegusWS {
         sb.append("     JOIN VCAR_Veiculo_Carreta ON (VCAR_VEIC_ORAS_Codigo = vcca_vcar_veic_oras_codigo)");
         sb.append("     JOIN VEIC_Veiculo AS CARRETA ON (CARRETA.VEIC_ORAS_Codigo = VCAR_VEIC_ORAS_Codigo)");
         sb.append(" where");
-        sb.append("     VEIC_Veiculo.VEIC_Placa ='").append(placaCavalo).append("'");
+        sb.append("     VEIC_Veiculo.VEIC_Placa = '").append(placaCavalo).append("'");
         sb.append(" ORDER BY VCCA_Sequencia");
 
         rs = Conexao.getInstance().executeQuery(placaCavalo);
 
-        sb.delete(0, sb.length() - 1);
+        sb = null;
+        sb = new StringBuilder();
 
         sb.append("<carretas>/n");
         while (rs.next()) {
@@ -343,7 +344,8 @@ public class TrafegusWS {
         ResultSet rs = Conexao.getInstance().executeQuery(sb.toString());
         ResultSetMetaData rsmd = rs.getMetaData();
 
-        sb.delete(0, sb.length() - 1);
+        sb = null;
+        sb = new StringBuilder();
 
         sb.append("<results>/n");
         int colCount = rsmd.getColumnCount();
@@ -358,6 +360,7 @@ public class TrafegusWS {
             sb.append("</row>/n");
         }
         sb.append("</results>");
+        System.out.println(sb.toString());
         return sb.toString();
     }
 
