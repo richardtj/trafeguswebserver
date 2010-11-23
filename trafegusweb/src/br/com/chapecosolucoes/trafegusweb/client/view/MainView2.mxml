@@ -78,63 +78,7 @@
 				</XMLList>;
 				this.myMenuBar.dataProvider = xml;
 			}
-			public function itemClickedHandler(event:MenuEvent):void
-			{
-				if(event.label == "Veiculos")
-				{
-					veiculos.visible = !veiculos.visible; 
-				}
-				if(event.label == "Mapa")
-				{
-					mapa.visible = !mapa.visible;	
-				}
-				if(event.label == "Detalhes")
-				{
-					detalhes.visible = !detalhes.visible;
-				}
-				if(event.label == "Salvar")
-				{
-					Alert.show("Configurações salvas com sucesso","Sucesso");
-				}
-				if(event.label == "Sair")
-				{
-					Alert.show("Deseja sair da aplicação","Sair",Alert.OK | Alert.CANCEL,this,this.closeApp);
-				}
-			}
-			public function closeEventHandler(event:CloseEvent):void
-			{
-				if(event.target.id.toString() == "veiculos")
-				{
-					veiculos.visible = !veiculos.visible;
-					myMenuBar.menuBarItems[1].data.menuitem[0].@toggled = "false";
-				}
-				if(event.target.id.toString() == "mapa")
-				{
-					mapa.visible = !mapa.visible;
-					myMenuBar.menuBarItems[1].data.menuitem[2].@toggled = "false";
-				}
-				if(event.target.id.toString() == "detalhes")
-				{
-					detalhes.visible = !detalhes.visible;
-					myMenuBar.menuBarItems[1].data.menuitem[1].@toggled = "false";
-				}
-			}
-			private function closeApp(event:CloseEvent):void
-			{
-				/**
-				 * For this to work in Firefox,
-				 * Type in "about:config" in firefox address bar
-				 * set dom.allow_scripts_to_close_windows to true.
-				 */
-				if(event.detail == Alert.OK)
-				{
-					//var urlString:String = "javascript:window.close();";
-					//var request:URLRequest = new URLRequest(urlString);
-					//navigateToURL(request, "_self");
-					var closeEvent:CloseAppEvent = new CloseAppEvent(CloseAppEvent.CLOSE_APP_EVENT);
-					this.dispatchEvent(closeEvent);
-				}
-			}
+			
 		]]>
 	</fx:Script>
 	<mx:MenuBar 
@@ -143,11 +87,11 @@
 		showRoot="false" 
 		width="100%" 
 		x="0" y="0"
-		itemClick="itemClickedHandler(event)"/>
+		itemClick="this.controller.itemClickedHandler(event)"/>
 	<resize:ResizableWindow 
 		id="veiculos" x="0" y="20" width="20%" height="100%" 
 		minWidth="200" minHeight="200"
-		movable="true" resizable="true" close="closeEventHandler(event)"
+		movable="true" resizable="true" close="this.controller.closeEventHandler(event)"
 		title="Veiculos" status="" showCloseButton="true" hideEffect="{fadeOut}" showEffect="{fadeIn}"
 		bringToFrontOnMove="true" bringToFrontOnResize="true" titleIcon="@Embed(source='assets/check.png')" 
 		verticalScrollPolicy="off" horizontalScrollPolicy="off"
@@ -162,7 +106,7 @@
 	<resize:ResizableWindow 
 		id="mapa" x="272" y="20" width="80%" height="50%"
 		minWidth="300" minHeight="272"
-		movable="true" resizable="true" close="closeEventHandler(event)"
+		movable="true" resizable="true" close="this.controller.closeEventHandler(event)"
 		title="Mapa" status="" showCloseButton="true" hideEffect="{fadeOut}" showEffect="{fadeIn}"
 		bringToFrontOnMove="true" bringToFrontOnResize="true" titleIcon="@Embed(source='assets/check.png')" 
 		verticalScrollPolicy="off" horizontalScrollPolicy="off"
@@ -172,13 +116,14 @@
 	<resize:ResizableWindow 
 		id="detalhes" x="272" y="274" width="80%" height="50%"
 		minWidth="300" minHeight="272"
-		movable="true" resizable="true" close="closeEventHandler(event)"
+		movable="true" resizable="true" close="this.controller.closeEventHandler(event)"
 		title="Detalhes" status="" showCloseButton="true" hideEffect="{fadeOut}" showEffect="{fadeIn}" 
 		bringToFrontOnMove="true" bringToFrontOnResize="true" titleIcon="@Embed(source='assets/check.png')" 
 		verticalScrollPolicy="off" horizontalScrollPolicy="off"
 		moveHandleColor="#ffffff" resizeHandleColor="#ffffff" verticalGap="2">
 		<view:DetailsView 
 			id="details" width="100%" height="100%"
-			routeReceivedEvent="this.controller.routeReceivedEventHandler(event)"/>
+			routeReceivedEvent="this.controller.routeReceivedEventHandler(event)"
+			vehicleSelectedEvent="this.controller.vehicleSelectedEventHandler(event)"/>
 	</resize:ResizableWindow>
 </mx:Canvas>

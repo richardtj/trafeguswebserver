@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.enum.VehicleEnum;
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.VehiclesView;
@@ -36,7 +37,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public function veiculoSelecionadoHandler(event:MouseEvent):void
 		{
 			MainModel.getInstance().posicaoVeiculoVO = PosicaoVeiculoVO(event.currentTarget.selectedItem);
-			this.view.dispatchEvent(new VehiclesEvent(VehiclesEvent.VEHICLE_SELECTED_EVENT,event.currentTarget.selectedIndex));
+			this.view.dispatchEvent(new VehiclesEvent(VehiclesEvent.VEHICLE_SELECTED_EVENT,event.currentTarget.selectedIndex,VehicleEnum.LIST));
 		}
 		private function veiculosRecebidosHandler(event:ResultEvent):void
 		{
