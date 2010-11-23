@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+    currentState="Default">
+    <mx:Metadata>
+    	//indica que esta classe ira despachar um loginEvent
+		[Event(name="loginEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.LoginEvent")]    	
+		[Event(name="registerEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.RegisterEvent")]    	
+    </mx:Metadata>
+	<mx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.events.LoginEvent;
+			
+			import mx.controls.Alert;
+			import mx.effects.easing.Bounce;
+			import mx.events.ValidationResultEvent;
+			private var senha:Boolean = false;
+			private var confirmaSenha:Boolean = true;
+			private var usuario:Boolean = false;
+			public function validaTodos(event:ValidationResultEvent):void
+			{
+				if(this.currentState == "Default")
+				{
+					if(this.senha && this.confirmaSenha && this.usuario)
+					{
+						var loginEvent:LoginEvent = new LoginEvent(LoginEvent.LOGIN_EVENT,textinput1.text,textinput2.text);
+						textinput1.text = "";
+						textinput2.text = "";
+						this.dispatchEvent(loginEvent);
+					}
+				}
+				else if(this.currentState == "registrar")
+				{
+					if(this.senha && this.usuario)
+					{
+						Alert.show(TextInput(StringValidator(event.target).source).text);
+					}	
+				}
+			}
+		]]>
+	</mx:Script>
+	<mx:StringValidator 
+		id="usuarioValidator"
+		source="{textinput2}"
+		property="text"
+		requiredFieldError="Campo requerido!"
+		tooShortError="Campo senha deve conter no minimo 6 caracteres"
+		minLength="6"
+		maxLength="20"
+		trigger="{entrar}"
+		triggerEvent="click"
+		valid="this.usuario = true;validaTodos(event)"
+		invalid="{this.usuario = false}"/>
+	<mx:StringValidator 
+		id="senhaValidator"
+		source="{textinput1}"
+		property="text"
+		requiredFieldError="Campo requerido!"
+		trigger="{entrar}"
+		triggerEvent="click"
+		valid="this.senha = true;validaTodos(event)"
+		invalid="{this.senha = false}"/>
+	<mx:states>
+		<mx:State name="registrar">
+			<mx:AddChild relativeTo="{form1}" position="lastChild">
+				<mx:FormItem id="confirm" label="Confirmar Senha" required="true" labelWidth="100">
+					<mx:TextInput id="confirmInputText" width="100%" resizeEffect="Resize" displayAsPassword="true"/>
+				</mx:FormItem>
+			</mx:AddChild>
+			<mx:AddChild>
+				<mx:StringValidator 
+					id="confirmValidator"
+					source="{confirmInputText}"
+					property="text"
+					requiredFieldError="Campo requerido!"
+					tooShortError="Campo senha deve conter no minimo 6 caracteres"
+					minLength="6"
+					maxLength="20"
+					trigger="{entrar}"
+					triggerEvent="click"
+					valid="this.confirmaSenha = true;validaTodos(event)"
+					invalid="this.confirmaSenha = false"/>
+			</mx:AddChild>
+			<!--mx:SetProperty target="{linkbutton1}" name="label" value="Login"/-->
+			<mx:SetProperty target="{entrar}" name="label" value="Registrar"/>
+			<mx:SetProperty target="{panel1}" name="title" value="Registrar"/>
+			<mx:SetProperty target="{panel1}" name="width" value="332"/>
+			<mx:SetProperty target="{panel1}" name="height" value="202"/>
+			<mx:SetProperty target="{form1}" name="width" value="311"/>
+			<mx:SetProperty target="{form1}" name="height" value="126"/>
+			<!--mx:SetEventHandler target="{linkbutton1}" name="click" handler="currentState='Default'"/-->
+			<mx:SetProperty target="{textinput1}" name="width" value="100%"/>
+			<mx:SetProperty target="{textinput2}" name="width" value="100%"/>
+			<mx:SetStyle target="{formitem1}" name="horizontalAlign"/>
+			<mx:SetStyle target="{formitem2}" name="horizontalAlign"/>
+		</mx:State>
+		<mx:State name="Default">
+			<mx:SetProperty target="{textinput2}" name="displayAsPassword" value="true"/>
+		</mx:State>
+	</mx:states>	
+	<mx:Panel width="332" height="180" layout="absolute" horizontalCenter="0" verticalCenter="0" title="Login" id="panel1">
+		<mx:Form id="form1" defaultButton="{entrar}" width="311" horizontalCenter="0" verticalCenter="0">
+			<mx:FormItem label="Usuário" required="true" id="formitem1" horizontalAlign="right" labelWidth="100">
+				<mx:TextInput id="textinput1" resizeEffect="Resize"/>
+			</mx:FormItem>
+			<mx:FormItem label="Senha" required="true" id="formitem2" horizontalAlign="right" labelWidth="100">
+				<mx:TextInput id="textinput2" resizeEffect="Resize"/>
+			</mx:FormItem>
+		</mx:Form>
+		<mx:ControlBar>
+			<!--mx:LinkButton label="Registrar usuário" click="currentState='registrar'" id="linkbutton1"/-->
+			<mx:Spacer width="100%" height="100%"/>
+			<mx:Button id="entrar" label="Entrar"/>
+		</mx:ControlBar>
+	</mx:Panel>
+	<mx:transitions>
+		<mx:Transition toState="*" fromState="*">
+			<mx:Parallel>
+				<!--mx:Resize duration="400" targets="{[form1,panel1,linkbutton1,entrar]}" easingFunction="Bounce.easeOut"/-->
+				<mx:Move duration="400" targets="{[form1,panel1]}" easingFunction="Bounce.easeOut"/>
+				<mx:Sequence>
+					<mx:Blur blurYFrom="0" blurYTo="20" target="{confirm}"/>
+					<mx:Blur blurYFrom="20" blurYTo="0" target="{confirm}"/>
+				</mx:Sequence>
+			</mx:Parallel>
+		</mx:Transition>
+	</mx:transitions>
+</mx:Canvas>

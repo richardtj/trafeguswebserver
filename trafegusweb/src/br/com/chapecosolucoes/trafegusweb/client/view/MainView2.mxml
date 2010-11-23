@@ -7,6 +7,9 @@
 	xmlns:view="br.com.chapecosolucoes.trafegusweb.client.view.*"
 	initialize="init()"
 	creationComplete="creationComplete()">
+	<fx:Metadata>
+		[Event(name="closeAppEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent")]
+	</fx:Metadata>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:Fade id="fadeOut" duration="1000" alphaFrom="1.0" alphaTo="0.0"/>
@@ -39,6 +42,7 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.controller.MainController;
+			import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
 			
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
@@ -57,6 +61,9 @@
 				xml = 
 				<XMLList>
 					<menuitem label="Arquivo">
+						<menuitem label="Novo">
+							<menuitem label="Agendamento"/>
+						</menuitem>
 						<menuitem label="Salvar"/>
 						<menuitem label="Sair"/>
 					</menuitem>
@@ -121,9 +128,11 @@
 				 */
 				if(event.detail == Alert.OK)
 				{
-					var urlString:String = "javascript:window.close();";
-					var request:URLRequest = new URLRequest(urlString);
-					navigateToURL(request, "_self");
+					//var urlString:String = "javascript:window.close();";
+					//var request:URLRequest = new URLRequest(urlString);
+					//navigateToURL(request, "_self");
+					var closeEvent:CloseAppEvent = new CloseAppEvent(CloseAppEvent.CLOSE_APP_EVENT);
+					this.dispatchEvent(closeEvent);
 				}
 			}
 		]]>
