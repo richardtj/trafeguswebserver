@@ -18,6 +18,10 @@
 			import br.com.chapecosolucoes.trafegusweb.client.controller.VehiclesController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			private var controller:VehiclesController
+			public function set selectedIndex(index:int):void
+			{
+				this.veiculos.selectedIndex = index;
+			}
 			private function init():void
 			{
 				controller = new VehiclesController();

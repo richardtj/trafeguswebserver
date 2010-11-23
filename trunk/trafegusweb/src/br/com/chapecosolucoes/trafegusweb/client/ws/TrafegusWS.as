@@ -106,6 +106,13 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.showBusyCursor = true;
 			operation.send(params);
 		}
+		public function solicitaDadosGridEmViagem(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaDadosGridEmViagem");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
+		}
 	}
 }
 

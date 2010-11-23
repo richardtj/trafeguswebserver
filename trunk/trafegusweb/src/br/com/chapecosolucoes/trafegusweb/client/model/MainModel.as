@@ -28,6 +28,9 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		public var dadosVeiculoVO:DadosVeiculoVO = new DadosVeiculoVO();
 		
 		public var codEmpresa:int = 1457;
+		
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoViagemVO")]
+		public var veiculosViagemArray:ArrayCollection = new ArrayCollection();
 
 		public function MainModel(enforcer:SingletonEnforcer)
 		{
