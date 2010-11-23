@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.ws
 {
+	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
 	
@@ -60,41 +61,50 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			Alert.show(e.fault.message);
 		}
 
-		public function solicitaAcesso(usuario:String, senha:String):void
+		public function solicitaAcesso(solicitaAcessoHandler:Function,usuario:String, senha:String):void
 		{
 			var operation:Operation = createOperation("solicitaAcesso");
 			operation.addEventListener(ResultEvent.RESULT, solicitaAcessoHandler);
+			operation.showBusyCursor = true;
 			operation.send(usuario, senha);
-			
-			function solicitaAcessoHandler(evt:ResultEvent):void {
-				Alert.show(ObjectUtil.toString(evt.result));
-			}
 		}
 		public function solicitaListaVeiculos(handler:Function):void
 		{
 			var operation:Operation = createOperation("solicitaListaVeiculos");
 			operation.addEventListener(ResultEvent.RESULT, handler);
-			operation.send(1457);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
 		}
 		
 		public function solicitaDadosGrid(handler:Function):void
 		{
 			var operation:Operation = createOperation("solicitaDadosGrid");
 			operation.addEventListener(ResultEvent.RESULT, handler);
-			operation.send(1457);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
 		}
 		
 		public function solicitaHistoricoPosicoes(handler:Function,params:PosicaoVeiculoVO):void{
 			var operation:Operation = createOperation("SolicitaHistoricoPosicoes");
 			operation.addEventListener(ResultEvent.RESULT, handler);
-			operation.send(1457,params.vehiclePlate,0,30,false);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa,params.vehiclePlate,0,30,false);
 		}
 		
 		public function solicitaDadosMotorista(handler:Function,params:String):void
 		{
 			var operation:Operation = createOperation("solicitaDadosMotorista");
 			operation.addEventListener(ResultEvent.RESULT, handler);
-			operation.send(1457,params);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa,params);
+		}
+		
+		public function solicitaDadosVeiculo(handler:Function,params:String):void
+		{
+			var operation:Operation = createOperation("solicitaDadosVeiculo");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(params);
 		}
 	}
 }

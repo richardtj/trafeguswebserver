@@ -37,6 +37,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			this.view.map.posicaoVeiculoVO(MainModel.getInstance().posicaoVeiculoVO);
 			this.view.details.posicaoVeiculoVO(MainModel.getInstance().posicaoVeiculoVO);
+			this.view.details.selectedIndex = event.index;
 		}
 		public function routeReceivedEventHandler(event:VehiclesHistoricEvent):void
 		{
