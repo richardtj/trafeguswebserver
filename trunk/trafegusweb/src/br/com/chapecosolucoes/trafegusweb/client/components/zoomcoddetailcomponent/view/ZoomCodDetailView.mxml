@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx">
+	<fx:Metadata>
+		[Event(name="clickZoom",type="br.com.chapecosolucoes.trafegusweb.client.events.ZoomCodDetailEvent")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.events.ZoomCodDetailEvent;
+			private function click(event:MouseEvent):void{
+				var zoomCodDetailEvent:ZoomCodDetailEvent = new ZoomCodDetailEvent(ZoomCodDetailEvent.CLICK);
+				this.dispatchEvent(zoomCodDetailEvent);
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:HBox borderStyle="solid">
+		<s:TextInput id="cod" editable="false" width="50" borderVisible="false" restrict="0-9"/>
+		<mx:Image source="@Embed(source='assets/Search-16.png')" useHandCursor="true" click="this.click(event)" buttonMode="true"/> 
+	</mx:HBox>
+	<s:TextInput id="detail" width="200" editable="false"/>
+</mx:HBox>

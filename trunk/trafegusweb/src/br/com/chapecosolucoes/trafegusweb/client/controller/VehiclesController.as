@@ -24,7 +24,14 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public var view:VehiclesView;
 		public function veiculosFilterFunction(item:Object):Boolean
 		{
-			return String(item.vehiclePlate).toUpperCase().search(MainModel.getInstance().veiculoSelecionado.toUpperCase()) >= 0;
+			return (String(PosicaoVeiculoVO(item).vehiclePlate).toUpperCase().search(MainModel.getInstance().veiculoSelecionado.toUpperCase()) >= 0) || 
+				   (String(PosicaoVeiculoVO(item).cpfMotoristaPrincipal).toUpperCase().search(MainModel.getInstance().veiculoSelecionado.toUpperCase()) >= 0) ||
+				   (String(PosicaoVeiculoVO(item).embarcador).toUpperCase().search(MainModel.getInstance().veiculoSelecionado.toUpperCase()) >= 0) ||
+				   (String(PosicaoVeiculoVO(item).gpsDescSis).toUpperCase().search(MainModel.getInstance().veiculoSelecionado.toUpperCase()) >= 0) ||
+				   (String(PosicaoVeiculoVO(item).motoristaPrincipal).toUpperCase().search(MainModel.getInstance().veiculoSelecionado.toUpperCase()) >= 0) ||
+				   (String(PosicaoVeiculoVO(item).numeroTerminal).toUpperCase().search(MainModel.getInstance().veiculoSelecionado.toUpperCase()) >= 0) ||
+				   (String(PosicaoVeiculoVO(item).tipoVeiculo).toUpperCase().search(MainModel.getInstance().veiculoSelecionado.toUpperCase()) >= 0) ||
+				   (String(PosicaoVeiculoVO(item).versaoTecnologia).toUpperCase().search(MainModel.getInstance().veiculoSelecionado.toUpperCase()) >= 0);
 		}
 		public function solicitaListaVeiculos():void
 		{
@@ -44,8 +51,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var xml:XML = XML(event.result);
 			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
 			var resultArray:Array = xmlListCollection.toArray();
-			MainModel.getInstance().posVeiculosArray = new ArrayCollection();
-			MainModel.getInstance().posVeiculosArray.filterFunction = veiculosFilterFunction;
+			MainModel.getInstance().posVeiculosArray.removeAll();
 			for each (var obj:Object in resultArray)
 			{
 				var dataPos:PosicaoVeiculoVO = new PosicaoVeiculoVO(obj);

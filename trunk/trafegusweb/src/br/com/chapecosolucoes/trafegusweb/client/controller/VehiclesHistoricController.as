@@ -19,6 +19,12 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public var view:VehiclesHistoricView;
 		
+		public function historicoFilterFunction(item:Object):Boolean
+		{
+			return (String(HistoricoPosicoesVeiculoVO(item).dataEHora).toUpperCase().search(MainModel.getInstance().historicoSelecionado.toUpperCase()) >= 0) ||
+				   (String(HistoricoPosicoesVeiculoVO(item).gpsDescSis).toUpperCase().search(MainModel.getInstance().historicoSelecionado.toUpperCase()) >= 0);
+		}
+		
 		public function solicitaHistoricoPosicoes(value:PosicaoVeiculoVO):void
 		{
 			TrafegusWS.getIntance().solicitaHistoricoPosicoes(this.solicitaHistoricoPosicoesHandler,value);
@@ -28,7 +34,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var xml:XML = XML(event.result);
 			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
 			var resultArray:Array = xmlListCollection.toArray();
-			MainModel.getInstance().historicoPosicoesVeiculosArray = new ArrayCollection();
+			MainModel.getInstance().historicoPosicoesVeiculosArray.removeAll();
 			for each (var obj:Object in resultArray)
 			{
 				var dataPos:HistoricoPosicoesVeiculoVO = new HistoricoPosicoesVeiculoVO(obj);

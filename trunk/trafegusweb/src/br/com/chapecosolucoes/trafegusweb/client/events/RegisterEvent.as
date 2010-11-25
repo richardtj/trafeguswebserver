@@ -6,7 +6,7 @@ package br.com.chapecosolucoes.trafegusweb.client.events
 	{
 		public var userName:String;
 		public var passWord:String;
-		public const static REGISTER_EVENT:String = "registerEvent";
+		public static const REGISTER_EVENT:String = "registerEvent";
 		public function RegisterEvent(type:String,userName:String,passWord:String)
 		{
 			super(type);

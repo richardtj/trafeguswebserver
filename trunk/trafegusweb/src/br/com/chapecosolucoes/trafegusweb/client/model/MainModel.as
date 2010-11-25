@@ -15,11 +15,14 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.vo.DataMsg")]
 		public var dpMensagens:ArrayCollection;
 		public var mapReady:Boolean = false;
-		public var veiculoSelecionado:String;
+		public var veiculoSelecionado:String = "";
+		public var historicoSelecionado:String = "";
+		public var viagemSelecionada:String = "";
+		public var zoomFilter:String = "";
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO")]
-		public var posVeiculosArray:ArrayCollection;
+		public var posVeiculosArray:ArrayCollection = new ArrayCollection();
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.HistoricoPosicoesVeiculoVO")]
-		public var historicoPosicoesVeiculosArray:ArrayCollection;
+		public var historicoPosicoesVeiculosArray:ArrayCollection = new ArrayCollection();
 		
 		public var posicaoVeiculoVO:PosicaoVeiculoVO;
 		
@@ -31,6 +34,8 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoViagemVO")]
 		public var veiculosViagemArray:ArrayCollection = new ArrayCollection();
+		
+		public var veiculosArray:ArrayCollection = new ArrayCollection();
 
 		public function MainModel(enforcer:SingletonEnforcer)
 		{

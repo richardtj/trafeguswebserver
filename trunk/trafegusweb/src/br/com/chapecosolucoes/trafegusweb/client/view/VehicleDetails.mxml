@@ -9,7 +9,8 @@
 				initialize="init()"
 				creationComplete="creationComplete()"
 				close="closeHandler()"
-				title="Dados do Veiculo">
+				title="Dados do Veiculo"
+				titleIcon="@Embed(source='assets/TractorUnitBlack48.png')">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:Dissolve id="dissolve" duration="500"/>

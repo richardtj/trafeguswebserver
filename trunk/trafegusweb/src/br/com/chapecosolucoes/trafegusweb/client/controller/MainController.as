@@ -8,13 +8,18 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MainView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MainView2;
+	import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
 	
 	import com.google.maps.LatLng;
 	
+	import flash.display.DisplayObject;
+	
 	import mx.controls.Alert;
+	import mx.core.FlexGlobals;
 	import mx.events.CloseEvent;
 	import mx.events.MenuEvent;
+	import mx.managers.PopUpManager;
 
 	public class MainController
 	{
@@ -99,6 +104,12 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(event.label == "Sair")
 			{
 				Alert.show("Deseja sair da aplicação","Sair",Alert.OK | Alert.CANCEL,this.view,this.closeApp);
+			}
+			if(event.label == "Agendamento")
+			{
+				var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
+				PopUpManager.addPopUp(monitoringRequest,DisplayObject(FlexGlobals.topLevelApplication));
+				PopUpManager.centerPopUp(monitoringRequest);
 			}
 		}
 	}
