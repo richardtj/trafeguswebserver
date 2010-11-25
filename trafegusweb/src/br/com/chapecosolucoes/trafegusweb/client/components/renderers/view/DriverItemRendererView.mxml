@@ -4,22 +4,26 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 verticalScrollPolicy="off" horizontalScrollPolicy="off"
 		 initialize="init()"
+		 creationComplete="this.creationComplete()"
 		 paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0">
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.renderers.controller.DriverItemRendererController;
 			
-			import mx.controls.Alert;
 			private var controller:DriverItemRendererController;
 			private function init():void
 			{
 				this.controller = new DriverItemRendererController();
 				this.controller.view = this;
 			}
+			private function creationComplete():void
+			{
+				this.linkButton.setStyle("textDecoration", "underline");
+			}
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:LinkButton label="{data.motoristaPrincipal}" click="this.controller.popUp(data.cpfMotoristaPrincipal)"/>
+	<mx:LinkButton id="linkButton" label="{data.motoristaPrincipal}" click="this.controller.popUp(data.cpfMotoristaPrincipal)"/>
 </mx:VBox>

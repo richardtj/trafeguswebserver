@@ -4,6 +4,7 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 verticalScrollPolicy="off" horizontalScrollPolicy="off"
 		 initialize="init()"
+		 creationComplete="creationComplete()"
 		 paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0">
 	<fx:Script>
 		<![CDATA[
@@ -16,10 +17,14 @@
 				this.controller = new VehicleItemRendererController();
 				this.controller.view = this;
 			}
+			private function creationComplete():void
+			{
+				this.linkButton.setStyle("textDecoration", "underline");
+			}
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:LinkButton label="{data.vehiclePlate}" click="this.controller.popUp(data.vehiclePlate)"/>
+	<mx:LinkButton id="linkButton" label="{data.vehiclePlate}" click="this.controller.popUp(data.vehiclePlate)"/>
 </mx:VBox>

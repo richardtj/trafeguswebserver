@@ -14,6 +14,24 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 		}
 		public var view:TravelView;
+		
+		public function viagemFilterFunction(item:Object):Boolean
+		{
+			return (String(VeiculoViagemVO(item).cpfMotoristaPrincipal).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
+				(String(VeiculoViagemVO(item).dataFim).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
+				(String(VeiculoViagemVO(item).dataInicio).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
+				(String(VeiculoViagemVO(item).destino).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
+				(String(VeiculoViagemVO(item).gpsDescSis).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
+				(String(VeiculoViagemVO(item).motoristaPrincipal).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
+				(String(VeiculoViagemVO(item).origem).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
+				(String(VeiculoViagemVO(item).numeroTerminal).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
+				(String(VeiculoViagemVO(item).previsaoFim).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
+				(String(VeiculoViagemVO(item).previsaoInicio).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
+				(String(VeiculoViagemVO(item).proximoDestino).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
+				(String(VeiculoViagemVO(item).tipoVeiculo).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
+				(String(VeiculoViagemVO(item).vehiclePlate).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
+				(String(VeiculoViagemVO(item).versaoTecnologia).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0);
+		}
 		public function solicitaDadosGridEmViagem():void
 		{
 			TrafegusWS.getIntance().solicitaDadosGridEmViagem(solicitaDadosGridEmViagemResultHandler);
