@@ -47,13 +47,13 @@
 		</mx:FormItem>
 		<mx:HRule width="60%"/>
 		<mx:FormItem label="Nome">
-			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.nome}" borderVisible="false" editable="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.motoristaPrincipal}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="RG">
 			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.rg}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="CPF">
-			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.cpf}" borderVisible="false" editable="false" width="200"/>
+			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.cpfMotoristaPrincipal}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="Sexo">
 			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.sexo}" borderVisible="false" editable="false" width="200"/>

@@ -113,6 +113,27 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.showBusyCursor = true;
 			operation.send(MainModel.getInstance().codEmpresa);
 		}
+		public function solicitaListaMotoristas(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaListaMotoristas");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
+		}
+		public function solicitaListaRotas(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaListaRotas");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
+		}
+		public function solicitaListaEmbarcadores(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaListaEmbarcadores");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
+		}
 	}
 }
 

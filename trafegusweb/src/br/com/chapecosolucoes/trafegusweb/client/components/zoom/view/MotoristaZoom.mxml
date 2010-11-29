@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				layout="vertical"
+				width="720" height="420"
+				showCloseButton="true"
+				creationCompleteEffect="{dissolve,iris}"
+				removedEffect="{dissolve,iris}"
+				initialize="init()"
+				creationComplete="creationComplete()"
+				close="this.controller.closeHandler()"
+				title="Motoristas"
+				titleIcon="@Embed(source='assets/Motorista.png')"
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
+	<fx:Metadata>
+		[Event(name="selectedDriverEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent")]		
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.MotoristaZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			
+			import mx.managers.PopUpManager;
+			private var controller:MotoristaZoomController;
+			private function init():void
+			{
+				this.controller = new MotoristaZoomController();
+				this.controller.view = this;
+				MainModel.getInstance().motoristasArray.filterFunction = this.controller.motoristaFilterFunction;
+			}
+			private function creationComplete():void
+			{
+				this.controller.solicitaListaMotoristas();
+			}
+		]]>
+	</fx:Script>
+	<searchInput:SearchInputFX 
+		id="textInputFiltro"
+		width="100%" 
+		keyUp="MainModel.getInstance().motoristasArray.refresh()"
+		text="{MainModel.getInstance().zoomFilter}"/>
+	<mx:DataGrid 
+		id="grid" 
+		width="100%" height="100%" 
+		doubleClickEnabled="true"
+		doubleClick="this.controller.motoristaSelecionado(event)"
+		dataProvider="{MainModel.getInstance().motoristasArray}"
+		toolTip="Clique sobre o nome do motorista para exibir os detalhes.">
+		<mx:columns>
+			<mx:DataGridColumn headerText="Código" dataField="codigo"/>
+			<mx:DataGridColumn headerText="Cadastramento" dataField="dataCadastramento"/>
+			<mx:DataGridColumn 
+				headerText="Nome" 
+				dataField="motoristaPrincipal"
+				itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DriverItemRendererView"/>
+			<mx:DataGridColumn headerText="RG" dataField="rg"/>
+			<mx:DataGridColumn headerText="CPF" dataField="cpfMotoristaPrincipal"/>
+			<mx:DataGridColumn headerText="Sexo" dataField="sexo"/>
+			<mx:DataGridColumn headerText="Cod. CNH" dataField="codigoCNH"/>
+			<mx:DataGridColumn headerText="Num. CNH" dataField="numeroCNH"/>
+			<mx:DataGridColumn headerText="Cat. CNH" dataField="categoriaCNH"/>
+			<mx:DataGridColumn headerText="Val. CNH" dataField="validadeCNH"/>
+			<mx:DataGridColumn headerText="Treinado" dataField="treinado"/>
+			<mx:DataGridColumn headerText="Ult. Treinamento" dataField="ultimoTreinamento"/>
+			<mx:DataGridColumn headerText="Val. Pesquisa" dataField="validadePesquisa"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Ok" click="this.controller.motoristaSelecionado(event)"/>
+		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
+	</mx:ControlBar>
+</mx:TitleWindow>

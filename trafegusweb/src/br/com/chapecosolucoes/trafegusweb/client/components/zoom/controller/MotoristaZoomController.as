@@ -1,0 +1,74 @@
+package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
+{
+	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.MotoristaZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosMotoristaVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.MotoristaVO;
+	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
+	
+	import flash.events.MouseEvent;
+	
+	import mx.collections.XMLListCollection;
+	import mx.controls.Alert;
+	import mx.managers.PopUpManager;
+	import mx.rpc.events.ResultEvent;
+
+	public class MotoristaZoomController
+	{
+		public function MotoristaZoomController()
+		{
+		}
+		public var view:MotoristaZoom;
+		public function motoristaSelecionado(event:MouseEvent):void
+		{
+			if (this.view.grid.selectedItem != null)
+			{
+				var motoristaEvent:SelectedDriverEvent = new SelectedDriverEvent(SelectedDriverEvent.SELECTED_DRIVER_EVENT,MotoristaVO(this.view.grid.selectedItem));
+				this.view.dispatchEvent(motoristaEvent);
+				this.closeHandler();
+			}
+			else
+			{
+				Alert.show("Nenhum motorista selecionado.");
+			}
+		}
+		public function motoristaFilterFunction(item:Object):Boolean
+		{
+			return (String(DadosMotoristaVO(item).codigo).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(DadosMotoristaVO(item).categoriaCNH).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(DadosMotoristaVO(item).codigoCNH).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(DadosMotoristaVO(item).cpfMotoristaPrincipal).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(DadosMotoristaVO(item).dataCadastro).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(DadosMotoristaVO(item).motoristaPrincipal).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(DadosMotoristaVO(item).numeroCNH).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(DadosMotoristaVO(item).rg).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(DadosMotoristaVO(item).sexo).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(DadosMotoristaVO(item).treinado).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(DadosMotoristaVO(item).ultimoTreinamento).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(DadosMotoristaVO(item).validadeCNH).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(DadosMotoristaVO(item).validadePesquisa).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0);
+		}
+		public function solicitaListaMotoristas():void
+		{
+			TrafegusWS.getIntance().solicitaListaMotoristas(solicitaListaMotoristasResultHandler);
+		}
+		private function solicitaListaMotoristasResultHandler(event:ResultEvent):void
+		{
+			var xml:XML = XML(event.result);
+			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
+			var resultArray:Array = xmlListCollection.toArray();
+			MainModel.getInstance().motoristasArray.removeAll();
+			for each (var obj:Object in resultArray)
+			{
+				var motorista:DadosMotoristaVO = new DadosMotoristaVO();
+				motorista.setDadosMotoristaVO(obj);
+				MainModel.getInstance().motoristasArray.addItem(motorista);
+			}
+		}
+		public function closeHandler():void
+		{
+			PopUpManager.removePopUp(this.view);
+		}
+	}
+}
