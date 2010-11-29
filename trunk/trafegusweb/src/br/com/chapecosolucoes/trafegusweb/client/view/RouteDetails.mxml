@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				layout="vertical"
+				showCloseButton="true"
+				creationCompleteEffect="{dissolve,iris}"
+				removedEffect="{dissolve,iris}"
+				initialize="init()"
+				close="closeHandler()"
+				title="Dados da Rota"
+				titleIcon="@Embed(source='assets/Map3.png')">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.controller.RouteDetailsController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
+			
+			import mx.managers.PopUpManager;
+			private var controller:RouteDetailsController;
+			private function closeHandler():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			private function init():void
+			{
+				this.controller = new RouteDetailsController();
+				this.controller.view = this;
+			}
+		]]>
+	</fx:Script>
+	<mx:Form width="100%" height="100%">
+		<mx:FormItem label="Código">
+			<s:TextInput text="{MainModel.getInstance().dadosRotaVO.codigo}" borderVisible="false" editable="false" width="200"/>
+		</mx:FormItem>
+		<mx:FormItem label="Descrição">
+			<s:TextInput text="{MainModel.getInstance().dadosRotaVO.descricao}" borderVisible="false" editable="false" width="200"/>
+		</mx:FormItem>
+		<mx:FormItem label="Distancia">
+			<s:TextInput text="{MainModel.getInstance().dadosRotaVO.distancia}" borderVisible="false" editable="false" width="200"/>
+		</mx:FormItem>
+		<mx:FormItem label="Cadastro">
+			<s:TextInput text="{MainModel.getInstance().dadosRotaVO.dataCadastro}" borderVisible="false" editable="false" width="200"/>
+		</mx:FormItem>
+	</mx:Form>
+</mx:TitleWindow>

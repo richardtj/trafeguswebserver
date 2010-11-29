@@ -24,10 +24,6 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		{
 			TrafegusWS.getIntance().solicitaListaVeiculos(solicitaListaVeiculosResultHandler);
 		}
-		public function showVehiclesDetails(event:ListEvent):void
-		{
-			
-		}
 		private function solicitaListaVeiculosResultHandler(event:ResultEvent):void
 		{
 			var xml:XML = XML(event.result);
@@ -48,9 +44,16 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function veiculoSelecionado(event:MouseEvent):void
 		{
-			var selectedVehicleEvent:SelectedVehicleEvent = new SelectedVehicleEvent(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,VeiculoVO(this.view.grid.selectedItem));
-			this.view.dispatchEvent(selectedVehicleEvent);
-			this.closeHandler();
+			if(this.view.grid.selectedItem != null)
+			{
+				var selectedVehicleEvent:SelectedVehicleEvent = new SelectedVehicleEvent(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,VeiculoVO(this.view.grid.selectedItem));
+				this.view.dispatchEvent(selectedVehicleEvent);
+				this.closeHandler();
+			}
+			else
+			{
+				Alert.show("Nenhum veiculo selecionado.");
+			}
 		}
 		public function closeHandler():void
 		{

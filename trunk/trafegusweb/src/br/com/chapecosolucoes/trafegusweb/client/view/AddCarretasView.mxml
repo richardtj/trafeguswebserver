@@ -8,9 +8,9 @@
 				removedEffect="{dissolve,iris}"
 				initialize="init()"
 				creationComplete="creationComplete()"
-				close="closeHandler()"
+				close="this.controller.closeHandler()"
 				title="Adicionar Carretas"
-				titleIcon="@Embed(source='assets/cam(Vazio).png')">
+				titleIcon="@Embed(source='assets/cam(Vazio).png')" xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:Dissolve id="dissolve" duration="500"/>
@@ -18,36 +18,86 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.controller.AddCarretasController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
-			
 			import mx.managers.PopUpManager;
+			private var controller:AddCarretasController;
 			private function init():void{
-				
+				this.controller = new AddCarretasController();
+				this.controller.view = this;
 			}
 			private function creationComplete():void{
-				
-			}
-			private function closeHandler():void
-			{
-				PopUpManager.removePopUp(this);
+
 			}
 		]]>
 	</fx:Script>
-	<mx:DataGrid 
-		id="grid" 
-		width="100%" height="100%" 
-		dataProvider="{MainModel.getInstance().veiculosArray}"
-		toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
-		<mx:columns>
-			<mx:DataGridColumn headerText="Sequencia" dataField="seq"/>
-			<mx:DataGridColumn headerText="Código" dataField="cod"/>
-			<mx:DataGridColumn headerText="Placa" 
-							   dataField="vehiclePlate" 
-							   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
-		</mx:columns>
-	</mx:DataGrid>
+	<mx:HBox width="100%" height="100%">
+		<mx:VBox width="100%" height="100%">
+			<searchInput:SearchInputFX width="100%"/>
+			<s:Label text="Carretas Disponiveis"/>
+			<mx:DataGrid 
+				id="grid" 
+				width="100%" height="100%" 
+				allowMultipleSelection="true"
+				allowDragSelection="true"
+				dragEnabled="true"
+				dropEnabled="true"
+				dragMoveEnabled="true"
+				dataProvider="{MainModel.getInstance().veiculosArray}"
+				toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Sequencia" dataField="seq"/>
+					<mx:DataGridColumn headerText="Código" dataField="cod"/>
+					<mx:DataGridColumn headerText="Placa" 
+									   dataField="vehiclePlate" 
+									   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
+				</mx:columns>
+			</mx:DataGrid>
+		</mx:VBox>
+		<mx:VBox 
+			width="100" 
+			height="100%"
+			horizontalAlign="center"
+			verticalAlign="middle">
+			<mx:Image 
+				id="leftToRight"
+				toolTip="Agrupar contas selecionadas"
+				enabled="{MainModel.getInstance().leftToRightEnabled}" 
+				source="@Embed(source='assets/go-next.png')" 
+				buttonMode="true" 
+				click="this.controller.leftToRightEventHandler()"/>
+			<mx:Image 
+				id="rightToLeft" 
+				toolTip="Desagrupar contas selecionadas"
+				source="@Embed(source='assets/go-prev.png')" 
+				buttonMode="true" 
+				click="this.controller.rightToLeftEventHandler()"/>
+		</mx:VBox>
+		<mx:VBox width="100%" height="100%">
+			<s:Label text="Carretas Selecionadas"/>
+			<mx:DataGrid 
+				id="grid1" 
+				width="100%" height="100%" 
+				allowMultipleSelection="true"
+				allowDragSelection="true"
+				dragMoveEnabled="true"
+				dragEnabled="true"
+				dropEnabled="true"
+				dataProvider="{MainModel.getInstance().veiculosSelecionadosArray}"
+				toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
+				<mx:columns>
+					<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+					<mx:DataGridColumn headerText="Sequencia" dataField="seq"/>
+					<mx:DataGridColumn headerText="Código" dataField="cod"/>
+					<mx:DataGridColumn headerText="Placa" 
+									   dataField="vehiclePlate" 
+									   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
+				</mx:columns>
+			</mx:DataGrid>
+		</mx:VBox>
+	</mx:HBox>
 	<mx:ControlBar horizontalAlign="right">
-		<s:Button label="Adicionar"/>
-		<s:Button label="Excluir"/>
+		<s:Button label="Ok"/>
+		<s:Button label="Cancelar" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </mx:TitleWindow>

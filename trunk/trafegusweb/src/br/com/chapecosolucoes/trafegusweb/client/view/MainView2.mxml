@@ -43,6 +43,7 @@
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.controller.MainController;
 			import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
@@ -88,7 +89,10 @@
 		x="0" y="0"
 		itemClick="this.controller.itemClickedHandler(event)"/>
 	<resize:ResizableWindow 
-		id="veiculos" x="0" y="20" width="20%" height="100%" 
+		id="veiculos" 
+		x="{MainModel.getInstance().veiculosX}" 
+		y="{MainModel.getInstance().veiculosY}" 
+		width="20%" height="100%" 
 		minWidth="200" minHeight="200"
 		movable="true" resizable="true" close="this.controller.closeEventHandler(event)"
 		title="Veiculos" status="" showCloseButton="true" hideEffect="{fadeOut}" showEffect="{fadeIn}"

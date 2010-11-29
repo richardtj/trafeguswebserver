@@ -2,7 +2,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 {
 
 	[Bindable]
-	public class DadosMotoristaVO
+	public class DadosMotoristaVO extends MotoristaVO
 	{
 		public function DadosMotoristaVO()
 		{
@@ -11,9 +11,9 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		{
 			this.codigo = obj.oras_codigo.toString();
 			this.dataCadastro = obj.oras_data_cadastro.toString();
-			this.nome = obj.pess_nome.toString();
+			this.motoristaPrincipal = obj.pess_nome.toString();
 			this.rg = obj.pfis_rg.toString();
-			this.cpf = obj.pfis_cpf.toString();
+			this.cpfMotoristaPrincipal = obj.pfis_cpf.toString();
 			this.sexo = obj.pfis_sexo.toString();
 			this.codigoCNH = obj.moto_epmo_codigo.toString();
 			this.numeroCNH = obj.moto_numero_cnh.toString();
@@ -23,11 +23,9 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.ultimoTreinamento = obj.moto_ultimo_treinamento.toString();
 			this.validadePesquisa = obj.moto_validade_pesquisa.toString();
 		}
-		public var codigo:String;
 		public var dataCadastro:String;
-		public var nome:String;
 		public var rg:String;
-		public var cpf:String;
+		public var cpfMotoristaPrincipal:String;
 		public var sexo:String;
 		public var codigoCNH:String;
 		public var numeroCNH:String;

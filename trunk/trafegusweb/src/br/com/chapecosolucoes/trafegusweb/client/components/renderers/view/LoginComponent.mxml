@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas 
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	cornerRadius="5"
     currentState="Default">
     <mx:Metadata>
     	//indica que esta classe ira despachar um loginEvent
@@ -98,7 +99,7 @@
 			<mx:SetProperty target="{textinput2}" name="displayAsPassword" value="true"/>
 		</mx:State>
 	</mx:states>	
-	<mx:Panel width="332" height="180" layout="absolute" horizontalCenter="0" verticalCenter="0" title="Login" id="panel1">
+	<mx:Panel cornerRadius="5" width="332" height="180" layout="absolute" horizontalCenter="0" verticalCenter="0" title="Login" titleIcon="@Embed(source='assets/chave_amarela.png')" id="panel1">
 		<mx:Form id="form1" defaultButton="{entrar}" width="311" horizontalCenter="0" verticalCenter="0">
 			<mx:FormItem label="Usuário" required="true" id="formitem1" horizontalAlign="right" labelWidth="100">
 				<mx:TextInput id="textinput1" resizeEffect="Resize"/>

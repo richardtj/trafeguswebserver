@@ -3,6 +3,7 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosMotoristaVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosVeiculoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
 	
 	import mx.collections.ArrayCollection;
 
@@ -30,12 +31,28 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		
 		public var dadosVeiculoVO:DadosVeiculoVO = new DadosVeiculoVO();
 		
+		public var dadosRotaVO:RouteVO = new RouteVO();
+		
 		public var codEmpresa:int = 1457;
+		
+		public var veiculosX:int = 0;
+		
+		public var veiculosY:int = 20;
+		
+		public var leftToRightEnabled:Boolean = true;
 		
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoViagemVO")]
 		public var veiculosViagemArray:ArrayCollection = new ArrayCollection();
-		
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO")]
 		public var veiculosArray:ArrayCollection = new ArrayCollection();
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.DadosMotoristaVO")]
+		public var motoristasArray:ArrayCollection = new ArrayCollection();
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO")]
+		public var rotasArray:ArrayCollection = new ArrayCollection();
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO")]
+		public var embarcadoresArray:ArrayCollection = new ArrayCollection();
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO")]
+		public var veiculosSelecionadosArray:ArrayCollection = new ArrayCollection();
 
 		public function MainModel(enforcer:SingletonEnforcer)
 		{
