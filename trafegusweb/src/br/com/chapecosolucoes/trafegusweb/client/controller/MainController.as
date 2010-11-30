@@ -34,8 +34,8 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function vehicleSelectedEventHandler(event:VehiclesEvent):void
 		{
-			this.view.map.posicaoVeiculoVO(MainModel.getInstance().posicaoVeiculoVO);
-			this.view.details.posicaoVeiculoVO(MainModel.getInstance().posicaoVeiculoVO);
+			this.view.map.posicaoVeiculoVO();
+			this.view.details.posicaoVeiculoVO();
 			if(event.enum == VehicleEnum.LIST)
 			{
 				this.view.details.selectedIndex = event.index;

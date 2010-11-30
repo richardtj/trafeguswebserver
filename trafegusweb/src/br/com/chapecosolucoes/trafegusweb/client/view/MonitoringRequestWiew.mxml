@@ -51,7 +51,7 @@
 				</mx:FormItem>
 				<mx:HRule width="60%"/>
 				<mx:FormItem label="Transportador" required="true">
-					<view:ZoomCodDetailView id="transportadorZoom" clickZoom="this.controller.veiculoZoomDispatcher()"/>
+					<view:ZoomCodDetailView id="transportadorZoom" clickZoom="this.controller.transportadorZoomDispatcher()"/>
 				</mx:FormItem>
 				<mx:FormItem label="Embarcador">
 					<view:ZoomCodDetailView id="embarcadorZoom" clickZoom="this.controller.embarcadoresZoomDispatcher()"/>
@@ -84,18 +84,22 @@
 				<mx:FormItem label="Prev. fim" required="true">
 					<mx:DateField/>
 				</mx:FormItem>
-				<mx:FormItem label="Entragas/Paradas">
+				<!--mx:FormItem label="Entragas/Paradas">
 					<mx:Image source="@Embed(source='assets/plus-icon.png')" buttonMode="true" click="this.controller.addParadas()"/>
-				</mx:FormItem>
+				</mx:FormItem-->
 			</mx:Form>
 		</s:NavigatorContent>
 		<s:NavigatorContent id="paradasView" label="Entregas/Paradas">
+			<s:layout>
+				<s:VerticalLayout/>
+			</s:layout>
 			<mx:DataGrid 
 				id="grid" 
 				width="100%" height="100%" 
 				dataProvider="{MainModel.getInstance().veiculosArray}"
 				toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
 				<mx:columns>
+					<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
 					<mx:DataGridColumn headerText="Sequencia" dataField="seq"/>
 					<mx:DataGridColumn headerText="Cod. Tipo Parada" dataField="cod"/>
 					<mx:DataGridColumn headerText="Tipo Parada" dataField="tipoParada"/>
@@ -104,6 +108,10 @@
 					<mx:DataGridColumn headerText="Raio" dataField="raio"/>
 				</mx:columns>
 			</mx:DataGrid>
+			<mx:ControlBar width="100%" horizontalAlign="right">
+				<s:Button label="Adicionar"/>
+				<s:Button label="Excluir"/>
+			</mx:ControlBar>
 		</s:NavigatorContent>
 		<s:NavigatorContent id="dadosAdicionaisView" label="Dados Adicionais">
 			

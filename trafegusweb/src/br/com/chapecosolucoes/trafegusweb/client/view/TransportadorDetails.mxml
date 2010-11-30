@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				layout="vertical"
+				showCloseButton="true"
+				creationCompleteEffect="{dissolve,iris}"
+				removedEffect="{dissolve,iris}"
+				initialize="init()"
+				creationComplete="creationComplete()"
+				close="closeHandler()"
+				title="Dados do Transportador"
+				titleIcon="@Embed(source='assets/transportador.png')">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.controller.TransportadorDetailsController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO;
+			
+			import mx.managers.PopUpManager;
+			private var controller:br.com.chapecosolucoes.trafegusweb.client.controller.TransportadorDetailsController;
+			public var codigo:String;
+			private function closeHandler():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			private function init():void
+			{
+				this.controller = new TransportadorDetailsController();
+				this.controller.view = this;
+			}
+			private function creationComplete():void
+			{
+				this.controller.solicitaDadosTransportador(codigo);
+			}
+		]]>
+	</fx:Script>
+	<mx:Form width="100%" height="100%">
+		<mx:FormItem label="Código">
+			<s:TextInput text="{MainModel.getInstance().dadosTransportadorVO.codigoTransportador}" borderVisible="false" editable="false" width="200"/>
+		</mx:FormItem>
+		<mx:FormItem label="Nome">
+			<s:TextInput text="{MainModel.getInstance().dadosTransportadorVO.nome}" borderVisible="false" editable="false" width="200"/>
+		</mx:FormItem>
+		<mx:FormItem label="Razão Social">
+			<s:TextInput text="{MainModel.getInstance().dadosTransportadorVO.razaoSocial}" borderVisible="false" editable="false" width="200"/>
+		</mx:FormItem>
+		<mx:FormItem label="CNPJ">
+			<s:TextInput text="{MainModel.getInstance().dadosTransportadorVO.cnpj}" borderVisible="false" editable="false" width="200"/>
+		</mx:FormItem>
+		<mx:FormItem label="IE">
+			<s:TextInput text="{MainModel.getInstance().dadosTransportadorVO.ie}" borderVisible="false" editable="false" width="200"/>
+		</mx:FormItem>
+		<mx:FormItem label="Site">
+			<s:TextInput text="{MainModel.getInstance().dadosTransportadorVO.site}" borderVisible="false" editable="false" width="200"/>
+		</mx:FormItem>
+	</mx:Form>
+</mx:TitleWindow>

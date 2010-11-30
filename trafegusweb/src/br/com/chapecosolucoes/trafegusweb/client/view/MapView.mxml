@@ -68,9 +68,8 @@
 					map.setCenter(new LatLng(-15.779413016690475, -47.929744720458984), 4);
 				}
 			}
-			public function posicaoVeiculoVO(value:PosicaoVeiculoVO):void
+			public function posicaoVeiculoVO():void
 			{
-				//MainModel.getInstance().posicaoVeiculoVO = value;
 				map.setCenter(MainModel.getInstance().posicaoVeiculoVO.latLong, 15);
 			}
 			[Embed(source="assets/caminhao_verde.png")]

@@ -11,5 +11,6 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public var cod:String;
 		public var vehiclePlate:String;
 		public var desc:String;
+		public var selected:Boolean=false;
 	}
 }

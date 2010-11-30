@@ -41,7 +41,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			MainModel.getInstance().embarcadoresArray.removeAll();
 			for each (var obj:Object in resultArray)
 			{
-				var embarcador:EmbarcadorVO = new EmbarcadorVO(obj);
+				var embarcador:EmbarcadorVO = new EmbarcadorVO();
+				embarcador.setEmbarcadorVO(obj);
 				MainModel.getInstance().embarcadoresArray.addItem(embarcador);
 			}
 		}
