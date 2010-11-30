@@ -10,7 +10,7 @@
 				creationComplete="creationComplete()"
 				close="this.controller.closeHandler()"
 				title="Adicionar Carretas"
-				titleIcon="@Embed(source='assets/cam(Vazio).png')" xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+				titleIcon="@Embed(source='assets/cam(Vazio).png')" xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:controller="br.com.chapecosolucoes.trafegusweb.client.components.renderers.controller.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:Dissolve id="dissolve" duration="500"/>
@@ -35,9 +35,9 @@
 		<mx:VBox width="100%" height="100%">
 			<searchInput:SearchInputFX width="100%"/>
 			<s:Label text="Carretas Disponiveis"/>
-			<mx:DataGrid 
+			<view:CheckBoxDataGrid
 				id="grid" 
-				width="100%" height="100%" 
+				width="300" height="100%" 
 				allowMultipleSelection="true"
 				allowDragSelection="true"
 				dragEnabled="true"
@@ -45,14 +45,20 @@
 				dragMoveEnabled="true"
 				dataProvider="{MainModel.getInstance().veiculosArray}"
 				toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
-				<mx:columns>
+				<view:columns>
+					<mx:DataGridColumn sortable="false" 
+									   width="20"
+									   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+					<mx:DataGridColumn dataField="selected" headerText=" " width="20" 
+									   sortable="false" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.CheckBoxRenderer" 
+									   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.CheckBoxHeaderRenderer" /> 
 					<mx:DataGridColumn headerText="Sequencia" dataField="seq"/>
 					<mx:DataGridColumn headerText="Código" dataField="cod"/>
 					<mx:DataGridColumn headerText="Placa" 
 									   dataField="vehiclePlate" 
 									   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
-				</mx:columns>
-			</mx:DataGrid>
+				</view:columns>
+			</view:CheckBoxDataGrid>
 		</mx:VBox>
 		<mx:VBox 
 			width="100" 
@@ -75,25 +81,28 @@
 		</mx:VBox>
 		<mx:VBox width="100%" height="100%">
 			<s:Label text="Carretas Selecionadas"/>
-			<mx:DataGrid 
+			<view:CheckBoxDataGrid 
 				id="grid1" 
-				width="100%" height="100%" 
+				width="300" height="100%" 
 				allowMultipleSelection="true"
 				allowDragSelection="true"
-				dragMoveEnabled="true"
 				dragEnabled="true"
 				dropEnabled="true"
+				dragMoveEnabled="true"
 				dataProvider="{MainModel.getInstance().veiculosSelecionadosArray}"
 				toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
-				<mx:columns>
+				<view:columns>
 					<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+					<mx:DataGridColumn dataField="selected" headerText=" " width="20" 
+									   sortable="false" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.CheckBoxRenderer" 
+									   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.CheckBoxHeaderRenderer" /> 
 					<mx:DataGridColumn headerText="Sequencia" dataField="seq"/>
 					<mx:DataGridColumn headerText="Código" dataField="cod"/>
 					<mx:DataGridColumn headerText="Placa" 
 									   dataField="vehiclePlate" 
 									   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
-				</mx:columns>
-			</mx:DataGrid>
+				</view:columns>
+			</view:CheckBoxDataGrid>
 		</mx:VBox>
 	</mx:HBox>
 	<mx:ControlBar horizontalAlign="right">

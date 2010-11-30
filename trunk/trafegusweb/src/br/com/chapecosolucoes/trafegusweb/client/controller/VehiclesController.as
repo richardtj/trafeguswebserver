@@ -43,8 +43,11 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function veiculoSelecionadoHandler(event:MouseEvent):void
 		{
-			MainModel.getInstance().posicaoVeiculoVO = PosicaoVeiculoVO(event.currentTarget.selectedItem);
-			this.view.dispatchEvent(new VehiclesEvent(VehiclesEvent.VEHICLE_SELECTED_EVENT,event.currentTarget.selectedIndex,VehicleEnum.LIST));
+			if(event.currentTarget.selectedItem != null)
+			{
+				MainModel.getInstance().posicaoVeiculoVO = PosicaoVeiculoVO(event.currentTarget.selectedItem);
+				this.view.dispatchEvent(new VehiclesEvent(VehiclesEvent.VEHICLE_SELECTED_EVENT,event.currentTarget.selectedIndex,VehicleEnum.LIST));
+			}
 		}
 		private function veiculosRecebidosHandler(event:ResultEvent):void
 		{

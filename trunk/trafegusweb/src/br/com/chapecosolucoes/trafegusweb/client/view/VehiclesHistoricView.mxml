@@ -45,6 +45,7 @@
 					 width="100%"
 					 height="100%">
 			<mx:columns>
+				<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
 				<mx:DataGridColumn headerText="Data e hora"
 								   dataField="dataEHora"/>
 				<mx:DataGridColumn headerText="Posição"

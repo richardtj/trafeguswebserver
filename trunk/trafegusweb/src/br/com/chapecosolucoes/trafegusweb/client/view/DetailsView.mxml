@@ -36,9 +36,9 @@
 				this.controller.view = this;
 			}
 
-			public function posicaoVeiculoVO(value:PosicaoVeiculoVO):void
+			public function posicaoVeiculoVO():void
 			{
-				this.vehicleHistoricoView.posicaoVeiculoVO(value);
+				this.vehicleHistoricoView.posicaoVeiculoVO(MainModel.getInstance().posicaoVeiculoVO);
 			}
 		]]>
 	</fx:Script>

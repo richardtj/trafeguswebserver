@@ -2,12 +2,15 @@
 <mx:Canvas 
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	cornerRadius="5"
+	creationCompleteEffect="{dissolve,iris}"
     currentState="Default">
     <mx:Metadata>
     	//indica que esta classe ira despachar um loginEvent
 		[Event(name="loginEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.LoginEvent")]    	
 		[Event(name="registerEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.RegisterEvent")]    	
     </mx:Metadata>
+	<mx:Dissolve id="dissolve" duration="700"/>
+	<mx:Iris id="iris" duration="700"/>
 	<mx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.events.LoginEvent;

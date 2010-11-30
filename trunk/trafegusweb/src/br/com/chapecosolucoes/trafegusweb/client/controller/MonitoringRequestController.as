@@ -3,12 +3,14 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.EmbarcadoresZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.MotoristaZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.RotaZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.TransportadoresZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.VeiculoZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
 	import br.com.chapecosolucoes.trafegusweb.client.events.EmbarcadorSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedRouteEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddCarretasView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddParadasView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
@@ -89,6 +91,18 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public function locaisZoomDispatcher(enum:LocaisEnum):void
 		{
 			
+		}
+		public function transportadorZoomDispatcher():void
+		{
+			var transportadoresZoom:TransportadoresZoom = new TransportadoresZoom();
+			transportadoresZoom.addEventListener(TransportadorSelecionadoEvent.TRANSPORTADOR_SELECIONADO_EVENT,transportadorSelecionadoEventHandler);
+			PopUpManager.addPopUp(transportadoresZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.centerPopUp(transportadoresZoom);
+		}
+		private function transportadorSelecionadoEventHandler(event:TransportadorSelecionadoEvent):void
+		{
+			this.view.transportadorZoom.cod.text = event.transportador.codigo;
+			this.view.transportadorZoom.detail.text = event.transportador.nome;
 		}
 	}
 }

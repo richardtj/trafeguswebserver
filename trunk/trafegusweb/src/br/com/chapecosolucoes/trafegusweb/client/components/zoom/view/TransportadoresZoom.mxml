@@ -10,12 +10,12 @@
 				initialize="init()"
 				creationComplete="creationComplete()"
 				close="this.controller.closeHandler()"
-				title="Embarcadores"
-				titleIcon="@Embed(source='assets/Fisica.png')"
+				title="Transportadores"
+				titleIcon="@Embed(source='assets/transportador.png')"
 				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
-		[Event(name="embarcadorSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.EmbarcadorSelecionadoEvent")]		
+		[Event(name="transportadorSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent")]		
 	</fx:Metadata>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -24,47 +24,48 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.EmbarcadoresZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.TransportadorZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
 			import mx.managers.PopUpManager;
-			private var controller:br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.EmbarcadoresZoomController;
+			private var controller:TransportadorZoomController;
 			private function init():void
 			{
-				this.controller = new EmbarcadoresZoomController();
+				this.controller = new TransportadorZoomController();
 				this.controller.view = this;
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaListaEmbarcadores();
-				MainModel.getInstance().embarcadoresArray.filterFunction = this.controller.embarcadoresFilterFunction;
+				this.controller.solicitaListaTransportadores();
+				MainModel.getInstance().transportadoresArray.filterFunction = this.controller.transportadoresFilterFunction;
 			}
 		]]>
 	</fx:Script>
 	<searchInput:SearchInputFX 
 		id="textInputFiltro"
 		width="100%" 
-		keyUp="MainModel.getInstance().embarcadoresArray.refresh()"
+		keyUp="MainModel.getInstance().transportadoresArray.refresh()"
 		text="{MainModel.getInstance().zoomFilter}"/>
 	<mx:DataGrid 
 		id="grid" 
 		doubleClickEnabled="true"
-		doubleClick="this.controller.embarcadorSelecionado(event)"
+		doubleClick="this.controller.transportadorSelecionado(event)"
 		width="100%" height="100%" 
-		dataProvider="{MainModel.getInstance().embarcadoresArray}"
-		toolTip="Clique sobre o nome do embarcador para exibir os detalhes.">
+		dataProvider="{MainModel.getInstance().transportadoresArray}"
+		toolTip="Clique sobre o codigo do transportador para exibir os detalhes.">
 		<mx:columns>
 			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
-			<mx:DataGridColumn headerText="Código" dataField="codigo" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.EmbarcadorItemRendererView"/>
+			<mx:DataGridColumn headerText="Código" dataField="codigo" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.TransportadorItemRendererView"/>
 			<mx:DataGridColumn headerText="Nome" dataField="nome"/>
 			<mx:DataGridColumn headerText="CNPJ" dataField="cnpj"/>
+			<mx:DataGridColumn headerText="CPF" dataField="cpf"/>
 			<mx:DataGridColumn headerText="IE" dataField="ie"/>
 			<mx:DataGridColumn headerText="Cadastro" dataField="dataCadastro"/>
 			<mx:DataGridColumn headerText="Site" dataField="site"/>
 		</mx:columns>
 	</mx:DataGrid>
 	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Ok" click="this.controller.embarcadorSelecionado(event)"/>
+		<s:Button label="Ok" click="this.controller.transportadorSelecionado(event)"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </mx:TitleWindow>
