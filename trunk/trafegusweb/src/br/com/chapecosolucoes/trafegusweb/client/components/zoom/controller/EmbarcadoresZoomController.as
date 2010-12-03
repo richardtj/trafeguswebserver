@@ -31,7 +31,10 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function solicitaListaEmbarcadores():void
 		{
-			TrafegusWS.getIntance().solicitaListaEmbarcadores(solicitaListaEmbarcadoresResultEvent);
+			if(MainModel.getInstance().embarcadoresArray.length == 0)
+			{
+				TrafegusWS.getIntance().solicitaListaEmbarcadores(solicitaListaEmbarcadoresResultEvent);
+			}
 		}
 		private function solicitaListaEmbarcadoresResultEvent(event:ResultEvent):void
 		{

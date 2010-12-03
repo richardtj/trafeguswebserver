@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.model
 {
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosEmbarcadorVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosLocalVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosMotoristaVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosTransportadorVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosVeiculoVO;
@@ -40,6 +41,8 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		
 		public var dadosTransportadorVO:DadosTransportadorVO = new DadosTransportadorVO();
 		
+		public var dadosLocalVO:DadosLocalVO = new DadosLocalVO();
+		
 		public var codEmpresa:int = 1457;
 		
 		public var veiculosX:int = 0;
@@ -62,6 +65,12 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		public var veiculosSelecionadosArray:ArrayCollection = new ArrayCollection();
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.TransportadorVO")]
 		public var transportadoresArray:ArrayCollection = new ArrayCollection();
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.LocalVO")]
+		public var locaisArray:ArrayCollection = new ArrayCollection();
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.ParadaVO")]
+		public var paradasArray:ArrayCollection = new ArrayCollection();
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.TipoTransporteVO")]
+		public var tipoTransporteArray:ArrayCollection = new ArrayCollection();
 
 		public function MainModel(enforcer:SingletonEnforcer)
 		{

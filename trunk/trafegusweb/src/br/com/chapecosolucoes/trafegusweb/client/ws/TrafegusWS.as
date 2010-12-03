@@ -155,6 +155,27 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.showBusyCursor = true;
 			operation.send(param);
 		}
+		public function solicitaListaLocais(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaListaLocais");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
+		}
+		public function solicitaListaTipoTransporte(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaListaTipoTransporte");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send();
+		}
+		public function solicitaDadosLocal(handler:Function,param:String):void
+		{
+			var operation:Operation = createOperation("solicitaDadosLocal");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(param);
+		}
 	}
 }
 

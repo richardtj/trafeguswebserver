@@ -1,4 +1,4 @@
-package br.com.chapecosolucoes.trafegusweb.client.events
+package br.com.chapecosolucoes.trafegusweb.client.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.EmbarcadorDetails;

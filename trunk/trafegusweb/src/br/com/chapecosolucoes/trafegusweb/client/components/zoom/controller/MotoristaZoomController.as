@@ -51,7 +51,10 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function solicitaListaMotoristas():void
 		{
-			TrafegusWS.getIntance().solicitaListaMotoristas(solicitaListaMotoristasResultHandler);
+			if(MainModel.getInstance().motoristasArray.length == 0)
+			{
+				TrafegusWS.getIntance().solicitaListaMotoristas(solicitaListaMotoristasResultHandler);
+			}
 		}
 		private function solicitaListaMotoristasResultHandler(event:ResultEvent):void
 		{

@@ -22,7 +22,10 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public var view:VeiculoZoom;
 		public function solicitaListaVeiculos():void
 		{
-			TrafegusWS.getIntance().solicitaListaVeiculos(solicitaListaVeiculosResultHandler);
+			if(MainModel.getInstance().veiculosArray.length == 0)
+			{
+				TrafegusWS.getIntance().solicitaListaVeiculos(solicitaListaVeiculosResultHandler);
+			}
 		}
 		private function solicitaListaVeiculosResultHandler(event:ResultEvent):void
 		{

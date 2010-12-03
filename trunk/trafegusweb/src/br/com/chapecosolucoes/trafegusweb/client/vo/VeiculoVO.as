@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.vo
 {
+	[Bindable]
 	public class VeiculoVO
 	{
 		public function VeiculoVO(obj:Object)

@@ -4,18 +4,16 @@ package br.com.chapecosolucoes.trafegusweb.client.events
 
 	public class LoginEvent extends Event
 	{
-		public var userName:String;
-		public var passWord:String;
+		public var logged:Boolean = false;
 		public static const LOGIN_EVENT:String = "loginEvent";
-		public function LoginEvent(type:String,userName:String,passWord:String)
+		public function LoginEvent(type:String,logged:Boolean)
 		{
-			this.userName = userName;
-			this.passWord = passWord;
+			this.logged = logged;
 			super(type);
 		}
 		override public function clone():Event
 		{
-			return new LoginEvent(this.type,this.userName,this.passWord);
+			return new LoginEvent(this.type,this.logged);
 		}
 	}
 }

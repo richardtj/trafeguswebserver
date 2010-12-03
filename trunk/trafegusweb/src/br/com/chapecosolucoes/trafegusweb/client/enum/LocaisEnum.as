@@ -4,6 +4,7 @@ package br.com.chapecosolucoes.trafegusweb.client.enum
 	{
 		public static const ORIGEM:LocaisEnum = LocaisEnum.create("origem");
 		public static const DESTINO:LocaisEnum = LocaisEnum.create("destino");
+		public static const PARADA:LocaisEnum = LocaisEnum.create("parada");
 		private var type:String;
 		private static function create(enumType:String):LocaisEnum
 		{
