@@ -8,6 +8,10 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.events.ZoomCodDetailEvent;
+			[Bindable]
+			public var cod:String;
+			[Bindable]
+			public var detail:String;
 			private function click(event:MouseEvent):void{
 				var zoomCodDetailEvent:ZoomCodDetailEvent = new ZoomCodDetailEvent(ZoomCodDetailEvent.CLICK);
 				this.dispatchEvent(zoomCodDetailEvent);
@@ -18,8 +22,8 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<mx:HBox borderStyle="solid">
-		<s:TextInput id="cod" editable="false" width="50" borderVisible="false" restrict="0-9"/>
+		<s:TextInput editable="false" width="50" borderVisible="false" restrict="0-9" text="{cod}"/>
 		<mx:Image source="@Embed(source='assets/Search-16.png')" useHandCursor="true" click="this.click(event)" buttonMode="true"/> 
 	</mx:HBox>
-	<s:TextInput id="detail" width="200" editable="false"/>
+	<s:TextInput width="200" editable="false" text="{detail}"/>
 </mx:HBox>

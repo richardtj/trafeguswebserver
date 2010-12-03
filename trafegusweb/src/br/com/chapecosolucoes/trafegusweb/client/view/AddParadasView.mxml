@@ -8,48 +8,77 @@
 				removedEffect="{dissolve,iris}"
 				initialize="init()"
 				creationComplete="creationComplete()"
-				close="closeHandler()"
+				close="this.controller.closeHandler()"
 				title="Adicionar Entregas/Paradas"
-				titleIcon="@Embed(source='assets/Map3.png')">
+				titleIcon="@Embed(source='assets/Map3.png')" 
+				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:Dissolve id="dissolve" duration="500"/>
 		<mx:Iris id="iris" duration="500"/>
+		<mx:StringValidator 
+			source="{tipoViagemZoom}"
+			property="cod"
+			requiredFieldError="Campo Tipo Viagem requerido."
+			required="true"
+			trigger="{ok}"
+			triggerEvent="click"
+			valid="this.tipoViagem = true;this.validaTodos()"
+			invalid="this.tipoViagem = false;Alert.show('Campo Tipo Viagem requerido.')"/>
+		<mx:StringValidator 
+			source="{localZoom}"
+			property="cod"
+			requiredFieldError="Campo Local requerido."
+			trigger="{ok}"
+			triggerEvent="click"
+			valid="this.local = true;this.validaTodos()"
+			invalid="this.local = false;Alert.show('Campo Local requerido.')"/>
 	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="paradaAdicionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.AddParadaEvent")]
+	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.renderers.AddParadasModel;
+			import br.com.chapecosolucoes.trafegusweb.client.controller.AddParadasController;
+			import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
+			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
+			private var controller:AddParadasController;
+			[Bindable]
+			private var model:AddParadasModel;
+			private var tipoViagem:Boolean;
+			private var local:Boolean;
 			private function init():void{
-				
+				this.controller = new AddParadasController();
+				this.model = new AddParadasModel();
+				this.controller.view = this;
+				this.controller.model = this.model;
 			}
 			private function creationComplete():void{
 				
 			}
-			private function closeHandler():void
+			private function validaTodos():void
 			{
-				PopUpManager.removePopUp(this);
+				if(tipoViagem && local)
+				{
+					this.controller.paradaSelecionada();
+				}
 			}
 		]]>
 	</fx:Script>
-	<mx:DataGrid 
-		id="grid" 
-		width="100%" height="100%" 
-		dataProvider="{MainModel.getInstance().veiculosArray}"
-		toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
-		<mx:columns>
-			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
-			<mx:DataGridColumn headerText="Sequencia" dataField="seq"/>
-			<mx:DataGridColumn headerText="Cod. Tipo Parada" dataField="cod"/>
-			<mx:DataGridColumn headerText="Tipo Parada" dataField="tipoParada"/>
-			<mx:DataGridColumn headerText="Cod. Ref." dataField="codReferencia"/>
-			<mx:DataGridColumn headerText="Referencia" dataField="referencia"/>
-			<mx:DataGridColumn headerText="Raio" dataField="raio"/>
-		</mx:columns>
-	</mx:DataGrid>
+	<mx:Form width="100%" height="100%" defaultButton="{ok}">
+		<mx:FormItem label="Tipo de parada" required="true">
+			<view:ZoomCodDetailView id="tipoViagemZoom" clickZoom="this.controller.tipoParadaZoomDispatcher()" cod="{model.parada.codigoTipoTransporte}" detail="{model.parada.descricaoTipoTransporte}"/>
+		</mx:FormItem>
+		<mx:FormItem label="Local" required="true">
+			<view:ZoomCodDetailView id="localZoom" clickZoom="this.controller.localZoomDispatcher(LocaisEnum.PARADA)" cod="{model.parada.codigoReferencia}" detail="{model.parada.descricaoReferencia}"/>
+		</mx:FormItem>
+	</mx:Form>
 	<mx:ControlBar horizontalAlign="right">
-		<s:Button label="Adicionar"/>
-		<s:Button label="Excluir"/>
+		<s:Button id="ok" label="Ok"/>
+		<s:Button label="Cancelar" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </mx:TitleWindow>

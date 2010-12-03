@@ -81,24 +81,16 @@
 					UsuarioLogado.getInstance().wsdl = XML(loader.data).wsdl;
 				}
 			}
-			private function loginHandler(event:LoginEvent):void
-			{
-				TrafegusWS.getIntance().solicitaAcesso(solicitaAcessoHandler,event.userName,event.passWord);
-			}
-			private function solicitaAcessoHandler(evt:ResultEvent):void 
-			{
-				var xml:XML = XML(evt.result);
-				var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
-				var resultArray:Array = xmlListCollection.toArray();
-				for each (var obj:Object in resultArray)
-				{
-					MainModel.getInstance().codEmpresa = obj.usua_pess_oras_codigo.toString();
-				}
-				loginViewStack.selectedIndex = 1;
-			}
 			private function closeAppEventHandler(event:CloseAppEvent):void
 			{
 				loginViewStack.selectedIndex = 0;
+			}
+			private function loginHandler(event:LoginEvent):void
+			{
+				if(event.logged == true)
+				{
+					loginViewStack.selectedIndex = 1;
+				}
 			}
 		]]>
 	</fx:Script>
