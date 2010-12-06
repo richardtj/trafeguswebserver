@@ -72,13 +72,29 @@ public class Conexao {
                     node.appendChild(doc.createTextNode(""));
                 }
                 row.appendChild(node);
+                columnName = null;
+                value = null;
+                node = null;
             }
+            row = null;
+
         }
+
         result = getDocumentAsXml(doc);
+
+        factory = null;
+        builder = null;
+        doc = null;
+        rsmd = null;
+        resultSet.close();
+        resultSet = null;
+
         return result;
     }
 
     private String getDocumentAsXml(Document doc) throws TransformerConfigurationException, TransformerException {
+
+        String result = "";
 
         DOMSource domSource = new DOMSource(doc);
         TransformerFactory tf = TransformerFactory.newInstance();
@@ -88,10 +104,20 @@ public class Conexao {
         transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
         java.io.StringWriter sw = new java.io.StringWriter();
         StreamResult sr = new StreamResult(sw);
         transformer.transform(domSource, sr);
-        return sw.toString();
+
+        result = sw.toString();
+
+        domSource = null;
+        sr = null;
+        sw = null;
+        tf = null;
+        transformer = null;
+
+        return result;
     }
 
     public Connection getConnection() {
