@@ -12,7 +12,8 @@
 				close="this.controller.closeHandler()"
 				title="Embarcadores"
 				titleIcon="@Embed(source='assets/Fisica.png')"
-				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
+				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
 		[Event(name="embarcadorSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.EmbarcadorSelecionadoEvent")]		
@@ -48,14 +49,15 @@
 		width="100%" 
 		keyUp="MainModel.getInstance().embarcadoresArray.refresh()"
 		text="{MainModel.getInstance().zoomFilter}"/>
-	<mx:DataGrid 
+	<view:DataGridFX 
 		id="grid" 
 		doubleClickEnabled="true"
-		doubleClick="this.controller.embarcadorSelecionado(event)"
+		doubleClick="this.controller.embarcadorSelecionado()"
+		keyDown="this.controller.embarcadorSelecionado()"
 		width="100%" height="100%" 
 		dataProvider="{MainModel.getInstance().embarcadoresArray}"
 		toolTip="Clique sobre o nome do embarcador para exibir os detalhes.">
-		<mx:columns>
+		<view:columns>
 			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
 			<mx:DataGridColumn headerText="Código" dataField="codigo" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.EmbarcadorItemRendererView"/>
 			<mx:DataGridColumn headerText="Nome" dataField="nome"/>
@@ -63,11 +65,11 @@
 			<mx:DataGridColumn headerText="IE" dataField="ie"/>
 			<mx:DataGridColumn headerText="Cadastro" dataField="dataCadastro"/>
 			<mx:DataGridColumn headerText="Site" dataField="site"/>
-		</mx:columns>
-	</mx:DataGrid>
+		</view:columns>
+	</view:DataGridFX>
 	<view:PaginableComponent id="paginable"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Ok" click="this.controller.embarcadorSelecionado(event)"/>
+		<s:Button label="Ok" click="this.controller.embarcadorSelecionado()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </mx:TitleWindow>

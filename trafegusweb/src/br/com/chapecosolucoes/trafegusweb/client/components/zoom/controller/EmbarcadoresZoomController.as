@@ -49,7 +49,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				MainModel.getInstance().embarcadoresArray.addItem(embarcador);
 			}
 		}
-		public function embarcadorSelecionado(event:MouseEvent):void
+		public function embarcadorSelecionado():void
 		{
 			if(this.view.grid.selectedItem != null)
 			{
