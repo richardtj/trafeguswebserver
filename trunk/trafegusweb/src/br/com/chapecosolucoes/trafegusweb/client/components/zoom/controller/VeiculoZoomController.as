@@ -45,7 +45,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 					(String(VeiculoVO(item).vehiclePlate).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 					(String(VeiculoVO(item).desc).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0);
 		}
-		public function veiculoSelecionado(event:MouseEvent):void
+		public function veiculoSelecionado():void
 		{
 			if(this.view.grid.selectedItem != null)
 			{

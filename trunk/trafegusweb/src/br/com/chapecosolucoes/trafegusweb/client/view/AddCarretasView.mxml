@@ -16,6 +16,7 @@
 		<mx:Dissolve id="dissolve" duration="500"/>
 		<mx:Iris id="iris" duration="500"/>
 	</fx:Declarations>
+	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.controller.AddCarretasController;
@@ -27,13 +28,19 @@
 				this.controller.view = this;
 			}
 			private function creationComplete():void{
-
+				this.controller.solicitaListaCarretasDisponiveis();
+				MainModel.getInstance().carretasDisponiveisArray.filterFunction = this.controller.carretasFilterFunction;
+				MainModel.getInstance().carretasDisponiveisArray.refresh();
 			}
 		]]>
 	</fx:Script>
 	<mx:HBox width="100%" height="100%">
 		<mx:VBox width="100%" height="100%">
-			<searchInput:SearchInputFX width="100%"/>
+			<searchInput:SearchInputFX
+				id="textInputFiltro"
+				width="100%"
+ 			   keyUp="MainModel.getInstance().carretasDisponiveisArray.refresh()"
+			   text="{MainModel.getInstance().zoomFilter}"/>
 			<s:Label text="Carretas Disponiveis"/>
 			<view:CheckBoxDataGrid
 				id="grid" 
@@ -43,7 +50,7 @@
 				dragEnabled="true"
 				dropEnabled="true"
 				dragMoveEnabled="true"
-				dataProvider="{MainModel.getInstance().veiculosArray}"
+				dataProvider="{MainModel.getInstance().carretasDisponiveisArray}"
 				toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
 				<view:columns>
 					<mx:DataGridColumn dataField="selected" headerText=" " width="20" 
@@ -52,11 +59,10 @@
 					<mx:DataGridColumn sortable="false" 
 									   width="20"
 									   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
-					<mx:DataGridColumn headerText="Sequencia" dataField="seq"/>
-					<mx:DataGridColumn headerText="Código" dataField="cod"/>
 					<mx:DataGridColumn headerText="Placa" 
 									   dataField="vehiclePlate" 
 									   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
+					<mx:DataGridColumn headerText="Cor" dataField="desc"/>
 				</view:columns>
 			</view:CheckBoxDataGrid>
 		</mx:VBox>
@@ -89,24 +95,23 @@
 				dragEnabled="true"
 				dropEnabled="true"
 				dragMoveEnabled="true"
-				dataProvider="{MainModel.getInstance().veiculosSelecionadosArray}"
+				dataProvider="{MainModel.getInstance().carretasSelecionadasArray}"
 				toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
 				<view:columns>
 					<mx:DataGridColumn dataField="selected" headerText=" " width="20" 
 									   sortable="false" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.CheckBoxRenderer" 
 									   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.CheckBoxHeaderRenderer"/>
 					<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
-					<mx:DataGridColumn headerText="Sequencia" dataField="seq"/>
-					<mx:DataGridColumn headerText="Código" dataField="cod"/>
 					<mx:DataGridColumn headerText="Placa" 
 									   dataField="vehiclePlate" 
 									   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
+					<mx:DataGridColumn headerText="Cor" dataField="desc"/>
 				</view:columns>
 			</view:CheckBoxDataGrid>
 		</mx:VBox>
 	</mx:HBox>
 	<mx:ControlBar horizontalAlign="right">
-		<s:Button label="Ok"/>
-		<s:Button label="Cancelar" click="this.controller.closeHandler()"/>
+		<s:Button label="Ok" click="this.controller.closeHandler()"/>
+		<s:Button label="Cancelar" click="this.controller.cancelarSelecao()"/>
 	</mx:ControlBar>
 </mx:TitleWindow>

@@ -12,7 +12,7 @@
 				close="this.controller.closeHandler()"
 				title="Embarcadores"
 				titleIcon="@Embed(source='assets/Fisica.png')"
-				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
 		[Event(name="embarcadorSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.EmbarcadorSelecionadoEvent")]		
@@ -27,6 +27,7 @@
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.EmbarcadoresZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
+			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			private var controller:br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.EmbarcadoresZoomController;
 			private function init():void
@@ -38,6 +39,7 @@
 			{
 				this.controller.solicitaListaEmbarcadores();
 				MainModel.getInstance().embarcadoresArray.filterFunction = this.controller.embarcadoresFilterFunction;
+				MainModel.getInstance().embarcadoresArray.refresh();
 			}
 		]]>
 	</fx:Script>
@@ -63,6 +65,7 @@
 			<mx:DataGridColumn headerText="Site" dataField="site"/>
 		</mx:columns>
 	</mx:DataGrid>
+	<view:PaginableComponent id="paginable"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.embarcadorSelecionado(event)"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>

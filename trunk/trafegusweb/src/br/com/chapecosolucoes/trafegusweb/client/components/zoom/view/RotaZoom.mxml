@@ -12,7 +12,7 @@
 				close="this.controller.closeHandler()"
 				title="Rotas"
 				titleIcon="@Embed(source='assets/Map3.png')"
-				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Binding source="RouteVO(this.grid.selectedItem)" destination="MainModel.getInstance().dadosRotaVO"/>
 	<fx:Metadata>
@@ -28,6 +28,8 @@
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.RotaZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
+			
+			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			private var controller:RotaZoomController;
 			private function init():void
@@ -39,6 +41,7 @@
 			{
 				this.controller.solicitaListaRotas();
 				MainModel.getInstance().rotasArray.filterFunction = this.controller.rotaFilterFunction;
+				MainModel.getInstance().rotasArray.refresh();
 			}
 		]]>
 	</fx:Script>
@@ -65,6 +68,7 @@
 			<!--mx:DataGridColumn headerText="Coordenadas Pipe"  dataField="coordenadasPipe"/-->
 		</mx:columns>
 	</mx:DataGrid>
+	<view:PaginableComponent id="paginable"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.rotaSelecionada(event)"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>

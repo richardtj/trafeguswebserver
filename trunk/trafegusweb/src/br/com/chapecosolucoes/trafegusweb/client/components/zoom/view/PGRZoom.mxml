@@ -10,12 +10,12 @@
 				initialize="init()"
 				creationComplete="creationComplete()"
 				close="this.controller.closeHandler()"
-				title="Locais"
-				titleIcon="@Embed(source='assets/Map3.png')"
+				title="PGR"
+				titleIcon="@Embed(source='assets/warning.png')"
 				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
-		[Event(name="selectedLocalEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.SelectedLocalEvent")]		
+		[Event(name="PGRSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent")]		
 	</fx:Metadata>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -24,50 +24,47 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.LocalZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.PGRZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
-			private var controller:LocalZoomController;
+			private var controller:PGRZoomController;
 			private function init():void
 			{
-				this.controller = new LocalZoomController();
+				this.controller = new PGRZoomController();
 				this.controller.view = this;
-				MainModel.getInstance().locaisArray.filterFunction = this.controller.locaisFilterFunction;
-				MainModel.getInstance().locaisArray.refresh();
+				MainModel.getInstance().pgrArray.filterFunction = this.controller.pgrFilterFunction;
+				MainModel.getInstance().pgrArray.refresh();
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaListaLocais();
+				this.controller.solicitaListaPGR();
 			}
 		]]>
 	</fx:Script>
 	<searchInput:SearchInputFX 
 		id="textInputFiltro"
 		width="100%" 
-		keyUp="MainModel.getInstance().locaisArray.refresh()"
+		keyUp="MainModel.getInstance().pgrArray.refresh()"
 		text="{MainModel.getInstance().zoomFilter}"/>
 	<mx:DataGrid 
 		id="grid" 
 		width="100%" height="100%" 
 		doubleClickEnabled="true"
-		doubleClick="this.controller.localSelecionado(event)"
-		dataProvider="{MainModel.getInstance().locaisArray}"
-		toolTip="Clique sobre o codigo do local para exibir os detalhes.">
+		doubleClick="this.controller.pgrSelecionado()"
+		dataProvider="{MainModel.getInstance().pgrArray}"
+		toolTip="Clique sobre o codigo do PGR para exibir os detalhes.">
 		<mx:columns>
 			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
-			<mx:DataGridColumn headerText="Código" dataField="codigo" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.LocalItemRendererView"/>
+			<mx:DataGridColumn headerText="Código" dataField="codigo" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.PGRItemRendererView"/>
 			<mx:DataGridColumn headerText="Descrição" dataField="descricao"/>
-			<mx:DataGridColumn headerText="Latitude" dataField="gpsLatitudeString"/>
-			<mx:DataGridColumn headerText="Longitude" dataField="gpsLongitudeString"/>
-			<mx:DataGridColumn headerText="Cod. Grupo" dataField="codigoGrupo"/>
-			<mx:DataGridColumn headerText="Des. Grupo" dataField="descricaoGrupo"/>
+			<mx:DataGridColumn headerText="Cadastro" dataField="dataCadastro"/>
 		</mx:columns>
 	</mx:DataGrid>
 	<view:PaginableComponent id="paginable"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Ok" click="this.controller.localSelecionado(event)"/>
+		<s:Button label="Ok" click="this.controller.pgrSelecionado()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </mx:TitleWindow>

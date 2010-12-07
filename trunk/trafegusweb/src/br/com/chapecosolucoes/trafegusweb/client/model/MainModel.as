@@ -3,6 +3,7 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosEmbarcadorVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosLocalVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosMotoristaVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosPGRVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosTransportadorVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosVeiculoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO;
@@ -43,6 +44,8 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		
 		public var dadosLocalVO:DadosLocalVO = new DadosLocalVO();
 		
+		public var dadosPGRVO:DadosPGRVO = new DadosPGRVO();
+		
 		public var codEmpresa:int = 1457;
 		
 		public var veiculosX:int = 0;
@@ -62,7 +65,7 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO")]
 		public var embarcadoresArray:ArrayCollection = new ArrayCollection();
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO")]
-		public var veiculosSelecionadosArray:ArrayCollection = new ArrayCollection();
+		public var carretasSelecionadasArray:ArrayCollection = new ArrayCollection();
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.TransportadorVO")]
 		public var transportadoresArray:ArrayCollection = new ArrayCollection();
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.LocalVO")]
@@ -71,6 +74,10 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		public var paradasArray:ArrayCollection = new ArrayCollection();
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.TipoTransporteVO")]
 		public var tipoTransporteArray:ArrayCollection = new ArrayCollection();
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO")]
+		public var carretasDisponiveisArray:ArrayCollection = new ArrayCollection();
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.PGRVO")]
+		public var pgrArray:ArrayCollection = new ArrayCollection();
 
 		public function MainModel(enforcer:SingletonEnforcer)
 		{

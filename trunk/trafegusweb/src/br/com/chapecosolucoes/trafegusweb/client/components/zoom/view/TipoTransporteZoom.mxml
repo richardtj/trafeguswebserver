@@ -12,7 +12,7 @@
 				close="this.controller.closeHandler()"
 				title="Tipo Transporte"
 				titleIcon="@Embed(source='assets/Map3.png')"
-				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
 		[Event(name="tipoTransporteSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.TipoTransporteSelecionadoEvent")]		
@@ -27,6 +27,7 @@
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.TipoTransporteZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
+			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			private var controller:TipoTransporteZoomController;
 			private function init():void
@@ -34,6 +35,7 @@
 				this.controller = new TipoTransporteZoomController();
 				this.controller.view = this;
 				MainModel.getInstance().tipoTransporteArray.filterFunction = this.controller.tipoTransporteFilterFunction;
+				MainModel.getInstance().tipoTransporteArray.refresh();
 			}
 			private function creationComplete():void
 			{
@@ -59,6 +61,7 @@
 			<mx:DataGridColumn headerText="Descrição" dataField="descricao"/>
 		</mx:columns>
 	</mx:DataGrid>
+	<view:PaginableComponent id="paginable"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.tipoTransporteSelecionado()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>

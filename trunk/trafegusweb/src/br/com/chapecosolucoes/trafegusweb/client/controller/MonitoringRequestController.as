@@ -3,6 +3,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.EmbarcadoresZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.LocaisZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.MotoristaZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.PGRZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.RotaZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.TipoTransporteZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.TransportadoresZoom;
@@ -10,6 +11,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
 	import br.com.chapecosolucoes.trafegusweb.client.events.AddParadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.EmbarcadorSelecionadoEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedLocalEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedRouteEvent;
@@ -167,6 +169,18 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		private function paradaAdicionadaEventHandler(event:AddParadaEvent):void
 		{
 			MainModel.getInstance().paradasArray.addItem(event.parada);
+		}
+		public function planoGRZoomDispatcher():void
+		{
+			var pgrZoom:PGRZoom = new PGRZoom();
+			pgrZoom.addEventListener(PGRSelecionadoEvent.PGR_SELECIONADO_EVENT,pgrSelecionadoEventHandler);
+			PopUpManager.addPopUp(pgrZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.centerPopUp(pgrZoom);
+		}
+		private function pgrSelecionadoEventHandler(event:PGRSelecionadoEvent):void
+		{
+			this.view.pgrZoom.cod = event.pgr.codigo;
+			this.view.pgrZoom.detail = event.pgr.descricao;
 		}
 	}
 }
