@@ -2,7 +2,7 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 initialize="init()" xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+		 initialize="init()" xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().historicoSelecionado"/>
 	<fx:Metadata>
 		[Event(name="routeReceivedEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.VehiclesHistoricEvent")]
@@ -53,18 +53,5 @@
 			</mx:columns>
 		</mx:DataGrid>
 	</s:Group>
-	<s:Group id="group2" 
-			 width="100%">
-		<s:layout>
-			<s:HorizontalLayout 
-				horizontalAlign="center" 
-				paddingBottom="5" paddingLeft="5" 
-				paddingRight="5" paddingTop="5"/>
-		</s:layout>
-		<mx:Image source="@Embed(source='assets/Gnome-Go-First-16.png')" buttonMode="true" click="Alert.show('First')"/>
-		<mx:Image source="@Embed(source='assets/Gnome-Go-Previous-16.png')" buttonMode="true" click="Alert.show('Previous')"/>
-		<s:TextInput id="textInput" width="20" text="0" textAlign="center"/>
-		<mx:Image source="@Embed(source='assets/Gnome-Go-Next-16.png')" buttonMode="true" click="Alert.show('Next')"/>
-		<mx:Image source="@Embed(source='assets/Gnome-Go-Last-16.png')" buttonMode="true" click="Alert.show('Last')"/>
-	</s:Group>
+	<view:PaginableComponent id="paginable"/>
 </s:Group>

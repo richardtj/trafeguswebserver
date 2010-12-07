@@ -12,7 +12,7 @@
 				close="this.controller.closeHandler()"
 				title="Motoristas"
 				titleIcon="@Embed(source='assets/Motorista.png')"
-				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
 		[Event(name="selectedDriverEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent")]		
@@ -27,6 +27,7 @@
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.MotoristaZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
+			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			private var controller:MotoristaZoomController;
 			private function init():void
@@ -34,6 +35,7 @@
 				this.controller = new MotoristaZoomController();
 				this.controller.view = this;
 				MainModel.getInstance().motoristasArray.filterFunction = this.controller.motoristaFilterFunction;
+				MainModel.getInstance().locaisArray.refresh();
 			}
 			private function creationComplete():void
 			{
@@ -73,6 +75,7 @@
 			<mx:DataGridColumn headerText="Val. Pesquisa" dataField="validadePesquisa"/>
 		</mx:columns>
 	</mx:DataGrid>
+	<view:PaginableComponent id="paginable"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.motoristaSelecionado(event)"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>

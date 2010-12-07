@@ -10,6 +10,7 @@ package br.com.chapecosolucoes.trafegusweb.client.events
 		public var parada:ParadaVO;
 		public function AddParadaEvent(type:String, parada:ParadaVO, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
+			this.parada = parada;
 			super(type, bubbles, cancelable);
 		}
 		override public function clone():Event

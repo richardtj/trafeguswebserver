@@ -12,7 +12,7 @@
 				close="this.controller.closeHandler()"
 				title="Transportadores"
 				titleIcon="@Embed(source='assets/transportador.png')"
-				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
 		[Event(name="transportadorSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent")]		
@@ -27,6 +27,7 @@
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.TransportadorZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
+			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			private var controller:TransportadorZoomController;
 			private function init():void
@@ -38,6 +39,7 @@
 			{
 				this.controller.solicitaListaTransportadores();
 				MainModel.getInstance().transportadoresArray.filterFunction = this.controller.transportadoresFilterFunction;
+				MainModel.getInstance().transportadoresArray.refresh();
 			}
 		]]>
 	</fx:Script>
@@ -64,6 +66,7 @@
 			<mx:DataGridColumn headerText="Site" dataField="site"/>
 		</mx:columns>
 	</mx:DataGrid>
+	<view:PaginableComponent id="paginable"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.transportadorSelecionado(event)"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>

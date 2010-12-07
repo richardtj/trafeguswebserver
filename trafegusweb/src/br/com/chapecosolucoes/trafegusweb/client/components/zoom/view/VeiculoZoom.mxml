@@ -12,7 +12,7 @@
 				close="this.controller.closeHandler()"
 				title="Veiculos do Transportador"
 				titleIcon="@Embed(source='assets/cam(Teal).png')"
-				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
 		[Event(name="selectedVehicleEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent")]		
@@ -27,6 +27,7 @@
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.VeiculoZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
+			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			private var controller:VeiculoZoomController;
 			private function init():void
@@ -38,6 +39,7 @@
 			{
 				this.controller.solicitaListaVeiculos();
 				MainModel.getInstance().veiculosArray.filterFunction = this.controller.veiculosFilterFunction;
+				MainModel.getInstance().veiculosArray.refresh();
 			}
 		]]>
 	</fx:Script>
@@ -50,7 +52,7 @@
 		id="grid" 
 		width="100%" height="100%" 
 		doubleClickEnabled="true"
-		doubleClick="this.controller.veiculoSelecionado(event)"
+		doubleClick="this.controller.veiculoSelecionado()"
 		dataProvider="{MainModel.getInstance().veiculosArray}"
 		toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
 		<mx:columns>
@@ -62,8 +64,9 @@
 			<mx:DataGridColumn headerText="Descrição" dataField="desc"/>
 		</mx:columns>
 	</mx:DataGrid>
+	<view:PaginableComponent id="paginable"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Ok" click="this.controller.veiculoSelecionado(event)"/>
+		<s:Button label="Ok" click="this.controller.veiculoSelecionado()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </mx:TitleWindow>

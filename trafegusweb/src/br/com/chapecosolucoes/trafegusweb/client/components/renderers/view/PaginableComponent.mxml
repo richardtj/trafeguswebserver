@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="100%"
+		 initialize="init()">
+		<s:layout>
+			<s:HorizontalLayout 
+				horizontalAlign="center" 
+				paddingBottom="5" paddingLeft="5" 
+				paddingRight="5" paddingTop="5"/>
+		</s:layout>
+		<fx:Metadata>
+			[Event(name="next",type="br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent")]
+			[Event(name="prev",type="br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent")]
+			[Event(name="first",type="br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent")]
+			[Event(name="last",type="br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent")]
+		</fx:Metadata>
+		<fx:Script>
+			<![CDATA[
+				import br.com.chapecosolucoes.trafegusweb.client.components.renderers.controller.PaginableComponentController;
+				
+				import mx.controls.Alert;
+				private var controller:PaginableComponentController;
+				public function init():void
+				{
+					this.controller = new PaginableComponentController();
+					this.controller.view = this;
+				}
+			]]>
+		</fx:Script>
+		<mx:Image source="@Embed(source='assets/Gnome-Go-First-16.png')" buttonMode="true" click="this.controller.first()"/>
+		<mx:Image source="@Embed(source='assets/Gnome-Go-Previous-16.png')" buttonMode="true" click="this.controller.prev()"/>
+		<s:TextInput id="textInput" width="20" text="0" textAlign="center"/>
+		<mx:Image source="@Embed(source='assets/Gnome-Go-Next-16.png')" buttonMode="true" click="this.controller.next()"/>
+		<mx:Image source="@Embed(source='assets/Gnome-Go-Last-16.png')" buttonMode="true" click="this.controller.last()"/>
+</s:Group>

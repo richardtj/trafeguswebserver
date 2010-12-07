@@ -176,6 +176,27 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.showBusyCursor = true;
 			operation.send(param);
 		}
+		public function solicitaListaCarretasDisponiveis(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaListaCarretasDisponiveis");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
+		}
+		public function solicitaListaPGR(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaListaPGR");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send();
+		}
+		public function solicitaDadosPGR(handler:Function,param:String):void
+		{
+			var operation:Operation = createOperation("solicitaDadosPGR");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(param);
+		}
 	}
 }
 
