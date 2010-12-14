@@ -76,12 +76,12 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.send(MainModel.getInstance().codEmpresa);
 		}
 		
-		public function solicitaDadosGrid(handler:Function):void
+		public function solicitaDadosGrid(handler:Function,offset:int):void
 		{
 			var operation:Operation = createOperation("solicitaDadosGrid");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send(MainModel.getInstance().codEmpresa);
+			operation.send(MainModel.getInstance().codEmpresa,offset);
 		}
 		
 		public function solicitaHistoricoPosicoes(handler:Function,params:PosicaoVeiculoVO):void{
@@ -196,6 +196,27 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
 			operation.send(param);
+		}
+		public function solicitaListaViagemPai(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaListaViagemPai");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
+		}
+		public function solicitaListaTerminais(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaListaTerminais");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().solicitacaoMonitoramentoVO.placaTruc);
+		}
+		public function solicitaTotalDadosGrid(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaTotalDadosGrid");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
 		}
 	}
 }

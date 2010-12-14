@@ -19,6 +19,7 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.controller.VehiclesController;
+			import br.com.chapecosolucoes.trafegusweb.client.enum.PaginableEnum;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
 			import mx.controls.Alert;
@@ -32,10 +33,11 @@
 				controller = new VehiclesController();
 				controller.view = this;
 				MainModel.getInstance().posVeiculosArray.filterFunction = this.controller.veiculosFilterFunction;
+				this.controller.solicitaTotalDadosGrid();
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaDadosGrid();
+				this.controller.atualizaDadosGrid();
 			}
 		]]>
 	</fx:Script>
@@ -44,7 +46,8 @@
 			id="textInputFiltro" 
 			width="100%" 
 			keyUp="MainModel.getInstance().posVeiculosArray.refresh()"
-			text="{MainModel.getInstance().veiculoSelecionado}"/>
+			text="{MainModel.getInstance().veiculoSelecionado}"
+			refreshEvent="this.controller.atualizaDadosGrid()"/>
 		<mx:DataGrid height="100%"
 					 width="100%"
 					 click="this.controller.veiculoSelecionadoHandler(event)"
@@ -62,5 +65,11 @@
 			</mx:columns>
 		</mx:DataGrid>
 	</s:VGroup>
-	<view:PaginableComponent id="paginable" next="Alert.show('next')" prev="Alert.show('prev')" first="Alert.show('first')" last="Alert.show('last')"/>
+	<view:PaginableComponent 
+		id="paginable" 
+		totalRecords="{MainModel.getInstance().totalDadosGrid}"
+		next="this.controller.solicitaDadosGrid(event)" 
+		prev="this.controller.solicitaDadosGrid(event)" 
+		first="this.controller.solicitaDadosGrid(event)" 
+		last="this.controller.solicitaDadosGrid(event)"/>
 </s:Group>

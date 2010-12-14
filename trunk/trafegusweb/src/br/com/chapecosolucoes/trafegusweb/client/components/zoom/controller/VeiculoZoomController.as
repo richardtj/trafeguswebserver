@@ -27,6 +27,10 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				TrafegusWS.getIntance().solicitaListaVeiculos(solicitaListaVeiculosResultHandler);
 			}
 		}
+		public function atualizaListaVeiculos():void
+		{
+			TrafegusWS.getIntance().solicitaListaVeiculos(solicitaListaVeiculosResultHandler);
+		}
 		private function solicitaListaVeiculosResultHandler(event:ResultEvent):void
 		{
 			var xml:XML = XML(event.result);

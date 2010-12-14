@@ -13,6 +13,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 				var gpsLatitude:Number = Number(gpsLatitudeString);
 				var gpsLongitude:Number = Number(gpsLongitudeString);
 				
+				this.codVeic = obj.veic_oras_codigo.toString();
 				this.vehiclePlate = obj.placa.toString();
 				this.latLong = new LatLng(gpsLatitude, gpsLongitude);
 				this.gpsDescSis = obj.posicao;
@@ -27,6 +28,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 				this.embarcador = obj.embarcador.toString();
 			}
 		}
+		public var codVeic:String;
 		public var vehiclePlate:String;
 		public var latLong:LatLng;
 		public var gpsDescSis:String;

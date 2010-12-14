@@ -50,6 +50,10 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				TrafegusWS.getIntance().solicitaListaRotas(solicitaListaRotasResultHandler);
 			}
 		}
+		public function atualizaListaRotas():void
+		{
+			TrafegusWS.getIntance().solicitaListaRotas(solicitaListaRotasResultHandler);
+		}
 		private function solicitaListaRotasResultHandler(event:ResultEvent):void
 		{
 			var xml:XML = XML(event.result);

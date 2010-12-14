@@ -10,12 +10,13 @@
 				initialize="init()"
 				creationComplete="creationComplete()"
 				close="this.controller.closeHandler()"
-				title="PGR"
-				titleIcon="@Embed(source='assets/warning.png')"
+				title="Viagem Pai"
+				titleIcon="@Embed(source='assets/travel.png')"
 				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
+	<fx:Binding source="ViagemPaiVO(this.grid.selectedItem)" destination="MainModel.getInstance().dadosViagemPaiVO"/>
 	<fx:Metadata>
-		[Event(name="PGRSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent")]		
+		[Event(name="viagemPaiSelecionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.ViagemPaiSelecionadaEvent")]		
 	</fx:Metadata>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -24,48 +25,50 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.PGRZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.ViagemPaiZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.ViagemPaiVO;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
-			private var controller:PGRZoomController;
+			private var controller:ViagemPaiZoomController;
 			private function init():void
 			{
-				this.controller = new PGRZoomController();
+				this.controller = new ViagemPaiZoomController();
 				this.controller.view = this;
-				MainModel.getInstance().pgrArray.filterFunction = this.controller.pgrFilterFunction;
-				MainModel.getInstance().pgrArray.refresh();
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaListaPGR();
+				this.controller.solicitaListaViagemPai();
+				MainModel.getInstance().viagemPaiArray.filterFunction = this.controller.viagemPaiFilterFunction;
+				MainModel.getInstance().viagemPaiArray.refresh();
 			}
 		]]>
 	</fx:Script>
 	<searchInput:SearchInputFX 
 		id="textInputFiltro"
 		width="100%" 
-		keyUp="MainModel.getInstance().pgrArray.refresh()"
+		keyUp="MainModel.getInstance().viagemPaiArray.refresh()"
 		text="{MainModel.getInstance().zoomFilter}"
-		refreshEvent="this.controller.atualizaListaPGR()"/>
+		refreshEvent="this.controller.atualizaListaViagemPai()"/>
 	<view:DataGridFX 
 		id="grid" 
 		width="100%" height="100%" 
 		doubleClickEnabled="true"
-		doubleClick="this.controller.pgrSelecionado()"
-		dataProvider="{MainModel.getInstance().pgrArray}"
-		toolTip="Clique sobre o codigo do PGR para exibir os detalhes.">
+		doubleClick="this.controller.viagemPaiSelecionada()"
+		dataProvider="{MainModel.getInstance().viagemPaiArray}"
+		toolTip="Clique sobre o codigo da viagem para exibir os detalhes.">
 		<view:columns>
 			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
-			<mx:DataGridColumn headerText="Código" dataField="codigo" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.PGRItemRendererView"/>
-			<mx:DataGridColumn headerText="Descrição" dataField="descricao"/>
-			<mx:DataGridColumn headerText="Cadastro" dataField="dataCadastro"/>
+			<mx:DataGridColumn id="codigo" headerText="Código"  dataField="codigo"
+							   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.ViagemPaiItemRendererView"/>
+			<mx:DataGridColumn headerText="Prev. Inicio"  dataField="previsaoInicio"/>
+			<mx:DataGridColumn headerText="Prev. Fim"  dataField="previsaoFim"/>
 		</view:columns>
 	</view:DataGridFX>
 	<view:PaginableComponent id="paginable"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Ok" click="this.controller.pgrSelecionado()"/>
+		<s:Button label="Ok" click="this.controller.viagemPaiSelecionada()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </mx:TitleWindow>

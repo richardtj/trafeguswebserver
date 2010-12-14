@@ -8,6 +8,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.TipoTransporteZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.TransportadoresZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.VeiculoZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.ViagemPaiZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
 	import br.com.chapecosolucoes.trafegusweb.client.events.AddParadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.EmbarcadorSelecionadoEvent;
@@ -18,6 +19,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.TipoTransporteSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.ViagemPaiSelecionadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddCarretasView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddParadasView;
@@ -47,6 +49,8 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			this.view.veiculoZoom.cod = event.veiculo.cod;
 			this.view.veiculoZoom.detail = event.veiculo.vehiclePlate;
+			MainModel.getInstance().solicitacaoMonitoramentoVO.placaTruc = event.vehiclePlate.cod;
+			this.view.dadosAdicionaisView.atualizaTerminais();
 		}
 		public function addCarretas():void
 		{
@@ -181,6 +185,18 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			this.view.pgrZoom.cod = event.pgr.codigo;
 			this.view.pgrZoom.detail = event.pgr.descricao;
+		}
+		public function viagemPaiZoomDispatcher():void
+		{
+			var viagemPaiZoom:ViagemPaiZoom = new ViagemPaiZoom();
+			viagemPaiZoom.addEventListener(ViagemPaiSelecionadaEvent.VIAGEM_PAI_SELECIONADA_EVENT,viagemPaiSelecionadaResultHandler);
+			PopUpManager.addPopUp(viagemPaiZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.centerPopUp(viagemPaiZoom);
+		}
+		private function viagemPaiSelecionadaResultHandler(event:ViagemPaiSelecionadaEvent):void
+		{
+			this.view.viagemPaiZoom.cod = event.viagemPai.codigo;
+			this.view.viagemPaiZoom.detail = event.viagemPai.previsaoInicio + " / " + event.viagemPai.previsaoFim;
 		}
 	}
 }

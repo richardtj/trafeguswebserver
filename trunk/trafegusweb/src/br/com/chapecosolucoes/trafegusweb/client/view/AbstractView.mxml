@@ -31,7 +31,7 @@
 			}
 		]]>
 	</fx:Script>
-	<searchInput:SearchInputFX 
+	<searchInput:SearchInputFXBase
 		id="textInputFiltro"
 		width="100%" 
 		keyUp="MainModel.getInstance().posVeiculosArray.refresh()"

@@ -35,7 +35,8 @@
 		id="textInputFiltro"
 		width="100%" 
 		keyUp="MainModel.getInstance().veiculosViagemArray.refresh()"
-		text="{MainModel.getInstance().viagemSelecionada}"/>
+		text="{MainModel.getInstance().viagemSelecionada}"
+		refreshEvent="this.controller.solicitaDadosGridEmViagem()"/>
 	<s:Group id="group1"
 			 width="100%"
 			 height="100%">

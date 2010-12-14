@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.LocaisZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.enum.PaginableEnum;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedLocalEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.LocalVO;
@@ -28,12 +29,16 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				(String(LocalVO(item).gpsLatitudeString).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(LocalVO(item).gpsLongitudeString).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0);
 		}
-		public function solicitaListaLocais():void
+		public function solicitaListaLocais(enum:PaginableEnum):void
 		{
 			if(MainModel.getInstance().locaisArray.length == 0)
 			{
 				TrafegusWS.getIntance().solicitaListaLocais(solicitaListaLocaisResultEvent);
 			}
+		}
+		public function atualizaListaLocais():void
+		{
+			TrafegusWS.getIntance().solicitaListaLocais(solicitaListaLocaisResultEvent);
 		}
 		private function solicitaListaLocaisResultEvent(event:ResultEvent):void
 		{

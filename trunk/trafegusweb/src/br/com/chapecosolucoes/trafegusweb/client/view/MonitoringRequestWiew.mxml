@@ -11,7 +11,7 @@
 		 close="closeHandler()"
 		 title="Novo Monitoramento"
 		 titleIcon="@Embed(source='assets/wifi.png')"
-		 xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*">
+		 xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*" xmlns:view1="br.com.chapecosolucoes.trafegusweb.client.view.*">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:Dissolve id="dissolve" duration="500"/>
@@ -47,7 +47,7 @@
 					<view:ZoomCodDetailView id="tipoViagemZoom" clickZoom="this.controller.tipoTransporteZoomDispatcher()"/>
 				</mx:FormItem>
 				<mx:FormItem label="Viagem pai" required="true">
-					<view:ZoomCodDetailView id="viagemPaiZoom" clickZoom="this.controller.tipoTransporteZoomDispatcher()"/>
+					<view:ZoomCodDetailView id="viagemPaiZoom" clickZoom="this.controller.viagemPaiZoomDispatcher()"/>
 				</mx:FormItem>
 				<mx:HRule width="60%"/>
 				<mx:FormItem label="Transportador" required="true">
@@ -112,8 +112,8 @@
 				<s:Button label="Excluir" click="this.controller.removeParada()"/>
 			</mx:ControlBar>
 		</s:NavigatorContent>
-		<s:NavigatorContent id="dadosAdicionaisView" label="Dados Adicionais">
-			
+		<s:NavigatorContent id="dadosAdicionaisTab" label="Dados Adicionais">
+			<view1:DadosAdicionaisView id="dadosAdicionaisView" width="100%"/>
 		</s:NavigatorContent>
 	</mx:ViewStack>
 	<mx:ControlBar horizontalAlign="right">

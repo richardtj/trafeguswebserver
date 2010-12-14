@@ -40,7 +40,8 @@
 				id="textInputFiltro"
 				width="100%"
  			   keyUp="MainModel.getInstance().carretasDisponiveisArray.refresh()"
-			   text="{MainModel.getInstance().zoomFilter}"/>
+			   text="{MainModel.getInstance().zoomFilter}"
+			   refreshEvent="this.controller.atualizaListaCarretasDisponiveis()"/>
 			<s:Label text="Carretas Disponiveis"/>
 			<view:CheckBoxDataGrid
 				id="grid" 
@@ -65,6 +66,7 @@
 					<mx:DataGridColumn headerText="Cor" dataField="desc"/>
 				</view:columns>
 			</view:CheckBoxDataGrid>
+			<view:PaginableComponent />
 		</mx:VBox>
 		<mx:VBox 
 			width="100" 
