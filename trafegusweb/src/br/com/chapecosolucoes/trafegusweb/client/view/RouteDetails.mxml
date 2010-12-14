@@ -39,7 +39,7 @@
 			<s:TextInput text="{MainModel.getInstance().dadosRotaVO.codigo}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="Descrição">
-			<s:TextInput text="{MainModel.getInstance().dadosRotaVO.descricao}" borderVisible="false" editable="false" width="200"/>
+			<mx:TextArea text="{MainModel.getInstance().dadosRotaVO.descricao}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="Distancia">
 			<s:TextInput text="{MainModel.getInstance().dadosRotaVO.distancia}" borderVisible="false" editable="false" width="200"/>

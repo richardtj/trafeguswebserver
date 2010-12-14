@@ -6,9 +6,12 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosPGRVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosTransportadorVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosVeiculoVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosViagemPaiVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.SolicitacaoMonitoramentoVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.ViagemPaiVO;
 	
 	import mx.collections.ArrayCollection;
 
@@ -46,13 +49,19 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		
 		public var dadosPGRVO:DadosPGRVO = new DadosPGRVO();
 		
-		public var codEmpresa:int = 1457;
+		public var dadosViagemPaiVO:ViagemPaiVO = new ViagemPaiVO();
+		
+		public var solicitacaoMonitoramentoVO:SolicitacaoMonitoramentoVO = new SolicitacaoMonitoramentoVO();
+		
+		public var codEmpresa:int = 0;
 		
 		public var veiculosX:int = 0;
 		
 		public var veiculosY:int = 20;
 		
 		public var leftToRightEnabled:Boolean = true;
+		
+		public var totalDadosGrid:int=0;
 		
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoViagemVO")]
 		public var veiculosViagemArray:ArrayCollection = new ArrayCollection();
@@ -78,6 +87,12 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		public var carretasDisponiveisArray:ArrayCollection = new ArrayCollection();
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.PGRVO")]
 		public var pgrArray:ArrayCollection = new ArrayCollection();
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.ViagemPaiVO")]
+		public var viagemPaiArray:ArrayCollection = new ArrayCollection();
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.TerminalVO")]
+		public var terminaisArray:ArrayCollection = new ArrayCollection();
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.TerminalDefeituosoVO")]
+		public var terminaisDefeituososArray:ArrayCollection = new ArrayCollection();
 
 		public function MainModel(enforcer:SingletonEnforcer)
 		{

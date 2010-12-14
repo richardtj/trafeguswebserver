@@ -45,10 +45,10 @@
 			<s:TextInput text="{MainModel.getInstance().dadosTransportadorVO.codigoTransportador}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="Nome">
-			<s:TextInput text="{MainModel.getInstance().dadosTransportadorVO.nome}" borderVisible="false" editable="false" width="200"/>
+			<mx:TextArea text="{MainModel.getInstance().dadosTransportadorVO.nome}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="Razão Social">
-			<s:TextInput text="{MainModel.getInstance().dadosTransportadorVO.razaoSocial}" borderVisible="false" editable="false" width="200"/>
+			<mx:TextArea text="{MainModel.getInstance().dadosTransportadorVO.razaoSocial}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 		<mx:FormItem label="CNPJ">
 			<s:TextInput text="{MainModel.getInstance().dadosTransportadorVO.cnpj}" borderVisible="false" editable="false" width="200"/>

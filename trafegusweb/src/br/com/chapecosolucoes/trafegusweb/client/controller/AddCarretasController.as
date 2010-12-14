@@ -48,6 +48,10 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				TrafegusWS.getIntance().solicitaListaCarretasDisponiveis(solicitaListaCarretasDisponiveisResultHandler);
 			}
 		}
+		public function atualizaListaCarretasDisponiveis():void
+		{
+			TrafegusWS.getIntance().solicitaListaCarretasDisponiveis(solicitaListaCarretasDisponiveisResultHandler);
+		}
 		private function solicitaListaCarretasDisponiveisResultHandler(event:ResultEvent):void
 		{
 			var xml:XML = XML(event.result);

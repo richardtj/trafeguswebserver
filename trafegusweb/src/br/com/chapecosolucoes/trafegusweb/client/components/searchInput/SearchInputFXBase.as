@@ -5,7 +5,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.searchInput
 	import mx.controls.Image;
 	import mx.controls.TextInput;
 
-	public class SearchInputFX extends TextInput
+	public class SearchInputFXBase extends TextInput
 	{
 		[Embed(source='assets/search.png')]
 		private var _searchIcon:Class;
@@ -14,7 +14,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.searchInput
 		private var _currentlyFocused:Boolean = false;
 
 
-		public function SearchInputFX()
+		public function SearchInputFXBase()
 		{
 			super();
 			_textEmpty = true;

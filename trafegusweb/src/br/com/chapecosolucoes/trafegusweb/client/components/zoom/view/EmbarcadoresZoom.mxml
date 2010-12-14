@@ -44,11 +44,12 @@
 			}
 		]]>
 	</fx:Script>
-	<searchInput:SearchInputFX 
+	<searchInput:SearchInputFX
 		id="textInputFiltro"
 		width="100%" 
+		text="{MainModel.getInstance().zoomFilter}"
 		keyUp="MainModel.getInstance().embarcadoresArray.refresh()"
-		text="{MainModel.getInstance().zoomFilter}"/>
+		refreshEvent="this.controller.atualizaListaEmbarcadores()"/>
 	<view:DataGridFX 
 		id="grid" 
 		doubleClickEnabled="true"
@@ -56,7 +57,7 @@
 		keyDown="this.controller.embarcadorSelecionado()"
 		width="100%" height="100%" 
 		dataProvider="{MainModel.getInstance().embarcadoresArray}"
-		toolTip="Clique sobre o nome do embarcador para exibir os detalhes.">
+		toolTip="Clique sobre o codigo do embarcador para exibir os detalhes.">
 		<view:columns>
 			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
 			<mx:DataGridColumn headerText="Código" dataField="codigo" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.EmbarcadorItemRendererView"/>

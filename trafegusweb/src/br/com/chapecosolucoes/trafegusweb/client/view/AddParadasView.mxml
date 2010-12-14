@@ -39,7 +39,7 @@
 	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
-			import br.com.chapecosolucoes.trafegusweb.client.model.AddParadasModel;
+			import br.com.chapecosolucoes.trafegusweb.client.components.renderers.AddParadasModel;
 			import br.com.chapecosolucoes.trafegusweb.client.controller.AddParadasController;
 			import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;

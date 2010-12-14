@@ -1,4 +1,4 @@
-package br.com.chapecosolucoes.trafegusweb.client.model
+package br.com.chapecosolucoes.trafegusweb.client.components.renderers
 {
 	import br.com.chapecosolucoes.trafegusweb.client.vo.ParadaVO;
 

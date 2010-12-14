@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="100%" height="100%"
+		 initialize="this.init()"
+		 creationComplete="this.createComplete()">
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.controller.DadosAdicionaisController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			private var controller:DadosAdicionaisController;
+			private function init():void
+			{
+				this.controller = new DadosAdicionaisController();
+				this.controller.view = this;
+			}
+			private function createComplete():void
+			{
+				
+			}
+			public function atualizaTerminais():void
+			{
+				this.controller.solicitaListaTerminais();
+				this.controller.solicitaDadosTerminalDefeituoso();
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:VBox width="100%">
+		<s:Label text="Terminais dos veículos"/>		
+		<mx:DataGrid width="100%" dataProvider="{MainModel.getInstance().terminaisArray}">
+			<mx:columns>
+				<mx:DataGridColumn sortable="false" 
+								   width="20"
+								   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+				<mx:DataGridColumn headerText="Prec." dataField="precedencia"/>
+				<mx:DataGridColumn headerText="Cod. Term." dataField="codigo"/>
+				<mx:DataGridColumn headerText="Num. Term." dataField="numero"/>
+				<mx:DataGridColumn headerText="Descrição"/>
+				<mx:DataGridColumn headerText="Versão" dataField="vtecCodigo"/>
+				<mx:DataGridColumn headerText="Tipo Comunicação"/>
+				<mx:DataGridColumn headerText="Tecnologia"/>
+				<mx:DataGridColumn headerText="Ativo" dataField="ativo"/>
+				<mx:DataGridColumn headerText="Ativo WS" dataField="ativoWS"/>
+				<mx:DataGridColumn headerText="T.S." dataField="tempoSatelital"/>
+				<mx:DataGridColumn headerText="T.G." dataField="tempoGPRS"/>
+				<mx:DataGridColumn headerText="Veículo"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:HBox horizontalAlign="center" width="100%">
+			<mx:Image source="@Embed(source='assets/gnome_go_up.png')" buttonMode="true" toolTip="Subir prioridade"/>
+			<mx:Image source="@Embed(source='assets/gnome_go_down.png')" buttonMode="true" toolTip="Descer prioridade"/>
+		</mx:HBox>
+	</mx:VBox>
+	<mx:HRule width="60%"/>
+	<mx:VBox width="100%">
+		<s:Label text="Terminais com problemas"/>
+		<mx:DataGrid
+			dataProvider="{MainModel.getInstance().terminaisDefeituososArray}"
+			width="100%">
+			<mx:columns>
+				<mx:DataGridColumn sortable="false" 
+								   width="20"
+								   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+				<mx:DataGridColumn headerText="Número do terminal com problemas" dataField="codigo"/>
+				<mx:DataGridColumn headerText="Descrição" dataField="descricao"/>
+				<mx:DataGridColumn headerText="Início problema" dataField="pperInicioProblema"/>
+				<mx:DataGridColumn headerText="PPER Descrição" dataField="pperDescricao"/>
+			</mx:columns>
+		</mx:DataGrid>
+	</mx:VBox>
+</mx:VBox>

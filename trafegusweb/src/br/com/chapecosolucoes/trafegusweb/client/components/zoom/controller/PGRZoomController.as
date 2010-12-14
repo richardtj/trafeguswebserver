@@ -36,6 +36,10 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				TrafegusWS.getIntance().solicitaListaPGR(solicitaListaPGRResultHandler);
 			}
 		}
+		public function atualizaListaPGR():void
+		{
+			TrafegusWS.getIntance().solicitaListaPGR(solicitaListaPGRResultHandler);
+		}
 		private function solicitaListaPGRResultHandler(event:ResultEvent):void
 		{
 			var xml:XML = XML(event.result);

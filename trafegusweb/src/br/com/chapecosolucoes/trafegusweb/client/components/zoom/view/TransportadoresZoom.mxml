@@ -47,15 +47,16 @@
 		id="textInputFiltro"
 		width="100%" 
 		keyUp="MainModel.getInstance().transportadoresArray.refresh()"
-		text="{MainModel.getInstance().zoomFilter}"/>
-	<mx:DataGrid 
+		text="{MainModel.getInstance().zoomFilter}"
+		refreshEvent="this.controller.atualizaListaTransportadores()"/>
+	<view:DataGridFX 
 		id="grid" 
 		doubleClickEnabled="true"
 		doubleClick="this.controller.transportadorSelecionado(event)"
 		width="100%" height="100%" 
 		dataProvider="{MainModel.getInstance().transportadoresArray}"
 		toolTip="Clique sobre o codigo do transportador para exibir os detalhes.">
-		<mx:columns>
+		<view:columns>
 			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
 			<mx:DataGridColumn headerText="Código" dataField="codigo" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.TransportadorItemRendererView"/>
 			<mx:DataGridColumn headerText="Nome" dataField="nome"/>
@@ -64,8 +65,8 @@
 			<mx:DataGridColumn headerText="IE" dataField="ie"/>
 			<mx:DataGridColumn headerText="Cadastro" dataField="dataCadastro"/>
 			<mx:DataGridColumn headerText="Site" dataField="site"/>
-		</mx:columns>
-	</mx:DataGrid>
+		</view:columns>
+	</view:DataGridFX>
 	<view:PaginableComponent id="paginable"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.transportadorSelecionado(event)"/>

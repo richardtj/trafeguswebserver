@@ -22,6 +22,10 @@
 				
 				import mx.controls.Alert;
 				private var controller:PaginableComponentController;
+				[Bindable]
+				public var totalRecords:int=20;
+				[Bindable]
+				public var paginaAtual:int=1;
 				public function init():void
 				{
 					this.controller = new PaginableComponentController();
@@ -29,9 +33,13 @@
 				}
 			]]>
 		</fx:Script>
-		<mx:Image source="@Embed(source='assets/Gnome-Go-First-16.png')" buttonMode="true" click="this.controller.first()"/>
-		<mx:Image source="@Embed(source='assets/Gnome-Go-Previous-16.png')" buttonMode="true" click="this.controller.prev()"/>
-		<s:TextInput id="textInput" width="20" text="0" textAlign="center"/>
-		<mx:Image source="@Embed(source='assets/Gnome-Go-Next-16.png')" buttonMode="true" click="this.controller.next()"/>
-		<mx:Image source="@Embed(source='assets/Gnome-Go-Last-16.png')" buttonMode="true" click="this.controller.last()"/>
+		<mx:Image source="@Embed(source='assets/Gnome-Go-First-16.png')" buttonMode="true" mouseChildren="false" click="this.controller.first()"/>
+		<mx:Image source="@Embed(source='assets/Gnome-Go-Previous-16.png')" buttonMode="true" mouseChildren="false" click="this.controller.prev()"/>
+		<mx:HBox borderStyle="solid" verticalAlign="middle" horizontalAlign="center" horizontalGap="0">
+			<mx:TextInput id="textInput" width="25" text="{paginaAtual}" textAlign="center" borderStyle="none" editable="false"/>
+			<mx:Label text="/" textAlign="center"/>
+			<mx:TextInput id="textInput1" width="25" text="{Math.ceil(totalRecords/20)}" textAlign="center" borderStyle="none" editable="false"/>
+		</mx:HBox>
+		<mx:Image source="@Embed(source='assets/Gnome-Go-Next-16.png')" buttonMode="true" mouseChildren="false" click="this.controller.next()"/>
+		<mx:Image source="@Embed(source='assets/Gnome-Go-Last-16.png')" buttonMode="true" mouseChildren="false" click="this.controller.last()"/>
 </s:Group>
