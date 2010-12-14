@@ -35,10 +35,12 @@
 			{
 				this.controller = new EmbarcadoresZoomController();
 				this.controller.view = this;
+				
+				this.controller.solicitaTotalListaEmbarcadores();
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaListaEmbarcadores();
+				this.controller.atualizaListaEmbarcadores();
 				MainModel.getInstance().embarcadoresArray.filterFunction = this.controller.embarcadoresFilterFunction;
 				MainModel.getInstance().embarcadoresArray.refresh();
 			}
@@ -68,7 +70,13 @@
 			<mx:DataGridColumn headerText="Site" dataField="site"/>
 		</view:columns>
 	</view:DataGridFX>
-	<view:PaginableComponent id="paginable"/>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalListaEmbarcadores}"
+		next="this.controller.solicitaListaEmbarcadores(event)"
+		first="this.controller.solicitaListaEmbarcadores(event)"
+		prev="this.controller.solicitaListaEmbarcadores(event)"
+		last="this.controller.solicitaListaEmbarcadores(event)"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.embarcadorSelecionado()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>

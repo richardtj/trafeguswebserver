@@ -36,10 +36,12 @@
 				this.controller.view = this;
 				MainModel.getInstance().motoristasArray.filterFunction = this.controller.motoristaFilterFunction;
 				MainModel.getInstance().locaisArray.refresh();
+				
+				this.controller.solicitaTotalListaMotoristas();
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaListaMotoristas();
+				this.controller.atualizaListaMotoristas();
 			}
 		]]>
 	</fx:Script>
@@ -76,7 +78,13 @@
 			<mx:DataGridColumn headerText="Val. Pesquisa" dataField="validadePesquisa"/>
 		</view:columns>
 	</view:DataGridFX>
-	<view:PaginableComponent id="paginable"/>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalListaMotoristas}"
+		next="this.controller.solicitaListaMotoristas(event)"
+		prev="this.controller.solicitaListaMotoristas(event)"
+		first="this.controller.solicitaListaMotoristas(event)"
+		last="this.controller.solicitaListaMotoristas(event)"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.motoristaSelecionado(event)"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>

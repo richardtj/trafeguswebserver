@@ -21,6 +21,8 @@
 			
 			import mx.controls.Alert;
 			private var controller:VehiclesHistoricController;
+			[Bindable]
+			public var param:PosicaoVeiculoVO;
 			private function init():void
 			{
 				this.controller = new VehiclesHistoricController();
@@ -29,7 +31,9 @@
 			}
 			public function posicaoVeiculoVO(value:PosicaoVeiculoVO):void
 			{
-				this.controller.solicitaHistoricoPosicoes(value);
+				this.param = value;
+				this.controller.solicitaTotalHistoricoPosicoes();
+				this.controller.atualizaHistoricoPosicoes();
 			}
 		]]>
 	</fx:Script>
@@ -53,5 +57,11 @@
 			</mx:columns>
 		</mx:DataGrid>
 	</s:Group>
-	<view:PaginableComponent id="paginable"/>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalHistoricoPosicoes}"
+		first="this.controller.solicitaHistoricoPosicoes(event)"
+		last="this.controller.solicitaHistoricoPosicoes(event)"
+		next="this.controller.solicitaHistoricoPosicoes(event)"
+		prev="this.controller.solicitaHistoricoPosicoes(event)"/>
 </s:Group>

@@ -38,10 +38,12 @@
 				this.controller.view = this;
 				MainModel.getInstance().locaisArray.filterFunction = this.controller.locaisFilterFunction;
 				MainModel.getInstance().locaisArray.refresh();
+				
+				this.controller.solicitaTotalListaLocais();
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaListaLocais(PaginableEnum.FIRST);
+				this.controller.atualizaListaLocais();
 			}
 		]]>
 	</fx:Script>
@@ -69,11 +71,12 @@
 		</view:columns>
 	</view:DataGridFX>
 	<view:PaginableComponent 
-		id="paginable" 
-		first="this.controller.solicitaListaLocais(PaginableEnum.FIRST)" 
-		prev="this.controller.solicitaListaLocais(PaginableEnum.PREV)" 
-		next="this.controller.solicitaListaLocais(PaginableEnum.NEXT)" 
-		last="this.controller.solicitaListaLocais(PaginableEnum.LAST)"/>
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalListaLocais}"
+		first="this.controller.solicitaListaLocais(event)" 
+		prev="this.controller.solicitaListaLocais(event)" 
+		next="this.controller.solicitaListaLocais(event)" 
+		last="this.controller.solicitaListaLocais(event)"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.localSelecionado(event)"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>

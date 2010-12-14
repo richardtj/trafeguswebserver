@@ -35,9 +35,9 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				   (String(PosicaoVeiculoVO(item).tipoVeiculo).toUpperCase().search(MainModel.getInstance().veiculoSelecionado.toUpperCase()) >= 0) ||
 				   (String(PosicaoVeiculoVO(item).versaoTecnologia).toUpperCase().search(MainModel.getInstance().veiculoSelecionado.toUpperCase()) >= 0);
 		}
-		public function solicitaListaVeiculos():void
+		public function solicitaListaVeiculos(event:PaginableEvent):void
 		{
-			TrafegusWS.getIntance().solicitaListaVeiculos(this.veiculosRecebidosHandler);
+			TrafegusWS.getIntance().solicitaListaVeiculos(this.veiculosRecebidosHandler,event.paginaAtual);
 		}
 		public function solicitaDadosGrid(event:PaginableEvent):void
 		{

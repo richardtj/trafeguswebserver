@@ -63,6 +63,26 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		
 		public var totalDadosGrid:int=0;
 		
+		public var totalListaLocais:int=0;
+		
+		public var totalListaEmbarcadores:int=0;
+		
+		public var totalListaMotoristas:int=0;
+		
+		public var totalListaPGR:int = 0;
+		
+		public var totalListaRotas:int=0;
+		
+		public var totalListaTipoTransporte:int=0;
+		
+		public var totalListaTransportadores:int=0;
+		
+		public var totalListaVeiculos:int=0;
+		
+		public var totalListaViagemPai:int=0;
+		
+		public var totalHistoricoPosicoes:int=0;
+		
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoViagemVO")]
 		public var veiculosViagemArray:ArrayCollection = new ArrayCollection();
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO")]

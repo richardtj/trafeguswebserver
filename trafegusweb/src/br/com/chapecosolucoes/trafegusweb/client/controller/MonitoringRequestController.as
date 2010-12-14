@@ -49,7 +49,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			this.view.veiculoZoom.cod = event.veiculo.cod;
 			this.view.veiculoZoom.detail = event.veiculo.vehiclePlate;
-			MainModel.getInstance().solicitacaoMonitoramentoVO.placaTruc = event.vehiclePlate.cod;
+			MainModel.getInstance().solicitacaoMonitoramentoVO.placaTruc = event.veiculo.vehiclePlate;
 			this.view.dadosAdicionaisView.atualizaTerminais();
 		}
 		public function addCarretas():void
@@ -152,7 +152,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			MainModel.getInstance().paradasArray.addItem(event.local);
 		}
-		public function removeParada():void
+		/*public function removeParada():void
 		{
 			if(this.view.grid.selectedIndex != -1)
 			{
@@ -162,7 +162,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				Alert.show("Nenhum item selecionado.");
 			}				
-		}
+		}*/
 		public function addParadaZoomDispatcher():void
 		{
 			var addParada:AddParadasView = new AddParadasView();

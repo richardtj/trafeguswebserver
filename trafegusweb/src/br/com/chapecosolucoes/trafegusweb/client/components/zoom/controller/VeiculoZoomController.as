@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.VeiculoZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO;
@@ -20,16 +21,14 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		{
 		}
 		public var view:VeiculoZoom;
-		public function solicitaListaVeiculos():void
+		public function solicitaListaVeiculos(event:PaginableEvent):void
 		{
-			if(MainModel.getInstance().veiculosArray.length == 0)
-			{
-				TrafegusWS.getIntance().solicitaListaVeiculos(solicitaListaVeiculosResultHandler);
-			}
+			TrafegusWS.getIntance().solicitaListaVeiculos(solicitaListaVeiculosResultHandler,event.paginaAtual);
 		}
 		public function atualizaListaVeiculos():void
 		{
-			TrafegusWS.getIntance().solicitaListaVeiculos(solicitaListaVeiculosResultHandler);
+			this.view.paginable.paginaAtual = 1;
+			TrafegusWS.getIntance().solicitaListaVeiculos(solicitaListaVeiculosResultHandler,0);
 		}
 		private function solicitaListaVeiculosResultHandler(event:ResultEvent):void
 		{
@@ -65,6 +64,20 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public function closeHandler():void
 		{
 			PopUpManager.removePopUp(this.view);
+		}
+		public function solicitaTotalListaVeiculos():void
+		{
+			TrafegusWS.getIntance().solicitaTotalListaVeiculos(solicitaTotalListaVeiculosResultHandler);
+		}
+		private function solicitaTotalListaVeiculosResultHandler(event:ResultEvent):void
+		{
+			var xml:XML = XML(event.result);
+			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
+			var resultArray:Array = xmlListCollection.toArray();
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().totalListaVeiculos = int(obj.total.toString());
+			}
 		}
 	}
 }

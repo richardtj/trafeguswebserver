@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.RotaZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedRouteEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
@@ -43,16 +44,14 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				Alert.show("Nenhuma rota selecionada.");
 			}
 		}
-		public function solicitaListaRotas():void
+		public function solicitaListaRotas(event:PaginableEvent):void
 		{
-			if(MainModel.getInstance().rotasArray.length == 0)
-			{
-				TrafegusWS.getIntance().solicitaListaRotas(solicitaListaRotasResultHandler);
-			}
+			TrafegusWS.getIntance().solicitaListaRotas(solicitaListaRotasResultHandler,event.paginaAtual);
 		}
 		public function atualizaListaRotas():void
 		{
-			TrafegusWS.getIntance().solicitaListaRotas(solicitaListaRotasResultHandler);
+			this.view.paginable.paginaAtual = 1;
+			TrafegusWS.getIntance().solicitaListaRotas(solicitaListaRotasResultHandler,0);
 		}
 		private function solicitaListaRotasResultHandler(event:ResultEvent):void
 		{
@@ -70,6 +69,20 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public function closeHandler():void
 		{
 			PopUpManager.removePopUp(this.view);
+		}
+		public function solicitaTotalListaRotas():void
+		{
+			TrafegusWS.getIntance().solicitaTotalListaRotas(solicitaTotalListaRotasResultHandler);
+		}
+		private function solicitaTotalListaRotasResultHandler(event:ResultEvent):void
+		{
+			var xml:XML = XML(event.result);
+			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
+			var resultArray:Array = xmlListCollection.toArray();
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().totalListaRotas = int(obj.total.toString());
+			}
 		}
 	}
 }

@@ -36,10 +36,12 @@
 			{
 				this.controller = new RotaZoomController();
 				this.controller.view = this;
+				
+				this.controller.solicitaTotalListaRotas();
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaListaRotas();
+				this.controller.atualizaListaRotas();
 				MainModel.getInstance().rotasArray.filterFunction = this.controller.rotaFilterFunction;
 				MainModel.getInstance().rotasArray.refresh();
 			}
@@ -69,7 +71,13 @@
 			<!--mx:DataGridColumn headerText="Coordenadas Pipe"  dataField="coordenadasPipe"/-->
 		</view:columns>
 	</view:DataGridFX>
-	<view:PaginableComponent id="paginable"/>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalListaRotas}"
+		next="this.controller.solicitaListaRotas(event)"
+		prev="this.controller.solicitaListaRotas(event)"
+		first="this.controller.solicitaListaRotas(event)"
+		last="this.controller.solicitaListaRotas(event)"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.rotaSelecionada(event)"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>

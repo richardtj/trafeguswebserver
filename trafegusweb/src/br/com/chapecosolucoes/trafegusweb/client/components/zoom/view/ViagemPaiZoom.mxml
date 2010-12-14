@@ -36,10 +36,12 @@
 			{
 				this.controller = new ViagemPaiZoomController();
 				this.controller.view = this;
+				
+				this.controller.solicitaTotalListaViagemPai();
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaListaViagemPai();
+				this.controller.atualizaListaViagemPai();
 				MainModel.getInstance().viagemPaiArray.filterFunction = this.controller.viagemPaiFilterFunction;
 				MainModel.getInstance().viagemPaiArray.refresh();
 			}
@@ -66,7 +68,13 @@
 			<mx:DataGridColumn headerText="Prev. Fim"  dataField="previsaoFim"/>
 		</view:columns>
 	</view:DataGridFX>
-	<view:PaginableComponent id="paginable"/>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalListaViagemPai}"
+		first="this.controller.solicitaListaViagemPai(event)"
+		last="this.controller.solicitaListaViagemPai(event)"
+		next="this.controller.solicitaListaViagemPai(event)"
+		prev="this.controller.solicitaListaViagemPai(event)"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.viagemPaiSelecionada()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>

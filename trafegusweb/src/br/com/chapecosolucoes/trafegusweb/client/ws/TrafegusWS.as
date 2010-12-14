@@ -68,12 +68,12 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.showBusyCursor = true;
 			operation.send(usuario, senha);
 		}
-		public function solicitaListaVeiculos(handler:Function):void
+		public function solicitaListaVeiculos(handler:Function,offset:int):void
 		{
 			var operation:Operation = createOperation("solicitaListaVeiculos");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send(MainModel.getInstance().codEmpresa);
+			operation.send(MainModel.getInstance().codEmpresa,offset);
 		}
 		
 		public function solicitaDadosGrid(handler:Function,offset:int):void
@@ -84,11 +84,11 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.send(MainModel.getInstance().codEmpresa,offset);
 		}
 		
-		public function solicitaHistoricoPosicoes(handler:Function,params:PosicaoVeiculoVO):void{
+		public function solicitaHistoricoPosicoes(handler:Function,params:PosicaoVeiculoVO,offset:int):void{
 			var operation:Operation = createOperation("SolicitaHistoricoPosicoes");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send(MainModel.getInstance().codEmpresa,params.vehiclePlate,0,30,false);
+			operation.send(MainModel.getInstance().codEmpresa,params.vehiclePlate,offset,false);
 		}
 		
 		public function solicitaDadosMotorista(handler:Function,params:String):void
@@ -113,33 +113,33 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.showBusyCursor = true;
 			operation.send(MainModel.getInstance().codEmpresa);
 		}
-		public function solicitaListaMotoristas(handler:Function):void
+		public function solicitaListaMotoristas(handler:Function,offset:int):void
 		{
 			var operation:Operation = createOperation("solicitaListaMotoristas");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send(MainModel.getInstance().codEmpresa);
+			operation.send(MainModel.getInstance().codEmpresa,offset);
 		}
-		public function solicitaListaRotas(handler:Function):void
+		public function solicitaListaRotas(handler:Function,offset:int):void
 		{
 			var operation:Operation = createOperation("solicitaListaRotas");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send(MainModel.getInstance().codEmpresa);
+			operation.send(MainModel.getInstance().codEmpresa,offset);
 		}
-		public function solicitaListaEmbarcadores(handler:Function):void
+		public function solicitaListaEmbarcadores(handler:Function,offset:int):void
 		{
 			var operation:Operation = createOperation("solicitaListaEmbarcadores");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send(MainModel.getInstance().codEmpresa);
+			operation.send(MainModel.getInstance().codEmpresa,offset);
 		}
-		public function solicitaListaTransportadores(handler:Function):void
+		public function solicitaListaTransportadores(handler:Function,offset:int):void
 		{
 			var operation:Operation = createOperation("solicitaListaTransportadores");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send();
+			operation.send(offset);
 		}
 		public function solicitaDadosEmbarcador(handler:Function,param:String):void
 		{
@@ -155,19 +155,19 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.showBusyCursor = true;
 			operation.send(param);
 		}
-		public function solicitaListaLocais(handler:Function):void
+		public function solicitaListaLocais(handler:Function,offset:int):void
 		{
 			var operation:Operation = createOperation("solicitaListaLocais");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send(MainModel.getInstance().codEmpresa);
+			operation.send(MainModel.getInstance().codEmpresa,offset);
 		}
-		public function solicitaListaTipoTransporte(handler:Function):void
+		public function solicitaListaTipoTransporte(handler:Function,offset:int):void
 		{
 			var operation:Operation = createOperation("solicitaListaTipoTransporte");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send();
+			operation.send(offset);
 		}
 		public function solicitaDadosLocal(handler:Function,param:String):void
 		{
@@ -183,12 +183,12 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.showBusyCursor = true;
 			operation.send(MainModel.getInstance().codEmpresa);
 		}
-		public function solicitaListaPGR(handler:Function):void
+		public function solicitaListaPGR(handler:Function,offset:int):void
 		{
 			var operation:Operation = createOperation("solicitaListaPGR");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send();
+			operation.send(offset);
 		}
 		public function solicitaDadosPGR(handler:Function,param:String):void
 		{
@@ -197,12 +197,12 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.showBusyCursor = true;
 			operation.send(param);
 		}
-		public function solicitaListaViagemPai(handler:Function):void
+		public function solicitaListaViagemPai(handler:Function,offset:int):void
 		{
 			var operation:Operation = createOperation("solicitaListaViagemPai");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send(MainModel.getInstance().codEmpresa);
+			operation.send(MainModel.getInstance().codEmpresa,offset);
 		}
 		public function solicitaListaTerminais(handler:Function):void
 		{
@@ -217,6 +217,76 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
 			operation.send(MainModel.getInstance().codEmpresa);
+		}
+		public function solicitaTotalListaLocais(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaTotalListaLocais");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
+		}
+		public function solicitaTotalListaEmbarcadores(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaTotalListaEmbarcadores");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
+		}
+		public function solicitaTotalListaMotoristas(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaTotalListaMotoristas");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
+		}
+		public function solicitaTotalListaPGR(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaTotalListaPGR");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send();
+		}
+		public function solicitaTotalListaRotas(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaTotalListaRotas");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
+		}
+		public function solicitaTotalListaTipoTransporte(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaTotalListaTipoTransporte");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send();
+		}
+		public function solicitaTotalListaTransportadores(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaTotalListaTransportadores");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send();
+		}
+		public function solicitaTotalListaVeiculos(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaTotalListaVeiculos");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send();
+		}
+		public function solicitaTotalListaViagemPai(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaTotalListaViagemPai");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send();
+		}
+		public function solicitaTotalHistoricoPosicoes(handler:Function,params:PosicaoVeiculoVO):void
+		{
+			var operation:Operation = createOperation("solicitaTotalHistoricoPosicoes");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa,params.vehiclePlate);
 		}
 	}
 }

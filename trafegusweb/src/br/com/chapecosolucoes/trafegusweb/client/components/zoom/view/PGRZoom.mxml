@@ -36,10 +36,12 @@
 				this.controller.view = this;
 				MainModel.getInstance().pgrArray.filterFunction = this.controller.pgrFilterFunction;
 				MainModel.getInstance().pgrArray.refresh();
+				
+				this.controller.solicitaTotalListaPGR();
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaListaPGR();
+				this.controller.atualizaListaPGR();
 			}
 		]]>
 	</fx:Script>
@@ -63,7 +65,13 @@
 			<mx:DataGridColumn headerText="Cadastro" dataField="dataCadastro"/>
 		</view:columns>
 	</view:DataGridFX>
-	<view:PaginableComponent id="paginable"/>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalListaPGR}"
+		next="this.controller.solicitaListaPGR(event)"
+		prev="this.controller.solicitaListaPGR(event)"
+		last="this.controller.solicitaListaPGR(event)"
+		first="this.controller.solicitaListaPGR(event)"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.pgrSelecionado()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
