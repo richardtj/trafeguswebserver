@@ -255,10 +255,11 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosGrid")
-    public String solicitaDadosGrid(@WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
+    public String solicitaDadosGrid(@WebParam(name = "codEmpresa") String codEmpresa,@WebParam(name = "offset") String offset) throws Exception {
         StringBuilder sb = new StringBuilder();
 
         sb.append("SELECT DISTINCT");
+        sb.append("             VEIC_ORAS_Codigo,");
         sb.append("             VEIC_Placa as placa,");
         sb.append("             URPE_Valor as ignicao,");
         sb.append("             UPOS_Descricao_Sistema AS posicao,");
@@ -301,8 +302,9 @@ public class TrafegusWS {
         sb.append("    LEFT JOIN vcav_veiculo_cavalo ON (VCAV_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
         sb.append("    LEFT JOIN VVEI_Viagem_Veiculo ON (VVEI_VEIC_ORAS_Codigo = ORAS_Codigo AND VVEI_Precedencia = '1' AND VVEI_Ativo = 'S')");
         sb.append("    LEFT JOIN VIAG_Viagem ON (VIAG_Codigo = VVEI_VIAG_Codigo)");
-        sb.append("    ORDER BY VEIC_Placa");
-
+        sb.append("    ORDER BY VEIC_ORAS_Codigo");
+        sb.append("    LIMIT 20 OFFSET ").append(offset);
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -472,7 +474,9 @@ public class TrafegusWS {
      */
     @WebMethod(operationName = "solicitaListaLocais")
     public String solicitaListaLocais(@WebParam(name = "codEmpresa")
-    String codEmpresa) throws Exception {
+    String codEmpresa,@WebParam(name = "codRefe")
+    String codRefe,@WebParam(name = "param")
+    String param) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT REFE_Referencia.REFE_Codigo,");
@@ -484,7 +488,17 @@ public class TrafegusWS {
         sb.append("          FROM REFE_Referencia");
         sb.append("      JOIN CREF_Classe_Referencia ON (CREF_Codigo = REFE_CREF_Codigo)");
         sb.append("     WHERE CREF_PESS_ORAS_Codigo IS NULL OR CREF_PESS_ORAS_Codigo = ").append(codEmpresa);
-        sb.append("  ORDER BY REFE_Descricao");
+        if(param.equalsIgnoreCase("next") || param.equalsIgnoreCase("first"))
+        {
+            sb.append("    AND REFE_Codigo >= ").append(codRefe);
+            sb.append("    ORDER BY REFE_Codigo ASC");
+        }
+        else if (param.equalsIgnoreCase("prev") || param.equalsIgnoreCase("last"))
+        {
+            sb.append("    AND REFE_Codigo <= ").append(codRefe);
+            sb.append("    ORDER BY REFE_Codigo DESC");
+        }
+        sb.append("  LIMIT 20");
         System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
@@ -557,22 +571,17 @@ public class TrafegusWS {
     String codLocal) throws Exception {
         //TODO write your implementation code here:
        StringBuilder sb = new StringBuilder();
-       sb.append(" SELECT REFE_Referencia.REFE_Codigo,");
-       sb.append("         REFE_Referencia.REFE_Descricao,");
-       sb.append("         REFE_Referencia.REFE_Latitude,");
-       sb.append("         REFE_Referencia.REFE_Longitude,");
-       sb.append("         CREF_Classe_Referencia.CREF_Codigo,");
-       sb.append("         CREF_Classe_Referencia.CREF_Descricao,");
-       sb.append("         REFE_Referencia.REFE_Raio,");
-       sb.append("         REFE_Referencia.REFE_KM,");
-       sb.append("         REFE_Referencia.REFE_Bandeira,");
-       sb.append("         REFE_Referencia.REFE_Utilizado_Sistema");
-       sb.append("    FROM TRAN_Transportador");
-       sb.append("    JOIN TLOC_Transportador_Local ON (TLOC_TRAN_PESS_ORAS_Codigo = TRAN_PESS_ORAS_Codigo)");
-       sb.append("    JOIN REFE_Referencia ON (REFE_Codigo = TLOC_REFE_Codigo)");
-       sb.append("    JOIN CREF_Classe_Referencia ON (CREF_Codigo = REFE_CREF_Codigo)");
-       sb.append("    JOIN TLOC_Tipo_Local ON (TLOC_Tipo_Local.TLOC_Codigo = TLOC_Transportador_Local.TLOC_TLOC_Codigo)");
-       sb.append(" WHERE  TLOC_Transportador_Local.TLOC_Codigo = ").append(codLocal);
+       sb.append(" SELECT REFE_Referencia.REFE_Codigo, REFE_Referencia.REFE_Descricao, REFE_Referencia.REFE_Latitude,");
+       sb.append("      REFE_Referencia.REFE_Longitude, CREF_Classe_Referencia.CREF_Codigo, CREF_Classe_Referencia.CREF_Descricao,");
+       sb.append("      REFE_Referencia.REFE_Raio, REFE_Referencia.REFE_KM, REFE_Referencia.REFE_Bandeira,");
+       sb.append("      REFE_Referencia.REFE_Utilizado_Sistema");
+       sb.append("      FROM TRAN_Transportador JOIN TLOC_Transportador_Local ON (TLOC_TRAN_PESS_ORAS_Codigo = TRAN_PESS_ORAS_Codigo)");
+       sb.append("      JOIN REFE_Referencia ON (REFE_Codigo = TLOC_REFE_Codigo)");
+       sb.append("      JOIN CREF_Classe_Referencia ON (CREF_Codigo = REFE_CREF_Codigo)");
+       sb.append("      JOIN TLOC_Tipo_Local ON (TLOC_Tipo_Local.TLOC_Codigo = TLOC_Transportador_Local.TLOC_TLOC_Codigo)");
+       sb.append("  WHERE (CREF_Classe_Referencia.cref_pess_oras_codigo is null or CREF_Classe_Referencia.cref_pess_oras_codigo = TRAN_Transportador.tran_pess_oras_codigo)");
+       sb.append("      AND TRAN_Transportador.tran_pess_oras_codigo = ").append(codLocal);
+
        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
@@ -633,6 +642,131 @@ public class TrafegusWS {
         sb.append(" WHERE PGPG_Estatus = 'A'");
         sb.append("         AND pgpg_codigo = ").append(codigo);
         sb.append(" ORDER BY pite_descricao");
+        return Conexao.getInstance().queryToXML(sb.toString());
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaListaViagemPai")
+    public String solicitaListaViagemPai(@WebParam(name = "codEmpresa")
+    String codEmpresa) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT ");
+        sb.append("     VIAG_CODIGO,");
+        sb.append("     VIAG_PREVISAO_INICIO,");
+        sb.append("     VIAG_PREVISAO_FIM");
+        sb.append(" FROM VIAG_VIAGEM");
+        sb.append(" JOIN TRAN_TRANSPORTADOR ON (TRAN_PESS_ORAS_CODIGO = VIAG_TRAN_PESS_ORAS_CODIGO AND VIAG_TRAN_PESS_ORAS_CODIGO = ").append(codEmpresa).append(")");
+        return Conexao.getInstance().queryToXML(sb.toString());
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaListaTerminais")
+    public String solicitaListaTerminais(@WebParam(name = "placa")
+    String placa) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT TERM_Terminal.term_codigo,");
+        sb.append("   TERM_Terminal.term_numero_terminal,");
+        sb.append("   TERM_Terminal.term_vtec_codigo,");
+        sb.append("   TERM_Terminal.term_ativo,");
+        sb.append("   TERM_Terminal.term_ativo_ws,");
+        sb.append("   TERM_Terminal.term_tempo_satelital_padrao,");
+        sb.append("   TERM_Terminal.term_tempo_gprs_padrao,");
+        sb.append("   ORTE_Objeto_Rastreado_Termina.ORTE_Sequencia");
+        sb.append(" FROM ORAS_Objeto_Rastreado");
+        sb.append(" JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = ORAS_Codigo AND TRIM(REPLACE(REPLACE(REPLACE(REPLACE(VEIC_Placa,'.',''),'/',''),'\\\\',''),'-','')) = TRIM(REPLACE(REPLACE(REPLACE(REPLACE('").append(placa).append("','.',''),'/',''),'\\\\',''),'-','')))");
+        sb.append(" JOIN ORTE_Objeto_Rastreado_Termina ON (ORTE_ORAS_Codigo = VEIC_ORAS_CODIGO)");
+        sb.append(" JOIN TERM_Terminal ON (TERM_Codigo = ORTE_TERM_Codigo)");
+        System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString());
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaDadosTerminalDefeituoso")
+    public String solicitaDadosTerminalDefeituoso(@WebParam(name = "codTerminal")
+    String codTerminal) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select ppad_periferico_padrao.ppad_codigo,");
+        sb.append("     ppad_periferico_padrao.ppad_descricao,");
+        sb.append("     PPER_Problema_Periferico.pper_data_inicio_problema,");
+        sb.append("     PPER_Problema_Periferico.pper_descricao");
+        sb.append(" from TERM_Terminal");
+        sb.append(" join PPIN_Periferico_Padrao_Instal ON (PPIN_TERM_Codigo = TERM_Codigo)");
+        sb.append(" join ppad_periferico_padrao on (ppad_codigo = ppin_ppad_codigo)");
+        sb.append(" join PPER_Problema_Periferico ON (PPER_PPIN_Codigo = PPIN_Codigo");
+        sb.append(" and PPER_Problema_Periferico.pper_data_inicio_problema is not null");
+        sb.append(" and PPER_Problema_Periferico.pper_data_inicio_problema is null)");
+        sb.append(" where TERM_Codigo IN (14086, 2485)");
+        sb.append(" order by ppad_periferico_padrao.ppad_descricao,");
+        sb.append(" PPER_Problema_Periferico.pper_descricao");
+        System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString());
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaTotalDadosGrid")
+    public String solicitaTotalDadosGrid(@WebParam(name = "codEmpresa")
+    String codEmpresa) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("SELECT COUNT(*) AS TOTAL FROM (");
+        sb.append(" SELECT DISTINCT");
+        sb.append("             VEIC_ORAS_Codigo,");
+        sb.append("             VEIC_Placa as placa,");
+        sb.append("             URPE_Valor as ignicao,");
+        sb.append("             UPOS_Descricao_Sistema AS posicao,");
+        sb.append("             UPOS_Longitude AS gpslatitude,");
+        sb.append("             UPOS_Latitude AS gpslongitude,");
+        sb.append("             VTEC_Descricao as versaoTecnologia,");
+        sb.append("             TERM_Numero_Terminal as numeroTerminal,");
+        sb.append("             '' as embarcador,");
+        sb.append("             TERM_Ativo,");
+        sb.append("             CASE");
+        sb.append("                WHEN (VUPA_VEIC_ORAS_Codigo IS NOT NULL) THEN 'UTILITARIO DE PASSEIO'");
+        sb.append("                WHEN (VUCA_VEIC_ORAS_Codigo IS NOT NULL) THEN 'UTILITARIO DE CARGA'");
+        sb.append("                WHEN (VTRU_VEIC_ORAS_Codigo IS NOT NULL) THEN 'TRUCK'");
+        sb.append("                WHEN (VMOT_VEIC_ORAS_Codigo IS NOT NULL) THEN 'MOTO'");
+        sb.append("                ELSE 'CAVALO'");
+        sb.append("             END AS tipoVeiculo,");
+        sb.append("             CASE");
+        sb.append("                WHEN (VIAG_Previsao_Inicio IS NOT NULL) AND (VIAG_Previsao_Fim IS NOT NULL) AND (VIAG_Data_Inicio IS NULL) AND (VIAG_Data_Fim IS NULL)  THEN 'AGENDADO'");
+        sb.append("                WHEN (VIAG_Previsao_Inicio IS NOT NULL) AND (VIAG_Previsao_Fim IS NOT NULL) AND (VIAG_Data_Inicio IS NOT NULL) AND (VIAG_Data_Fim IS NULL) THEN 'EM VIAGEM'");
+        sb.append("                ELSE 'SEM VIAGEM'");
+        sb.append("             END AS statusViagem,");
+        sb.append("             0 as statusAtraso,");
+        sb.append("             MOTO1.PESS_Nome AS NomeMotorista,");
+        sb.append("             MO1.PFIS_CPF AS CpfMotorista");
+        sb.append("        FROM UPOS_Ultima_Posicao    ");
+        sb.append("        JOIN TERM_Terminal ON (TERM_Numero_Terminal = UPOS_TERM_Numero_Terminal AND TERM_VTEC_Codigo = UPOS_VTEC_Codigo AND TERM_Ativo_WS = 'S')");
+        sb.append("        JOIN VTEC_Versao_Tecnologia ON (VTEC_Codigo = TERM_VTEC_Codigo)                                     ");
+        sb.append("        JOIN ORTE_Objeto_Rastreado_Termina ON (ORTE_TERM_Codigo = TERM_Codigo AND ORTE_Sequencia = 'P')");
+        sb.append("        JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = ORTE_ORAS_Codigo)    ");
+        sb.append("        JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = ORAS_Codigo)");
+        sb.append("        JOIN VTRA_Veiculo_Transportador ON (VTRA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo AND VTRA_TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(")"); /*parametros*/
+        sb.append("    LEFT JOIN MOTO_Motorista AS M1 ON (M1.MOTO_PFIS_PESS_ORAS_Codigo = VEIC_MOTO_PFIS_PESS_ORAS_Codigo)");
+        sb.append("    LEFT JOIN PFIS_Pessoa_Fisica MO1 ON (MO1.PFIS_PESS_ORAS_Codigo = M1.MOTO_PFIS_PESS_ORAS_Codigo)");
+        sb.append("    LEFT JOIN PESS_Pessoa AS MOTO1 ON (MOTO1.PESS_ORAS_Codigo = MO1.PFIS_PESS_ORAS_Codigo)");
+        sb.append("    LEFT JOIN urpe_ultimo_rec_periferico ON (URPE_TERM_Numero_terminal = UPOS_TERM_Numero_Terminal AND URPE_VTEC_Codigo = UPOS_VTEC_codigo AND urpe_eppa_codigo = 30)");
+        sb.append("    LEFT JOIN vupa_veiculo_utilitario_passe ON (VUPA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
+        sb.append("    LEFT JOIN vuca_veiculo_utilitario_carga ON (VUCA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
+        sb.append("    LEFT JOIN vtru_veiculo_truck ON (VTRU_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
+        sb.append("    LEFT JOIN vmot_veiculo_moto ON (VMOT_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
+        sb.append("    LEFT JOIN vcav_veiculo_cavalo ON (VCAV_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
+        sb.append("    LEFT JOIN VVEI_Viagem_Veiculo ON (VVEI_VEIC_ORAS_Codigo = ORAS_Codigo AND VVEI_Precedencia = '1' AND VVEI_Ativo = 'S')");
+        sb.append("    LEFT JOIN VIAG_Viagem ON (VIAG_Codigo = VVEI_VIAG_Codigo)");
+        sb.append(" ) AS XXX");
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 }
