@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.TransportadoresZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.TransportadorVO;
@@ -31,16 +32,17 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				(String(TransportadorVO(item).rg).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(TransportadorVO(item).site).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0);
 		}
-		public function solicitaListaTransportadores():void
+		public function solicitaListaTransportadores(event:PaginableEvent):void
 		{
 			if(MainModel.getInstance().transportadoresArray.length == 0)
 			{
-				TrafegusWS.getIntance().solicitaListaTransportadores(solicitaListaTransportadoresResultHandler);
+				TrafegusWS.getIntance().solicitaListaTransportadores(solicitaListaTransportadoresResultHandler,event.paginaAtual);
 			}
 		}
 		public function atualizaListaTransportadores():void
 		{
-			TrafegusWS.getIntance().solicitaListaTransportadores(solicitaListaTransportadoresResultHandler);
+			this.view.paginable.paginaAtual = 1;
+			TrafegusWS.getIntance().solicitaListaTransportadores(solicitaListaTransportadoresResultHandler,0);
 		}
 		private function solicitaListaTransportadoresResultHandler(event:ResultEvent):void
 		{
@@ -70,6 +72,20 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			else
 			{
 				Alert.show("Nenhuma transportador selecionado.");
+			}
+		}
+		public function solicitaTotalListaTransportadores():void
+		{
+			TrafegusWS.getIntance().solicitaTotalListaTransportadores(solicitaTotalListaTransportadoresResultHandler);
+		}
+		private function solicitaTotalListaTransportadoresResultHandler(event:ResultEvent):void
+		{
+			var xml:XML = XML(event.result);
+			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
+			var resultArray:Array = xmlListCollection.toArray();
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().totalListaTransportadores = int(obj.total.toString());
 			}
 		}
 	}

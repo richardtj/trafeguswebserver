@@ -2,6 +2,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.EmbarcadoresZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.events.EmbarcadorSelecionadoEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
@@ -29,16 +30,14 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				(String(EmbarcadorVO(item).site).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0);
 			
 		}
-		public function solicitaListaEmbarcadores():void
+		public function solicitaListaEmbarcadores(event:PaginableEvent):void
 		{
-			if(MainModel.getInstance().embarcadoresArray.length == 0)
-			{
-				TrafegusWS.getIntance().solicitaListaEmbarcadores(solicitaListaEmbarcadoresResultEvent);
-			}
+			TrafegusWS.getIntance().solicitaListaEmbarcadores(solicitaListaEmbarcadoresResultEvent,event.paginaAtual);
 		}
 		public function atualizaListaEmbarcadores():void
 		{
-			TrafegusWS.getIntance().solicitaListaEmbarcadores(solicitaListaEmbarcadoresResultEvent);
+			this.view.paginable.paginaAtual = 1;
+			TrafegusWS.getIntance().solicitaListaEmbarcadores(solicitaListaEmbarcadoresResultEvent,0);
 		}
 		private function solicitaListaEmbarcadoresResultEvent(event:ResultEvent):void
 		{
@@ -69,6 +68,20 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public function closeHandler():void
 		{
 			PopUpManager.removePopUp(this.view);
+		}
+		public function solicitaTotalListaEmbarcadores():void
+		{
+			TrafegusWS.getIntance().solicitaTotalListaEmbarcadores(solicitaTotalListaEmbarcadoresResultHandler);
+		}
+		private function solicitaTotalListaEmbarcadoresResultHandler(event:ResultEvent):void
+		{
+			var xml:XML = XML(event.result);
+			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
+			var resultArray:Array = xmlListCollection.toArray();
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().totalListaEmbarcadores = int(obj.total.toString());
+			}
 		}
 	}
 }

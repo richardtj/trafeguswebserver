@@ -2,6 +2,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.PGRZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PGRVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
@@ -29,16 +30,14 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				(String(PGRVO(item).dataCadastro).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(PGRVO(item).descricao).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0);
 		}
-		public function solicitaListaPGR():void
+		public function solicitaListaPGR(event:PaginableEvent):void
 		{
-			if(MainModel.getInstance().pgrArray.length == 0)
-			{
-				TrafegusWS.getIntance().solicitaListaPGR(solicitaListaPGRResultHandler);
-			}
+			TrafegusWS.getIntance().solicitaListaPGR(solicitaListaPGRResultHandler,event.paginaAtual);
 		}
 		public function atualizaListaPGR():void
 		{
-			TrafegusWS.getIntance().solicitaListaPGR(solicitaListaPGRResultHandler);
+			this.view.paginable.paginaAtual = 1;
+			TrafegusWS.getIntance().solicitaListaPGR(solicitaListaPGRResultHandler,0);
 		}
 		private function solicitaListaPGRResultHandler(event:ResultEvent):void
 		{
@@ -69,6 +68,20 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public function closeHandler():void
 		{
 			PopUpManager.removePopUp(this.view);
+		}
+		public function solicitaTotalListaPGR():void
+		{
+			TrafegusWS.getIntance().solicitaTotalListaPGR(solicitaTotalListaPGRResultHandler);
+		}
+		private function solicitaTotalListaPGRResultHandler(event:ResultEvent):void
+		{
+			var xml:XML = XML(event.result);
+			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
+			var resultArray:Array = xmlListCollection.toArray();
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().totalListaPGR = int(obj.total.toString());
+			}
 		}
 	}
 }

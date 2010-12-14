@@ -36,10 +36,12 @@
 				this.controller.view = this;
 				MainModel.getInstance().tipoTransporteArray.filterFunction = this.controller.tipoTransporteFilterFunction;
 				MainModel.getInstance().tipoTransporteArray.refresh();
+				
+				this.controller.solicitaTotalListaTipoTransporte();
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaListaTipoTransporte();
+				this.controller.atualizaListaTipoTransporte();
 			}
 		]]>
 	</fx:Script>
@@ -62,7 +64,13 @@
 			<mx:DataGridColumn headerText="Descrição" dataField="descricao"/>
 		</view:columns>
 	</view:DataGridFX>
-	<view:PaginableComponent id="paginable"/>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalListaTipoTransporte}"
+		next="this.controller.solicitaListaTipoTransporte(event)"
+		prev="this.controller.solicitaListaTipoTransporte(event)"
+		first="this.controller.solicitaListaTipoTransporte(event)"
+		last="this.controller.solicitaListaTipoTransporte(event)"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.tipoTransporteSelecionado()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>

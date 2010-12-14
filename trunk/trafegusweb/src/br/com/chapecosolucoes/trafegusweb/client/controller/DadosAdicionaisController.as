@@ -31,6 +31,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				terminal.setTerminalVO(obj);
 				MainModel.getInstance().terminaisArray.addItem(terminal);
 			}
+			this.solicitaDadosTerminalDefeituoso();
 		}
 		public function solicitaDadosTerminalDefeituoso():void
 		{

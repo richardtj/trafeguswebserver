@@ -34,10 +34,12 @@
 			{
 				this.controller = new TransportadorZoomController();
 				this.controller.view = this;
+				
+				this.controller.solicitaTotalListaTransportadores();
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaListaTransportadores();
+				this.controller.atualizaListaTransportadores();
 				MainModel.getInstance().transportadoresArray.filterFunction = this.controller.transportadoresFilterFunction;
 				MainModel.getInstance().transportadoresArray.refresh();
 			}
@@ -67,7 +69,13 @@
 			<mx:DataGridColumn headerText="Site" dataField="site"/>
 		</view:columns>
 	</view:DataGridFX>
-	<view:PaginableComponent id="paginable"/>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalListaTransportadores}"
+		first="this.controller.solicitaListaTransportadores(event)"
+		prev="this.controller.solicitaListaTransportadores(event)"
+		last="this.controller.solicitaListaTransportadores(event)"
+		next="this.controller.solicitaListaTransportadores(event)"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.transportadorSelecionado(event)"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>

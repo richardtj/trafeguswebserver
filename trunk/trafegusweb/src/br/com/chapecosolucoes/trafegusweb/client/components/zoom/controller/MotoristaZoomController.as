@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.MotoristaZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosMotoristaVO;
@@ -49,16 +50,14 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				(String(DadosMotoristaVO(item).validadeCNH).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(DadosMotoristaVO(item).validadePesquisa).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0);
 		}
-		public function solicitaListaMotoristas():void
+		public function solicitaListaMotoristas(event:PaginableEvent):void
 		{
-			if(MainModel.getInstance().motoristasArray.length == 0)
-			{
-				TrafegusWS.getIntance().solicitaListaMotoristas(solicitaListaMotoristasResultHandler);
-			}
+			TrafegusWS.getIntance().solicitaListaMotoristas(solicitaListaMotoristasResultHandler,event.paginaAtual);
 		}
 		public function atualizaListaMotoristas():void
 		{
-			TrafegusWS.getIntance().solicitaListaMotoristas(solicitaListaMotoristasResultHandler);
+			this.view.paginable.paginaAtual = 1;
+			TrafegusWS.getIntance().solicitaListaMotoristas(solicitaListaMotoristasResultHandler,0);
 		}
 		private function solicitaListaMotoristasResultHandler(event:ResultEvent):void
 		{
@@ -76,6 +75,20 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public function closeHandler():void
 		{
 			PopUpManager.removePopUp(this.view);
+		}
+		public function solicitaTotalListaMotoristas():void
+		{
+			TrafegusWS.getIntance().solicitaTotalListaMotoristas(solicitaTotalListaMotoristasResultHandler);
+		}
+		private function solicitaTotalListaMotoristasResultHandler(event:ResultEvent):void
+		{
+			var xml:XML = XML(event.result);
+			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
+			var resultArray:Array = xmlListCollection.toArray();
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().totalListaMotoristas = int(obj.total.toString());
+			}
 		}
 	}
 }

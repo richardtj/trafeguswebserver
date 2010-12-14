@@ -40,7 +40,7 @@
 		]]>
 	</fx:Script>
 	<mx:TabBar dataProvider="{viewStack}"/>
-	<mx:ViewStack id="viewStack" width="100%" height="100%">
+	<mx:ViewStack id="viewStack" width="100%" height="100%" creationPolicy="all">
 		<s:NavigatorContent id="smView" label="Agendamento de Viagem">
 			<mx:Form width="100%" height="100%">
 				<mx:FormItem label="Tipo de viagem" required="true">
@@ -90,27 +90,7 @@
 			</mx:Form>
 		</s:NavigatorContent>
 		<s:NavigatorContent id="paradasView" label="Entregas/Paradas">
-			<s:layout>
-				<s:VerticalLayout/>
-			</s:layout>
-			<mx:DataGrid 
-				id="grid" 
-				width="100%" height="100%" 
-				dataProvider="{MainModel.getInstance().paradasArray}">
-				<mx:columns>
-					<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
-					<mx:DataGridColumn headerText="Sequencia" dataField="seq"/>
-					<mx:DataGridColumn headerText="Cod. Tipo Parada" dataField="codigoTipoTransporte"/>
-					<mx:DataGridColumn headerText="Tipo Parada" dataField="descricaoTipoTransporte"/>
-					<mx:DataGridColumn headerText="Cod. Ref." dataField="codigoReferencia"/>
-					<mx:DataGridColumn headerText="Referencia" dataField="descricaoReferencia"/>
-					<mx:DataGridColumn headerText="Raio" dataField="raio"/>
-				</mx:columns>
-			</mx:DataGrid>
-			<mx:ControlBar width="100%" horizontalAlign="right">
-				<s:Button label="Adicionar" click="this.controller.addParadaZoomDispatcher()"/>
-				<s:Button label="Excluir" click="this.controller.removeParada()"/>
-			</mx:ControlBar>
+			<view1:ParadasView width="100%" height="100%"/>
 		</s:NavigatorContent>
 		<s:NavigatorContent id="dadosAdicionaisTab" label="Dados Adicionais">
 			<view1:DadosAdicionaisView id="dadosAdicionaisView" width="100%"/>

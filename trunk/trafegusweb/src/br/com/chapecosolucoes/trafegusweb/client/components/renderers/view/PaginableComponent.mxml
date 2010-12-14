@@ -36,9 +36,9 @@
 		<mx:Image source="@Embed(source='assets/Gnome-Go-First-16.png')" buttonMode="true" mouseChildren="false" click="this.controller.first()"/>
 		<mx:Image source="@Embed(source='assets/Gnome-Go-Previous-16.png')" buttonMode="true" mouseChildren="false" click="this.controller.prev()"/>
 		<mx:HBox borderStyle="solid" verticalAlign="middle" horizontalAlign="center" horizontalGap="0">
-			<mx:TextInput id="textInput" width="25" text="{paginaAtual}" textAlign="center" borderStyle="none" editable="false"/>
-			<mx:Label text="/" textAlign="center"/>
-			<mx:TextInput id="textInput1" width="25" text="{Math.ceil(totalRecords/20)}" textAlign="center" borderStyle="none" editable="false"/>
+			<mx:TextInput id="textInput" width="25" text="{paginaAtual}" textAlign="center" borderStyle="none" editable="false" paddingRight="0"/>
+			<mx:Label text="/" textAlign="center" paddingLeft="0" paddingRight="0"/>
+			<mx:TextInput id="textInput1" width="25" text="{Math.ceil(totalRecords/20)}" textAlign="center" borderStyle="none" editable="false" paddingLeft="0"/>
 		</mx:HBox>
 		<mx:Image source="@Embed(source='assets/Gnome-Go-Next-16.png')" buttonMode="true" mouseChildren="false" click="this.controller.next()"/>
 		<mx:Image source="@Embed(source='assets/Gnome-Go-Last-16.png')" buttonMode="true" mouseChildren="false" click="this.controller.last()"/>

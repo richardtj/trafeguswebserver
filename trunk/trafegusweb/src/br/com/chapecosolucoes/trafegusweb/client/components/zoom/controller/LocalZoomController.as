@@ -2,6 +2,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.LocaisZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.enum.PaginableEnum;
+	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedLocalEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.LocalVO;
@@ -29,16 +30,14 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				(String(LocalVO(item).gpsLatitudeString).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(LocalVO(item).gpsLongitudeString).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0);
 		}
-		public function solicitaListaLocais(enum:PaginableEnum):void
+		public function solicitaListaLocais(event:PaginableEvent):void
 		{
-			if(MainModel.getInstance().locaisArray.length == 0)
-			{
-				TrafegusWS.getIntance().solicitaListaLocais(solicitaListaLocaisResultEvent);
-			}
+			TrafegusWS.getIntance().solicitaListaLocais(solicitaListaLocaisResultEvent,event.paginaAtual);
 		}
 		public function atualizaListaLocais():void
 		{
-			TrafegusWS.getIntance().solicitaListaLocais(solicitaListaLocaisResultEvent);
+			this.view.paginable.paginaAtual=1;
+			TrafegusWS.getIntance().solicitaListaLocais(solicitaListaLocaisResultEvent,0);
 		}
 		private function solicitaListaLocaisResultEvent(event:ResultEvent):void
 		{
@@ -69,6 +68,20 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public function closeHandler():void
 		{
 			PopUpManager.removePopUp(this.view);
+		}
+		public function solicitaTotalListaLocais():void
+		{
+			TrafegusWS.getIntance().solicitaTotalListaLocais(solicitaTotalListaLocaisResultHandler);
+		}
+		private function solicitaTotalListaLocaisResultHandler(event:ResultEvent):void
+		{
+			var xml:XML = XML(event.result);
+			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
+			var resultArray:Array = xmlListCollection.toArray();
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().totalListaLocais = int(obj.total.toString());
+			}
 		}
 	}
 }

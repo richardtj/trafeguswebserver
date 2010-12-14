@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.ViagemPaiZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.ViagemPaiSelecionadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.ViagemPaiVO;
@@ -19,16 +20,13 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		{
 		}
 		public var view:ViagemPaiZoom;
-		public function solicitaListaViagemPai():void
+		public function solicitaListaViagemPai(event:PaginableEvent):void
 		{
-			if(MainModel.getInstance().viagemPaiArray.length == 0)
-			{
-				TrafegusWS.getIntance().solicitaListaViagemPai(solicitaListaViagemPaiResultHandler);
-			}
+			TrafegusWS.getIntance().solicitaListaViagemPai(solicitaListaViagemPaiResultHandler,event.paginaAtual);
 		}
 		public function atualizaListaViagemPai():void
 		{
-			TrafegusWS.getIntance().solicitaListaViagemPai(solicitaListaViagemPaiResultHandler);
+			TrafegusWS.getIntance().solicitaListaViagemPai(solicitaListaViagemPaiResultHandler,0);
 		}
 		private function solicitaListaViagemPaiResultHandler(event:ResultEvent):void
 		{
@@ -65,6 +63,20 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public function closeHandler():void
 		{
 			PopUpManager.removePopUp(this.view);
+		}
+		public function solicitaTotalListaViagemPai():void
+		{
+			TrafegusWS.getIntance().solicitaTotalListaViagemPai(solicitaTotalListaViagemPaiResultHandler);
+		}
+		private function solicitaTotalListaViagemPaiResultHandler(event:ResultEvent):void
+		{
+			var xml:XML = XML(event.result);
+			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
+			var resultArray:Array = xmlListCollection.toArray();
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().totalListaViagemPai = int(obj.total.toString());
+			}
 		}
 	}
 }

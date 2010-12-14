@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesHistoricEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.VehiclesHistoricView;
@@ -25,9 +26,13 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				   (String(HistoricoPosicoesVeiculoVO(item).gpsDescSis).toUpperCase().search(MainModel.getInstance().historicoSelecionado.toUpperCase()) >= 0);
 		}
 		
-		public function solicitaHistoricoPosicoes(value:PosicaoVeiculoVO):void
+		public function solicitaHistoricoPosicoes(event:PaginableEvent):void
 		{
-			TrafegusWS.getIntance().solicitaHistoricoPosicoes(this.solicitaHistoricoPosicoesHandler,value);
+			TrafegusWS.getIntance().solicitaHistoricoPosicoes(this.solicitaHistoricoPosicoesHandler,this.view.param,event.paginaAtual);
+		}
+		public function atualizaHistoricoPosicoes():void
+		{
+			TrafegusWS.getIntance().solicitaHistoricoPosicoes(this.solicitaHistoricoPosicoesHandler,this.view.param,0);
 		}
 		private function solicitaHistoricoPosicoesHandler(event:ResultEvent):void
 		{
@@ -41,6 +46,20 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				MainModel.getInstance().historicoPosicoesVeiculosArray.addItem(dataPos);
 			}
 			this.view.dispatchEvent(new VehiclesHistoricEvent(VehiclesHistoricEvent.ROUTE_RECEIVED_EVENT,true));
+		}
+		public function solicitaTotalHistoricoPosicoes():void
+		{
+			TrafegusWS.getIntance().solicitaTotalHistoricoPosicoes(solicitaTotalHistoricoPosicoesResultHandler,this.view.param);
+		}
+		private function solicitaTotalHistoricoPosicoesResultHandler(event:ResultEvent):void
+		{
+			var xml:XML = XML(event.result);
+			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
+			var resultArray:Array = xmlListCollection.toArray();
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().totalHistoricoPosicoes = int(obj.total.toString());
+			}
 		}
 	}
 }

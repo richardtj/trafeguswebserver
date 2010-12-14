@@ -34,10 +34,12 @@
 			{
 				this.controller = new VeiculoZoomController();
 				this.controller.view = this;
+				
+				this.controller.solicitaTotalListaVeiculos();
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaListaVeiculos();
+				this.controller.atualizaListaVeiculos();
 				MainModel.getInstance().veiculosArray.filterFunction = this.controller.veiculosFilterFunction;
 				MainModel.getInstance().veiculosArray.refresh();
 			}
@@ -65,7 +67,13 @@
 			<mx:DataGridColumn headerText="Descrição" dataField="desc"/>
 		</view:columns>
 	</view:DataGridFX>
-	<view:PaginableComponent id="paginable"/>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalListaVeiculos}"
+		first="this.controller.solicitaListaVeiculos(event)"
+		last="this.controller.solicitaListaVeiculos(event)"
+		next="this.controller.solicitaListaVeiculos(event)"
+		prev="this.controller.solicitaListaVeiculos(event)"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button label="Ok" click="this.controller.veiculoSelecionado()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
