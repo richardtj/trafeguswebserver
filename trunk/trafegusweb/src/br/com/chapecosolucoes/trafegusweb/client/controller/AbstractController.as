@@ -26,7 +26,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function pageChanged(event:PaginableEvent):void
 		{
-			var paginableEvent:PaginableEvent = new PaginableEvent(PaginableEvent.PAGE_CHANGED,(event.paginaAtual/20)+1);
+			var paginableEvent:PaginableEvent = new PaginableEvent(PaginableEvent.PAGE_CHANGED,(event.paginaAtual/20)+1,true);
 			this.view.dispatchEvent(paginableEvent);
 		}
 	}

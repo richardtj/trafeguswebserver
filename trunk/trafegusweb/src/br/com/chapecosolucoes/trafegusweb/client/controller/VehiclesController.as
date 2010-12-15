@@ -45,10 +45,18 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			this.view.dispatchEvent(paginableEvent);
 			TrafegusWS.getIntance().solicitaDadosGrid(this.dadosGridRecebidosHandler,event.paginaAtual);
 		}
-		public function atualizaDadosGrid():void
+		public function atualizaDadosGrid(paginaAtual:int=0):void
 		{
-			this.view.paginable.paginaAtual=1;
-			TrafegusWS.getIntance().solicitaDadosGrid(this.dadosGridRecebidosHandler,0);
+			if(paginaAtual == 0)
+			{
+				this.view.paginable.paginaAtual=1;
+				TrafegusWS.getIntance().solicitaDadosGrid(this.dadosGridRecebidosHandler,0);
+			}
+			else
+			{
+				this.view.paginable.paginaAtual = paginaAtual;
+				TrafegusWS.getIntance().solicitaDadosGrid(this.dadosGridRecebidosHandler,(paginaAtual-1)*20);
+			}
 		}
 		public function veiculoSelecionadoHandler(event:MouseEvent):void
 		{
