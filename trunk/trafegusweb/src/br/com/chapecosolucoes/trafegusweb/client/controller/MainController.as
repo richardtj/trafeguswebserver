@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.enum.VehicleEnum;
 	import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.DetailsEvent;
@@ -11,6 +12,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.view.MainView2;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
+	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
 	import com.google.maps.LatLng;
 	
@@ -21,6 +23,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import mx.events.CloseEvent;
 	import mx.events.MenuEvent;
 	import mx.managers.PopUpManager;
+	import mx.rpc.events.ResultEvent;
 
 	public class MainController
 	{
@@ -101,10 +104,12 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(event.label == "Salvar")
 			{
 				Alert.show("Configurações salvas com sucesso","Sucesso");
+				TrafegusWS.getIntance().salvarPreferenciasUsuario(salvarPreferenciasUsuarioResultHandler);
 			}
 			if(event.label == "Sair")
 			{
-				Alert.show("Deseja sair da aplicação","Sair",Alert.OK | Alert.CANCEL,this.view,this.closeApp);
+				MessageBox.atencao("Deseja sair da aplicação");
+				//Alert.show("Deseja sair da aplicação","Sair",Alert.OK | Alert.CANCEL,this.view,this.closeApp);
 			}
 			if(event.label == "Agendamento")
 			{
@@ -122,6 +127,10 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				this.view.vehiclesView.paginaAtual = event.paginaAtual;
 			}
+		}
+		private function salvarPreferenciasUsuarioResultHandler(event:ResultEvent):void
+		{
+			
 		}
 	}
 }
