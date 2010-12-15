@@ -39,7 +39,6 @@
 	</fx:Style>
 	<fx:Script>
 		<![CDATA[
-			import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 			import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.events.LoginEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
@@ -101,7 +100,7 @@
 				if (event.logged == true)
 				{
 					loginViewStack.selectedIndex=1;
-					MessageBox.informacao("teste");
+
 				}
 			}
 		]]>
