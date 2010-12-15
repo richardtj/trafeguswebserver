@@ -8,6 +8,7 @@
 	<fx:Metadata>
 		[Event(name="routeReceivedEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.VehiclesHistoricEvent")]
 		[Event(name="vehicleSelectedEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent")]
+		[Event(name="pageChanged",type="br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent")]
 	</fx:Metadata>
 	<s:layout>
 		<s:VerticalLayout paddingRight="10"

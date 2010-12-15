@@ -31,7 +31,7 @@
 			}
 			public function set paginaAtual(paginaAtual:int):void
 			{
-				this.paginable.paginaAtual = paginaAtual;
+				this.controller.atualizaDadosGrid(paginaAtual);
 			}
 			private function init():void
 			{
