@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.enum.VehicleEnum;
+	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.AbstractView;
@@ -22,6 +23,11 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				var vehicleEvent:VehiclesEvent = new VehiclesEvent(VehiclesEvent.VEHICLE_SELECTED_EVENT,event.currentTarget.selectedIndex,VehicleEnum.DETAILS,true);
 				this.view.dispatchEvent(vehicleEvent);
 			}
+		}
+		public function pageChanged(event:PaginableEvent):void
+		{
+			var paginableEvent:PaginableEvent = new PaginableEvent(PaginableEvent.PAGE_CHANGED,(event.paginaAtual/20)+1);
+			this.view.dispatchEvent(paginableEvent);
 		}
 	}
 }

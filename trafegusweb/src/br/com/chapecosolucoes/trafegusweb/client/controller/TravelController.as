@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.TravelView;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoViagemVO;
@@ -32,9 +33,14 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				(String(VeiculoViagemVO(item).vehiclePlate).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0) ||
 				(String(VeiculoViagemVO(item).versaoTecnologia).toUpperCase().search(MainModel.getInstance().viagemSelecionada.toUpperCase()) >= 0);
 		}
-		public function solicitaDadosGridEmViagem():void
+		public function solicitaDadosGridEmViagem(event:PaginableEvent):void
 		{
-			TrafegusWS.getIntance().solicitaDadosGridEmViagem(solicitaDadosGridEmViagemResultHandler);
+			TrafegusWS.getIntance().solicitaDadosGridEmViagem(solicitaDadosGridEmViagemResultHandler,event.paginaAtual);
+		}
+		public function atualizaDadosGridEmViagem():void
+		{
+			this.view.paginable.paginaAtual = 1;
+			TrafegusWS.getIntance().solicitaDadosGridEmViagem(solicitaDadosGridEmViagemResultHandler,0);
 		}
 		public function solicitaDadosGridEmViagemResultHandler(event:ResultEvent):void
 		{
@@ -46,6 +52,20 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				var dataPos:VeiculoViagemVO = new VeiculoViagemVO(obj);
 				MainModel.getInstance().veiculosViagemArray.addItem(dataPos);
+			}
+		}
+		public function solicitaTotalDadosGridEmViagem():void
+		{
+			TrafegusWS.getIntance().solicitaTotalDadosGridEmViagem(solicitaTotalDadosGridEmViagemResultHandler);
+		}
+		private function solicitaTotalDadosGridEmViagemResultHandler(event:ResultEvent):void
+		{
+			var xml:XML = XML(event.result);
+			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
+			var resultArray:Array = xmlListCollection.toArray();
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().totalVeiculosViagem = int(obj.total.toString());
 			}
 		}
 	}

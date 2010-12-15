@@ -30,6 +30,10 @@
 			{
 				this.abstractView.selectedIndex = index;
 			}
+			public function set paginaAtual(paginaAtual:int):void
+			{
+				this.abstractView.paginaAtual = paginaAtual;
+			}
 			private function init():void
 			{
 				this.controller = new DetailsController();

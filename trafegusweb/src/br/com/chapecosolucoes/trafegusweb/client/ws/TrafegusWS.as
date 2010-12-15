@@ -106,12 +106,12 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.showBusyCursor = true;
 			operation.send(params);
 		}
-		public function solicitaDadosGridEmViagem(handler:Function):void
+		public function solicitaDadosGridEmViagem(handler:Function,offset:int):void
 		{
 			var operation:Operation = createOperation("solicitaDadosGridEmViagem");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send(MainModel.getInstance().codEmpresa);
+			operation.send(MainModel.getInstance().codEmpresa,offset);
 		}
 		public function solicitaListaMotoristas(handler:Function,offset:int):void
 		{
@@ -272,14 +272,14 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			var operation:Operation = createOperation("solicitaTotalListaVeiculos");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send();
+			operation.send(MainModel.getInstance().codEmpresa);
 		}
 		public function solicitaTotalListaViagemPai(handler:Function):void
 		{
 			var operation:Operation = createOperation("solicitaTotalListaViagemPai");
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
-			operation.send();
+			operation.send(MainModel.getInstance().codEmpresa);
 		}
 		public function solicitaTotalHistoricoPosicoes(handler:Function,params:PosicaoVeiculoVO):void
 		{
@@ -287,6 +287,20 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.addEventListener(ResultEvent.RESULT, handler);
 			operation.showBusyCursor = true;
 			operation.send(MainModel.getInstance().codEmpresa,params.vehiclePlate);
+		}
+		public function solicitaDadosTerminalDefeituoso(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaDadosTerminalDefeituoso");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codTerminais);
+		}
+		public function solicitaTotalDadosGridEmViagem(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaTotalDadosGridEmViagem");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa);
 		}
 	}
 }
