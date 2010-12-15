@@ -302,6 +302,13 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.showBusyCursor = true;
 			operation.send(MainModel.getInstance().codEmpresa);
 		}
+		public function salvarPreferenciasUsuario(handler:Function):void
+		{
+			var operation:Operation = createOperation("salvarPreferenciasUsuario");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send("ChaveTeste","ValorTeste",MainModel.getInstance().codUsuario);
+		}
 	}
 }
 

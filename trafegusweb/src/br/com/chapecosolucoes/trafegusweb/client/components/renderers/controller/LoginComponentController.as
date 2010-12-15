@@ -27,6 +27,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 			for each (var obj:Object in resultArray)
 			{
 				MainModel.getInstance().codEmpresa = obj.usua_pess_oras_codigo.toString();
+				MainModel.getInstance().codUsuario = obj.usua_pfis_pess_oras_codigo.toString();
 			}
 			if(resultArray.length != 0)
 			{
