@@ -4,7 +4,8 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 initialize="init()" 
 		 creationComplete="creationComplete()"
-		 xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+		 xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
+		 xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<s:layout>
 		<s:VerticalLayout/>
 	</s:layout>
@@ -24,10 +25,12 @@
 				this.controller = new TravelController();
 				this.controller.view = this;
 				MainModel.getInstance().veiculosViagemArray.filterFunction = this.controller.viagemFilterFunction;
+				
+				this.controller.solicitaTotalDadosGridEmViagem();
 			}
 			private function creationComplete():void
 			{
-				this.controller.solicitaDadosGridEmViagem();
+				this.controller.atualizaDadosGridEmViagem();
 			}
 		]]>
 	</fx:Script>
@@ -36,7 +39,7 @@
 		width="100%" 
 		keyUp="MainModel.getInstance().veiculosViagemArray.refresh()"
 		text="{MainModel.getInstance().viagemSelecionada}"
-		refreshEvent="this.controller.solicitaDadosGridEmViagem()"/>
+		refreshEvent="this.controller.atualizaDadosGridEmViagem()"/>
 	<s:Group id="group1"
 			 width="100%"
 			 height="100%">
@@ -88,18 +91,11 @@
 			</mx:columns>
 		</mx:DataGrid>
 	</s:Group>
-	<s:Group id="group2" 
-			 width="100%">
-		<s:layout>
-			<s:HorizontalLayout 
-				horizontalAlign="center" 
-				paddingBottom="5" paddingLeft="5" 
-				paddingRight="5" paddingTop="5"/>
-		</s:layout>
-		<mx:Image source="@Embed(source='assets/Gnome-Go-First-16.png')" buttonMode="true" click="Alert.show('First')"/>
-		<mx:Image source="@Embed(source='assets/Gnome-Go-Previous-16.png')" buttonMode="true" click="Alert.show('Previous')"/>
-		<s:TextInput id="textInput" width="20" text="0" textAlign="center"/>
-		<mx:Image source="@Embed(source='assets/Gnome-Go-Next-16.png')" buttonMode="true" click="Alert.show('Next')"/>
-		<mx:Image source="@Embed(source='assets/Gnome-Go-Last-16.png')" buttonMode="true" click="Alert.show('Last')"/>
-	</s:Group>
+	<view:PaginableComponent
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalVeiculosViagem}"
+		first="this.controller.solicitaDadosGridEmViagem(event)"
+		last="this.controller.solicitaDadosGridEmViagem(event)"
+		next="this.controller.solicitaDadosGridEmViagem(event)"
+		prev="this.controller.solicitaDadosGridEmViagem(event)"/>
 </s:Group>

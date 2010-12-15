@@ -34,10 +34,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function solicitaListaTransportadores(event:PaginableEvent):void
 		{
-			if(MainModel.getInstance().transportadoresArray.length == 0)
-			{
-				TrafegusWS.getIntance().solicitaListaTransportadores(solicitaListaTransportadoresResultHandler,event.paginaAtual);
-			}
+			TrafegusWS.getIntance().solicitaListaTransportadores(solicitaListaTransportadoresResultHandler,event.paginaAtual);
 		}
 		public function atualizaListaTransportadores():void
 		{

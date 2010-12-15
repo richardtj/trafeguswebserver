@@ -10,6 +10,7 @@
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().veiculoSelecionado"/>
 	<fx:Metadata>
 		[Event(name="vehicleSelectedEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent")]
+		[Event(name="pageChanged",type="br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent")]
 	</fx:Metadata>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -23,6 +24,10 @@
 			private var controller:AbstractController;
 			public function set selectedIndex(index:int):void{
 				this.abstractDataGrid.selectedIndex = index;
+			}
+			public function set paginaAtual(paginaAtual:int):void
+			{
+				this.paginable.paginaAtual = paginaAtual;
 			}
 			public function init():void
 			{
@@ -75,5 +80,11 @@
 			</mx:columns>
 		</mx:DataGrid>
 	</s:Group>
-	<view:PaginableComponent id="paginable"/>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalDadosGrid}"
+		first="this.controller.pageChanged(event)"
+		next="this.controller.pageChanged(event)"
+		last="this.controller.pageChanged(event)"
+		prev="this.controller.pageChanged(event)"/>
 </s:Group>

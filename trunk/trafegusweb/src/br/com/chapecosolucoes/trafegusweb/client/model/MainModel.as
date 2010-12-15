@@ -28,6 +28,7 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		public var historicoSelecionado:String = "";
 		public var viagemSelecionada:String = "";
 		public var zoomFilter:String = "";
+		public var codTerminais:String="";
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO")]
 		public var posVeiculosArray:ArrayCollection = new ArrayCollection();
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.HistoricoPosicoesVeiculoVO")]
@@ -82,6 +83,8 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		public var totalListaViagemPai:int=0;
 		
 		public var totalHistoricoPosicoes:int=0;
+		
+		public var totalVeiculosViagem:int=0;
 		
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoViagemVO")]
 		public var veiculosViagemArray:ArrayCollection = new ArrayCollection();

@@ -41,6 +41,8 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function solicitaDadosGrid(event:PaginableEvent):void
 		{
+			var paginableEvent:PaginableEvent = new PaginableEvent(PaginableEvent.PAGE_CHANGED,(event.paginaAtual/20)+1);
+			this.view.dispatchEvent(paginableEvent);
 			TrafegusWS.getIntance().solicitaDadosGrid(this.dadosGridRecebidosHandler,event.paginaAtual);
 		}
 		public function atualizaDadosGrid():void

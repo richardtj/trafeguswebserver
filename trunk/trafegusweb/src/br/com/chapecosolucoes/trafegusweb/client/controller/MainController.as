@@ -3,6 +3,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.enum.VehicleEnum;
 	import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.DetailsEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesHistoricEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
@@ -110,6 +111,16 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
 				PopUpManager.addPopUp(monitoringRequest,DisplayObject(FlexGlobals.topLevelApplication));
 				PopUpManager.centerPopUp(monitoringRequest);
+			}
+		}
+		public function pageChangedEventHandler(event:PaginableEvent):void{
+			if(event.currentTarget == this.view.vehiclesView)
+			{
+				this.view.details.paginaAtual = event.paginaAtual;
+			}
+			else
+			{
+				this.view.vehiclesView.paginaAtual = event.paginaAtual;
 			}
 		}
 	}
