@@ -39,12 +39,13 @@
 	</fx:Style>
     <fx:Script>
         <![CDATA[
+            import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
             import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
             import br.com.chapecosolucoes.trafegusweb.client.events.LoginEvent;
             import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
             import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
             import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
-
+            
             import mx.collections.XMLListCollection;
             import mx.controls.Alert;
             import mx.events.FlexEvent;
@@ -76,7 +77,7 @@
 
             private function contextMenuHandler(event:ContextMenuEvent):void
             {
-                Alert.show(event.toString());
+                MessageBox.atencao("Funcionalidade não implementada");
             }
 
             protected function preinitializeHandler(event:FlexEvent):void
