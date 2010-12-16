@@ -1093,4 +1093,17 @@ public class TrafegusWS {
        System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "salvarPreferenciasUsuario")
+    public String salvarPreferenciasUsuario(@WebParam(name = "chave")
+    String chave, @WebParam(name = "valor")
+    String valor, @WebParam(name = "usuario")
+    String usuario) {
+        //TODO write your implementation code here:
+        System.out.print("Chave: " + chave + "Valor: " + valor + "Usuario: "+usuario);
+        return null;
+    }
 }
