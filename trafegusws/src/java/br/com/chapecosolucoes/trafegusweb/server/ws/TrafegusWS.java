@@ -55,7 +55,6 @@ public class TrafegusWS {
         sb.append("     cref_classe_sistema");
         sb.append(" FROM cref_classe_referencia");
         sb.append(" WHERE(cref_pess_oras_codigo IS NULL OR cref_pess_oras_codigo = '").append(codEmrpesa.toString()).append("')");
-
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -85,7 +84,6 @@ public class TrafegusWS {
         sb.append("           TRIM(REPLACE(REPLACE(REPLACE(REPLACE('");sb.append(cpfMotorista).append("' ,'.',''),'/',''),'\\\\',''),'-',''))  )");
         sb.append(" JOIN PESS_Pessoa ON (PESS_ORAS_codigo = PFIS_PESS_ORAS_Codigo)");
         sb.append(" JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = PESS_ORAS_codigo AND ORAS_EOBJ_Codigo = 1)");
-        System.out.println(sb.toString());
 
         return Conexao.getInstance().queryToXML(sb.toString());
 
