@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				layout="vertical"
+				width="520" height="420"
+				showCloseButton="true"
+				creationCompleteEffect="{dissolve,iris}"
+				removedEffect="{dissolve,iris}"
+				initialize="init()"
+				creationComplete="creationComplete()"
+				close="this.controller.closeHandler()"
+				title="Referencias"
+				titleIcon="@Embed(source='assets/referencias.png')"
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
+				xmlns:code="http://code.google.com/p/flexlib/">
+	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
+	<fx:Metadata>
+				
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.controller.ClassesReferenciaController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			private var controller:ClassesReferenciaController;
+			private function init():void
+			{
+				this.controller = new ClassesReferenciaController();
+				this.controller.view = this;
+				
+				this.controller.solicitaClassesReferencias();
+			}
+			private function creationComplete():void
+			{
+				//this.controller.atualizaListaEmbarcadores();
+				MainModel.getInstance().classesReferencia.filterFunction = this.controller.classesReferenciaFilterFunction;
+				MainModel.getInstance().classesReferencia.refresh();
+			}
+		]]>
+	</fx:Script>
+	<searchInput:SearchInputFX
+		id="textInputFiltro"
+		width="100%" 
+		text="{MainModel.getInstance().zoomFilter}"
+		keyUp="MainModel.getInstance().classesReferencia.refresh()"
+		refreshEvent=""/>
+	<mx:List 
+		id="list" 
+		width="100%"
+		editorDataField="selected"
+		height="100%" 
+		dataProvider="{MainModel.getInstance().classesReferencia}"
+		borderStyle="none"
+		itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.ClassesReferenciaItemRenderer"/>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Ok" click=""/>
+		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
+	</mx:ControlBar>
+</mx:TitleWindow>

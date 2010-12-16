@@ -75,6 +75,7 @@
 								  type="check" toggled="true"/>
 						<menuitem label="Mapa" 
 								  type="check" toggled="true"/>
+						<menuitem label="Referências"/>
 					</menuitem>
 				</XMLList>;
 				this.myMenuBar.dataProvider = xml;

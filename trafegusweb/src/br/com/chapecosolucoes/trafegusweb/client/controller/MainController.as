@@ -8,6 +8,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesHistoricEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.view.ClassesReferenciaView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MainView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MainView2;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
@@ -116,6 +117,12 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
 				PopUpManager.addPopUp(monitoringRequest,DisplayObject(FlexGlobals.topLevelApplication));
 				PopUpManager.centerPopUp(monitoringRequest);
+			}
+			if(event.label == "Referências")
+			{
+				var referencias:ClassesReferenciaView = new ClassesReferenciaView();
+				PopUpManager.addPopUp(referencias,DisplayObject(FlexGlobals.topLevelApplication));
+				PopUpManager.centerPopUp(referencias);
 			}
 		}
 		public function pageChangedEventHandler(event:PaginableEvent):void{
