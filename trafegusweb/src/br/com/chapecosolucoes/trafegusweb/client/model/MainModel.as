@@ -20,9 +20,6 @@ package br.com.chapecosolucoes.trafegusweb.client.model
     {
         private static var instance:MainModel;
 
-        /*[ArrayElementType("br.com.chapecosolucoes.trafegusweb.vo.DataPos")]
-        public var dpPosicao:ArrayCollection;*/
-
         public var mapReady:Boolean = false;
 
         public var veiculoSelecionado:String = "";
@@ -58,10 +55,6 @@ package br.com.chapecosolucoes.trafegusweb.client.model
         public var codEmpresa:int = 0;
 		
 		public var codUsuario:int = 0;
-
-        public var veiculosX:int = 0;
-
-        public var veiculosY:int = 20;
 
         public var leftToRightEnabled:Boolean = true;
 
