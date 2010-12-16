@@ -32,8 +32,6 @@ public class Conexao {
     private Connection connection = null;
 
     private Conexao() throws Exception {
-        Class.forName("org.postgresql.Driver").newInstance();
-        this.connection = DriverManager.getConnection("jdbc:postgresql://172.1.2.110:5432/desenvolvimento", "postgres", "postgres");
     }
 
     public static Conexao getInstance() throws Exception {
@@ -45,7 +43,10 @@ public class Conexao {
 
     public ResultSet executeQuery(String sql) throws Exception {
         ResultSet result = null;
-        result = Conexao.getInstance().getConnection().createStatement().executeQuery(sql);
+        Connection con = Conexao.getInstance().getConnection();
+        result = con.createStatement().executeQuery(sql);
+        con.close();
+        con = null;
         return result;
     }
 
@@ -120,7 +121,9 @@ public class Conexao {
         return result;
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws Exception {
+        Class.forName("org.postgresql.Driver").newInstance();
+        this.connection = DriverManager.getConnection("jdbc:postgresql://172.1.2.110:5432/desenvolvimento", "postgres", "postgres");
         return this.connection;
     }
 
