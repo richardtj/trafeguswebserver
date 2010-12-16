@@ -8,6 +8,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesHistoricEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
 	import br.com.chapecosolucoes.trafegusweb.client.view.ClassesReferenciaView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MainView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MainView2;
@@ -104,7 +105,19 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			}
 			if(event.label == "Salvar")
 			{
-				Alert.show("Configurações salvas com sucesso","Sucesso");
+				UsuarioLogado.getInstance().gridVeiculosX = this.view.veiculos.x;
+				UsuarioLogado.getInstance().gridVeiculosY = this.view.veiculos.y;
+				UsuarioLogado.getInstance().gridVeiculosWidth = this.view.veiculos.width;
+				UsuarioLogado.getInstance().gridVeiculosHeight = this.view.veiculos.height;
+				UsuarioLogado.getInstance().mapaGoogleX = this.view.mapa.x;
+				UsuarioLogado.getInstance().mapaGoogleY = this.view.mapa.y;
+				UsuarioLogado.getInstance().mapaGoogleWidth = this.view.mapa.width;
+				UsuarioLogado.getInstance().mapaGoogleHeight = this.view.mapa.height;
+				UsuarioLogado.getInstance().gridDetalheX = this.view.detalhes.x;
+				UsuarioLogado.getInstance().gridDetalheY = this.view.detalhes.y;
+				UsuarioLogado.getInstance().gridDetalheWidth = this.view.detalhes.width;
+				UsuarioLogado.getInstance().gridDetalheHeight = this.view.detalhes.height;
+				
 				TrafegusWS.getIntance().salvarPreferenciasUsuario(salvarPreferenciasUsuarioResultHandler);
 			}
 			if(event.label == "Sair")
