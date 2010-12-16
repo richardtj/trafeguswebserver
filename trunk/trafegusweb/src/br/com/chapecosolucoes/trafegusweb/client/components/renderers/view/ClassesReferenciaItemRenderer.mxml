@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 verticalAlign="middle"
+		 height="40">
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:CheckBox id="checkBox" selected="{data.selected}"/>
+	<mx:Image id="image" source="{MainModel.getInstance().classesReferenciaIcons.getItemAt(data.codigo - 1).img}"/>
+	<s:Label text="{data.descricao}"/>
+</mx:HBox>
