@@ -46,15 +46,15 @@
 			}
 		]]>
 	</fx:Script>
-	<searchInput:SearchInputFX
+	<searchInput:SearchInputFXBase
 		id="textInputFiltro"
 		width="100%" 
 		text="{MainModel.getInstance().zoomFilter}"
-		keyUp="MainModel.getInstance().classesReferencia.refresh()"
-		refreshEvent=""/>
+		keyUp="MainModel.getInstance().classesReferencia.refresh()"/>
 	<mx:List 
 		id="list" 
 		width="100%"
+		rendererIsEditor="true"
 		editorDataField="selected"
 		height="100%" 
 		dataProvider="{MainModel.getInstance().classesReferencia}"
