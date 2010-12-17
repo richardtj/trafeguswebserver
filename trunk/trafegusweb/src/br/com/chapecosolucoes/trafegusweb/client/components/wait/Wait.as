@@ -1,26 +1,22 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.wait
 {
     import flash.display.DisplayObject;
-
+    
     import mx.core.Application;
     import mx.core.FlexGlobals;
     import mx.managers.PopUpManager;
 
     public class Wait
     {
-        private const TITULO:String = "PROCESSANDO...";
-
-        private const MENSAGEM:String = "Isso pode levar alguns segundos.";
-
         private static var instance:Wait = null;
 
-        private var _Form:WaitForm
+		private var spinner:Spinner;
 
         private var acesso:int = 0;
 
         public function Wait(forca:Forca)
         {
-            _Form = new WaitForm();
+			spinner = new Spinner();
         }
 
         public static function getInstance():Wait
@@ -32,17 +28,14 @@ package br.com.chapecosolucoes.trafegusweb.client.components.wait
             return instance;
         }
 
-        public function Show(mensagem:String = MENSAGEM, titulo:String = TITULO, show_spinner:Boolean = true):void
+        public function Show(show_spinner:Boolean = true):void
         {
             acesso++;
-            this._Form.Show_spinner = show_spinner
-            this._Form.Titulo = titulo;
-            this._Form.Mensagem = mensagem;
-            PopUpManager.removePopUp(this._Form);
-            PopUpManager.addPopUp(this._Form, DisplayObject(FlexGlobals.topLevelApplication), true)
-            PopUpManager.centerPopUp(this._Form);
-            this._Form.visible = true;
-            this._Form.spinner.play();
+            PopUpManager.removePopUp(this.spinner);
+            PopUpManager.addPopUp(this.spinner, DisplayObject(FlexGlobals.topLevelApplication), true)
+            PopUpManager.centerPopUp(this.spinner);
+			this.spinner.visible = true;
+			this.spinner.play();
         }
 
         public function Close():void
@@ -50,9 +43,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.wait
             acesso--;
             if (acesso == 0)
             {
-                this._Form.spinner.stop();
-                this._Form.visible = false;
-                PopUpManager.removePopUp(this._Form);
+				this.spinner.stop();
+				this.spinner.visible = false;
             }
         }
     }
