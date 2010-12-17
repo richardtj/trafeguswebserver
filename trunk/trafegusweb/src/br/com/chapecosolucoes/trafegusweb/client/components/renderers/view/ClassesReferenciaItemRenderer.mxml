@@ -13,6 +13,6 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:CheckBox id="checkBox" selected="{data.selected}"/>
-	<mx:Image id="image" source="{MainModel.getInstance().classesReferenciaIcons.getItemAt(data.codigo - 1).img}"/>
+	<mx:Image id="image" source="{MainModel.getInstance().getClassesReferenciaIcons(data.codigo - 1)}"/>
 	<s:Label text="{data.descricao}"/>
 </mx:HBox>

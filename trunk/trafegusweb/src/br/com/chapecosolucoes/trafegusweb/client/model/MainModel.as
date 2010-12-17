@@ -211,7 +211,7 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		[Embed(source="assets/map/country.png")]
 		private var referenciasGerais:Class;
 		
-		public function get classesReferenciaIcons(value:int):Class
+		public function getClassesReferenciaIcons(value:int):Class
 		{
 			switch(value)
 			{
