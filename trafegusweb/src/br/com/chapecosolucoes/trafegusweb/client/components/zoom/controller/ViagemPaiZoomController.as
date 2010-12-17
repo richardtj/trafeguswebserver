@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.ViagemPaiZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.ViagemPaiSelecionadaEvent;
@@ -57,7 +58,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			}
 			else
 			{
-				Alert.show("Nenhuma Viagem Selecionada.");
+				MessageBox.informacao("Nenhuma Viagem Selecionada.");
 			}
 		}
 		public function closeHandler():void

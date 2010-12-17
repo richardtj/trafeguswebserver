@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.MotoristaZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent;
@@ -31,7 +32,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			}
 			else
 			{
-				Alert.show("Nenhum motorista selecionado.");
+				MessageBox.informacao("Nenhum motorista selecionado.");
 			}
 		}
 		public function motoristaFilterFunction(item:Object):Boolean

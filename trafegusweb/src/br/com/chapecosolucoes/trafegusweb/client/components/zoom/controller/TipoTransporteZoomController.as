@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.TipoTransporteZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.TipoTransporteSelecionadoEvent;
@@ -55,7 +56,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			}
 			else
 			{
-				Alert.show("Nenhum tipo de viagem selecionado.");
+				MessageBox.informacao("Nenhum tipo de viagem selecionado.");
 			}
 		}
 		public function closeHandler():void

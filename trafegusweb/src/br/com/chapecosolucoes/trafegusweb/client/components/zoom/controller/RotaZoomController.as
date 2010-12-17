@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.RotaZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedRouteEvent;
@@ -41,7 +42,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			}
 			else
 			{
-				Alert.show("Nenhuma rota selecionada.");
+				MessageBox.informacao("Nenhuma rota selecionada.");
 			}
 		}
 		public function solicitaListaRotas(event:PaginableEvent):void

@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.PGRZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
@@ -62,7 +63,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			}
 			else
 			{
-				Alert.show("Nenhum PGR selecionado.");
+				MessageBox.informacao("Nenhum PGR selecionado.");
 			}
 		}
 		public function closeHandler():void
