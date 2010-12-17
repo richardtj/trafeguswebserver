@@ -64,9 +64,6 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			 */
 			if(event.detail == Alert.OK)
 			{
-				//var urlString:String = "javascript:window.close();";
-				//var request:URLRequest = new URLRequest(urlString);
-				//navigateToURL(request, "_self");
 				var closeEvent:CloseAppEvent = new CloseAppEvent(CloseAppEvent.CLOSE_APP_EVENT);
 				this.view.dispatchEvent(closeEvent);
 			}
@@ -118,7 +115,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				UsuarioLogado.getInstance().gridDetalhePercentWidth = this.view.detalhes.percentWidth;
 				UsuarioLogado.getInstance().gridDetalhePercentHeight = this.view.detalhes.percentHeight;
 				
-				TrafegusWS.getIntance().salvarPreferenciasUsuario(salvarPreferenciasUsuarioResultHandler);
+				TrafegusWS.getIntance().salvarPosicaoTelas(salvarPosicaoTelasResultHandler);
 			}
 			if(event.label == "Sair")
 			{
@@ -148,7 +145,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				this.view.vehiclesView.paginaAtual = event.paginaAtual;
 			}
 		}
-		private function salvarPreferenciasUsuarioResultHandler(event:ResultEvent):void
+		private function salvarPosicaoTelasResultHandler(event:ResultEvent):void
 		{
 			
 		}
