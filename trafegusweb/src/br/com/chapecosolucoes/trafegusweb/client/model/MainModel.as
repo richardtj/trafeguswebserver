@@ -139,7 +139,134 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.ClassesReferenciaVO")]
 		public var classesReferencia:ArrayCollection = new ArrayCollection();
 		
-		public var classesReferenciaIcons:ArrayCollection = new ArrayCollection([{img:"assets/map/apartment.png"},{img:"assets/map/tollstation.png"},{img:"assets/map/police2.png"},{img:"assets/map/gazstation.png"},{img:"assets/map/firstaid.png"},{img:"assets/map/hotel.png"},{img:"assets/map/white20.png"},{img:"assets/map/police.png"},{img:"assets/map/port.png"},{img:"assets/map/airport.png"},{img:"assets/map/police3.png"},{img:"assets/map/tools.png"},{img:"assets/map/bigcity2.png"},{img:"assets/map/bigcity.png"},{img:"assets/map/smallcity2.png"},{img:"assets/map/smallcity.png"},{img:"assets/map/agriculture2.png"},{img:"assets/map/villa-tourism.png"},{img:"assets/map/wifi2.png"},{img:"assets/map/court.png"},{img:"assets/map/truck.png"},{img:"assets/map/police5.png"},{img:"assets/map/truck.png"},{img:""},{img:"assets/map/country.png"},{img:"assets/map/google_maps_marker.png"},{img:"assets/map/google_maps_marker.png"},{img:"assets/map/google_maps_marker.png"}]);
+		[Embed(source="assets/map/apartment.png")]
+		private var outrasCidades:Class;
+		
+		[Embed(source="assets/map/google_maps_marker.png")]
+		private var referenciaGenerica:Class;
+		
+		[Embed(source="assets/map/tollstation.png")]
+		private var pedagios:Class;
+		
+		[Embed(source="assets/map/police2.png")]
+		private var policiaRodoviariaFederal:Class;
+		
+		[Embed(source="assets/map/gazstation.png")]
+		private var postosCombustivel:Class;
+		
+		[Embed(source="assets/map/firstaid.png")]
+		private var hospitais:Class;
+		
+		[Embed(source="assets/map/hotel.png")]
+		private var hoteis:Class;
+		
+		[Embed(source="assets/map/white20.png")]
+		private var marcoQuilometrico:Class;
+		
+		[Embed(source="assets/map/police.png")]
+		private var delegacias:Class;
+		
+		[Embed(source="assets/map/port.png")]
+		private var portos:Class;
+		
+		[Embed(source="assets/map/airport.png")]
+		private var aeroportos:Class;
+		
+		[Embed(source="assets/map/police3.png")]
+		private var policiaRodoviariaEstadual:Class;
+		
+		[Embed(source="assets/map/tools.png")]
+		private var manutencao:Class;
+		
+		[Embed(source="assets/map/bigcity2.png")]
+		private var capitais:Class;
+		
+		[Embed(source="assets/map/bigcity.png")]
+		private var cidadesGrandes:Class;
+		
+		[Embed(source="assets/map/smallcity2.png")]
+		private var cidadesMedias:Class;
+		
+		[Embed(source="assets/map/smallcity.png")]
+		private var cidadesPequenas:Class;
+		
+		[Embed(source="assets/map/agriculture2.png")]
+		private var cidadesMuitoPequenas:Class;
+		
+		[Embed(source="assets/map/villa-tourism.png")]
+		private var cidades:Class;
+		
+		[Embed(source="assets/map/wifi2.png")]
+		private var perdaSinal:Class;
+		
+		[Embed(source="assets/map/court.png")]
+		private var balanca:Class;
+		
+		[Embed(source="assets/map/truck.png")]
+		private var cargaDescarga:Class;
+		
+		[Embed(source="assets/map/police5.png")]
+		private var policia:Class;
+		
+		[Embed(source="assets/map/country.png")]
+		private var referenciasGerais:Class;
+		
+		public function get classesReferenciaIcons(value:int):Class
+		{
+			switch(value)
+			{
+				case 1:
+					return this.outrasCidades;
+				case 2:
+					return this.pedagios;
+				case 3:
+					return this.policiaRodoviariaFederal;
+				case 4:
+					return this.postosCombustivel;
+				case 5:
+					return this.hospitais;
+				case 6:
+					return this.hoteis;
+				case 7:
+					return this.marcoQuilometrico;
+				case 8:
+					return this.delegacias;
+				case 9:
+					return this.portos;
+				case 10:
+					return this.aeroportos;
+				case 11:
+					return this.policiaRodoviariaEstadual;
+				case 12:
+					return this.manutencao;
+				case 13:
+					return this.capitais;
+				case 14:
+					return this.cidadesGrandes;
+				case 15:
+					return this.cidadesMedias;
+				case 16:
+					return this.cidadesPequenas;
+				case 17:
+					return this.cidadesMuitoPequenas;
+				case 18:
+					return this.cidades;
+				case 19:
+					return this.perdaSinal;
+				case 20:
+					return this.balanca;
+				case 21:
+					return this.cargaDescarga;
+				case 22:
+					return this.policia;
+				case 23:
+					return this.cargaDescarga;
+				case 25:
+					return this.referenciasGerais;
+				default:
+					return this.referenciaGenerica; 
+			}
+		}
 		
 		public var Referencias:ArrayCollection = new ArrayCollection();
 		
