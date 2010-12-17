@@ -4,8 +4,6 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 	public class UsuarioLogado
 	{
 		private static var instance:UsuarioLogado;
-		public var codigo:int;
-		public var empresa:int;
 		public var wsdl:String;
 		
 		//--- Variaveis de posicionamento do Grid de veiculos

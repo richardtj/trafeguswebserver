@@ -98,7 +98,10 @@
         showRoot="false"
         itemClick="this.controller.itemClickedHandler(event)"/>
     <resize:ResizableWindow id="veiculos"
-        x="{UsuarioLogado.getInstance().gridVeiculosX}" y="{UsuarioLogado.getInstance().gridVeiculosY}" width="{UsuarioLogado.getInstance().gridVeiculosHeight}" height="{UsuarioLogado.getInstance().gridVeiculosWidth}"
+        x="{UsuarioLogado.getInstance().gridVeiculosX}" 
+		y="{UsuarioLogado.getInstance().gridVeiculosY}" 
+		width="{UsuarioLogado.getInstance().gridVeiculosHeight}" 
+		height="{UsuarioLogado.getInstance().gridVeiculosWidth}"
         verticalGap="2"
         hideEffect="{fadeOut}"
         showEffect="{fadeIn}"
