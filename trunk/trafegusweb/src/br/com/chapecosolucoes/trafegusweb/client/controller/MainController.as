@@ -5,6 +5,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.DetailsEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.ReferenciasRecebidasEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesHistoricEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
@@ -131,9 +132,14 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(event.label == "Referências")
 			{
 				var referencias:ClassesReferenciaView = new ClassesReferenciaView();
+				referencias.addEventListener(ReferenciasRecebidasEvent.REFERENCIAS_RECEBIDAS_EVENT,referenciasRecebidasResultHandler);
 				PopUpManager.addPopUp(referencias,DisplayObject(FlexGlobals.topLevelApplication));
 				PopUpManager.centerPopUp(referencias);
 			}
+		}
+		private function referenciasRecebidasResultHandler(event:ReferenciasRecebidasEvent):void
+		{
+			this.view.map.carregarReferencias();
 		}
 		public function pageChangedEventHandler(event:PaginableEvent):void{
 			if(event.currentTarget == this.view.vehiclesView)

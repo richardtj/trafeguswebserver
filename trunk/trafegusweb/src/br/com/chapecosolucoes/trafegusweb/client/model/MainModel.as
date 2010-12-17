@@ -13,6 +13,8 @@ package br.com.chapecosolucoes.trafegusweb.client.model
     import br.com.chapecosolucoes.trafegusweb.client.vo.SolicitacaoMonitoramentoVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.ViagemPaiVO;
     
+    import com.google.maps.overlays.Polyline;
+    
     import mx.collections.ArrayCollection;
 
     [Bindable]
@@ -82,6 +84,8 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 
         public var totalVeiculosViagem:int = 0;
 		
+		public var rota:Polyline = null;
+		
         [ArrayElementType("br.com.chapecosolucoes.trafegusweb.vo.DataMsg")]
         public var dpMensagens:ArrayCollection;
 
@@ -138,6 +142,12 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.ClassesReferenciaVO")]
 		public var classesReferencia:ArrayCollection = new ArrayCollection();
+		
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.ReferenciaVO")]
+		public var referencias:ArrayCollection = new ArrayCollection();
+		
+		[ArrayElementType("com.google.maps.overlays.Marker")]
+		public var markers:ArrayCollection = new ArrayCollection();
 		
 		[Embed(source="assets/map/apartment.png")]
 		private var outrasCidades:Class;
@@ -268,7 +278,6 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 			}
 		}
 		
-		public var Referencias:ArrayCollection = new ArrayCollection();
 		
         public function MainModel(enforcer:SingletonEnforcer)
         {
