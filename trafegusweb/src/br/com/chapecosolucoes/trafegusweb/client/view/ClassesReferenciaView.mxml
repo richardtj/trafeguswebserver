@@ -16,7 +16,7 @@
 				xmlns:code="http://code.google.com/p/flexlib/">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
-				
+		[Event(name="referenciasRecebidasEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.ReferenciasRecebidasEvent")]		
 	</fx:Metadata>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -35,22 +35,21 @@
 			{
 				this.controller = new ClassesReferenciaController();
 				this.controller.view = this;
-				
-				this.controller.solicitaClassesReferencias();
 			}
 			private function creationComplete():void
 			{
-				//this.controller.atualizaListaEmbarcadores();
+				this.controller.solicitaClassesReferencias();
 				MainModel.getInstance().classesReferencia.filterFunction = this.controller.classesReferenciaFilterFunction;
 				MainModel.getInstance().classesReferencia.refresh();
 			}
 		]]>
 	</fx:Script>
-	<searchInput:SearchInputFXBase
+	<searchInput:SearchInputFX
 		id="textInputFiltro"
 		width="100%" 
 		text="{MainModel.getInstance().zoomFilter}"
-		keyUp="MainModel.getInstance().classesReferencia.refresh()"/>
+		keyUp="MainModel.getInstance().classesReferencia.refresh()"
+		refreshEvent="this.controller.atualizaClassesReferencias()"/>
 	<mx:List 
 		id="list" 
 		width="100%"

@@ -12,11 +12,14 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 			import br.com.chapecosolucoes.trafegusweb.client.controller.MapController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.HistoricoPosicoesVeiculoVO;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.ReferenciaVO;
 			
+			import com.google.maps.InfoWindowOptions;
 			import com.google.maps.LatLng;
 			import com.google.maps.MapMouseEvent;
 			import com.google.maps.examples.TooltipOverlay;
@@ -34,8 +37,27 @@
 				controller = new MapController();
 				controller.view = this;
 			}
+			public function carregarReferencias():void
+			{
+				if(MainModel.getInstance().mapReady == true)
+				{
+					this.removeCategories();
+					for each (var referencia:ReferenciaVO in MainModel.getInstance().referencias)
+					{
+						this.createCategorie(referencia);
+					}
+				}
+				else
+				{
+					MessageBox.atencao("Favor aguardar carga do mapa");
+				}
+			}
 			public function rotaVeiculo(value:ArrayCollection):void
 			{
+				if(MainModel.getInstance().rota != null)
+				{
+					map.removeOverlay(MainModel.getInstance().rota);
+				}
 				var historicoPosicoes:Array = new Array();
 				for each (var route:HistoricoPosicoesVeiculoVO in value)
 				{
@@ -55,6 +77,7 @@
 					})
 				);
 				map.addOverlay(polyLine);
+				MainModel.getInstance().rota = polyLine;
 			}
 			public function posicaoVeiculosArray(value:ArrayCollection):void
 			{
@@ -87,7 +110,13 @@
 				
 				var marker:Marker = new Marker(posicaoVeiculoVO.latLong, makerOp);
 				var tooltip:TooltipOverlay = new TooltipOverlay(posicaoVeiculoVO.latLong, posicaoVeiculoVO.gpsDescSis);
-				marker.addEventListener(MapMouseEvent.CLICK, this.controller.mapMouseEventHandler);
+				//marker.addEventListener(MapMouseEvent.CLICK, this.controller.mapMouseEventHandler);
+				var html:String = "<b>" + posicaoVeiculoVO.vehiclePlate + "</b> <br/>" + posicaoVeiculoVO.motoristaPrincipal + "<br/>" + posicaoVeiculoVO.gpsDescSis;
+				marker.addEventListener(MapMouseEvent.CLICK, function(e:MapMouseEvent):void
+				{
+					//this.view.map.setCenter(e.latLng,15);
+					marker.openInfoWindow(new InfoWindowOptions({contentHTML: html}));
+				});
 				marker.addEventListener(MapMouseEvent.ROLL_OVER, function(e:MapMouseEvent):void
 				{
 					map.addOverlay(tooltip);
@@ -98,6 +127,51 @@
 				});
 				return marker;
 			}
+			private function removeCategories():void{
+				for each(var marker:Marker in MainModel.getInstance().markers)
+				{
+					map.removeOverlay(marker);
+				}
+			}
+			private function createCategorie(referencia:ReferenciaVO):void
+			{
+				var markerOp:MarkerOptions = new MarkerOptions();
+				var clazz:Class = MainModel.getInstance().getClassesReferenciaIcons(int(referencia.codigo)); 
+				markerOp.icon = new clazz();
+				
+				var marker:Marker = new Marker(referencia.latLong, markerOp);
+				var tooltip:TooltipOverlay = new TooltipOverlay(referencia.latLong, referencia.refeDescricao);
+				var html:String = "<b>" + referencia.refeDescricao + "</b> <br/>" + referencia.descricao;
+				marker.addEventListener(MapMouseEvent.CLICK, function(e:MapMouseEvent):void
+				{
+					marker.openInfoWindow(new InfoWindowOptions({contentHTML: html}));
+				});
+				marker.addEventListener(MapMouseEvent.ROLL_OVER, function(e:MapMouseEvent):void
+				{
+					map.addOverlay(tooltip);
+				});
+				marker.addEventListener(MapMouseEvent.ROLL_OUT, function(e:MapMouseEvent):void
+				{
+					map.removeOverlay(tooltip);
+				});
+				map.addOverlay(marker);
+				MainModel.getInstance().markers.addItem(marker);
+			}
+			/* private function toggleCategory(type:String):void
+			{
+				for (var i:Number = 0; i < categories[type].markers.length; i++)
+				{
+					var marker:Marker = categories[type].markers[i];
+					if (!marker.visible)
+					{
+						marker.visible = true;
+					}
+					else
+					{
+						marker.visible = false;
+					}
+				}
+			} */
 		]]>
 	</fx:Script>
 	<maps:Map id="map"
