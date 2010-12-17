@@ -24,7 +24,7 @@
 			trigger="{ok}"
 			triggerEvent="click"
 			valid="this.tipoViagem = true;this.validaTodos()"
-			invalid="this.tipoViagem = false;Alert.show('Campo Tipo Viagem requerido.')"/>
+			invalid="this.tipoViagem = false;MessageBox.informacao('Campo Tipo Viagem requerido.')"/>
 		<mx:StringValidator 
 			source="{localZoom}"
 			property="cod"
@@ -32,13 +32,14 @@
 			trigger="{ok}"
 			triggerEvent="click"
 			valid="this.local = true;this.validaTodos()"
-			invalid="this.local = false;Alert.show('Campo Local requerido.')"/>
+			invalid="this.local = false;MessageBox.informacao('Campo Local requerido.')"/>
 	</fx:Declarations>
 	<fx:Metadata>
 		[Event(name="paradaAdicionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.AddParadaEvent")]
 	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 			import br.com.chapecosolucoes.trafegusweb.client.components.renderers.AddParadasModel;
 			import br.com.chapecosolucoes.trafegusweb.client.controller.AddParadasController;
 			import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
