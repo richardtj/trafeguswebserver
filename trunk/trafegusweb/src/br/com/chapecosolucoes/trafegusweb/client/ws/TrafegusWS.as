@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.ws
 {
+    import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
     import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
     import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
@@ -45,123 +46,102 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
             return instance;
         }
 
-        private function createOperation(operationName:String):Operation
+        private function createOperation(operationName:String, result:Function = null):Operation
         {
             var operation:Operation = Operation(this.webservice.getOperation(operationName));
             if (operation == null)
             {
                 operation = new Operation(this.webservice, operationName);
+                operation.showBusyCursor = true;
             }
             operation.addEventListener(FaultEvent.FAULT, onFaultHandler);
+            if (result != null)
+            {
+                operation.addEventListener(ResultEvent.RESULT, result);
+            }
             return operation;
         }
 
         private function onFaultHandler(e:FaultEvent):void
         {
-            Alert.show(e.fault.message);
+            MessageBox.erro(e.fault.message);
         }
 
         public function solicitaAcesso(solicitaAcessoHandler:Function, usuario:String, senha:String):void
         {
-            var operation:Operation = createOperation("solicitaAcesso");
-            operation.addEventListener(ResultEvent.RESULT, solicitaAcessoHandler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaAcesso", solicitaAcessoHandler);
             operation.send(usuario, senha);
         }
 
         public function solicitaListaVeiculos(handler:Function, offset:int):void
         {
-            var operation:Operation = createOperation("solicitaListaVeiculos");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaListaVeiculos", handler);
             operation.send(MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaDadosGrid(handler:Function, offset:int):void
         {
-            var operation:Operation = createOperation("solicitaDadosGrid");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaDadosGrid", handler);
             operation.send(MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaHistoricoPosicoes(handler:Function, params:PosicaoVeiculoVO, offset:int):void
         {
-            var operation:Operation = createOperation("SolicitaHistoricoPosicoes");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("SolicitaHistoricoPosicoes", handler);
             operation.send(MainModel.getInstance().codEmpresa, params.vehiclePlate, offset, false);
         }
 
         public function solicitaDadosMotorista(handler:Function, params:String):void
         {
-            var operation:Operation = createOperation("solicitaDadosMotorista");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaDadosMotorista", handler);
             operation.send(MainModel.getInstance().codEmpresa, params);
         }
 
         public function solicitaDadosVeiculo(handler:Function, params:String):void
         {
-            var operation:Operation = createOperation("solicitaDadosVeiculo");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaDadosVeiculo", handler);
             operation.send(params);
         }
 
         public function solicitaDadosGridEmViagem(handler:Function, offset:int):void
         {
-            var operation:Operation = createOperation("solicitaDadosGridEmViagem");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaDadosGridEmViagem", handler);
             operation.send(MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaMotoristas(handler:Function, offset:int):void
         {
-            var operation:Operation = createOperation("solicitaListaMotoristas");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaListaMotoristas", handler);
             operation.send(MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaRotas(handler:Function, offset:int):void
         {
-            var operation:Operation = createOperation("solicitaListaRotas");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaListaRotas", handler);
             operation.send(MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaEmbarcadores(handler:Function, offset:int):void
         {
-            var operation:Operation = createOperation("solicitaListaEmbarcadores");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaListaEmbarcadores", handler);
             operation.send(MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaTransportadores(handler:Function, offset:int):void
         {
-            var operation:Operation = createOperation("solicitaListaTransportadores");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaListaTransportadores", handler);
             operation.send(offset);
         }
 
         public function solicitaDadosEmbarcador(handler:Function, param:String):void
         {
-            var operation:Operation = createOperation("solicitaDadosEmbarcador");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaDadosEmbarcador", handler);
             operation.send(param);
         }
 
         public function solicitaDadosTransportador(handler:Function, param:String):void
         {
-            var operation:Operation = createOperation("solicitaDadosTransportador");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaDadosTransportador", handler);
             operation.send(param);
         }
 
@@ -327,31 +307,18 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 
         public function solicitaTotalDadosGridEmViagem(handler:Function):void
         {
-            var operation:Operation = createOperation("solicitaTotalDadosGridEmViagem");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaTotalDadosGridEmViagem", handler);
             operation.send(MainModel.getInstance().codEmpresa);
         }
 
-        public function salvarPreferenciasUsuario(handler:Function):void
+        public function salvarPosicaoTelas(handler:Function):void
         {
-            var operation:Operation = createOperation("salvarPreferenciasUsuario");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
-            operation.send("gridVeiculosX", UsuarioLogado.getInstance().gridVeiculosX, MainModel.getInstance().codUsuario);
-            operation.send("gridVeiculosY", UsuarioLogado.getInstance().gridVeiculosY, MainModel.getInstance().codUsuario);
-            operation.send("gridVeiculosPercentHeight", UsuarioLogado.getInstance().gridVeiculosPercentHeight, MainModel.getInstance().codUsuario);
-            operation.send("gridVeiculosPercentWidth", UsuarioLogado.getInstance().gridVeiculosPercentWidth, MainModel.getInstance().codUsuario);
-            operation.send("mapaGoogleX", UsuarioLogado.getInstance().mapaGoogleX, MainModel.getInstance().codUsuario);
-            operation.send("mapaGoogleY", UsuarioLogado.getInstance().mapaGoogleY, MainModel.getInstance().codUsuario);
-            operation.send("mapaGooglePercentWidth", UsuarioLogado.getInstance().mapaGooglePercentWidth, MainModel.getInstance().codUsuario);
-            operation.send("mapaGooglePercentHeight", UsuarioLogado.getInstance().mapaGooglePercentHeight, MainModel.getInstance().codUsuario);
-            operation.send("gridDetalheX", UsuarioLogado.getInstance().gridDetalheX, MainModel.getInstance().codUsuario);
-            operation.send("gridDetalheY", UsuarioLogado.getInstance().gridDetalheY, MainModel.getInstance().codUsuario);
-            operation.send("gridDetalhePercentWidth", UsuarioLogado.getInstance().gridDetalhePercentWidth, MainModel.getInstance().codUsuario);
-            operation.send("gridDetalhePercentHeight", UsuarioLogado.getInstance().gridDetalhePercentHeight, MainModel.getInstance().codUsuario);
-        
-		}
+            var operation:Operation = createOperation("salvarPosicaoTelas", handler);
+            with (UsuarioLogado.getInstance())
+            {
+                operation.send("salvarPosicaoTelas", MainModel.getInstance().codUsuario, gridVeiculosX, gridVeiculosY, gridVeiculosPercentWidth, gridVeiculosPercentWidth, mapaGoogleX, mapaGoogleY, mapaGooglePercentWidth, mapaGooglePercentHeight, gridDetalheX, gridDetalheY, gridDetalhePercentWidth, gridDetalhePercentHeight);
+            }
+        }
 
         public function solicitaClassesReferencias(handler:Function):void
         {
