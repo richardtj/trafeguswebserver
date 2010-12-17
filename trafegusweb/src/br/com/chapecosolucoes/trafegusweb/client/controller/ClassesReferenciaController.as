@@ -39,5 +39,16 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			PopUpManager.removePopUp(this.view);
 		}
+		public function classesReferenciaSelecionadas():void
+		{
+			for each (var classe:ClassesReferenciaVO in MainModel.getInstance().classesReferencia)
+			{
+				TrafegusWS.getIntance().solicitaRefencias(solicitaRefenciasResultHandler,classe.codigo);
+			}
+		}
+		private function solicitaRefenciasResultHandler(event:ResultEvent):void
+		{
+			
+		}
 	}
 }

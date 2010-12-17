@@ -4,11 +4,11 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
     import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
     import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
-
+    
     import flash.events.Event;
     import flash.net.URLLoader;
     import flash.net.URLRequest;
-
+    
     import mx.charts.chartClasses.InstanceCache;
     import mx.controls.Alert;
     import mx.events.FlexEvent;
@@ -17,7 +17,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
     import mx.rpc.soap.mxml.Operation;
     import mx.rpc.soap.mxml.WebService;
     import mx.utils.ObjectUtil;
-
+    
     import org.osmf.layout.AbsoluteLayoutFacet;
 
     public class TrafegusWS
@@ -327,6 +327,14 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
             operation.showBusyCursor = true;
             operation.send(MainModel.getInstance().codEmpresa);
         }
+		
+		public function solicitaRefencias(handler:Function,codClasseReferencia:String):void
+		{
+			var operation:Operation = createOperation("solicitaRefencias");
+			operation.addEventListener(ResultEvent.RESULT, handler);
+			operation.showBusyCursor = true;
+			operation.send(MainModel.getInstance().codEmpresa,codClasseReferencia);
+		}
     }
 }
 
