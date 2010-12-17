@@ -8,21 +8,21 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		
 		//--- Variaveis de posicionamento do Grid de veiculos
 		public var gridVeiculosX:int = 0;
-		public var gridVeiculosY:int = 0;
-		public var gridVeiculosWidth:int = 0;
-		public var gridVeiculosHeight:int = 0;
+		public var gridVeiculosY:int = 20;
+		public var gridVeiculosPercentWidth:int = 20;
+		public var gridVeiculosPercentHeight:int = 100;
 		
 		//--- Variaveis de posicionamento do Google Maps
-		public var mapaGoogleX:int = 0;
-		public var mapaGoogleY:int = 0;
-		public var mapaGoogleWidth:int = 0;
-		public var mapaGoogleHeight:int = 0;
+		public var mapaGoogleX:int = 272;
+		public var mapaGoogleY:int = 20;
+		public var mapaGooglePercentWidth:int = 80;
+		public var mapaGooglePercentHeight:int = 50;
 		
 		//--- Variaveis de posicionamento do Grid de detalhe
-		public var gridDetalheX:int = 0;
-		public var gridDetalheY:int = 0;
-		public var gridDetalheWidth:int = 0;
-		public var gridDetalheHeight:int = 0;
+		public var gridDetalheX:int = 272;
+		public var gridDetalheY:int = 274;
+		public var gridDetalhePercentWidth:int = 80;
+		public var gridDetalhePercentHeight:int = 50;
 
 		public function UsuarioLogado(enforcer:SingletonEnforcer)
 		{

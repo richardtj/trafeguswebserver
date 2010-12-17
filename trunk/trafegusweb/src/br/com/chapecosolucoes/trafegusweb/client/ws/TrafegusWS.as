@@ -340,16 +340,16 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
             operation.showBusyCursor = true;
             operation.send("gridVeiculosX", UsuarioLogado.getInstance().gridVeiculosX, MainModel.getInstance().codUsuario);
             operation.send("gridVeiculosY", UsuarioLogado.getInstance().gridVeiculosY, MainModel.getInstance().codUsuario);
-            operation.send("gridVeiculosHeight", UsuarioLogado.getInstance().gridVeiculosHeight, MainModel.getInstance().codUsuario);
-            operation.send("gridVeiculosWidth", UsuarioLogado.getInstance().gridVeiculosWidth, MainModel.getInstance().codUsuario);
+            operation.send("gridVeiculosPercentHeight", UsuarioLogado.getInstance().gridVeiculosPercentHeight, MainModel.getInstance().codUsuario);
+            operation.send("gridVeiculosPercentWidth", UsuarioLogado.getInstance().gridVeiculosPercentWidth, MainModel.getInstance().codUsuario);
             operation.send("mapaGoogleX", UsuarioLogado.getInstance().mapaGoogleX, MainModel.getInstance().codUsuario);
             operation.send("mapaGoogleY", UsuarioLogado.getInstance().mapaGoogleY, MainModel.getInstance().codUsuario);
-            operation.send("mapaGoogleWidth", UsuarioLogado.getInstance().mapaGoogleWidth, MainModel.getInstance().codUsuario);
-            operation.send("mapaGoogleHeight", UsuarioLogado.getInstance().mapaGoogleHeight, MainModel.getInstance().codUsuario);
+            operation.send("mapaGooglePercentWidth", UsuarioLogado.getInstance().mapaGooglePercentWidth, MainModel.getInstance().codUsuario);
+            operation.send("mapaGooglePercentHeight", UsuarioLogado.getInstance().mapaGooglePercentHeight, MainModel.getInstance().codUsuario);
             operation.send("gridDetalheX", UsuarioLogado.getInstance().gridDetalheX, MainModel.getInstance().codUsuario);
             operation.send("gridDetalheY", UsuarioLogado.getInstance().gridDetalheY, MainModel.getInstance().codUsuario);
-            operation.send("gridDetalheWidth", UsuarioLogado.getInstance().gridDetalheWidth, MainModel.getInstance().codUsuario);
-            operation.send("gridDetalheHeight", UsuarioLogado.getInstance().gridDetalheHeight, MainModel.getInstance().codUsuario);
+            operation.send("gridDetalhePercentWidth", UsuarioLogado.getInstance().gridDetalhePercentWidth, MainModel.getInstance().codUsuario);
+            operation.send("gridDetalhePercentHeight", UsuarioLogado.getInstance().gridDetalhePercentHeight, MainModel.getInstance().codUsuario);
         
 		}
 

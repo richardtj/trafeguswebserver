@@ -107,16 +107,16 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				UsuarioLogado.getInstance().gridVeiculosX = this.view.veiculos.x;
 				UsuarioLogado.getInstance().gridVeiculosY = this.view.veiculos.y;
-				UsuarioLogado.getInstance().gridVeiculosWidth = this.view.veiculos.width;
-				UsuarioLogado.getInstance().gridVeiculosHeight = this.view.veiculos.height;
+				UsuarioLogado.getInstance().gridVeiculosPercentWidth = this.view.veiculos.percentWidth;
+				UsuarioLogado.getInstance().gridVeiculosPercentHeight = this.view.veiculos.percentHeight;
 				UsuarioLogado.getInstance().mapaGoogleX = this.view.mapa.x;
 				UsuarioLogado.getInstance().mapaGoogleY = this.view.mapa.y;
-				UsuarioLogado.getInstance().mapaGoogleWidth = this.view.mapa.width;
-				UsuarioLogado.getInstance().mapaGoogleHeight = this.view.mapa.height;
+				UsuarioLogado.getInstance().mapaGooglePercentWidth = this.view.mapa.percentWidth;
+				UsuarioLogado.getInstance().mapaGooglePercentHeight = this.view.mapa.percentHeight;
 				UsuarioLogado.getInstance().gridDetalheX = this.view.detalhes.x;
 				UsuarioLogado.getInstance().gridDetalheY = this.view.detalhes.y;
-				UsuarioLogado.getInstance().gridDetalheWidth = this.view.detalhes.width;
-				UsuarioLogado.getInstance().gridDetalheHeight = this.view.detalhes.height;
+				UsuarioLogado.getInstance().gridDetalhePercentWidth = this.view.detalhes.percentWidth;
+				UsuarioLogado.getInstance().gridDetalhePercentHeight = this.view.detalhes.percentHeight;
 				
 				TrafegusWS.getIntance().salvarPreferenciasUsuario(salvarPreferenciasUsuarioResultHandler);
 			}
