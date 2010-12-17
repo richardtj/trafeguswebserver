@@ -5,11 +5,11 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
     import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
     import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
-    
+
     import flash.events.Event;
     import flash.net.URLLoader;
     import flash.net.URLRequest;
-    
+
     import mx.charts.chartClasses.InstanceCache;
     import mx.controls.Alert;
     import mx.events.FlexEvent;
@@ -18,7 +18,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
     import mx.rpc.soap.mxml.Operation;
     import mx.rpc.soap.mxml.WebService;
     import mx.utils.ObjectUtil;
-    
+
     import org.osmf.layout.AbsoluteLayoutFacet;
 
     public class TrafegusWS
@@ -54,30 +54,30 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
             {
                 operation = new Operation(this.webservice, operationName);
                 operation.showBusyCursor = true;
+                operation.addEventListener(FaultEvent.FAULT, onFaultHandler);
+                operation.addEventListener(ResultEvent.RESULT, onResultHander)
             }
-            operation.addEventListener(FaultEvent.FAULT, onFaultHandler);
-			operation.addEventListener(ResultEvent.RESULT, onResultHander)
 
-			if (result != null)
+            if (result != null)
             {
                 operation.addEventListener(ResultEvent.RESULT, result);
             }
-			Wait.getInstance().Show();
+            Wait.getInstance().Show();
             return operation;
         }
 
         private function onFaultHandler(e:FaultEvent):void
         {
-			Wait.getInstance().Close();
+            Wait.getInstance().Close();
             MessageBox.erro(e.fault.message);
         }
 
-		private function onResultHander(e:ResultEvent):void
-		{
-			Wait.getInstance().Close();
-		}
+        private function onResultHander(e:ResultEvent):void
+        {
+            Wait.getInstance().Close();
+        }
 
-		public function solicitaAcesso(solicitaAcessoHandler:Function, usuario:String, senha:String):void
+        public function solicitaAcesso(solicitaAcessoHandler:Function, usuario:String, senha:String):void
         {
             var operation:Operation = createOperation("solicitaAcesso", solicitaAcessoHandler);
             operation.send(usuario, senha);
