@@ -61,7 +61,7 @@
 		borderStyle="none"
 		itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.ClassesReferenciaItemRenderer"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Ok" click=""/>
+		<s:Button label="Ok" click="this.controller.classesReferenciaSelecionadas()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </mx:TitleWindow>

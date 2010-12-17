@@ -22,6 +22,7 @@
             target="{loginViewStack}"
             siblings="{[mainView]}"/>
     </fx:Declarations>
+	<fx:Style source="styles/customScroll.css"/>
     <fx:Style>
 		@namespace s "library://ns.adobe.com/flex/spark";
 		@namespace mx "library://ns.adobe.com/flex/halo";
@@ -36,6 +37,7 @@
 			backgroundImage:Embed("assets/background.jpg");
 			backgroundImageFillMode: repeat;
 		}
+		
 	</fx:Style>
     <fx:Script>
         <![CDATA[

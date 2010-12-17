@@ -142,7 +142,7 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		[Embed(source="assets/map/apartment.png")]
 		private var outrasCidades:Class;
 		
-		[Embed(source="assets/map/google_maps_marker.png")]
+		[Embed(source="assets/map/regroup.png")]
 		private var referenciaGenerica:Class;
 		
 		[Embed(source="assets/map/tollstation.png")]
