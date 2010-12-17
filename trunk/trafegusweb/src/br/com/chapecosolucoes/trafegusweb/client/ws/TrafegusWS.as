@@ -1,14 +1,15 @@
 package br.com.chapecosolucoes.trafegusweb.client.ws
 {
     import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
+    import br.com.chapecosolucoes.trafegusweb.client.components.wait.Wait;
     import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
     import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
-
+    
     import flash.events.Event;
     import flash.net.URLLoader;
     import flash.net.URLRequest;
-
+    
     import mx.charts.chartClasses.InstanceCache;
     import mx.controls.Alert;
     import mx.events.FlexEvent;
@@ -17,7 +18,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
     import mx.rpc.soap.mxml.Operation;
     import mx.rpc.soap.mxml.WebService;
     import mx.utils.ObjectUtil;
-
+    
     import org.osmf.layout.AbsoluteLayoutFacet;
 
     public class TrafegusWS
@@ -55,19 +56,28 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
                 operation.showBusyCursor = true;
             }
             operation.addEventListener(FaultEvent.FAULT, onFaultHandler);
-            if (result != null)
+			operation.addEventListener(ResultEvent.RESULT, onResultHander)
+
+			if (result != null)
             {
                 operation.addEventListener(ResultEvent.RESULT, result);
             }
+			Wait.getInstance().Show();
             return operation;
         }
 
         private function onFaultHandler(e:FaultEvent):void
         {
+			Wait.getInstance().Close();
             MessageBox.erro(e.fault.message);
         }
 
-        public function solicitaAcesso(solicitaAcessoHandler:Function, usuario:String, senha:String):void
+		private function onResultHander(e:ResultEvent):void
+		{
+			Wait.getInstance().Close();
+		}
+
+		public function solicitaAcesso(solicitaAcessoHandler:Function, usuario:String, senha:String):void
         {
             var operation:Operation = createOperation("solicitaAcesso", solicitaAcessoHandler);
             operation.send(usuario, senha);
@@ -276,7 +286,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
             var operation:Operation = createOperation("salvarPosicaoTelas", handler);
             with (UsuarioLogado.getInstance())
             {
-                operation.send("salvarPosicaoTelas", MainModel.getInstance().codUsuario, gridVeiculosX, gridVeiculosY, gridVeiculosPercentWidth, gridVeiculosPercentWidth, mapaGoogleX, mapaGoogleY, mapaGooglePercentWidth, mapaGooglePercentHeight, gridDetalheX, gridDetalheY, gridDetalhePercentWidth, gridDetalhePercentHeight);
+                operation.send(MainModel.getInstance().codUsuario, gridVeiculosX, gridVeiculosY, gridVeiculosPercentWidth, gridVeiculosPercentWidth, mapaGoogleX, mapaGoogleY, mapaGooglePercentWidth, mapaGooglePercentHeight, gridDetalheX, gridDetalheY, gridDetalhePercentWidth, gridDetalhePercentHeight);
             }
         }
 
