@@ -60,7 +60,7 @@
 
             private function init():void
             {
-                xml = <Context>
+       /*         xml = <Context>
                         <Menu>Novo Agendamento</Menu>
                     </Context>;
                 var xmlListCollection:XMLListCollection = new XMLListCollection(xml.Menu);
@@ -75,6 +75,7 @@
                     this.myContextMenu.customItems.push(menuItem);
                 }
                 backGround.contextMenu = myContextMenu;
+				*/
             }
 
             private function contextMenuHandler(event:ContextMenuEvent):void
@@ -104,8 +105,12 @@
                 if (event.logged == true)
                 {
                     loginViewStack.selectedIndex = 1;
+					TrafegusWS.getIntance().lerPosicaoTelas(lerPosicaoTelasResultHandler);
                 }
             }
+			
+			private function lerPosicaoTelasResultHandler(e:ResultEvent):void {
+			}
         ]]>
     </fx:Script>
     <s:BorderContainer id="backGround"
