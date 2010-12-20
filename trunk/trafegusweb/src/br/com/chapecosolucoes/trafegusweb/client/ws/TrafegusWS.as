@@ -292,18 +292,20 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 
         public function solicitaClassesReferencias(handler:Function):void
         {
-            var operation:Operation = createOperation("solicitaClassesReferencias");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaClassesReferencias", handler);
             operation.send(MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaRefencias(handler:Function, codClasseReferencia:String):void
         {
-            var operation:Operation = createOperation("solicitaRefencias");
-            operation.addEventListener(ResultEvent.RESULT, handler);
-            operation.showBusyCursor = true;
+            var operation:Operation = createOperation("solicitaRefencias", handler);
             operation.send(MainModel.getInstance().codEmpresa, codClasseReferencia);
+        }
+
+        public function lerPosicaoTelas(handler:Function):void
+        {
+            var operation:Operation = createOperation("lerPosicaoTelas", handler);
+            operation.send(MainModel.getInstance().codUsuario);
         }
     }
 }
