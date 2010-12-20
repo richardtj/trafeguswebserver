@@ -1,32 +1,5 @@
 @namespace mx "library://ns.adobe.com/flex/mx";
-@namespace s "library://ns.adobe.com/flex/spark";
-s|VScrollBar {
-    downArrowUpSkin: Embed(source="/assets/downArrow.png");
-    downArrowOverSkin: Embed(source="/assets/downArrow.png");
-    downArrowDownSkin: Embed(source="/assets/downArrow.png");
-    upArrowUpSkin: Embed(source="/assets/upArrow.png");
-    upArrowOverSkin: Embed(source="/assets/upArrow.png");
-    upArrowDownSkin: Embed(source="/assets/upArrow.png");
-    thumbDownSkin: 
-    	Embed(source="/assets/thumb.png",
-        scaleGridLeft="7", scaleGridTop="5", 
-        scaleGridRight="8", scaleGridBottom="7");
-        
-    thumbUpSkin: 
-    	Embed(source="/assets/thumb.png",
-        scaleGridLeft="7", scaleGridTop="5", 
-        scaleGridRight="8", scaleGridBottom="7");
-        
-    thumbOverSkin: 
-    	Embed(source="/assets/thumb.png",
-        scaleGridLeft="7", scaleGridTop="5", 
-        scaleGridRight="8", scaleGridBottom="7");
-        
-    trackSkin: 
-    	Embed(source="/assets/scrolltrack.png",
-        scaleGridLeft="7", scaleGridTop="4", 
-        scaleGridRight="8", scaleGridBottom="6" );       
-} 
+@namespace s "library://ns.adobe.com/flex/spark"; 
 mx|VScrollBar {
     downArrowUpSkin: Embed(source="/assets/downArrow.png");
     downArrowOverSkin: Embed(source="/assets/downArrow.png");
@@ -53,4 +26,31 @@ mx|VScrollBar {
     	Embed(source="/assets/scrolltrack.png",
         scaleGridLeft="7", scaleGridTop="4", 
         scaleGridRight="8", scaleGridBottom="6" );       
+}
+mx|HScrollBar {
+	leftArrowUpSkin: Embed(source="/assets/leftArrow.png");
+	leftArrowOverSkin: Embed(source="/assets/leftArrow.png");
+	leftArrowDownSkin: Embed(source="/assets/leftArrow.png");
+	rightArrowUpSkin: Embed(source="/assets/rightArrow.png");
+	rightArrowOverSkin: Embed(source="/assets/rightArrow.png");
+	rightArrowDownSkin: Embed(source="/assets/rightArrow.png");
+	thumbDownSkin: 
+		Embed(source="/assets/thumb.png",
+		scaleGridLeft="7", scaleGridTop="5", 
+		scaleGridRight="8", scaleGridBottom="7");
+	
+	thumbUpSkin: 
+		Embed(source="/assets/thumb.png",
+		scaleGridLeft="7", scaleGridTop="5", 
+		scaleGridRight="8", scaleGridBottom="7");
+	
+	thumbOverSkin: 
+		Embed(source="/assets/thumb.png",
+		scaleGridLeft="7", scaleGridTop="5", 
+		scaleGridRight="8", scaleGridBottom="7");
+	
+	trackSkin: 
+		Embed(source="/assets/scrolltrackh.png",
+		scaleGridLeft="7", scaleGridTop="4", 
+		scaleGridRight="8", scaleGridBottom="6" );       
 }
