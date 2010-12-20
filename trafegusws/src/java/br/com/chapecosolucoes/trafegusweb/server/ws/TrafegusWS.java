@@ -6,7 +6,6 @@ package br.com.chapecosolucoes.trafegusweb.server.ws;
 
 import br.com.chapecosolucoes.trafegusweb.server.conexao.Conexao;
 import java.sql.Connection;
-import java.sql.SQLException;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -182,7 +181,6 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN PFIS_Pessoa_Fisica ON (PFIS_PESS_ORAS_Codigo = PESS_ORAS_Codigo)");
         sb.append(" LEFT JOIN PJUR_Pessoa_juridica ON (PJUR_PESS_ORAS_Codigo = PESS_ORAS_Codigo)");
         sb.append(" WHERE TRAN_Transportador.TRAN_PESS_ORAS_Codigo = '").append(codTransportador).append("'");
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -227,7 +225,6 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN vupa_veiculo_utilitario_passe ON (VEIC_ORAS_Codigo = VUPA_VEIC_ORAS_Codigo)");
         sb.append(" ORDER BY VEIC_Veiculo.VEIC_Placa");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
-        System.out.println(sb.toString());
 
         return Conexao.getInstance().queryToXML(sb.toString());
 
@@ -306,7 +303,6 @@ public class TrafegusWS {
         sb.append("    LEFT JOIN VIAG_Viagem ON (VIAG_Codigo = VVEI_VIAG_Codigo)");
         sb.append("    ORDER BY VEIC_ORAS_Codigo");
         sb.append("    LIMIT 20 OFFSET ").append(offset);
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -348,7 +344,6 @@ public class TrafegusWS {
         sb.append(" ORDER BY VEIC_Placa,");
         sb.append("         RPOS_Data_Computador_Bordo");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -409,7 +404,6 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN PESS_Pessoa ON (PESS_ORAS_Codigo = EMBA_PJUR_PESS_ORAS_Codigo)");
         sb.append("  ORDER BY VEIC_Placa");
         sb.append("  LIMIT 20 OFFSET ").append(offset);
-        System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -443,7 +437,6 @@ public class TrafegusWS {
         sb.append("         AND TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(")");
         sb.append("    ORDER BY PESS_Pessoa.PESS_Nome");
         sb.append("    LIMIT 20 OFFSET ").append(offset);
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -469,7 +462,6 @@ public class TrafegusWS {
         sb.append("     JOIN TEST_Tipo_Estabelecimento ON (TEST_Codigo = EMBA_TEST_Codigo)");
         sb.append(" ORDER BY ORAS_Codigo");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
-        System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -491,7 +483,6 @@ public class TrafegusWS {
         sb.append("     WHERE CREF_PESS_ORAS_Codigo IS NULL OR CREF_PESS_ORAS_Codigo = ").append(codEmpresa);
         sb.append("    ORDER BY REFE_Codigo");
         sb.append("  LIMIT 20 OFFSET ").append(offset);
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -573,8 +564,6 @@ public class TrafegusWS {
         sb.append("      JOIN TLOC_Tipo_Local ON (TLOC_Tipo_Local.TLOC_Codigo = TLOC_Transportador_Local.TLOC_TLOC_Codigo)");
         sb.append("  WHERE (CREF_Classe_Referencia.cref_pess_oras_codigo is null or CREF_Classe_Referencia.cref_pess_oras_codigo = TRAN_Transportador.tran_pess_oras_codigo)");
         sb.append("      AND TRAN_Transportador.tran_pess_oras_codigo = ").append(codLocal);
-
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -592,7 +581,6 @@ public class TrafegusWS {
         sb.append("     JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = VTRA_TRAN_PESS_ORAS_Codigo AND TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(")");
         sb.append("    JOIN vcar_veiculo_carreta ON (VEIC_ORAS_Codigo = VCAR_VEIC_ORAS_Codigo)");
         sb.append(" ORDER BY VEIC_Veiculo.VEIC_Placa");
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -610,7 +598,6 @@ public class TrafegusWS {
         sb.append(" WHERE PGPG_ESTATUS = 'A'");
         sb.append(" ORDER BY PGPG_DESCRICAO");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -651,7 +638,6 @@ public class TrafegusWS {
         sb.append(" JOIN TRAN_TRANSPORTADOR ON (TRAN_PESS_ORAS_CODIGO = VIAG_TRAN_PESS_ORAS_CODIGO AND VIAG_TRAN_PESS_ORAS_CODIGO = ").append(codEmpresa).append(") ");
         sb.append(" ORDER BY VIAG_CODIGO ");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
-        System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -674,7 +660,6 @@ public class TrafegusWS {
         sb.append(" JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = ORAS_Codigo AND TRIM(REPLACE(REPLACE(REPLACE(REPLACE(VEIC_Placa,'.',''),'/',''),'\\\\',''),'-','')) = TRIM(REPLACE(REPLACE(REPLACE(REPLACE('").append(placa).append("','.',''),'/',''),'\\\\',''),'-','')))");
         sb.append(" JOIN ORTE_Objeto_Rastreado_Termina ON (ORTE_ORAS_Codigo = VEIC_ORAS_CODIGO)");
         sb.append(" JOIN TERM_Terminal ON (TERM_Codigo = ORTE_TERM_Codigo)");
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -698,7 +683,6 @@ public class TrafegusWS {
         sb.append(" where TERM_Codigo IN (").append(codTerminal).append(")");
         sb.append(" order by ppad_periferico_padrao.ppad_descricao,");
         sb.append(" PPER_Problema_Periferico.pper_descricao");
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -756,7 +740,6 @@ public class TrafegusWS {
         sb.append("    LEFT JOIN VVEI_Viagem_Veiculo ON (VVEI_VEIC_ORAS_Codigo = ORAS_Codigo AND VVEI_Precedencia = '1' AND VVEI_Ativo = 'S')");
         sb.append("    LEFT JOIN VIAG_Viagem ON (VIAG_Codigo = VVEI_VIAG_Codigo)");
         sb.append(" ) AS XXX");
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -778,7 +761,6 @@ public class TrafegusWS {
         sb.append("      JOIN CREF_Classe_Referencia ON (CREF_Codigo = REFE_CREF_Codigo)");
         sb.append("     WHERE CREF_PESS_ORAS_Codigo IS NULL OR CREF_PESS_ORAS_Codigo = ").append(codEmpresa);
         sb.append(" ) AS XXX");
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -804,7 +786,6 @@ public class TrafegusWS {
         sb.append("     JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = PESS_ORAS_Codigo AND ORAS_EOBJ_Codigo = 1)");
         sb.append("     JOIN TEST_Tipo_Estabelecimento ON (TEST_Codigo = EMBA_TEST_Codigo)");
         sb.append(" ) AS XXX");
-        System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -838,7 +819,6 @@ public class TrafegusWS {
         sb.append("        JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = MTRA_TRAN_PESS_ORAS_Codigo");
         sb.append("         AND TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(")");
         sb.append(" ) AS XXX");
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -856,7 +836,6 @@ public class TrafegusWS {
         sb.append(" FROM PGPG_PG");
         sb.append(" WHERE PGPG_ESTATUS = 'A'");
         sb.append(" ) AS XXX ");
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -945,7 +924,6 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN vuca_veiculo_utilitario_carga ON (VEIC_ORAS_Codigo = VUCA_VEIC_ORAS_Codigo)");
         sb.append(" LEFT JOIN vupa_veiculo_utilitario_passe ON (VEIC_ORAS_Codigo = VUPA_VEIC_ORAS_Codigo)");
         sb.append(" ) AS XXX ");
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -964,7 +942,6 @@ public class TrafegusWS {
         sb.append(" FROM VIAG_VIAGEM");
         sb.append(" JOIN TRAN_TRANSPORTADOR ON (TRAN_PESS_ORAS_CODIGO = VIAG_TRAN_PESS_ORAS_CODIGO AND VIAG_TRAN_PESS_ORAS_CODIGO = ").append(codEmpresa).append(") ");
         sb.append(" ) AS XXX ");
-        System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -1003,7 +980,6 @@ public class TrafegusWS {
         sb.append("   JOIN VTRA_Veiculo_Transportador ON (VTRA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
         sb.append("   JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = VTRA_TRAN_PESS_ORAS_Codigo AND TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(" /*CodEmpresa*/)");
         sb.append(" ) AS XXX ");
-        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -1064,42 +1040,85 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN EMBA_Embarcador ON (EMBA_PJUR_PESS_ORAS_Codigo = VIAG_EMBA_PJUR_PESS_ORAS_Codigo)");
         sb.append(" LEFT JOIN PESS_Pessoa ON (PESS_ORAS_Codigo = EMBA_PJUR_PESS_ORAS_Codigo)");
         sb.append(" ) AS XXX");
-        System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
     /**
      * Web service operation
      */
-    private void excluirPreferenciasUsuario(String chave, String valor, String usuario) throws Exception {
+    private void excluirPosicoesTela(String usuario, Connection con) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" DELETE FROM sreg_sistema_registro");
-        sb.append(" WHERE sreg_sessao = '").append("TRAFEGUS_WEB").append("'");
-        sb.append(" AND sreg_chave = '").append(chave).append("'");
-        sb.append(" AND sreg_valor = '").append(valor).append("'");
+        sb.append(" WHERE sreg_sessao = '").append("TRAFEGUS_WEB_POSICAO").append("'");
         sb.append(" AND sreg_usuario_adicionou = '").append(usuario).append("'");
 
         String sql = sb.toString();
 
         sb = null;
-        Connection con = Conexao.getInstance().getConnection();
         con.createStatement().execute(sql);
-        con.close();
-
     }
 
-    @WebMethod(operationName = "salvarPreferenciasUsuario")
-    public String salvarPreferenciasUsuario(@WebParam(name = "chave") String chave, @WebParam(name = "valor") String valor, @WebParam(name = "usuario") String usuario) throws Exception {
-        excluirPreferenciasUsuario(chave, valor, usuario);
+    private void gravaPosicaoTela(String chave, String valor, String usuario, Connection con) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" INSERT INTO sreg_sistema_registro");
         sb.append("    (sreg_sessao, sreg_chave, sreg_valor, sreg_usuario_adicionou)");
-        sb.append(" VALUES ('").append("TRAFEGUS_WEB").append("','").append(chave).append("','").append(valor).append("','").append(usuario).append("')");
+        sb.append(" VALUES ('").append("TRAFEGUS_WEB_POSICAO").append("','").append(chave).append("','").append(valor).append("','").append(usuario).append("')");
         String sql = sb.toString();
         sb = null;
-        Connection con = Conexao.getInstance().getConnection();
         con.createStatement().execute(sql);
+    }
+
+    @WebMethod(operationName = "salvarPosicaoTelas")
+    public String salvarPosicaoTelas(
+            @WebParam(name = "usuario") String usuario,
+            @WebParam(name = "gridVeiculosX") String gridVeiculosX,
+            @WebParam(name = "gridVeiculosY") String gridVeiculosY,
+            @WebParam(name = "gridVeiculosPercentWidth") String gridVeiculosPercentWidth,
+            @WebParam(name = "gridVeiculosPercentHeight") String gridVeiculosPercentHeight,
+            @WebParam(name = "mapaGoogleX") String mapaGoogleX,
+            @WebParam(name = "mapaGoogleY") String mapaGoogleY,
+            @WebParam(name = "mapaGooglePercentWidth") String mapaGooglePercentWidth,
+            @WebParam(name = "mapaGooglePercentHeight") String mapaGooglePercentHeight,
+            @WebParam(name = "gridDetalheX") String gridDetalheX,
+            @WebParam(name = "gridDetalheY") String gridDetalheY,
+            @WebParam(name = "gridDetalhePercentWidth") String gridDetalhePercentWidth,
+            @WebParam(name = "gridDetalhePercentHeight") String gridDetalhePercentHeight) throws Exception {
+
+        Connection con = Conexao.getInstance().getConnection();
+
+        excluirPosicoesTela(usuario, con);
+
+        gravaPosicaoTela("gridVeiculosX", gridVeiculosX, usuario, con);
+        gravaPosicaoTela("gridVeiculosY", gridVeiculosY, usuario, con);
+        gravaPosicaoTela("gridVeiculosPercentWidth", gridVeiculosPercentWidth, usuario, con);
+        gravaPosicaoTela("gridVeiculosPercentHeight", gridVeiculosPercentHeight, usuario, con);
+        gravaPosicaoTela("mapaGoogleX", mapaGoogleX, usuario, con);
+        gravaPosicaoTela("mapaGoogleY", mapaGoogleY, usuario, con);
+        gravaPosicaoTela("mapaGooglePercentWidth", mapaGooglePercentWidth, usuario, con);
+        gravaPosicaoTela("mapaGooglePercentHeight", mapaGooglePercentHeight, usuario, con);
+        gravaPosicaoTela("gridDetalheX", gridDetalheX, usuario, con);
+        gravaPosicaoTela("gridDetalheY", gridDetalheY, usuario, con);
+        gravaPosicaoTela("gridDetalhePercentWidth", gridDetalhePercentWidth, usuario, con);
+        gravaPosicaoTela("gridDetalhePercentHeight", gridDetalhePercentHeight, usuario, con);
         con.close();
+
         return "<registro>OK</registro>";
+    }
+
+    @WebMethod(operationName = "lerPosicaoTelas")
+    public String lerPosicaoTelas(@WebParam(name = "usuario") String usuario) throws Exception {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("    SELECT");
+        sb.append("	sreg_chave,");
+        sb.append("	sreg_valor");
+        sb.append("FROM");
+        sb.append("	sreg_sistema_registro");
+        sb.append("WHERE");
+        sb.append("	sreg_sessao = 'TRAFEGUS_WEB_POSICAO'");
+        sb.append("AND	sreg_usuario_adicionou = '").append(usuario).append("'");
+
+        return Conexao.getInstance().queryToXML(sb.toString());
+
     }
 }
