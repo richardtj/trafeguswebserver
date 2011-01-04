@@ -85,73 +85,73 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaListaVeiculos(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaVeiculos", handler);
-            operation.send(MainModel.getInstance().codEmpresa, offset);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaDadosGrid(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaDadosGrid", handler);
-            operation.send(MainModel.getInstance().codEmpresa, offset);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaHistoricoPosicoes(handler:Function, params:PosicaoVeiculoVO, offset:int):void
         {
             var operation:Operation = createOperation("SolicitaHistoricoPosicoes", handler);
-            operation.send(MainModel.getInstance().codEmpresa, params.vehiclePlate, offset, false);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa, params.vehiclePlate, offset, false);
         }
 
         public function solicitaDadosMotorista(handler:Function, params:String):void
         {
             var operation:Operation = createOperation("solicitaDadosMotorista", handler);
-            operation.send(MainModel.getInstance().codEmpresa, params);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa, params);
         }
 
         public function solicitaDadosVeiculo(handler:Function, params:String):void
         {
             var operation:Operation = createOperation("solicitaDadosVeiculo", handler);
-            operation.send(params);
+            operation.send(MainModel.getInstance().codUsuario,params);
         }
 
         public function solicitaDadosGridEmViagem(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaDadosGridEmViagem", handler);
-            operation.send(MainModel.getInstance().codEmpresa, offset);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaMotoristas(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaMotoristas", handler);
-            operation.send(MainModel.getInstance().codEmpresa, offset);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaRotas(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaRotas", handler);
-            operation.send(MainModel.getInstance().codEmpresa, offset);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaEmbarcadores(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaEmbarcadores", handler);
-            operation.send(MainModel.getInstance().codEmpresa, offset);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaTransportadores(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaTransportadores", handler);
-            operation.send(offset);
+            operation.send(MainModel.getInstance().codUsuario,offset);
         }
 
         public function solicitaDadosEmbarcador(handler:Function, param:String):void
         {
             var operation:Operation = createOperation("solicitaDadosEmbarcador", handler);
-            operation.send(param);
+            operation.send(MainModel.getInstance().codUsuario,param);
         }
 
         public function solicitaDadosTransportador(handler:Function, param:String):void
         {
             var operation:Operation = createOperation("solicitaDadosTransportador", handler);
-            operation.send(param);
+            operation.send(MainModel.getInstance().codUsuario,param);
         }
 
         public function solicitaListaLocais(handler:Function, offset:int):void
@@ -163,121 +163,121 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaListaTipoTransporte(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaTipoTransporte", handler);
-            operation.send(offset);
+            operation.send(MainModel.getInstance().codUsuario,offset);
         }
 
         public function solicitaDadosLocal(handler:Function, param:String):void
         {
             var operation:Operation = createOperation("solicitaDadosLocal", handler);
-            operation.send(param);
+            operation.send(MainModel.getInstance().codUsuario,param);
         }
 
         public function solicitaListaCarretasDisponiveis(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaListaCarretasDisponiveis", handler);
-            operation.send(MainModel.getInstance().codEmpresa);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaListaPGR(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaPGR", handler);
-            operation.send(offset);
+            operation.send(MainModel.getInstance().codUsuario,offset);
         }
 
         public function solicitaDadosPGR(handler:Function, param:String):void
         {
             var operation:Operation = createOperation("solicitaDadosPGR", handler);
-            operation.send(param);
+            operation.send(MainModel.getInstance().codUsuario,param);
         }
 
         public function solicitaListaViagemPai(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaViagemPai", handler);
-            operation.send(MainModel.getInstance().codEmpresa, offset);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaTerminais(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaListaTerminais", handler);
-            operation.send(MainModel.getInstance().solicitacaoMonitoramentoVO.placaTruc);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().solicitacaoMonitoramentoVO.placaTruc);
         }
 
         public function solicitaTotalDadosGrid(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalDadosGrid", handler);
-            operation.send(MainModel.getInstance().codEmpresa);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalListaLocais(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaLocais", handler);
-            operation.send(MainModel.getInstance().codEmpresa);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalListaEmbarcadores(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaEmbarcadores", handler);
-            operation.send(MainModel.getInstance().codEmpresa);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalListaMotoristas(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaMotoristas", handler);
-            operation.send(MainModel.getInstance().codEmpresa);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalListaPGR(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaPGR", handler);
-            operation.send();
+            operation.send(MainModel.getInstance().codUsuario);
         }
 
         public function solicitaTotalListaRotas(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaRotas", handler);
-            operation.send(MainModel.getInstance().codEmpresa);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalListaTipoTransporte(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaTipoTransporte", handler);
-            operation.send();
+            operation.send(MainModel.getInstance().codUsuario);
         }
 
         public function solicitaTotalListaTransportadores(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaTransportadores", handler);
-            operation.send();
+            operation.send(MainModel.getInstance().codUsuario);
         }
 
         public function solicitaTotalListaVeiculos(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaVeiculos", handler);
-            operation.send(MainModel.getInstance().codEmpresa);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalListaViagemPai(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaViagemPai", handler);
-            operation.send(MainModel.getInstance().codEmpresa);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalHistoricoPosicoes(handler:Function, params:PosicaoVeiculoVO):void
         {
             var operation:Operation = createOperation("solicitaTotalHistoricoPosicoes", handler);
-            operation.send(MainModel.getInstance().codEmpresa, params.vehiclePlate);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa, params.vehiclePlate);
         }
 
         public function solicitaDadosTerminalDefeituoso(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaDadosTerminalDefeituoso", handler);
-            operation.send(MainModel.getInstance().codTerminais);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codTerminais);
         }
 
         public function solicitaTotalDadosGridEmViagem(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalDadosGridEmViagem", handler);
-            operation.send(MainModel.getInstance().codEmpresa);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa);
         }
 
         public function salvarPosicaoTelas(handler:Function):void
@@ -292,13 +292,13 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaClassesReferencias(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaClassesReferencias", handler);
-            operation.send(MainModel.getInstance().codEmpresa);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaRefencias(handler:Function, codClasseReferencia:String):void
         {
             var operation:Operation = createOperation("solicitaRefencias", handler);
-            operation.send(MainModel.getInstance().codEmpresa, codClasseReferencia);
+            operation.send(MainModel.getInstance().codUsuario,MainModel.getInstance().codEmpresa, codClasseReferencia);
         }
 
         public function lerPosicaoTelas(handler:Function):void
