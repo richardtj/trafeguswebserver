@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -30,8 +31,18 @@ public class Conexao {
 
     private static Conexao instance = null;
     private Connection connection = null;
+    private HashMap<String,Connection> map = null;
 
     private Conexao() throws Exception {
+        this.map = new HashMap<String,Connection>();
+        Class.forName("org.postgresql.Driver").newInstance();
+        this.connection = DriverManager.getConnection("jdbc:postgresql://172.1.2.110:5432/desenvolvimento", "postgres", "postgres");
+    }
+
+    private Connection createConnection() throws Exception
+    {
+        Class.forName("org.postgresql.Driver").newInstance();
+        return DriverManager.getConnection("jdbc:postgresql://172.1.2.110:5432/desenvolvimento", "postgres", "postgres");
     }
 
     public static Conexao getInstance() throws Exception {
@@ -41,12 +52,9 @@ public class Conexao {
         return instance;
     }
 
-    public ResultSet executeQuery(String sql) throws Exception {
+    public ResultSet executeQuery(String sql,String codUsuario) throws Exception {
         ResultSet result = null;
-        Connection con = Conexao.getInstance().getConnection();
-        result = con.createStatement().executeQuery(sql);
-        con.close();
-        con = null;
+        result = Conexao.getInstance().getConnection(codUsuario).createStatement().executeQuery(sql);
         return result;
     }
 
@@ -121,13 +129,21 @@ public class Conexao {
         return result;
     }
 
-    public Connection getConnection() throws Exception {
-        Class.forName("org.postgresql.Driver").newInstance();
-        this.connection = DriverManager.getConnection("jdbc:postgresql://172.1.2.110:5432/desenvolvimento", "postgres", "postgres");
-        return this.connection;
+    public Connection getConnection(String codUsuario) throws Exception {
+        Connection con = null;
+        if(map.containsKey(codUsuario))
+        {
+            con = map.get(codUsuario);
+        }
+        else
+        {
+            con = this.createConnection();
+            this.map.put(codUsuario, con);
+        }
+        return con;
     }
 
-    public String queryToXML(String sql) throws Exception {
-        return this.queryToXML(this.executeQuery(sql));
+    public String queryToXML(String sql,String codUsuario) throws Exception {
+        return this.queryToXML(this.executeQuery(sql,codUsuario));
     }
 }
