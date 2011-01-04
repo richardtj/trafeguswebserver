@@ -21,7 +21,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaAcesso")
-    public String solicitaAcesso(@WebParam(name = "usuario") String usuario, @WebParam(name = "senha") String senha) throws Exception {
+    public String solicitaAcesso(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "usuario") String usuario, @WebParam(name = "senha") String senha) throws Exception {
         StringBuilder sb = new StringBuilder();
 
         sb.append(" SELECT");
@@ -41,14 +41,14 @@ public class TrafegusWS {
         sb.append("       UPPER(USUA_LOGIN) = UPPER('").append(usuario).append("')");
         sb.append("   AND UPPER(USUA_SENHA) = UPPER('").append(senha).append("')");
         sb.append(" LIMIT 1        ");
-        return Conexao.getInstance().queryToXML(sb.toString(), usuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaClassesReferencias")
-    public String solicitaClassesReferencias(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmrpesa") String codEmrpesa) throws Exception {
+    public String solicitaClassesReferencias(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmrpesa") String codEmrpesa) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT cref_codigo,");
         sb.append("     cref_descricao,");
@@ -57,14 +57,14 @@ public class TrafegusWS {
         sb.append(" FROM cref_classe_referencia");
         sb.append(" WHERE(cref_pess_oras_codigo IS NULL OR cref_pess_oras_codigo = '").append(codEmrpesa.toString()).append("')");
         System.out.print(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosMotorista")
-    public String solicitaDadosMotorista(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "cpfMotorista") String cpfMotorista) throws Exception {
+    public String solicitaDadosMotorista(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "cpfMotorista") String cpfMotorista) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
         sb.append("     TO_CHAR(ORAS_Objeto_Rastreado.ORAS_Data_Cadastro,'DD/MM/YYYY HH24:MI:SS') AS ORAS_Data_Cadastro,");
@@ -89,7 +89,7 @@ public class TrafegusWS {
         sb.append(" JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = PESS_ORAS_codigo AND ORAS_EOBJ_Codigo = 1)");
         System.out.println(sb.toString());
 
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
 
     }
 
@@ -97,7 +97,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaRefencias")
-    public String solicitaRefencias(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "codClasseReferencia") Integer codClasseReferencia) throws Exception {
+    public String solicitaRefencias(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "codClasseReferencia") Integer codClasseReferencia) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT CREF_CODIGO,");
         sb.append("        CREF_DESCRICAO,");
@@ -124,14 +124,14 @@ public class TrafegusWS {
         }
         sb.append(" ORDER BY REFE_DESCRICAO");
         System.out.print(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosVeiculo")
-    public String solicitaDadosVeiculo(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "placaVeiculo") String placaVeiculo) throws Exception {
+    public String solicitaDadosVeiculo(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "placaVeiculo") String placaVeiculo) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
         sb.append("         TO_CHAR(ORAS_Objeto_Rastreado.ORAS_Data_Cadastro,'DD/MM/YYYY HH24:MI:SS') AS ORAS_Data_Cadastro,");
@@ -157,14 +157,14 @@ public class TrafegusWS {
         sb.append(" WHERE");
         sb.append("       TRIM(REPLACE(REPLACE(REPLACE(REPLACE(VEIC_Veiculo.VEIC_Placa,'.',''),'/',''),'\\\\',''),'-','')) =");
         sb.append("       TRIM(REPLACE(REPLACE(REPLACE(REPLACE('").append(placaVeiculo).append("' ,'.',''),'/',''),'\\\\',''),'-',''))");
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosTransportador")
-    public String solicitaDadosTransportador(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codTransportador") String codTransportador) throws Exception {
+    public String solicitaDadosTransportador(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codTransportador") String codTransportador) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT TRAN_Transportador.TRAN_PESS_ORAS_Codigo,");
         //sb.append("         TEST_Tipo_Estabelecimento.*,");
@@ -185,14 +185,14 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN PJUR_Pessoa_juridica ON (PJUR_PESS_ORAS_Codigo = PESS_ORAS_Codigo)");
         sb.append(" WHERE TRAN_Transportador.TRAN_PESS_ORAS_Codigo = '").append(codTransportador).append("'");
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosRota")
-    public String solicitaDadosRota(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "codRota") Integer codRota) throws Exception {
+    public String solicitaDadosRota(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "codRota") Integer codRota) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ROTA_CODIGO,");
         sb.append("	ROTA_DESCRICAO,");
@@ -203,14 +203,14 @@ public class TrafegusWS {
         sb.append(" FROM ROTA_ROTA");
         sb.append(" WHERE ROTA_CODIGO = ").append(codRota.toString());
         sb.append(" ORDER BY ROTA_DESCRICAO");
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaVeiculos")
-    public String solicitaListaVeiculos(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "offset") Integer offset) throws Exception {
+    public String solicitaListaVeiculos(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "offset") Integer offset) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ORAS_OBJETO_RASTREADO.ORAS_CODIGO,");
         sb.append("       VEIC_VEICULO.VEIC_PLACA,");
@@ -231,7 +231,7 @@ public class TrafegusWS {
         sb.append(" LIMIT 20 OFFSET ").append(offset);
         System.out.println(sb.toString());
 
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
 
     }
 
@@ -239,7 +239,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaRotas")
-    public String solicitaListaRotas(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaListaRotas(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT");
         sb.append("    ROTA_CODIGO,");
@@ -252,14 +252,14 @@ public class TrafegusWS {
         sb.append(" WHERE ROTA_PESS_ORAS_CODIGO_DONO = ").append(codEmpresa.toString());
         sb.append(" ORDER BY ROTA_DESCRICAO");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosGrid")
-    public String solicitaDadosGrid(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaDadosGrid(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
         StringBuilder sb = new StringBuilder();
 
         sb.append("SELECT DISTINCT");
@@ -309,14 +309,14 @@ public class TrafegusWS {
         sb.append("    ORDER BY VEIC_ORAS_Codigo");
         sb.append("    LIMIT 20 OFFSET ").append(offset);
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "SolicitaHistoricoPosicoes")
-    public String SolicitaHistoricoPosicoes(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa,
+    public String SolicitaHistoricoPosicoes(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa,
             @WebParam(name = "placaVeiculo") String placaVeiculo,
             @WebParam(name = "offset") String offset,
             @WebParam(name = "somenteTerminalPrincipal") boolean somenteTerminalPrincipal) throws Exception {
@@ -351,14 +351,14 @@ public class TrafegusWS {
         sb.append("         RPOS_Data_Computador_Bordo");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosGridEmViagem")
-    public String solicitaDadosGridEmViagem(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaDadosGridEmViagem(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT VEIC_Placa as placa,");
@@ -412,14 +412,14 @@ public class TrafegusWS {
         sb.append("  ORDER BY VEIC_Placa");
         sb.append("  LIMIT 20 OFFSET ").append(offset);
         System.out.print(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaMotoristas")
-    public String solicitaListaMotoristas(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaListaMotoristas(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append("      SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
@@ -446,14 +446,14 @@ public class TrafegusWS {
         sb.append("    ORDER BY PESS_Pessoa.PESS_Nome");
         sb.append("    LIMIT 20 OFFSET ").append(offset);
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaEmbarcadores")
-    public String solicitaListaEmbarcadores(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaListaEmbarcadores(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
@@ -472,14 +472,14 @@ public class TrafegusWS {
         sb.append(" ORDER BY ORAS_Codigo");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
         System.out.print(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaLocais")
-    public String solicitaListaLocais(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaListaLocais(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT REFE_Referencia.REFE_Codigo,");
@@ -494,14 +494,14 @@ public class TrafegusWS {
         sb.append("    ORDER BY REFE_Codigo");
         sb.append("  LIMIT 20 OFFSET ").append(offset);
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaTransportadores")
-    public String solicitaListaTransportadores(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaListaTransportadores(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "offset") String offset) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
@@ -519,14 +519,14 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN PJUR_Pessoa_Juridica ON (PJUR_PESS_ORAS_Codigo = PESS_ORAS_Codigo)");
         sb.append(" ORDER BY PESS_Nome");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosEmbarcador")
-    public String solicitaDadosEmbarcador(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmbarcador") String codEmbarcador) throws Exception {
+    public String solicitaDadosEmbarcador(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmbarcador") String codEmbarcador) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT EMBA_PJUR_PESS_ORAS_Codigo,");
@@ -540,14 +540,14 @@ public class TrafegusWS {
         sb.append(" JOIN PESS_Pessoa ON (PESS_ORAS_Codigo = PJUR_PESS_ORAS_Codigo)");
         sb.append(" JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = PESS_ORAS_Codigo AND ORAS_EOBJ_Codigo = 1)");
         sb.append(" WHERE EMBA_Embarcador.EMBA_PJUR_PESS_ORAS_Codigo = ").append(codEmbarcador);
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaTipoTransporte")
-    public String solicitaListaTipoTransporte(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaListaTipoTransporte(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "offset") String offset) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT TTRA_Codigo,");
@@ -555,14 +555,14 @@ public class TrafegusWS {
         sb.append(" FROM TTRA_Tipo_Transporte");
         sb.append(" ORDER BY TTRA_Codigo");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosLocal")
-    public String solicitaDadosLocal(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codLocal") String codLocal) throws Exception {
+    public String solicitaDadosLocal(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codLocal") String codLocal) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT REFE_Referencia.REFE_Codigo, REFE_Referencia.REFE_Descricao, REFE_Referencia.REFE_Latitude,");
@@ -577,14 +577,14 @@ public class TrafegusWS {
         sb.append("      AND TRAN_Transportador.tran_pess_oras_codigo = ").append(codLocal);
 
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaCarretasDisponiveis")
-    public String solicitaListaCarretasDisponiveis(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
+    public String solicitaListaCarretasDisponiveis(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT VEIC_Veiculo.VEIC_COR AS TVEI_DESCRICAO,");
@@ -595,14 +595,14 @@ public class TrafegusWS {
         sb.append("    JOIN vcar_veiculo_carreta ON (VEIC_ORAS_Codigo = VCAR_VEIC_ORAS_Codigo)");
         sb.append(" ORDER BY VEIC_Veiculo.VEIC_Placa");
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaPGR")
-    public String solicitaListaPGR(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaListaPGR(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "offset") String offset) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT PGPG_CODIGO,");
         sb.append(" PGPG_DESCRICAO,");
@@ -612,14 +612,14 @@ public class TrafegusWS {
         sb.append(" ORDER BY PGPG_DESCRICAO");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosPGR")
-    public String solicitaDadosPGR(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codigo") String codigo) throws Exception {
+    public String solicitaDadosPGR(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codigo") String codigo) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ");
@@ -634,14 +634,14 @@ public class TrafegusWS {
         sb.append(" WHERE PGPG_Estatus = 'A'");
         sb.append("         AND pgpg_codigo = ").append(codigo);
         sb.append(" ORDER BY pite_descricao");
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaViagemPai")
-    public String solicitaListaViagemPai(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaListaViagemPai(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ");
@@ -653,14 +653,14 @@ public class TrafegusWS {
         sb.append(" ORDER BY VIAG_CODIGO ");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
         System.out.print(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaTerminais")
-    public String solicitaListaTerminais(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "placa") String placa) throws Exception {
+    public String solicitaListaTerminais(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "placa") String placa) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT TERM_Terminal.term_codigo,");
@@ -676,14 +676,14 @@ public class TrafegusWS {
         sb.append(" JOIN ORTE_Objeto_Rastreado_Termina ON (ORTE_ORAS_Codigo = VEIC_ORAS_CODIGO)");
         sb.append(" JOIN TERM_Terminal ON (TERM_Codigo = ORTE_TERM_Codigo)");
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosTerminalDefeituoso")
-    public String solicitaDadosTerminalDefeituoso(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codTerminal") String codTerminal) throws Exception {
+    public String solicitaDadosTerminalDefeituoso(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codTerminal") String codTerminal) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" select ppad_periferico_padrao.ppad_codigo,");
@@ -700,14 +700,14 @@ public class TrafegusWS {
         sb.append(" order by ppad_periferico_padrao.ppad_descricao,");
         sb.append(" PPER_Problema_Periferico.pper_descricao");
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaTotalDadosGrid")
-    public String solicitaTotalDadosGrid(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
+    public String solicitaTotalDadosGrid(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
 
@@ -758,14 +758,14 @@ public class TrafegusWS {
         sb.append("    LEFT JOIN VIAG_Viagem ON (VIAG_Codigo = VVEI_VIAG_Codigo)");
         sb.append(" ) AS XXX");
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaTotalListaLocais")
-    public String solicitaTotalListaLocais(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
+    public String solicitaTotalListaLocais(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(*) AS TOTAL FROM ( ");
         sb.append(" SELECT solicitaTotalListaLocaisREFE_Referencia.REFE_Codigo,");
@@ -779,14 +779,14 @@ public class TrafegusWS {
         sb.append("     WHERE CREF_PESS_ORAS_Codigo IS NULL OR CREF_PESS_ORAS_Codigo = ").append(codEmpresa);
         sb.append(" ) AS XXX");
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaTotalListaEmbarcadores")
-    public String solicitaTotalListaEmbarcadores(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
+    public String solicitaTotalListaEmbarcadores(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(*) AS TOTAL FROM ( ");
@@ -805,14 +805,14 @@ public class TrafegusWS {
         sb.append("     JOIN TEST_Tipo_Estabelecimento ON (TEST_Codigo = EMBA_TEST_Codigo)");
         sb.append(" ) AS XXX");
         System.out.print(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaTotalListaMotoristas")
-    public String solicitaTotalListaMotoristas(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
+    public String solicitaTotalListaMotoristas(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append("      SELECT COUNT(*) AS TOTAL FROM ( ");
@@ -839,14 +839,14 @@ public class TrafegusWS {
         sb.append("         AND TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(")");
         sb.append(" ) AS XXX");
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaTotalListaPGR")
-    public String solicitaTotalListaPGR(@WebParam(name = "codUsuario") String codUsuario) throws Exception {
+    public String solicitaTotalListaPGR(@WebParam(name = "idSessao") String idSessao) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(*) AS TOTAL FROM ( ");
@@ -857,14 +857,14 @@ public class TrafegusWS {
         sb.append(" WHERE PGPG_ESTATUS = 'A'");
         sb.append(" ) AS XXX ");
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaTotalListaRotas")
-    public String solicitaTotalListaRotas(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
+    public String solicitaTotalListaRotas(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(*) AS TOTAL FROM ( ");
@@ -878,14 +878,14 @@ public class TrafegusWS {
         sb.append(" FROM ROTA_ROTA");
         sb.append(" WHERE ROTA_PESS_ORAS_CODIGO_DONO = ").append(codEmpresa.toString());
         sb.append(" ) AS XXX");
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaTotalListaTipoTransporte")
-    public String solicitaTotalListaTipoTransporte(@WebParam(name = "codUsuario") String codUsuario) throws Exception {
+    public String solicitaTotalListaTipoTransporte(@WebParam(name = "idSessao") String idSessao) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(*) AS TOTAL FROM ( ");
@@ -893,14 +893,14 @@ public class TrafegusWS {
         sb.append("         TTRA_Descricao");
         sb.append(" FROM TTRA_Tipo_Transporte");
         sb.append(" ) AS XXX");
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaTotalListaTransportadores")
-    public String solicitaTotalListaTransportadores(@WebParam(name = "codUsuario") String codUsuario) throws Exception {
+    public String solicitaTotalListaTransportadores(@WebParam(name = "idSessao") String idSessao) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(*) AS TOTAL FROM ( ");
@@ -918,14 +918,14 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN PFIS_Pessoa_Fisica ON (PFIS_PESS_ORAS_Codigo = PESS_ORAS_Codigo)");
         sb.append(" LEFT JOIN PJUR_Pessoa_Juridica ON (PJUR_PESS_ORAS_Codigo = PESS_ORAS_Codigo)");
         sb.append(" ) AS XXX ");
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaTotalListaVeiculos")
-    public String solicitaTotalListaVeiculos(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
+    public String solicitaTotalListaVeiculos(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(*) AS TOTAL FROM ( ");
@@ -946,14 +946,14 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN vupa_veiculo_utilitario_passe ON (VEIC_ORAS_Codigo = VUPA_VEIC_ORAS_Codigo)");
         sb.append(" ) AS XXX ");
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaTotalListaViagemPai")
-    public String solicitaTotalListaViagemPai(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
+    public String solicitaTotalListaViagemPai(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(*) AS TOTAL FROM ( ");
@@ -965,14 +965,14 @@ public class TrafegusWS {
         sb.append(" JOIN TRAN_TRANSPORTADOR ON (TRAN_PESS_ORAS_CODIGO = VIAG_TRAN_PESS_ORAS_CODIGO AND VIAG_TRAN_PESS_ORAS_CODIGO = ").append(codEmpresa).append(") ");
         sb.append(" ) AS XXX ");
         System.out.print(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaTotalHistoricoPosicoes")
-    public String solicitaTotalHistoricoPosicoes(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "placa") String placa) throws Exception {
+    public String solicitaTotalHistoricoPosicoes(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "placa") String placa) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
 
@@ -1004,14 +1004,14 @@ public class TrafegusWS {
         sb.append("   JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = VTRA_TRAN_PESS_ORAS_Codigo AND TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(" /*CodEmpresa*/)");
         sb.append(" ) AS XXX ");
         System.out.println(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaTotalDadosGridEmViagem")
-    public String solicitaTotalDadosGridEmViagem(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
+    public String solicitaTotalDadosGridEmViagem(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(*) AS TOTAL FROM ( ");
@@ -1065,7 +1065,7 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN PESS_Pessoa ON (PESS_ORAS_Codigo = EMBA_PJUR_PESS_ORAS_Codigo)");
         sb.append(" ) AS XXX");
         System.out.print(sb.toString());
-        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
     /**
@@ -1095,6 +1095,7 @@ public class TrafegusWS {
 
     @WebMethod(operationName = "salvarPosicaoTelas")
     public String salvarPosicaoTelas(
+            @WebParam(name = "idSessao") String idSessao,
             @WebParam(name = "usuario") String usuario,
             @WebParam(name = "gridVeiculosX") String gridVeiculosX,
             @WebParam(name = "gridVeiculosY") String gridVeiculosY,
@@ -1109,7 +1110,7 @@ public class TrafegusWS {
             @WebParam(name = "gridDetalhePercentWidth") String gridDetalhePercentWidth,
             @WebParam(name = "gridDetalhePercentHeight") String gridDetalhePercentHeight) throws Exception {
 
-        Connection con = Conexao.getInstance().getConnection(usuario);
+        Connection con = Conexao.getInstance().getConnection(idSessao);
 
         excluirPosicoesTela(usuario, con);
 
@@ -1131,7 +1132,7 @@ public class TrafegusWS {
     }
 
     @WebMethod(operationName = "lerPosicaoTelas")
-    public String lerPosicaoTelas(@WebParam(name = "usuario") String usuario) throws Exception {
+    public String lerPosicaoTelas(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "usuario") String usuario) throws Exception {
         StringBuilder sb = new StringBuilder();
 
         sb.append("    SELECT ");
@@ -1143,7 +1144,7 @@ public class TrafegusWS {
         sb.append("	sreg_sessao = 'TRAFEGUS_WEB_POSICAO' ");
         sb.append(" AND	sreg_usuario_adicionou = '").append(usuario).append("'");
 
-        return Conexao.getInstance().queryToXML(sb.toString(), usuario);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
 
     }
 }
