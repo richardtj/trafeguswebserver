@@ -4,6 +4,7 @@
  */
 package br.com.chapecosolucoes.trafegusweb.server.conexao;
 
+import br.com.chapecosolucoes.trafegusweb.server.config.Config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -30,19 +31,27 @@ import org.w3c.dom.Element;
 public class Conexao {
 
     private static Conexao instance = null;
-    private Connection connection = null;
-    private HashMap<String,Connection> map = null;
+    private HashMap<String, Connection> map = null;
 
     private Conexao() throws Exception {
-        this.map = new HashMap<String,Connection>();
-        Class.forName("org.postgresql.Driver").newInstance();
-        this.connection = DriverManager.getConnection("jdbc:postgresql://172.1.2.110:5432/desenvolvimento", "postgres", "postgres");
+        this.map = new HashMap<String, Connection>();
     }
 
-    private Connection createConnection() throws Exception
-    {
+    private Connection createConnection() throws Exception {
+        String url = Config.getInstance().getValue("trafegusweb.url");
+        String usuario = Config.getInstance().getValue("trafegusweb.usuario");
+        String senha = Config.getInstance().getValue("trafegusweb.senha");
+
+        url = (url == null ? "jdbc:postgresql://172.1.2.110:5432/desenvolvimento" : url);
+        usuario = (usuario == null ? "postgres" : usuario);
+        senha = (senha == null ? "postgres" : senha);
+
+        Config.getInstance().setValue("trafegusweb.url", url);
+        Config.getInstance().setValue("trafegusweb.usuario", usuario);
+        Config.getInstance().setValue("trafegusweb.senha", senha);
+
         Class.forName("org.postgresql.Driver").newInstance();
-        return DriverManager.getConnection("jdbc:postgresql://172.1.2.110:5432/desenvolvimento", "postgres", "postgres");
+        return DriverManager.getConnection(url, usuario, senha);
     }
 
     public static Conexao getInstance() throws Exception {
@@ -52,7 +61,7 @@ public class Conexao {
         return instance;
     }
 
-    public ResultSet executeQuery(String sql,String codUsuario) throws Exception {
+    public ResultSet executeQuery(String sql, String codUsuario) throws Exception {
         ResultSet result = null;
         result = Conexao.getInstance().getConnection(codUsuario).createStatement().executeQuery(sql);
         return result;
@@ -131,19 +140,16 @@ public class Conexao {
 
     public Connection getConnection(String codUsuario) throws Exception {
         Connection con = null;
-        if(map.containsKey(codUsuario))
-        {
+        if (map.containsKey(codUsuario)) {
             con = map.get(codUsuario);
-        }
-        else
-        {
+        } else {
             con = this.createConnection();
             this.map.put(codUsuario, con);
         }
         return con;
     }
 
-    public String queryToXML(String sql,String codUsuario) throws Exception {
-        return this.queryToXML(this.executeQuery(sql,codUsuario));
+    public String queryToXML(String sql, String codUsuario) throws Exception {
+        return this.queryToXML(this.executeQuery(sql, codUsuario));
     }
 }
