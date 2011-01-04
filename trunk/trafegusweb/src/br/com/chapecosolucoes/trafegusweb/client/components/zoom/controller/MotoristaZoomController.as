@@ -22,7 +22,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		{
 		}
 		public var view:MotoristaZoom;
-		public function motoristaSelecionado(event:MouseEvent):void
+		public function motoristaSelecionado():void
 		{
 			if (this.view.grid.selectedItem != null)
 			{
@@ -90,6 +90,10 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			{
 				MainModel.getInstance().totalListaMotoristas = int(obj.total.toString());
 			}
+		}
+		public function selectedDriverEventHandler(event:SelectedDriverEvent):void
+		{
+			MessageBox.informacao("eee");
 		}
 	}
 }

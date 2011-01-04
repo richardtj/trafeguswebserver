@@ -25,6 +25,7 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.MotoristaZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
 			import mx.controls.Alert;
@@ -42,6 +43,7 @@
 			private function creationComplete():void
 			{
 				this.controller.atualizaListaMotoristas();
+				this.grid.addEventListener(SelectedDriverEvent.SELECTED_DRIVER_EVENT,this.controller.selectedDriverEventHandler);
 			}
 		]]>
 	</fx:Script>
@@ -55,7 +57,7 @@
 		id="grid" 
 		width="100%" height="100%" 
 		doubleClickEnabled="true"
-		doubleClick="this.controller.motoristaSelecionado(event)"
+		doubleClick="this.controller.motoristaSelecionado()"
 		dataProvider="{MainModel.getInstance().motoristasArray}"
 		toolTip="Clique sobre o nome do motorista para exibir os detalhes.">
 		<view:columns>
@@ -86,7 +88,7 @@
 		first="this.controller.solicitaListaMotoristas(event)"
 		last="this.controller.solicitaListaMotoristas(event)"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Ok" click="this.controller.motoristaSelecionado(event)"/>
+		<s:Button label="Ok" click="this.controller.motoristaSelecionado()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </mx:TitleWindow>

@@ -16,10 +16,15 @@
 		<mx:Dissolve id="dissolve" duration="500"/>
 		<mx:Iris id="iris" duration="500"/>
 	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="selectedDriverEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent")]		
+	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.controller.DriverDetailsController;
-			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;			
+			import br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			
 			import mx.managers.PopUpManager;
 			public var cpfMotoristaPrincipal:String;
 			private var controller:DriverDetailsController;
@@ -35,6 +40,11 @@
 			private function creationComplete():void
 			{
 				this.controller.solicitaDadosMotorista(this.cpfMotoristaPrincipal);
+			}
+			private function motoristaSelecionado():void
+			{
+				var event:SelectedDriverEvent = new SelectedDriverEvent(SelectedDriverEvent.SELECTED_DRIVER_EVENT,MainModel.getInstance().dadosMotoristaVO,true);
+				this.dispatchEvent(event);
 			}
 		]]>
 	</fx:Script>
@@ -82,4 +92,8 @@
 			<s:TextInput text="{MainModel.getInstance().dadosMotoristaVO.validadePesquisa}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 	</mx:Form>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Selecionar" click="this.motoristaSelecionado()"/>
+		<s:Button label="Voltar" click="this.closeHandler()"/>
+	</mx:ControlBar>
 </mx:TitleWindow>
