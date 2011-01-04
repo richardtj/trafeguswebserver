@@ -714,7 +714,7 @@ public class TrafegusWS {
         sb.append("SELECT COUNT(*) AS TOTAL FROM (");
         sb.append(" SELECT DISTINCT");
         sb.append("             VEIC_ORAS_Codigo,");
-        sb.append("             VEIC_Pla    ca as placa,");
+        sb.append("             VEIC_Placa as placa,");
         sb.append("             URPE_Valor as ignicao,");
         sb.append("             UPOS_Descricao_Sistema AS posicao,");
         sb.append("             UPOS_Longitude AS gpslatitude,");
