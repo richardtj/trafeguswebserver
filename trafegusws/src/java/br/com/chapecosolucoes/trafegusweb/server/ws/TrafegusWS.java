@@ -1147,4 +1147,10 @@ public class TrafegusWS {
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
 
     }
+
+    @WebMethod(operationName = "logout")
+    public String logout(@WebParam(name = "idSessao") String idSessao) throws Exception {
+        Conexao.getInstance().logout(idSessao);
+        return "<results><row>OK</row></results>";
+    }
 }
