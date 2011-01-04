@@ -41,14 +41,14 @@ public class TrafegusWS {
         sb.append("       UPPER(USUA_LOGIN) = UPPER('").append(usuario).append("')");
         sb.append("   AND UPPER(USUA_SENHA) = UPPER('").append(senha).append("')");
         sb.append(" LIMIT 1        ");
-        return Conexao.getInstance().queryToXML(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), usuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaClassesReferencias")
-    public String solicitaClassesReferencias(@WebParam(name = "codEmrpesa") String codEmrpesa) throws Exception {
+    public String solicitaClassesReferencias(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmrpesa") String codEmrpesa) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT cref_codigo,");
         sb.append("     cref_descricao,");
@@ -56,14 +56,15 @@ public class TrafegusWS {
         sb.append("     cref_classe_sistema");
         sb.append(" FROM cref_classe_referencia");
         sb.append(" WHERE(cref_pess_oras_codigo IS NULL OR cref_pess_oras_codigo = '").append(codEmrpesa.toString()).append("')");
-        return Conexao.getInstance().queryToXML(sb.toString());
+        System.out.print(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosMotorista")
-    public String solicitaDadosMotorista(@WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "cpfMotorista") String cpfMotorista) throws Exception {
+    public String solicitaDadosMotorista(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "cpfMotorista") String cpfMotorista) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
         sb.append("     TO_CHAR(ORAS_Objeto_Rastreado.ORAS_Data_Cadastro,'DD/MM/YYYY HH24:MI:SS') AS ORAS_Data_Cadastro,");
@@ -86,8 +87,9 @@ public class TrafegusWS {
         sb.append(cpfMotorista).append("' ,'.',''),'/',''),'\\\\',''),'-',''))  )");
         sb.append(" JOIN PESS_Pessoa ON (PESS_ORAS_codigo = PFIS_PESS_ORAS_Codigo)");
         sb.append(" JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = PESS_ORAS_codigo AND ORAS_EOBJ_Codigo = 1)");
+        System.out.println(sb.toString());
 
-        return Conexao.getInstance().queryToXML(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
 
     }
 
@@ -95,7 +97,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaRefencias")
-    public String solicitaRefencias(@WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "codClasseReferencia") Integer codClasseReferencia) throws Exception {
+    public String solicitaRefencias(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "codClasseReferencia") Integer codClasseReferencia) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT CREF_CODIGO,");
         sb.append("        CREF_DESCRICAO,");
@@ -121,14 +123,15 @@ public class TrafegusWS {
             sb.append("          AND CREF_CODIGO = '").append(codClasseReferencia.toString()).append("'");
         }
         sb.append(" ORDER BY REFE_DESCRICAO");
-        return Conexao.getInstance().queryToXML(sb.toString());
+        System.out.print(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosVeiculo")
-    public String solicitaDadosVeiculo(@WebParam(name = "placaVeiculo") String placaVeiculo) throws Exception {
+    public String solicitaDadosVeiculo(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "placaVeiculo") String placaVeiculo) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
         sb.append("         TO_CHAR(ORAS_Objeto_Rastreado.ORAS_Data_Cadastro,'DD/MM/YYYY HH24:MI:SS') AS ORAS_Data_Cadastro,");
@@ -154,14 +157,14 @@ public class TrafegusWS {
         sb.append(" WHERE");
         sb.append("       TRIM(REPLACE(REPLACE(REPLACE(REPLACE(VEIC_Veiculo.VEIC_Placa,'.',''),'/',''),'\\\\',''),'-','')) =");
         sb.append("       TRIM(REPLACE(REPLACE(REPLACE(REPLACE('").append(placaVeiculo).append("' ,'.',''),'/',''),'\\\\',''),'-',''))");
-        return Conexao.getInstance().queryToXML(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosTransportador")
-    public String solicitaDadosTransportador(@WebParam(name = "codTransportador") String codTransportador) throws Exception {
+    public String solicitaDadosTransportador(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codTransportador") String codTransportador) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT TRAN_Transportador.TRAN_PESS_ORAS_Codigo,");
         //sb.append("         TEST_Tipo_Estabelecimento.*,");
@@ -181,14 +184,15 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN PFIS_Pessoa_Fisica ON (PFIS_PESS_ORAS_Codigo = PESS_ORAS_Codigo)");
         sb.append(" LEFT JOIN PJUR_Pessoa_juridica ON (PJUR_PESS_ORAS_Codigo = PESS_ORAS_Codigo)");
         sb.append(" WHERE TRAN_Transportador.TRAN_PESS_ORAS_Codigo = '").append(codTransportador).append("'");
-        return Conexao.getInstance().queryToXML(sb.toString());
+        System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosRota")
-    public String solicitaDadosRota(@WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "codRota") Integer codRota) throws Exception {
+    public String solicitaDadosRota(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "codRota") Integer codRota) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ROTA_CODIGO,");
         sb.append("	ROTA_DESCRICAO,");
@@ -199,14 +203,14 @@ public class TrafegusWS {
         sb.append(" FROM ROTA_ROTA");
         sb.append(" WHERE ROTA_CODIGO = ").append(codRota.toString());
         sb.append(" ORDER BY ROTA_DESCRICAO");
-        return Conexao.getInstance().queryToXML(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaVeiculos")
-    public String solicitaListaVeiculos(@WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "offset") Integer offset) throws Exception {
+    public String solicitaListaVeiculos(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "offset") Integer offset) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ORAS_OBJETO_RASTREADO.ORAS_CODIGO,");
         sb.append("       VEIC_VEICULO.VEIC_PLACA,");
@@ -225,8 +229,9 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN vupa_veiculo_utilitario_passe ON (VEIC_ORAS_Codigo = VUPA_VEIC_ORAS_Codigo)");
         sb.append(" ORDER BY VEIC_Veiculo.VEIC_Placa");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
+        System.out.println(sb.toString());
 
-        return Conexao.getInstance().queryToXML(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
 
     }
 
@@ -234,7 +239,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaRotas")
-    public String solicitaListaRotas(@WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaListaRotas(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT");
         sb.append("    ROTA_CODIGO,");
@@ -247,14 +252,14 @@ public class TrafegusWS {
         sb.append(" WHERE ROTA_PESS_ORAS_CODIGO_DONO = ").append(codEmpresa.toString());
         sb.append(" ORDER BY ROTA_DESCRICAO");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
-        return Conexao.getInstance().queryToXML(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosGrid")
-    public String solicitaDadosGrid(@WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaDadosGrid(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
         StringBuilder sb = new StringBuilder();
 
         sb.append("SELECT DISTINCT");
@@ -303,14 +308,15 @@ public class TrafegusWS {
         sb.append("    LEFT JOIN VIAG_Viagem ON (VIAG_Codigo = VVEI_VIAG_Codigo)");
         sb.append("    ORDER BY VEIC_ORAS_Codigo");
         sb.append("    LIMIT 20 OFFSET ").append(offset);
-        return Conexao.getInstance().queryToXML(sb.toString());
+        System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "SolicitaHistoricoPosicoes")
-    public String SolicitaHistoricoPosicoes(@WebParam(name = "codEmpresa") String codEmpresa,
+    public String SolicitaHistoricoPosicoes(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa,
             @WebParam(name = "placaVeiculo") String placaVeiculo,
             @WebParam(name = "offset") String offset,
             @WebParam(name = "somenteTerminalPrincipal") boolean somenteTerminalPrincipal) throws Exception {
@@ -344,14 +350,15 @@ public class TrafegusWS {
         sb.append(" ORDER BY VEIC_Placa,");
         sb.append("         RPOS_Data_Computador_Bordo");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
-        return Conexao.getInstance().queryToXML(sb.toString());
+        System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosGridEmViagem")
-    public String solicitaDadosGridEmViagem(@WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaDadosGridEmViagem(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT VEIC_Placa as placa,");
@@ -404,14 +411,15 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN PESS_Pessoa ON (PESS_ORAS_Codigo = EMBA_PJUR_PESS_ORAS_Codigo)");
         sb.append("  ORDER BY VEIC_Placa");
         sb.append("  LIMIT 20 OFFSET ").append(offset);
-        return Conexao.getInstance().queryToXML(sb.toString());
+        System.out.print(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaMotoristas")
-    public String solicitaListaMotoristas(@WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaListaMotoristas(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append("      SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
@@ -437,14 +445,15 @@ public class TrafegusWS {
         sb.append("         AND TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(")");
         sb.append("    ORDER BY PESS_Pessoa.PESS_Nome");
         sb.append("    LIMIT 20 OFFSET ").append(offset);
-        return Conexao.getInstance().queryToXML(sb.toString());
+        System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaEmbarcadores")
-    public String solicitaListaEmbarcadores(@WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaListaEmbarcadores(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
@@ -462,14 +471,15 @@ public class TrafegusWS {
         sb.append("     JOIN TEST_Tipo_Estabelecimento ON (TEST_Codigo = EMBA_TEST_Codigo)");
         sb.append(" ORDER BY ORAS_Codigo");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
-        return Conexao.getInstance().queryToXML(sb.toString());
+        System.out.print(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaLocais")
-    public String solicitaListaLocais(@WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaListaLocais(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT REFE_Referencia.REFE_Codigo,");
@@ -483,14 +493,15 @@ public class TrafegusWS {
         sb.append("     WHERE CREF_PESS_ORAS_Codigo IS NULL OR CREF_PESS_ORAS_Codigo = ").append(codEmpresa);
         sb.append("    ORDER BY REFE_Codigo");
         sb.append("  LIMIT 20 OFFSET ").append(offset);
-        return Conexao.getInstance().queryToXML(sb.toString());
+        System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaListaTransportadores")
-    public String solicitaListaTransportadores(@WebParam(name = "offset") String offset) throws Exception {
+    public String solicitaListaTransportadores(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "offset") String offset) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
@@ -508,14 +519,14 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN PJUR_Pessoa_Juridica ON (PJUR_PESS_ORAS_Codigo = PESS_ORAS_Codigo)");
         sb.append(" ORDER BY PESS_Nome");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
-        return Conexao.getInstance().queryToXML(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDadosEmbarcador")
-    public String solicitaDadosEmbarcador(@WebParam(name = "codEmbarcador") String codEmbarcador) throws Exception {
+    public String solicitaDadosEmbarcador(@WebParam(name = "codUsuario") String codUsuario, @WebParam(name = "codEmbarcador") String codEmbarcador) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT EMBA_PJUR_PESS_ORAS_Codigo,");
@@ -529,7 +540,7 @@ public class TrafegusWS {
         sb.append(" JOIN PESS_Pessoa ON (PESS_ORAS_Codigo = PJUR_PESS_ORAS_Codigo)");
         sb.append(" JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = PESS_ORAS_Codigo AND ORAS_EOBJ_Codigo = 1)");
         sb.append(" WHERE EMBA_Embarcador.EMBA_PJUR_PESS_ORAS_Codigo = ").append(codEmbarcador);
-        return Conexao.getInstance().queryToXML(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), codUsuario);
     }
 
     /**
@@ -564,6 +575,8 @@ public class TrafegusWS {
         sb.append("      JOIN TLOC_Tipo_Local ON (TLOC_Tipo_Local.TLOC_Codigo = TLOC_Transportador_Local.TLOC_TLOC_Codigo)");
         sb.append("  WHERE (CREF_Classe_Referencia.cref_pess_oras_codigo is null or CREF_Classe_Referencia.cref_pess_oras_codigo = TRAN_Transportador.tran_pess_oras_codigo)");
         sb.append("      AND TRAN_Transportador.tran_pess_oras_codigo = ").append(codLocal);
+
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -581,6 +594,7 @@ public class TrafegusWS {
         sb.append("     JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = VTRA_TRAN_PESS_ORAS_Codigo AND TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(")");
         sb.append("    JOIN vcar_veiculo_carreta ON (VEIC_ORAS_Codigo = VCAR_VEIC_ORAS_Codigo)");
         sb.append(" ORDER BY VEIC_Veiculo.VEIC_Placa");
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -598,6 +612,7 @@ public class TrafegusWS {
         sb.append(" WHERE PGPG_ESTATUS = 'A'");
         sb.append(" ORDER BY PGPG_DESCRICAO");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -638,6 +653,7 @@ public class TrafegusWS {
         sb.append(" JOIN TRAN_TRANSPORTADOR ON (TRAN_PESS_ORAS_CODIGO = VIAG_TRAN_PESS_ORAS_CODIGO AND VIAG_TRAN_PESS_ORAS_CODIGO = ").append(codEmpresa).append(") ");
         sb.append(" ORDER BY VIAG_CODIGO ");
         sb.append(" LIMIT 20 OFFSET ").append(offset);
+        System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -660,6 +676,7 @@ public class TrafegusWS {
         sb.append(" JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = ORAS_Codigo AND TRIM(REPLACE(REPLACE(REPLACE(REPLACE(VEIC_Placa,'.',''),'/',''),'\\\\',''),'-','')) = TRIM(REPLACE(REPLACE(REPLACE(REPLACE('").append(placa).append("','.',''),'/',''),'\\\\',''),'-','')))");
         sb.append(" JOIN ORTE_Objeto_Rastreado_Termina ON (ORTE_ORAS_Codigo = VEIC_ORAS_CODIGO)");
         sb.append(" JOIN TERM_Terminal ON (TERM_Codigo = ORTE_TERM_Codigo)");
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -683,6 +700,7 @@ public class TrafegusWS {
         sb.append(" where TERM_Codigo IN (").append(codTerminal).append(")");
         sb.append(" order by ppad_periferico_padrao.ppad_descricao,");
         sb.append(" PPER_Problema_Periferico.pper_descricao");
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -740,6 +758,7 @@ public class TrafegusWS {
         sb.append("    LEFT JOIN VVEI_Viagem_Veiculo ON (VVEI_VEIC_ORAS_Codigo = ORAS_Codigo AND VVEI_Precedencia = '1' AND VVEI_Ativo = 'S')");
         sb.append("    LEFT JOIN VIAG_Viagem ON (VIAG_Codigo = VVEI_VIAG_Codigo)");
         sb.append(" ) AS XXX");
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -761,6 +780,7 @@ public class TrafegusWS {
         sb.append("      JOIN CREF_Classe_Referencia ON (CREF_Codigo = REFE_CREF_Codigo)");
         sb.append("     WHERE CREF_PESS_ORAS_Codigo IS NULL OR CREF_PESS_ORAS_Codigo = ").append(codEmpresa);
         sb.append(" ) AS XXX");
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -786,6 +806,7 @@ public class TrafegusWS {
         sb.append("     JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = PESS_ORAS_Codigo AND ORAS_EOBJ_Codigo = 1)");
         sb.append("     JOIN TEST_Tipo_Estabelecimento ON (TEST_Codigo = EMBA_TEST_Codigo)");
         sb.append(" ) AS XXX");
+        System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -819,6 +840,7 @@ public class TrafegusWS {
         sb.append("        JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = MTRA_TRAN_PESS_ORAS_Codigo");
         sb.append("         AND TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(")");
         sb.append(" ) AS XXX");
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -836,6 +858,7 @@ public class TrafegusWS {
         sb.append(" FROM PGPG_PG");
         sb.append(" WHERE PGPG_ESTATUS = 'A'");
         sb.append(" ) AS XXX ");
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -924,6 +947,7 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN vuca_veiculo_utilitario_carga ON (VEIC_ORAS_Codigo = VUCA_VEIC_ORAS_Codigo)");
         sb.append(" LEFT JOIN vupa_veiculo_utilitario_passe ON (VEIC_ORAS_Codigo = VUPA_VEIC_ORAS_Codigo)");
         sb.append(" ) AS XXX ");
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -942,6 +966,7 @@ public class TrafegusWS {
         sb.append(" FROM VIAG_VIAGEM");
         sb.append(" JOIN TRAN_TRANSPORTADOR ON (TRAN_PESS_ORAS_CODIGO = VIAG_TRAN_PESS_ORAS_CODIGO AND VIAG_TRAN_PESS_ORAS_CODIGO = ").append(codEmpresa).append(") ");
         sb.append(" ) AS XXX ");
+        System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -980,6 +1005,7 @@ public class TrafegusWS {
         sb.append("   JOIN VTRA_Veiculo_Transportador ON (VTRA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
         sb.append("   JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = VTRA_TRAN_PESS_ORAS_Codigo AND TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(" /*CodEmpresa*/)");
         sb.append(" ) AS XXX ");
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -1040,6 +1066,7 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN EMBA_Embarcador ON (EMBA_PJUR_PESS_ORAS_Codigo = VIAG_EMBA_PJUR_PESS_ORAS_Codigo)");
         sb.append(" LEFT JOIN PESS_Pessoa ON (PESS_ORAS_Codigo = EMBA_PJUR_PESS_ORAS_Codigo)");
         sb.append(" ) AS XXX");
+        System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString());
     }
 
@@ -1109,14 +1136,14 @@ public class TrafegusWS {
     public String lerPosicaoTelas(@WebParam(name = "usuario") String usuario) throws Exception {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("    SELECT");
-        sb.append("	sreg_chave,");
-        sb.append("	sreg_valor");
-        sb.append("FROM");
-        sb.append("	sreg_sistema_registro");
-        sb.append("WHERE");
-        sb.append("	sreg_sessao = 'TRAFEGUS_WEB_POSICAO'");
-        sb.append("AND	sreg_usuario_adicionou = '").append(usuario).append("'");
+        sb.append("    SELECT ");
+        sb.append("	sreg_chave, ");
+        sb.append("	sreg_valor ");
+        sb.append(" FROM ");
+        sb.append("	sreg_sistema_registro ");
+        sb.append(" WHERE ");
+        sb.append("	sreg_sessao = 'TRAFEGUS_WEB_POSICAO' ");
+        sb.append(" AND	sreg_usuario_adicionou = '").append(usuario).append("'");
 
         return Conexao.getInstance().queryToXML(sb.toString());
 
