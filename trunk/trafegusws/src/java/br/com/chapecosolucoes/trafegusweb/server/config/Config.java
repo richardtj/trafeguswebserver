@@ -16,11 +16,14 @@ public class Config {
 
     private Config() throws Exception {
         File file = new File("config.properties");
-        FileInputStream fis = new FileInputStream(file);
-
+        FileInputStream fis = null;
         props = new Properties();
-        props.load(fis);
-        fis.close();
+        if(file.exists())
+        {
+            fis = new FileInputStream(file);
+            props.load(fis);
+            fis.close();
+        }
     }
 
     public static Config getInstance() throws Exception {
