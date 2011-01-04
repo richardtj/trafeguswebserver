@@ -45,7 +45,6 @@ public class ConnectionManager extends Thread {
             tempo = tempo - 1;
             if (tempo == 0) {
                 Conexao.getInstance().logout(idSessao);
-                map.remove(idSessao);
             } else {
                 map.remove(idSessao);
                 map.put(idSessao, tempo);
