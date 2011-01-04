@@ -152,4 +152,14 @@ public class Conexao {
     public String queryToXML(String sql, String codUsuario) throws Exception {
         return this.queryToXML(this.executeQuery(sql, codUsuario));
     }
+
+    public void logout(String idSessao) throws Exception{
+        Connection con = null;
+        if (map.containsKey(idSessao)) {
+            con = map.get(idSessao);
+            map.remove(idSessao);
+            con.close();
+            con = null;
+        }
+    }
 }
