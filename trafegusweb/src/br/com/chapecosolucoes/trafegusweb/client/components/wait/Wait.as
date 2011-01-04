@@ -31,11 +31,13 @@ package br.com.chapecosolucoes.trafegusweb.client.components.wait
         public function Show(show_spinner:Boolean = true):void
         {
             acesso++;
-            PopUpManager.removePopUp(this.spinner);
-            PopUpManager.addPopUp(this.spinner, DisplayObject(FlexGlobals.topLevelApplication), true)
-            PopUpManager.centerPopUp(this.spinner);
-			this.spinner.visible = true;
-			this.spinner.play();
+			if(acesso == 1)
+			{
+	            PopUpManager.addPopUp(this.spinner, DisplayObject(FlexGlobals.topLevelApplication), true)
+	            PopUpManager.centerPopUp(this.spinner);
+				this.spinner.visible = true;
+				this.spinner.play();
+			}
         }
 
         public function Close():void
@@ -45,6 +47,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.wait
             {
 				this.spinner.stop();
 				this.spinner.visible = false;
+	            PopUpManager.removePopUp(this.spinner);
             }
         }
     }

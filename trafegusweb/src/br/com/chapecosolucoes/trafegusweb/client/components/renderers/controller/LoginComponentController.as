@@ -33,15 +33,18 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
             }
             if (resultArray.length != 0)
             {
-                this.view.textinput1.text = "";
-                this.view.textinput2.text = "";
-                var loginEvent:LoginEvent = new LoginEvent(LoginEvent.LOGIN_EVENT, true);
-                this.view.dispatchEvent(loginEvent);
+				TrafegusWS.getIntance().lerPosicaoTelas(lerPosicaoTelasResultHandler);
             }
             else
             {
                 Alert.show("Usuario ou senha inválidos.");
             }
         }
+		private function lerPosicaoTelasResultHandler(e:ResultEvent):void {
+            this.view.textinput1.text = "";
+            this.view.textinput2.text = "";
+            var loginEvent:LoginEvent = new LoginEvent(LoginEvent.LOGIN_EVENT, true);
+            this.view.dispatchEvent(loginEvent);
+		}
     }
 }
