@@ -1135,13 +1135,13 @@ public class TrafegusWS {
     public String lerPosicaoTelas(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "usuario") String usuario) throws Exception {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("    SELECT ");
-        sb.append("	sreg_chave, ");
-        sb.append("	sreg_valor ");
+        sb.append(" SELECT ");
+        sb.append("  sreg_chave, ");
+        sb.append("  sreg_valor ");
         sb.append(" FROM ");
-        sb.append("	sreg_sistema_registro ");
+        sb.append(" sreg_sistema_registro ");
         sb.append(" WHERE ");
-        sb.append("	sreg_sessao = 'TRAFEGUS_WEB_POSICAO' ");
+        sb.append("  sreg_sessao = 'TRAFEGUS_WEB_POSICAO' ");
         sb.append(" AND	sreg_usuario_adicionou = '").append(usuario).append("'");
 
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
