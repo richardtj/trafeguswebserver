@@ -9,10 +9,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
-/**
- *
- * @author emerson
- */
 public class Config {
 
     private static Config instance = null;
