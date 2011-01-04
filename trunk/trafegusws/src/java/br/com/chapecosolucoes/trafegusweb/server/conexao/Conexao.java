@@ -138,14 +138,15 @@ public class Conexao {
         return result;
     }
 
-    public Connection getConnection(String codUsuario) throws Exception {
+    public Connection getConnection(String idSessao) throws Exception {
         Connection con = null;
-        if (map.containsKey(codUsuario)) {
-            con = map.get(codUsuario);
+        if (map.containsKey(idSessao)) {
+            con = map.get(idSessao);
         } else {
             con = this.createConnection();
-            this.map.put(codUsuario, con);
+            this.map.put(idSessao, con);
         }
+        ConnectionManager.getInstance().setaConexaoAtiva(idSessao);
         return con;
     }
 
@@ -160,6 +161,7 @@ public class Conexao {
             map.remove(idSessao);
             con.close();
             con = null;
+            ConnectionManager.getInstance().setaConexaoInativa(idSessao);
         }
     }
 }
