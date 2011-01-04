@@ -126,7 +126,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             }
             if (event.label == "Sair")
             {
-                MessageBox.atencao("Deseja sair da aplicação");
+                MessageBox.atencao("Deseja sair da aplicação","",Alert.OK | Alert.CANCEL,this.view,this.closeApp);
                     //Alert.show("Deseja sair da aplicação","Sair",Alert.OK | Alert.CANCEL,this.view,this.closeApp);
             }
             if (event.label == "Agendamento")

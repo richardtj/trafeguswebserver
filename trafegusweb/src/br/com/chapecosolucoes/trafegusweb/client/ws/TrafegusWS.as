@@ -79,7 +79,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaAcesso(solicitaAcessoHandler:Function, usuario:String, senha:String):void
         {
             var operation:Operation = createOperation("solicitaAcesso", solicitaAcessoHandler);
-            operation.send(usuario, senha);
+            operation.send(UsuarioLogado.getInstance().IdSessao,usuario, senha);
         }
 
         public function solicitaListaVeiculos(handler:Function, offset:int):void
@@ -306,6 +306,11 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
             var operation:Operation = createOperation("lerPosicaoTelas", handler);
             operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codUsuario);
         }
+		public function logout(handler:Function):void
+		{
+			var operation:Operation = createOperation("logout", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao);
+		}
     }
 }
 
