@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
 	import br.com.chapecosolucoes.trafegusweb.client.view.DadosAdicionaisView;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.TerminalDefeituosoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.TerminalVO;

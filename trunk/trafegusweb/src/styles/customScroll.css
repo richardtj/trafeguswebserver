@@ -28,29 +28,29 @@ mx|VScrollBar {
         scaleGridRight="8", scaleGridBottom="6" );       
 }
 mx|HScrollBar {
-	leftArrowUpSkin: Embed(source="/assets/leftArrow.png");
-	leftArrowOverSkin: Embed(source="/assets/leftArrow.png");
-	leftArrowDownSkin: Embed(source="/assets/leftArrow.png");
-	rightArrowUpSkin: Embed(source="/assets/rightArrow.png");
-	rightArrowOverSkin: Embed(source="/assets/rightArrow.png");
-	rightArrowDownSkin: Embed(source="/assets/rightArrow.png");
+	upArrowUpSkin: Embed(source="assets/leftArrow.png");
+	upArrowOverSkin: Embed(source="assets/leftArrow.png");
+	upArrowDownSkin: Embed(source="assets/leftArrow.png");
+	downArrowUpSkin: Embed(source="assets/rightArrow.png");
+	downArrowOverSkin: Embed(source="assets/rightArrow.png");
+	downArrowDownSkin: Embed(source="assets/rightArrow.png");
 	thumbDownSkin: 
-		Embed(source="/assets/thumb.png",
-		scaleGridLeft="7", scaleGridTop="5", 
-		scaleGridRight="8", scaleGridBottom="7");
+		Embed(source="/assets/thumbh.png",
+		scaleGridLeft="4", scaleGridTop="6", 
+		scaleGridRight="6", scaleGridBottom="7");
 	
 	thumbUpSkin: 
-		Embed(source="/assets/thumb.png",
-		scaleGridLeft="7", scaleGridTop="5", 
-		scaleGridRight="8", scaleGridBottom="7");
+		Embed(source="/assets/thumbh.png",
+		scaleGridLeft="4", scaleGridTop="6", 
+		scaleGridRight="6", scaleGridBottom="7");
 	
 	thumbOverSkin: 
-		Embed(source="/assets/thumb.png",
-		scaleGridLeft="7", scaleGridTop="5", 
-		scaleGridRight="8", scaleGridBottom="7");
+		Embed(source="/assets/thumbh.png",
+		scaleGridLeft="4", scaleGridTop="6", 
+		scaleGridRight="6", scaleGridBottom="7");
 	
 	trackSkin: 
 		Embed(source="/assets/scrolltrackh.png",
-		scaleGridLeft="7", scaleGridTop="4", 
-		scaleGridRight="8", scaleGridBottom="6" );       
+		scaleGridLeft="4", scaleGridTop="7", 
+		scaleGridRight="36", scaleGridBottom="8" );       
 }
