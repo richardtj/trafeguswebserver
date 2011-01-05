@@ -5,11 +5,18 @@
 package br.com.chapecosolucoes.trafegusweb.server.ws;
 
 import br.com.chapecosolucoes.trafegusweb.server.conexao.Conexao;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.lang.model.element.Element;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 /**
  *
@@ -1205,12 +1212,23 @@ public class TrafegusWS {
     }
 
     @WebMethod(operationName = "gravaConfigGrid")
-    public String gravaConfigGrid(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "usuario") String usuario, String tela, String grid) throws Exception {
+    public String gravaConfigGrid(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "usuario") String usuario, @WebParam(name = "tela") String tela, @WebParam(name = "grid") String grid, @WebParam(name = "xml") String xml) throws Exception {
         StringBuilder sb = new StringBuilder();
 
         String sreg_sessao = "TRAFEGUS_WEB_GRID_" + tela.toUpperCase() + "_" + grid.toUpperCase();
 
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        InputSource is = new InputSource();
+        is.setCharacterStream(new StringReader(xml));
+
+        Document doc = db.parse(is);
+        NodeList nodes = doc.getElementsByTagName("row");
+
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Element element = (Element) nodes.item(i);
+
+        }
         return "";
     }
-
 }
