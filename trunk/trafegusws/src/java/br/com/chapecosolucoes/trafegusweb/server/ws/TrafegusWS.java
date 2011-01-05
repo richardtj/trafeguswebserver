@@ -769,7 +769,7 @@ public class TrafegusWS {
     public String solicitaTotalListaLocais(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(*) AS TOTAL FROM ( ");
-        sb.append(" SELECT solicitaTotalListaLocaisREFE_Referencia.REFE_Codigo,");
+        sb.append(" SELECT REFE_Referencia.REFE_Codigo,");
         sb.append("        REFE_Referencia.REFE_Descricao,");
         sb.append("        REFE_Referencia.REFE_Latitude,");
         sb.append("        REFE_Referencia.REFE_Longitude,");
