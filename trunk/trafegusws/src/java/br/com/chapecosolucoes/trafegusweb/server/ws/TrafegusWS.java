@@ -267,8 +267,8 @@ public class TrafegusWS {
         sb.append("             VEIC_Placa as placa,");
         sb.append("             URPE_Valor as ignicao,");
         sb.append("             UPOS_Descricao_Sistema AS posicao,");
-        sb.append("             UPOS_Longitude AS gpslatitude,");
-        sb.append("             UPOS_Latitude AS gpslongitude,");
+        sb.append("             UPOS_Longitude,");
+        sb.append("             UPOS_Latitude,");
         sb.append("             VTEC_Descricao as versaoTecnologia,");
         sb.append("             TERM_Numero_Terminal as numeroTerminal,");
         sb.append("             '' as embarcador,");
