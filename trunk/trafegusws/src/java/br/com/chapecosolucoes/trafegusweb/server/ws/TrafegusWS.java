@@ -6,6 +6,7 @@ package br.com.chapecosolucoes.trafegusweb.server.ws;
 
 import br.com.chapecosolucoes.trafegusweb.server.conexao.Conexao;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -1153,4 +1154,63 @@ public class TrafegusWS {
         Conexao.getInstance().logout(idSessao);
         return "<results><row>OK</row></results>";
     }
+
+    private void excluirConfigGrid(String usuario, String tela, String grid, Connection con) throws Exception {
+        String sreg_sessao = "TRAFEGUS_WEB_GRID_" + tela.toUpperCase() + "_" + grid.toUpperCase();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(" DELETE FROM sreg_sistema_registro");
+        sb.append(" WHERE sreg_sessao = '").append(sreg_sessao).append("' AND sreg_usuario_adicionou = '").append(usuario).append("'");
+
+        String sql = sb.toString();
+
+        sb = null;
+        con.createStatement().execute(sql);
+    }
+
+    @WebMethod(operationName = "lerConfigGrid")
+    public String lerConfigGrid(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "usuario") String usuario, String tela, String grid) throws Exception {
+        StringBuilder sb = new StringBuilder();
+
+        String sreg_sessao = "TRAFEGUS_WEB_GRID_" + tela.toUpperCase() + "_" + grid.toUpperCase();
+
+        sb.append(" SELECT ");
+        sb.append("     sreg_chave, ");
+        sb.append("     sreg_valor ");
+        sb.append(" FROM ");
+        sb.append("     sreg_sistema_registro ");
+        sb.append(" WHERE ");
+        sb.append("     sreg_sessao = '").append(sreg_sessao).append("' ");
+        sb.append(" AND	sreg_usuario_adicionou = '").append(usuario).append("'");
+
+        String sql = sb.toString();
+        sb = null;
+
+        String result = "";
+
+        ResultSet rs = Conexao.getInstance().executeQuery(sql, idSessao);
+
+        result += "<results><row>";
+
+        while (rs.next()) {
+            result += "<" + rs.getString("sreg_chave").trim() + ">";
+            result += rs.getString("sreg_valor");
+            result += "</" + rs.getString("sreg_chave").trim() + ">";
+        }
+
+        result += "</row></results>";
+
+        rs.close();
+        return result;
+    }
+
+    @WebMethod(operationName = "gravaConfigGrid")
+    public String gravaConfigGrid(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "usuario") String usuario, String tela, String grid) throws Exception {
+        StringBuilder sb = new StringBuilder();
+
+        String sreg_sessao = "TRAFEGUS_WEB_GRID_" + tela.toUpperCase() + "_" + grid.toUpperCase();
+
+        return "";
+    }
+
 }
