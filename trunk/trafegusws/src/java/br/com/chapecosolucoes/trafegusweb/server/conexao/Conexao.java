@@ -61,9 +61,9 @@ public class Conexao {
         return instance;
     }
 
-    public ResultSet executeQuery(String sql, String codUsuario) throws Exception {
+    public ResultSet executeQuery(String sql, String idSessao) throws Exception {
         ResultSet result = null;
-        result = Conexao.getInstance().getConnection(codUsuario).createStatement().executeQuery(sql);
+        result = Conexao.getInstance().getConnection(idSessao).createStatement().executeQuery(sql);
         return result;
     }
 
