@@ -286,6 +286,11 @@ package br.com.chapecosolucoes.trafegusweb.client.model
                 throw new Error("Só pode haver uma instância de [MainModel]");
             }
         }
+		
+		public function cleanUp():void
+		{
+			instance = null;
+		}
 
         public static function getInstance():MainModel
         {

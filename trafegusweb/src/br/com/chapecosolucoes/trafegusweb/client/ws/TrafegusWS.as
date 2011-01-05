@@ -283,9 +283,9 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function salvarPosicaoTelas(handler:Function):void
         {
             var operation:Operation = createOperation("salvarPosicaoTelas", handler);
-            with (UsuarioLogado.getInstance())
+            with (UsuarioLogado.getInstance().posicaoTelasVO)
             {
-                operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codUsuario, gridVeiculosX, gridVeiculosY, gridVeiculosPercentWidth, gridVeiculosPercentWidth, mapaGoogleX, mapaGoogleY, mapaGooglePercentWidth, mapaGooglePercentHeight, gridDetalheX, gridDetalheY, gridDetalhePercentWidth, gridDetalhePercentHeight);
+                operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codUsuario, gridVeiculosX, gridVeiculosY, gridVeiculosPercentWidth, gridVeiculosPercentHeight, mapaGoogleX, mapaGoogleY, mapaGooglePercentWidth, mapaGooglePercentHeight, gridDetalheX, gridDetalheY, gridDetalhePercentWidth, gridDetalhePercentHeight);
             }
         }
 

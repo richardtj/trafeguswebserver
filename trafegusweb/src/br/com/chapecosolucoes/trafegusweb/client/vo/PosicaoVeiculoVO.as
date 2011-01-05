@@ -8,8 +8,8 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		{
 			if(obj!=null)
 			{
-				var gpsLatitudeString:String = obj.gpslatitude.toString().replace(",", ".");
-				var gpsLongitudeString:String = obj.gpslongitude.toString().replace(",", ".");
+				var gpsLatitudeString:String = obj.upos_latitude.toString().replace(",", ".");
+				var gpsLongitudeString:String = obj.upos_longitude.toString().replace(",", ".");
 				var gpsLatitude:Number = Number(gpsLatitudeString);
 				var gpsLongitude:Number = Number(gpsLongitudeString);
 				

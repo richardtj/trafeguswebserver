@@ -3,7 +3,9 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
     import br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.LoginComponent;
     import br.com.chapecosolucoes.trafegusweb.client.events.LoginEvent;
     import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+    import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
     import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoTelasVO;
     import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
     
     import mx.collections.XMLListCollection;
@@ -43,6 +45,11 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 		private function lerPosicaoTelasResultHandler(e:ResultEvent):void {
             this.view.textinput1.text = "";
             this.view.textinput2.text = "";
+			var resultArray:Array = ParserResult.parserDefault(e);
+			for each (var obj:Object in resultArray)
+			{
+				UsuarioLogado.getInstance().posicaoTelasVO.setPosicaoTelasVO(obj);
+			}
             var loginEvent:LoginEvent = new LoginEvent(LoginEvent.LOGIN_EVENT, true);
             this.view.dispatchEvent(loginEvent);
 		}

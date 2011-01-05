@@ -27,6 +27,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import mx.events.MenuEvent;
     import mx.managers.PopUpManager;
     import mx.rpc.events.ResultEvent;
+    import mx.utils.ObjectUtil;
 
     public class MainController
     {
@@ -62,15 +63,12 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 
         public function closeApp(event:CloseEvent):void
         {
-            /**
-             * For this to work in Firefox,
-             * Type in "about:config" in firefox address bar
-             * set dom.allow_scripts_to_close_windows to true.
-             */
             if (event.detail == Alert.OK)
             {
                 var closeEvent:CloseAppEvent = new CloseAppEvent(CloseAppEvent.CLOSE_APP_EVENT);
                 this.view.dispatchEvent(closeEvent);
+				MainModel.getInstance().cleanUp();
+				UsuarioLogado.getInstance().cleanUp();
             }
         }
 
@@ -109,18 +107,18 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             }
             if (event.label == "Salvar")
             {
-                UsuarioLogado.getInstance().gridVeiculosX = this.view.veiculos.x;
-                UsuarioLogado.getInstance().gridVeiculosY = this.view.veiculos.y;
-                UsuarioLogado.getInstance().gridVeiculosPercentWidth = this.view.veiculos.percentWidth;
-                UsuarioLogado.getInstance().gridVeiculosPercentHeight = this.view.veiculos.percentHeight;
-                UsuarioLogado.getInstance().mapaGoogleX = this.view.mapa.x;
-                UsuarioLogado.getInstance().mapaGoogleY = this.view.mapa.y;
-                UsuarioLogado.getInstance().mapaGooglePercentWidth = this.view.mapa.percentWidth;
-                UsuarioLogado.getInstance().mapaGooglePercentHeight = this.view.mapa.percentHeight;
-                UsuarioLogado.getInstance().gridDetalheX = this.view.detalhes.x;
-                UsuarioLogado.getInstance().gridDetalheY = this.view.detalhes.y;
-                UsuarioLogado.getInstance().gridDetalhePercentWidth = this.view.detalhes.percentWidth;
-                UsuarioLogado.getInstance().gridDetalhePercentHeight = this.view.detalhes.percentHeight;
+                UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosX = this.view.veiculos.x;
+                UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosY = this.view.veiculos.y;
+                UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosPercentWidth = (100 * this.view.veiculos.width)/FlexGlobals.topLevelApplication.width;
+                UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosPercentHeight = (100 * this.view.veiculos.height)/FlexGlobals.topLevelApplication.height;
+                UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleX = this.view.mapa.x;
+                UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleY = this.view.mapa.y;
+                UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentWidth = (100 * this.view.mapa.width)/FlexGlobals.topLevelApplication.width;
+                UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentHeight = (100 * this.view.mapa.height)/FlexGlobals.topLevelApplication.width;;
+                UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheX = this.view.detalhes.x;
+                UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheY = this.view.detalhes.y;
+                UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentWidth = (100 * this.view.detalhes.width)/FlexGlobals.topLevelApplication.width;;
+                UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentHeight = (100 * this.view.detalhes.height)/FlexGlobals.topLevelApplication.width;
 
                 TrafegusWS.getIntance().salvarPosicaoTelas(salvarPosicaoTelasResultHandler);
             }

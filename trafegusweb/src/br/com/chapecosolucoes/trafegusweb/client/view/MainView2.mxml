@@ -68,7 +68,7 @@
                 controller.view = this;
             }
 
-            public function creationComplete()
+            public function creationComplete():void
             {
                 xml = <XMLList>
                         <menuitem label="Arquivo">
@@ -90,14 +90,14 @@
                     </XMLList>;
                 this.myMenuBar.dataProvider = xml;
 
-                this.veiculos.percentHeight = UsuarioLogado.getInstance().gridVeiculosPercentHeight;
-                this.veiculos.percentWidth = UsuarioLogado.getInstance().gridVeiculosPercentWidth;
+                this.veiculos.percentHeight = UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosPercentHeight;
+                this.veiculos.percentWidth = UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosPercentWidth;
 
-                this.mapa.percentHeight = UsuarioLogado.getInstance().mapaGooglePercentHeight;
-                this.mapa.percentWidth = UsuarioLogado.getInstance().mapaGooglePercentWidth;
+                this.mapa.percentHeight = UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentHeight;
+                this.mapa.percentWidth = UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentWidth;
 
-                this.detalhes.percentHeight = UsuarioLogado.getInstance().gridDetalhePercentHeight;
-                this.detalhes.percentHeight = UsuarioLogado.getInstance().gridDetalhePercentWidth;
+                this.detalhes.percentHeight = UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentHeight;
+                this.detalhes.percentHeight = UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentWidth;
 
             }
         ]]>
@@ -108,7 +108,8 @@
         showRoot="false"
         itemClick="this.controller.itemClickedHandler(event)"/>
     <resize:ResizableWindow id="veiculos"
-        x="{UsuarioLogado.getInstance().gridVeiculosX}" y="{UsuarioLogado.getInstance().gridVeiculosY}"
+        x="{UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosX}" 
+		y="{UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosY}"
         verticalGap="2"
         hideEffect="{fadeOut}"
         showEffect="{fadeIn}"
@@ -134,7 +135,8 @@
             pageChanged="this.controller.pageChangedEventHandler(event)"/>
     </resize:ResizableWindow>
     <resize:ResizableWindow id="mapa"
-        x="{UsuarioLogado.getInstance().mapaGoogleX}" y="{UsuarioLogado.getInstance().mapaGoogleY}"
+        x="{UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleX}" 
+		y="{UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleY}"
         verticalGap="2"
         hideEffect="{fadeOut}"
         showEffect="{fadeIn}"
@@ -157,7 +159,8 @@
             width="100%" height="100%"/>
     </resize:ResizableWindow>
     <resize:ResizableWindow id="detalhes"
-        x="{UsuarioLogado.getInstance().gridDetalheX}" y="{UsuarioLogado.getInstance().gridDetalheY}"
+        x="{UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheX}" 
+		y="{UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheY}"
         verticalGap="2"
         hideEffect="{fadeOut}"
         showEffect="{fadeIn}"
