@@ -6,6 +6,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedLocalEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.view.LocalDetailsView;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.LocalVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
@@ -53,7 +54,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				MainModel.getInstance().locaisArray.addItem(local);
 			}
 		}
-		public function localSelecionado(event:MouseEvent):void
+		public function localSelecionado():void
 		{
 			if(this.view.grid.selectedItem != null)
 			{
@@ -83,6 +84,15 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			{
 				MainModel.getInstance().totalListaLocais = int(obj.total.toString());
 			}
+		}
+		public function localSelecionadoEventHandler(event:SelectedLocalEvent):void
+		{
+			event.stopImmediatePropagation();
+			this.localSelecionado();
+		}
+		public function mouseOverEventHandler():void
+		{
+			LocalDetailsView.SELECT_BUTTON_VISIBLE = true;
 		}
 	}
 }

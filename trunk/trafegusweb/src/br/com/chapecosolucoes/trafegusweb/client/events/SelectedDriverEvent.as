@@ -15,7 +15,7 @@ package br.com.chapecosolucoes.trafegusweb.client.events
 		}
 		public override function clone():Event 
 		{
-			return new SelectedDriverEvent(SELECTED_DRIVER_EVENT,motorista,bubbles);
+			return new SelectedDriverEvent(SELECTED_DRIVER_EVENT,motorista,bubbles,cancelable);
 		}
 	}
 }

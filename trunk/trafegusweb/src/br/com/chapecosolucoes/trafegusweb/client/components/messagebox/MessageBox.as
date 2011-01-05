@@ -29,8 +29,9 @@ package br.com.chapecosolucoes.trafegusweb.client.components.messagebox
 
         public static const NO:uint = Alert.NO;
 		
+		[Bindable]
 		private static var dissolve:Dissolve = new Dissolve();
-		
+		[Bindable]
 		private static var iris:Iris = new Iris();
 
 

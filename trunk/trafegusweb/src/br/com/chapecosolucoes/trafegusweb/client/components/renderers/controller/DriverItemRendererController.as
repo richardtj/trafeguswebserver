@@ -29,9 +29,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 		}
 		private function selectedDriverEventHandler(e:SelectedDriverEvent):void
 		{
-			MessageBox.informacao("aaa");
-			var event:SelectedDriverEvent = SelectedDriverEvent(e.clone());
-			this.view.dispatchEvent(event);
+			this.view.dispatchEvent(e);
 		}
 	}
 }
