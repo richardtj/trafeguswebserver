@@ -15,7 +15,7 @@ package br.com.chapecosolucoes.trafegusweb.client.events
 		}
 		override public function clone():Event
 		{
-			return new EmbarcadorSelecionadoEvent(type,embarcador);
+			return new EmbarcadorSelecionadoEvent(type,embarcador,bubbles,cancelable);
 		}
 	}
 }

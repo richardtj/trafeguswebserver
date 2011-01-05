@@ -5,6 +5,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.EmbarcadorSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.view.EmbarcadorDetails;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
@@ -83,6 +84,15 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			{
 				MainModel.getInstance().totalListaEmbarcadores = int(obj.total.toString());
 			}
+		}
+		public function embarcadorSelecionadoEventHandler(event:EmbarcadorSelecionadoEvent):void
+		{
+			event.stopImmediatePropagation();
+			this.embarcadorSelecionado();
+		}
+		public function mouseOverEventHandler():void
+		{
+			EmbarcadorDetails.SELECT_BUTTON_VISIBLE = true;
 		}
 	}
 }

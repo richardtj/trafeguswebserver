@@ -27,6 +27,8 @@
 			
 			import mx.managers.PopUpManager;
 			public var cpfMotoristaPrincipal:String;
+			[Bindable]
+			public static var SELECT_BUTTON_VISIBLE:Boolean = false;
 			private var controller:DriverDetailsController;
 			private function closeHandler():void
 			{
@@ -43,9 +45,11 @@
 			}
 			private function motoristaSelecionado():void
 			{
-				var event:SelectedDriverEvent = new SelectedDriverEvent(SelectedDriverEvent.SELECTED_DRIVER_EVENT,MainModel.getInstance().dadosMotoristaVO,true);
+				var event:SelectedDriverEvent = new SelectedDriverEvent(SelectedDriverEvent.SELECTED_DRIVER_EVENT,null,true,true);
 				this.dispatchEvent(event);
+				this.closeHandler();
 			}
+			
 		]]>
 	</fx:Script>
 	<mx:Form width="100%" height="100%">
@@ -93,7 +97,7 @@
 		</mx:FormItem>
 	</mx:Form>
 	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Selecionar" click="this.motoristaSelecionado()"/>
+		<s:Button label="Selecionar" click="this.motoristaSelecionado()" visible="{DriverDetails.SELECT_BUTTON_VISIBLE}"/>
 		<s:Button label="Voltar" click="this.closeHandler()"/>
 	</mx:ControlBar>
 </mx:TitleWindow>

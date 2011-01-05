@@ -5,6 +5,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.view.DriverDetails;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosMotoristaVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.MotoristaVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
@@ -93,7 +94,12 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function selectedDriverEventHandler(event:SelectedDriverEvent):void
 		{
-			MessageBox.informacao("eee");
+			event.stopImmediatePropagation();
+			this.motoristaSelecionado();
+		}
+		public function mouseOverEventHandler():void
+		{
+			DriverDetails.SELECT_BUTTON_VISIBLE = true;
 		}
 	}
 }

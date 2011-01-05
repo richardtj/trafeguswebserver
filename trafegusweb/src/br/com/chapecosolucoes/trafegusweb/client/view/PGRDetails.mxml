@@ -16,14 +16,19 @@
 		<mx:Dissolve id="dissolve" duration="500"/>
 		<mx:Iris id="iris" duration="500"/>
 	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="PGRSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent")]		
+	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.controller.PGRDetailsController;
+			import br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
 			import mx.managers.PopUpManager;
 			private var controller:br.com.chapecosolucoes.trafegusweb.client.controller.PGRDetailsController;
 			public var codigo:String;
+			public static var SELECT_BUTTON_VISIBLE:Boolean = false;
 			private function closeHandler():void
 			{
 				PopUpManager.removePopUp(this);
@@ -36,6 +41,10 @@
 			private function creationComplete():void
 			{
 				this.controller.solicitaDadosPGR(codigo);
+			}
+			private function pgrSelecionado():void
+			{
+				var event:PGRSelecionadoEvent = new PGRSelecionadoEvent(PGRSelecionadoEvent.PGR_SELECIONADO_EVENT,null,true,true);
 			}
 		]]>
 	</fx:Script>
@@ -53,4 +62,8 @@
 			<mx:TextArea text="{MainModel.getInstance().dadosPGRVO.piteDescricao}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 	</mx:Form>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Selecionar" click="this.pgrSelecionado()" visible="{PGRDetails.SELECT_BUTTON_VISIBLE}"/>
+		<s:Button label="Voltar" click="this.closeHandler()"/>
+	</mx:ControlBar>
 </mx:TitleWindow>

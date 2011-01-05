@@ -16,15 +16,21 @@
 		<mx:Dissolve id="dissolve" duration="500"/>
 		<mx:Iris id="iris" duration="500"/>
 	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="embarcadorSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.EmbarcadorSelecionadoEvent")]		
+	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.controller.EmbarcadorDetailsController;
+			import br.com.chapecosolucoes.trafegusweb.client.events.EmbarcadorSelecionadoEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO;
 			
 			import mx.managers.PopUpManager;
 			private var controller:br.com.chapecosolucoes.trafegusweb.client.controller.EmbarcadorDetailsController;
 			public var codigo:String;
+			[Bindable]
+			public static var SELECT_BUTTON_VISIBLE:Boolean = false;
 			private function closeHandler():void
 			{
 				PopUpManager.removePopUp(this);
@@ -37,6 +43,12 @@
 			private function creationComplete():void
 			{
 				this.controller.solicitaDadosEmbarcador(codigo);
+			}
+			private function embarcadorSelecionado():void
+			{
+				var event:EmbarcadorSelecionadoEvent = new EmbarcadorSelecionadoEvent(EmbarcadorSelecionadoEvent.EMBARCADOR_SELECIONADO_EVENT,null,true,true);
+				this.dispatchEvent(event);
+				this.closeHandler();
 			}
 		]]>
 	</fx:Script>
@@ -60,4 +72,8 @@
 			<s:TextInput text="{MainModel.getInstance().dadosEmbarcadorVO.site}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 	</mx:Form>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Selecionar" click="this.embarcadorSelecionado()" visible="{EmbarcadorDetails.SELECT_BUTTON_VISIBLE}"/>
+		<s:Button label="Voltar" click="this.closeHandler()"/>
+	</mx:ControlBar>
 </mx:TitleWindow>

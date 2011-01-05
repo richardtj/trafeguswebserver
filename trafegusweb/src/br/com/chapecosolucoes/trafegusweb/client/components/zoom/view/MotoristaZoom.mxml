@@ -11,8 +11,10 @@
 				creationComplete="creationComplete()"
 				close="this.controller.closeHandler()"
 				title="Motoristas"
+				mouseOver="this.controller.mouseOverEventHandler()"
 				titleIcon="@Embed(source='assets/Motorista.png')"
-				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
+				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
 		[Event(name="selectedDriverEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent")]		
@@ -27,6 +29,7 @@
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.MotoristaZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			import br.com.chapecosolucoes.trafegusweb.client.view.DriverDetails;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
@@ -45,6 +48,7 @@
 				this.controller.atualizaListaMotoristas();
 				this.grid.addEventListener(SelectedDriverEvent.SELECTED_DRIVER_EVENT,this.controller.selectedDriverEventHandler);
 			}
+			
 		]]>
 	</fx:Script>
 	<searchInput:SearchInputFX 
