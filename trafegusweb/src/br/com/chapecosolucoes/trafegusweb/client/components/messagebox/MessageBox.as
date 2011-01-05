@@ -29,13 +29,15 @@ package br.com.chapecosolucoes.trafegusweb.client.components.messagebox
 
         public static const NO:uint = Alert.NO;
 		
-		private var dissolve:Dissolve = new Dissolve();
+		private static var dissolve:Dissolve = new Dissolve();
 		
-		private var iris:Iris = new Iris();
+		private static var iris:Iris = new Iris();
 
 
         public function MessageBox()
         {
+			dissolve.duration = 700;
+			iris.duration = 700;
         }
 
         public static function atencao(text:String = "", title:String = "", flags:uint = 0x4, parent:Sprite = null, closeHandler:Function = null, iconClass:Class = null, defaultButtonFlag:uint = 0x4):Alert
@@ -43,15 +45,22 @@ package br.com.chapecosolucoes.trafegusweb.client.components.messagebox
             title = (title != "" ? "Atenção - " + title : "Atenção");
 			var alert:Alert = Alert.show(text, title, flags, parent, closeHandler, iconClass, defaultButtonFlag);
 			alert.titleIcon = alertaIcone;
+			alert.setStyle("creationCompleteEffect", dissolve);
+			alert.setStyle("creationCompleteEffect", iris);
+			alert.setStyle("removedEffect", dissolve);
+			alert.setStyle("removedEffect", iris);
 			return alert;
         }
 
         public static function informacao(text:String = "", title:String = "", flags:uint = 0x4, parent:Sprite = null, closeHandler:Function = null, iconClass:Class = null, defaultButtonFlag:uint = 0x4):Alert
         {
-			this.
             title = (title != "" ? "Informação - " + title : "Informação");
             var alert:Alert = Alert.show(text, title, flags, parent, closeHandler, iconClass, defaultButtonFlag);
             alert.titleIcon = inforIcone;
+			alert.setStyle("creationCompleteEffect", dissolve);
+			alert.setStyle("creationCompleteEffect", iris);
+			alert.setStyle("removedEffect", dissolve);
+			alert.setStyle("removedEffect", iris);
             return alert;
         }
 
@@ -60,6 +69,10 @@ package br.com.chapecosolucoes.trafegusweb.client.components.messagebox
             title = (title != "" ? "Erro - " + title : "Erro");
 			var alert:Alert = Alert.show(text, title, flags, parent, closeHandler, iconClass, defaultButtonFlag);
 			alert.titleIcon = erroIcone;
+			alert.setStyle("creationCompleteEffect", dissolve);
+			alert.setStyle("creationCompleteEffect", iris);
+			alert.setStyle("removedEffect", dissolve);
+			alert.setStyle("removedEffect", iris);
 			return alert;
         }
 
@@ -74,6 +87,10 @@ package br.com.chapecosolucoes.trafegusweb.client.components.messagebox
             }
 			var alert:Alert = Alert.show(text, title, flags, parent, closeHandler, iconClass, defaultButtonFlag);
 			alert.titleIcon = perguntaIcone;
+			alert.setStyle("creationCompleteEffect", dissolve);
+			alert.setStyle("creationCompleteEffect", iris);
+			alert.setStyle("removedEffect", dissolve);
+			alert.setStyle("removedEffect", iris);
 			return alert;
         }
 
