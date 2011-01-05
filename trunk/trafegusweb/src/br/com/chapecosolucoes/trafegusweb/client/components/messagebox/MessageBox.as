@@ -1,8 +1,10 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.messagebox
 {
     import flash.display.Sprite;
-
+    
     import mx.controls.Alert;
+    import mx.effects.Dissolve;
+    import mx.effects.Iris;
 
     public class MessageBox
     {
@@ -26,6 +28,10 @@ package br.com.chapecosolucoes.trafegusweb.client.components.messagebox
         public static const YES:uint = Alert.YES;
 
         public static const NO:uint = Alert.NO;
+		
+		private var dissolve:Dissolve = new Dissolve();
+		
+		private var iris:Iris = new Iris();
 
 
         public function MessageBox()
@@ -42,6 +48,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.messagebox
 
         public static function informacao(text:String = "", title:String = "", flags:uint = 0x4, parent:Sprite = null, closeHandler:Function = null, iconClass:Class = null, defaultButtonFlag:uint = 0x4):Alert
         {
+			this.
             title = (title != "" ? "Informação - " + title : "Informação");
             var alert:Alert = Alert.show(text, title, flags, parent, closeHandler, iconClass, defaultButtonFlag);
             alert.titleIcon = inforIcone;

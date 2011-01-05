@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.vo
 {
+	[Bindable]
 	public class ViagemPaiVO
 	{
 		public function ViagemPaiVO()
