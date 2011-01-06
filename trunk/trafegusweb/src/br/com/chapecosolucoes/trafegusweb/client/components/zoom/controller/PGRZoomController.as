@@ -5,6 +5,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.view.PGRDetails;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PGRVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
@@ -83,6 +84,15 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			{
 				MainModel.getInstance().totalListaPGR = int(obj.total.toString());
 			}
+		}
+		public function pgrSelecionadoEventHandler(event:PGRSelecionadoEvent):void
+		{
+			event.stopImmediatePropagation();
+			this.pgrSelecionado();
+		}
+		public function mouseOverEventHandler():void
+		{
+			PGRDetails.SELECT_BUTTON_VISIBLE = true;
 		}
 	}
 }

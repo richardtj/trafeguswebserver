@@ -45,6 +45,8 @@
 			private function pgrSelecionado():void
 			{
 				var event:PGRSelecionadoEvent = new PGRSelecionadoEvent(PGRSelecionadoEvent.PGR_SELECIONADO_EVENT,null,true,true);
+				this.dispatchEvent(event);
+				this.closeHandler();
 			}
 		]]>
 	</fx:Script>

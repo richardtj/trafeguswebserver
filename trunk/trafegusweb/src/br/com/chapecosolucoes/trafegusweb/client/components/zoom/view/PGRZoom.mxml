@@ -8,6 +8,7 @@
 				creationCompleteEffect="{dissolve,iris}"
 				removedEffect="{dissolve,iris}"
 				initialize="init()"
+				mouseOver="this.controller.mouseOverEventHandler()"
 				creationComplete="creationComplete()"
 				close="this.controller.closeHandler()"
 				title="PGR"
@@ -25,6 +26,7 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.PGRZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
 			import mx.controls.Alert;
@@ -42,6 +44,7 @@
 			private function creationComplete():void
 			{
 				this.controller.atualizaListaPGR();
+				this.grid.addEventListener(PGRSelecionadoEvent.PGR_SELECIONADO_EVENT,this.controller.pgrSelecionadoEventHandler);
 			}
 		]]>
 	</fx:Script>

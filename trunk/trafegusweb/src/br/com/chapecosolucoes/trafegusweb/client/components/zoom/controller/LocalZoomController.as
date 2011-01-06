@@ -3,6 +3,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.LocaisZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.enum.PaginableEnum;
+	import br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedLocalEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
@@ -64,7 +65,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			}
 			else
 			{
-				MessageBox.informacao("Nenhum embarcador selecionado.");
+				MessageBox.informacao("Nenhum local selecionado.");
 			}
 		}
 		public function closeHandler():void

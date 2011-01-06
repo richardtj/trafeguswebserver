@@ -6,6 +6,9 @@
 		 initialize="init()"
 		 creationComplete="this.creationComplete()"
 		 paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0">
+	<fx:Metadata>
+		[Event(name="PGRSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent")]		
+	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.renderers.controller.PGRItemRendererController;
