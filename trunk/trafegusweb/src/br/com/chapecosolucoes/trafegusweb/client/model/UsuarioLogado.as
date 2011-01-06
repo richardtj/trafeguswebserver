@@ -13,8 +13,6 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 
         private var _idSessao:String;
 
-        public var gridConfig:GridConfig = new GridConfig();
-
         public var posicaoTelasVO:PosicaoTelasVO = new PosicaoTelasVO();
 
         public function UsuarioLogado(enforcer:SingletonEnforcer)
