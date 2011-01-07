@@ -2,7 +2,6 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 {
     import br.com.chapecosolucoes.trafegusweb.client.utils.GUID;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoTelasVO;
-    import br.com.chapecosolucoes.trafegusweb.client.vo.grids.GridConfig;
 
     [Bindable]
     public class UsuarioLogado
