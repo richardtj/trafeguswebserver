@@ -22,7 +22,7 @@
             target="{loginViewStack}"
             siblings="{[mainView]}"/>
     </fx:Declarations>
-	<fx:Style source="styles/customScroll.css"/>
+    <fx:Style source="styles/customScroll.css"/>
     <fx:Style>
 		@namespace s "library://ns.adobe.com/flex/spark";
 		@namespace mx "library://ns.adobe.com/flex/halo";
@@ -41,48 +41,48 @@
 	</fx:Style>
     <fx:Script>
         <![CDATA[
-			import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
-			import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
-			import br.com.chapecosolucoes.trafegusweb.client.events.LoginEvent;
-			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
-			import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
-			import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
-			import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
-			
-			import mx.collections.XMLListCollection;
-			import mx.controls.Alert;
-			import mx.events.FlexEvent;
-			import mx.rpc.events.ResultEvent;
-			import mx.utils.ObjectUtil;
+            import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
+            import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
+            import br.com.chapecosolucoes.trafegusweb.client.events.LoginEvent;
+            import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+            import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
+            import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
+            import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
+
+            import mx.collections.XMLListCollection;
+            import mx.controls.Alert;
+            import mx.events.FlexEvent;
+            import mx.rpc.events.ResultEvent;
+            import mx.utils.ObjectUtil;
 
             private var xml:XML;
 
-            private var myContextMenu:ContextMenu;
+//            private var myContextMenu:ContextMenu;
 
             private function init():void
             {
-                xml = <Context>
-                        <Menu>Novo Agendamento</Menu>
-                    </Context>;
-                var xmlListCollection:XMLListCollection = new XMLListCollection(xml.Menu);
-                var resultArray:Array = xmlListCollection.toArray();
-                myContextMenu = new ContextMenu();
-                myContextMenu.hideBuiltInItems();
-                var menuItem:ContextMenuItem;
-                for each (var obj:Object in resultArray)
-                {
-                    menuItem = new ContextMenuItem(obj.toString());
-                    menuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, contextMenuHandler);
-                    this.myContextMenu.customItems.push(menuItem);
-                }
-                backGround.contextMenu = myContextMenu;
-				
+            /*   xml = <Context>
+                       <Menu>Novo Agendamento</Menu>
+                   </Context>;
+               var xmlListCollection:XMLListCollection = new XMLListCollection(xml.Menu);
+               var resultArray:Array = xmlListCollection.toArray();
+               myContextMenu = new ContextMenu();
+               myContextMenu.hideBuiltInItems();
+               var menuItem:ContextMenuItem;
+               for each (var obj:Object in resultArray)
+               {
+                   menuItem = new ContextMenuItem(obj.toString());
+                   menuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, contextMenuHandler);
+                   this.myContextMenu.customItems.push(menuItem);
+               }
+               backGround.contextMenu = myContextMenu;
+               */
             }
 
-            private function contextMenuHandler(event:ContextMenuEvent):void
-            {
-                MessageBox.atencao("Funcionalidade não implementada");
-            }
+//            private function contextMenuHandler(event:ContextMenuEvent):void
+//            {
+//                MessageBox.atencao("Funcionalidade não implementada");
+//            }
 
             protected function preinitializeHandler(event:FlexEvent):void
             {
@@ -98,20 +98,21 @@
 
             private function closeAppEventHandler(event:CloseAppEvent):void
             {
-				TrafegusWS.getIntance().logout(logoutResultHandler);
+                TrafegusWS.getIntance().logout(logoutResultHandler);
             }
-			private function logoutResultHandler(event:ResultEvent):void
-			{
-				var resultArray:Array = ParserResult.parserDefault(event);
-				for each (var obj:Object in resultArray)
-				{
-					if(obj.row.toString() == "OK")
-					{
-						MessageBox.informacao("Saiu");
-					}
-				}
+
+            private function logoutResultHandler(event:ResultEvent):void
+            {
+                var resultArray:Array = ParserResult.parserDefault(event);
+                for each (var obj:Object in resultArray)
+                {
+                    if (obj.row.toString() == "OK")
+                    {
+                        MessageBox.informacao("Saiu");
+                    }
+                }
                 loginViewStack.selectedIndex = 0;
-			}
+            }
 
             private function loginHandler(event:LoginEvent):void
             {
