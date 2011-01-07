@@ -16,11 +16,11 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
     import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
-    
+
     import com.google.maps.LatLng;
-    
+
     import flash.display.DisplayObject;
-    
+
     import mx.controls.Alert;
     import mx.core.FlexGlobals;
     import mx.events.CloseEvent;
@@ -67,8 +67,8 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             {
                 var closeEvent:CloseAppEvent = new CloseAppEvent(CloseAppEvent.CLOSE_APP_EVENT);
                 this.view.dispatchEvent(closeEvent);
-				MainModel.getInstance().cleanUp();
-				UsuarioLogado.getInstance().cleanUp();
+                MainModel.getInstance().cleanUp();
+                UsuarioLogado.getInstance().cleanUp();
             }
         }
 
@@ -76,19 +76,24 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
         {
             if (event.target.id.toString() == "veiculos")
             {
-                this.view.veiculos.visible = !this.view.veiculos.visible;
+                this.view.veiculos.visible = false;
                 this.view.myMenuBar.menuBarItems[1].data.menuitem[0].@toggled = "false";
+
+                this.view.oh.unregisterComponent(this.view.veiculos);
             }
             if (event.target.id.toString() == "mapa")
             {
-                this.view.mapa.visible = !this.view.mapa.visible;
+                this.view.mapa.visible = false;
                 this.view.myMenuBar.menuBarItems[1].data.menuitem[2].@toggled = "false";
+                this.view.oh.unregisterComponent(this.view.mapa);
             }
             if (event.target.id.toString() == "detalhes")
             {
-                this.view.detalhes.visible = !this.view.detalhes.visible;
+                this.view.detalhes.visible = false;
                 this.view.myMenuBar.menuBarItems[1].data.menuitem[1].@toggled = "false";
+                this.view.oh.unregisterComponent(this.view.detalhes);
             }
+            this.view.oh.selectionManager.clearSelection();
         }
 
         public function itemClickedHandler(event:MenuEvent):void
@@ -96,36 +101,62 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             if (event.label == "Veiculos")
             {
                 this.view.veiculos.visible = !this.view.veiculos.visible;
+                if (this.view.veiculos.visible)
+                {
+                    this.view.oh.registerComponent(this.view.veiculos, this.view.veiculos);
+                }
+                else
+                {
+                    this.view.oh.unregisterComponent(this.view.veiculos);
+                }
             }
             if (event.label == "Mapa")
             {
                 this.view.mapa.visible = !this.view.mapa.visible;
+                if (this.view.mapa.visible)
+                {
+                    this.view.oh.registerComponent(this.view.mapa, this.view.mapa);
+                }
+                else
+                {
+                    this.view.oh.unregisterComponent(this.view.mapa);
+                }
             }
             if (event.label == "Detalhes")
             {
                 this.view.detalhes.visible = !this.view.detalhes.visible;
+                if (this.view.mapa.visible)
+                {
+                    this.view.oh.registerComponent(this.view.detalhes, this.view.detalhes);
+                }
+                else
+                {
+                    this.view.oh.unregisterComponent(this.view.detalhes);
+                }
             }
             if (event.label == "Salvar")
             {
                 UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosX = this.view.veiculos.x;
                 UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosY = this.view.veiculos.y;
-                UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosPercentWidth = (100 * this.view.veiculos.width)/FlexGlobals.topLevelApplication.width;
-                UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosPercentHeight = (100 * this.view.veiculos.height)/FlexGlobals.topLevelApplication.height;
+                UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosPercentWidth = (100 * this.view.veiculos.width) / FlexGlobals.topLevelApplication.width;
+                UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosPercentHeight = (100 * this.view.veiculos.height) / FlexGlobals.topLevelApplication.height;
                 UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleX = this.view.mapa.x;
                 UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleY = this.view.mapa.y;
-                UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentWidth = (100 * this.view.mapa.width)/FlexGlobals.topLevelApplication.width;
-                UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentHeight = (100 * this.view.mapa.height)/FlexGlobals.topLevelApplication.width;;
+                UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentWidth = (100 * this.view.mapa.width) / FlexGlobals.topLevelApplication.width;
+                UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentHeight = (100 * this.view.mapa.height) / FlexGlobals.topLevelApplication.width;
+                ;
                 UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheX = this.view.detalhes.x;
                 UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheY = this.view.detalhes.y;
-                UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentWidth = (100 * this.view.detalhes.width)/FlexGlobals.topLevelApplication.width;;
-                UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentHeight = (100 * this.view.detalhes.height)/FlexGlobals.topLevelApplication.width;
+                UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentWidth = (100 * this.view.detalhes.width) / FlexGlobals.topLevelApplication.width;
+                ;
+                UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentHeight = (100 * this.view.detalhes.height) / FlexGlobals.topLevelApplication.width;
 
                 TrafegusWS.getIntance().salvarPosicaoTelas(salvarPosicaoTelasResultHandler);
             }
             if (event.label == "Sair")
             {
-                MessageBox.atencao("Deseja sair da aplicação","",Alert.OK | Alert.CANCEL,this.view,this.closeApp);
-                //Alert.show("Deseja sair da aplicação","Sair",Alert.OK | Alert.CANCEL,this.view,this.closeApp);
+                MessageBox.atencao("Deseja sair da aplicação", "", Alert.OK | Alert.CANCEL, this.view, this.closeApp);
+                    //Alert.show("Deseja sair da aplicação","Sair",Alert.OK | Alert.CANCEL,this.view,this.closeApp);
             }
             if (event.label == "Agendamento")
             {
@@ -136,16 +167,16 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             if (event.label == "Referências")
             {
                 var referencias:ClassesReferenciaView = new ClassesReferenciaView();
-				referencias.addEventListener(ReferenciasRecebidasEvent.REFERENCIAS_RECEBIDAS_EVENT,referenciasRecebidasResultHandler);
+                referencias.addEventListener(ReferenciasRecebidasEvent.REFERENCIAS_RECEBIDAS_EVENT, referenciasRecebidasResultHandler);
                 PopUpManager.addPopUp(referencias, DisplayObject(FlexGlobals.topLevelApplication));
                 PopUpManager.centerPopUp(referencias);
             }
         }
-		
-		private function referenciasRecebidasResultHandler(event:ReferenciasRecebidasEvent):void
-		{
-			this.view.map.carregarReferencias();
-		}
+
+        private function referenciasRecebidasResultHandler(event:ReferenciasRecebidasEvent):void
+        {
+            this.view.map.carregarReferencias();
+        }
 
         public function pageChangedEventHandler(event:PaginableEvent):void
         {
