@@ -6,7 +6,8 @@
     xmlns:s="library://ns.adobe.com/flex/spark"
     xmlns:mx="library://ns.adobe.com/flex/mx"
     xmlns:resize="flex.utils.ui.resize.*"
-    xmlns:view="br.com.chapecosolucoes.trafegusweb.client.view.*">
+    xmlns:view="br.com.chapecosolucoes.trafegusweb.client.view.*"
+    xmlns:objecthandles="com.roguedevelopment.objecthandles.*">
     <fx:Metadata>
 		[Event(name="closeAppEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent")]
 	</fx:Metadata>
@@ -52,6 +53,10 @@
             import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
             import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
 
+            import com.roguedevelopment.objecthandles.Flex4ChildManager;
+            import com.roguedevelopment.objecthandles.Flex4HandleFactory;
+            import com.roguedevelopment.objecthandles.ObjectHandles;
+
             import mx.controls.Alert;
             import mx.events.CloseEvent;
             import mx.events.MenuEvent;
@@ -62,10 +67,20 @@
 
             public var xml:XML;
 
+            public var oh:ObjectHandles;
+
             private function init():void
             {
                 controller = new MainController();
                 controller.view = this;
+                oh = new ObjectHandles(this, null, new Flex4HandleFactory(), new Flex4ChildManager());
+                oh.registerComponent(veiculos, veiculos);
+                oh.registerComponent(detalhes, detalhes);
+                oh.registerComponent(mapa, mapa);
+                //        registerDragSource(circleSource, CircleShape);
+                //       registerDragSource(squareSource, SquareShape);
+                //       oh.addEventListener(ObjectChangedEvent.OBJECT_MOVED, onObjectMoved);
+                //       oh.addDefaultConstraint(new SnapToGridConstraint());
             }
 
             public function creationComplete():void
@@ -108,8 +123,7 @@
         showRoot="false"
         itemClick="this.controller.itemClickedHandler(event)"/>
     <resize:ResizableWindow id="veiculos"
-        x="{UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosX}" 
-		y="{UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosY}"
+        x="{UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosX}" y="{UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosY}"
         verticalGap="2"
         hideEffect="{fadeOut}"
         showEffect="{fadeIn}"
@@ -117,8 +131,8 @@
         minHeight="200"
         minWidth="200"
         verticalScrollPolicy="off"
-        movable="true"
-        resizable="true"
+        movable="false"
+        resizable="false"
         close="this.controller.closeEventHandler(event)"
         title="Veiculos"
         status=""
@@ -135,8 +149,7 @@
             pageChanged="this.controller.pageChangedEventHandler(event)"/>
     </resize:ResizableWindow>
     <resize:ResizableWindow id="mapa"
-        x="{UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleX}" 
-		y="{UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleY}"
+        x="{UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleX}" y="{UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleY}"
         verticalGap="2"
         hideEffect="{fadeOut}"
         showEffect="{fadeIn}"
@@ -144,8 +157,8 @@
         minHeight="272"
         minWidth="300"
         verticalScrollPolicy="off"
-        movable="true"
-        resizable="true"
+        movable="false"
+        resizable="false"
         close="this.controller.closeEventHandler(event)"
         title="Mapa"
         status=""
@@ -158,9 +171,9 @@
         <view:MapView id="map"
             width="100%" height="100%"/>
     </resize:ResizableWindow>
+
     <resize:ResizableWindow id="detalhes"
-        x="{UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheX}" 
-		y="{UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheY}"
+        x="{UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheX}" y="{UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheY}"
         verticalGap="2"
         hideEffect="{fadeOut}"
         showEffect="{fadeIn}"
@@ -168,8 +181,8 @@
         minHeight="272"
         minWidth="300"
         verticalScrollPolicy="off"
-        movable="true"
-        resizable="true"
+        movable="false"
+        resizable="false"
         close="this.controller.closeEventHandler(event)"
         title="Detalhes"
         status=""
