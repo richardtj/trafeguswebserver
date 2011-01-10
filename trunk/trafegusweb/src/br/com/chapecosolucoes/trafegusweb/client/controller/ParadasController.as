@@ -10,6 +10,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
+	import mx.managers.PopUpManagerChildList;
 
 	public class ParadasController
 	{
@@ -21,7 +22,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			var addParada:AddParadasView = new AddParadasView();
 			addParada.addEventListener(AddParadaEvent.PARADA_ADICIONADA_EVENT,paradaAdicionadaEventHandler);
-			PopUpManager.addPopUp(addParada,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(addParada,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(addParada);
 		}
 		private function paradaAdicionadaEventHandler(event:AddParadaEvent):void

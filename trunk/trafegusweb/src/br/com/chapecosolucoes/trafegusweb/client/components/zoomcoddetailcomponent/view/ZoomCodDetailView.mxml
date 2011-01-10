@@ -8,6 +8,8 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.events.ZoomCodDetailEvent;
+			
+			import mx.controls.Alert;
 			[Bindable]
 			public var cod:String;
 			[Bindable]
@@ -16,13 +18,20 @@
 				var zoomCodDetailEvent:ZoomCodDetailEvent = new ZoomCodDetailEvent(ZoomCodDetailEvent.CLICK);
 				this.dispatchEvent(zoomCodDetailEvent);
 			}
+			private function keyUpEventHandler(event:KeyboardEvent):void
+			{
+				if(event.keyCode == Keyboard.TAB)
+				{
+					Alert.show("");
+				}
+			}
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<mx:HBox borderStyle="solid">
-		<s:TextInput editable="false" width="50" borderVisible="false" restrict="0-9" text="{cod}"/>
+		<s:TextInput editable="true" width="50" borderVisible="false" restrict="0-9" text="{cod}" keyUp="keyUpEventHandler(event)"/>
 		<mx:Image source="@Embed(source='assets/Search-16.png')" useHandCursor="true" click="this.click(event)" buttonMode="true"/> 
 	</mx:HBox>
 	<s:TextInput width="200" editable="false" text="{detail}"/>

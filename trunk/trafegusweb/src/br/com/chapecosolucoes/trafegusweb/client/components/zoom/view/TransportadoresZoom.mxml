@@ -7,6 +7,7 @@
 				showCloseButton="true"
 				creationCompleteEffect="{dissolve,iris}"
 				removedEffect="{dissolve,iris}"
+				mouseOver="this.controller.mouseOverEventHandler()"
 				initialize="init()"
 				creationComplete="creationComplete()"
 				close="this.controller.closeHandler()"
@@ -25,6 +26,7 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.TransportadorZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
 			import mx.controls.Alert;
@@ -42,6 +44,8 @@
 				this.controller.atualizaListaTransportadores();
 				MainModel.getInstance().transportadoresArray.filterFunction = this.controller.transportadoresFilterFunction;
 				MainModel.getInstance().transportadoresArray.refresh();
+				
+				this.grid.addEventListener(TransportadorSelecionadoEvent.TRANSPORTADOR_SELECIONADO_EVENT,this.controller.transportadorSelecionadoEventHandler);
 			}
 		]]>
 	</fx:Script>
@@ -54,7 +58,7 @@
 	<view:DataGridFX 
 		id="grid" 
 		doubleClickEnabled="true"
-		doubleClick="this.controller.transportadorSelecionado(event)"
+		doubleClick="this.controller.transportadorSelecionado()"
 		width="100%" height="100%" 
 		dataProvider="{MainModel.getInstance().transportadoresArray}"
 		toolTip="Clique sobre o codigo do transportador para exibir os detalhes.">
@@ -77,7 +81,7 @@
 		last="this.controller.solicitaListaTransportadores(event)"
 		next="this.controller.solicitaListaTransportadores(event)"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Ok" click="this.controller.transportadorSelecionado(event)"/>
+		<s:Button label="Ok" click="this.controller.transportadorSelecionado()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </mx:TitleWindow>

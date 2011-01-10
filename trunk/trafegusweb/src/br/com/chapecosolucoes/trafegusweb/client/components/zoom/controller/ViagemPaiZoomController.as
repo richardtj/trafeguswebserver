@@ -5,6 +5,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.ViagemPaiSelecionadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.view.ViagemPaiDetails;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.ViagemPaiVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
@@ -78,6 +79,15 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			{
 				MainModel.getInstance().totalListaViagemPai = int(obj.total.toString());
 			}
+		}
+		public function viagemPaiSelecionadaEventHandler(event:ViagemPaiSelecionadaEvent):void
+		{
+			event.stopImmediatePropagation();
+			this.viagemPaiSelecionada();
+		}
+		public function mouseOverEventHandler():void
+		{
+			ViagemPaiDetails.SELECT_BUTTON_VISIBLE = true;
 		}
 	}
 }

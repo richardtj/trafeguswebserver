@@ -1,12 +1,14 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView;
+	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.view.VehicleDetails;
 	
 	import flash.display.DisplayObject;
 	
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
+	import mx.managers.PopUpManagerChildList;
 
 	public class VehicleItemRendererController
 	{
@@ -18,8 +20,13 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 		{
 			var vehicleDetails:VehicleDetails = new VehicleDetails();
 			vehicleDetails.placa = placa;
-			PopUpManager.addPopUp(vehicleDetails,DisplayObject(FlexGlobals.topLevelApplication));
+			vehicleDetails.addEventListener(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,selectedVehicleEventHandler);
+			PopUpManager.addPopUp(vehicleDetails,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(vehicleDetails);
+		}
+		private function selectedVehicleEventHandler(event:SelectedVehicleEvent):void
+		{
+			this.view.dispatchEvent(event);
 		}
 	}
 }

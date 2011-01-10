@@ -11,6 +11,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 	import mx.core.FlexGlobals;
 	import mx.core.IFlexDisplayObject;
 	import mx.managers.PopUpManager;
+	import mx.managers.PopUpManagerChildList;
 	import mx.rpc.events.ResultEvent;
 
 	public class DriverItemRendererController
@@ -24,7 +25,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 			var driverDetails:DriverDetails = new DriverDetails();
 			driverDetails.cpfMotoristaPrincipal = param;
 			driverDetails.addEventListener(SelectedDriverEvent.SELECTED_DRIVER_EVENT,this.selectedDriverEventHandler);
-			PopUpManager.addPopUp(driverDetails,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(driverDetails,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(driverDetails);
 		}
 		private function selectedDriverEventHandler(e:SelectedDriverEvent):void

@@ -5,6 +5,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedRouteEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.view.RouteDetails;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
@@ -32,7 +33,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				(String(RouteVO(item).descricao).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(RouteVO(item).distancia).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0);
 		}
-		public function rotaSelecionada(event:MouseEvent):void
+		public function rotaSelecionada():void
 		{
 			if(this.view.grid.selectedItem != null)
 			{
@@ -84,6 +85,15 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			{
 				MainModel.getInstance().totalListaRotas = int(obj.total.toString());
 			}
+		}
+		public function selectedRouteEventHandler(event:SelectedRouteEvent):void
+		{
+			event.stopImmediatePropagation();
+			this.rotaSelecionada();
+		}
+		public function mouseOverEventHandler():void
+		{
+			RouteDetails.SELECT_BUTTON_VISIBLE = true;
 		}
 	}
 }

@@ -15,7 +15,7 @@ package br.com.chapecosolucoes.trafegusweb.client.events
 		}
 		override public function clone():Event
 		{
-			return new ViagemPaiSelecionadaEvent(type,viagemPai);
+			return new ViagemPaiSelecionadaEvent(type,viagemPai, bubbles, cancelable);
 		}
 	}
 }

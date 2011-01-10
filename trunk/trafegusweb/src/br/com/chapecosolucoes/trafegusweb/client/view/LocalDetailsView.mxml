@@ -29,6 +29,7 @@
 			import mx.managers.PopUpManager;
 			private var controller:br.com.chapecosolucoes.trafegusweb.client.controller.LocalDetailsController;
 			public var codigo:String;
+			[Bindable]
 			public static var SELECT_BUTTON_VISIBLE:Boolean = false;
 			private function closeHandler():void
 			{

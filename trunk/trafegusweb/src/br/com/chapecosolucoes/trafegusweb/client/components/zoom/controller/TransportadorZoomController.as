@@ -5,6 +5,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.view.TransportadorDetails;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.TransportadorVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
@@ -59,7 +60,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		{
 			PopUpManager.removePopUp(this.view);
 		}
-		public function transportadorSelecionado(event:MouseEvent):void
+		public function transportadorSelecionado():void
 		{
 			if(this.view.grid.selectedItem != null)
 			{
@@ -85,6 +86,15 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			{
 				MainModel.getInstance().totalListaTransportadores = int(obj.total.toString());
 			}
+		}
+		public function transportadorSelecionadoEventHandler(event:TransportadorSelecionadoEvent):void
+		{
+			event.stopImmediatePropagation();
+			this.transportadorSelecionado();
+		}
+		public function mouseOverEventHandler():void
+		{
+			TransportadorDetails.SELECT_BUTTON_VISIBLE = true;
 		}
 	}
 }
