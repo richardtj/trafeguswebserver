@@ -48,22 +48,25 @@
 	</fx:Style>
     <fx:Script>
         <![CDATA[
-            import br.com.chapecosolucoes.trafegusweb.client.controller.MainController;
-            import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
-            import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
-            import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
-
-            import com.roguedevelopment.objecthandles.Flex4ChildManager;
-            import com.roguedevelopment.objecthandles.Flex4HandleFactory;
-            import com.roguedevelopment.objecthandles.HandleDescription;
-            import com.roguedevelopment.objecthandles.HandleRoles;
-            import com.roguedevelopment.objecthandles.ObjectHandles;
-
-            import mx.controls.Alert;
-            import mx.events.CloseEvent;
-            import mx.events.MenuEvent;
-
-            import org.osmf.layout.AbsoluteLayoutFacet;
+			import br.com.chapecosolucoes.trafegusweb.client.controller.MainController;
+			import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
+			
+			import com.roguedevelopment.objecthandles.Flex4ChildManager;
+			import com.roguedevelopment.objecthandles.Flex4HandleFactory;
+			import com.roguedevelopment.objecthandles.HandleDefinitions;
+			import com.roguedevelopment.objecthandles.HandleDescription;
+			import com.roguedevelopment.objecthandles.HandleRoles;
+			import com.roguedevelopment.objecthandles.ObjectHandles;
+			import com.roguedevelopment.objecthandles.constraints.MovementConstraint;
+			import com.roguedevelopment.objecthandles.constraints.SizeConstraint;
+			
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			import mx.events.MenuEvent;
+			
+			import org.osmf.layout.AbsoluteLayoutFacet;
 
             private var controller:MainController;
 
@@ -79,15 +82,18 @@
                 handles.push(new HandleDescription(HandleRoles.RESIZE_UP + HandleRoles.RESIZE_RIGHT, new Point(100, 0), new Point(0, 0)));
                 handles.push(new HandleDescription(HandleRoles.RESIZE_DOWN + HandleRoles.RESIZE_RIGHT, new Point(100, 100), new Point(0, 0)));
                 handles.push(new HandleDescription(HandleRoles.RESIZE_DOWN + HandleRoles.RESIZE_LEFT, new Point(0, 100), new Point(0, 0)));
+                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 4), new Point(0, 0)));
 
                 controller = new MainController();
                 controller.view = this;
 
                 oh = new ObjectHandles(this, null, new Flex4HandleFactory(), new Flex4ChildManager());
+                oh.defaultHandles = handles;
+				
 
-                oh.registerComponent(veiculos, veiculos, handles);
-                oh.registerComponent(detalhes, detalhes, handles);
-                oh.registerComponent(mapa, mapa, handles);
+                oh.registerComponent(veiculos, veiculos);
+                oh.registerComponent(detalhes, detalhes);
+                oh.registerComponent(mapa, mapa);
             }
 
 
