@@ -20,12 +20,15 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import com.google.maps.LatLng;
 
     import flash.display.DisplayObject;
-
+    import flash.utils.getQualifiedClassName;
     import mx.controls.Alert;
     import mx.core.FlexGlobals;
+    import mx.core.IFlexDisplayObject;
     import mx.events.CloseEvent;
     import mx.events.MenuEvent;
     import mx.managers.PopUpManager;
+    import mx.managers.PopUpManagerChildList;
+    import mx.managers.SystemManager;
     import mx.rpc.events.ResultEvent;
     import mx.utils.ObjectUtil;
 
@@ -69,8 +72,30 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
                 this.view.dispatchEvent(closeEvent);
                 MainModel.getInstance().cleanUp();
                 UsuarioLogado.getInstance().cleanUp();
+				this.closeAllPopups();
             }
         }
+		private function closeAllPopups():void
+		{
+			var systemManager:SystemManager = FlexGlobals.topLevelApplication.systemManager.topLevelSystemManager;
+			// if you scope your popups to PopUpManagerChildList.POPUP
+			// this is all you should have to check to clear all popups
+
+			while(systemManager.popUpChildren.numChildren > 0){
+				PopUpManager.removePopUp(IFlexDisplayObject(systemManager.popUpChildren.getChildAt(0)));
+			}
+			
+			// if you scope your popups to other than PopUpManagerChildList.POPUP
+			// you need to scan this and check the class name to decide if you need to remove the child
+			/*for (var i:int = systemManager.numChildren - 1 ; i >= 0 ; i--)
+			{
+				trace(getQualifiedClassName(systemManager.getChildAt(i)));
+				if(getQualifiedClassName(systemManager.getChildAt(i))=="Popup")
+				{
+					systemManager.removeChildAt(i);
+				}
+			}*/
+		}
 
         public function closeEventHandler(event:CloseEvent):void
         {
@@ -161,14 +186,14 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             if (event.label == "Agendamento")
             {
                 var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
-                PopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication));
+                PopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
                 PopUpManager.centerPopUp(monitoringRequest);
             }
             if (event.label == "Referências")
             {
                 var referencias:ClassesReferenciaView = new ClassesReferenciaView();
                 referencias.addEventListener(ReferenciasRecebidasEvent.REFERENCIAS_RECEBIDAS_EVENT, referenciasRecebidasResultHandler);
-                PopUpManager.addPopUp(referencias, DisplayObject(FlexGlobals.topLevelApplication));
+                PopUpManager.addPopUp(referencias, DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
                 PopUpManager.centerPopUp(referencias);
             }
         }
