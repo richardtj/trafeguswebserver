@@ -51,7 +51,7 @@
 				</mx:FormItem>
 				<mx:HRule width="60%"/>
 				<mx:FormItem label="Transportador" required="true">
-					<view:ZoomCodDetailView id="transportadorZoom" clickZoom="this.controller.transportadorZoomDispatcher()"/>
+					<view:ZoomCodDetailView id="transportadorZoom" clickZoom="this.controller.transportadorZoomDispatcher(event)" tabZoom="this.controller.transportadorZoomDispatcher(event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Embarcador">
 					<view:ZoomCodDetailView id="embarcadorZoom" clickZoom="this.controller.embarcadoresZoomDispatcher()"/>
