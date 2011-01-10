@@ -346,6 +346,16 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			var operation:Operation = createOperation("solicitaDescricaoPGR", handler);
 			operation.send(UsuarioLogado.getInstance().IdSessao,codPGR);
 		}
+		public function solicitaDescricaoRota(handler:Function,codRota:String):void
+		{
+			var operation:Operation = createOperation("solicitaDescricaoRota", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,codRota);
+		}
+		public function solicitaDescricaoLocal(handler:Function,codLocal:String):void
+		{
+			var operation:Operation = createOperation("solicitaDescricaoLocal", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,codLocal);
+		}
     }
 }
 
