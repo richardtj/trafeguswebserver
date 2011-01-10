@@ -324,7 +324,27 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 		public function solicitaDescricaoTransportador(handler:Function,codTransportador:String):void
 		{
 			var operation:Operation = createOperation("solicitaDescricaoTransportador", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,codTransportador);
+			operation.send(UsuarioLogado.getInstance().IdSessao,codTransportador);
+		}
+		public function solicitaDescricaoEmbarcador(handler:Function,codEmbarcador:String):void
+		{
+			var operation:Operation = createOperation("solicitaDescricaoEmbarcador", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,codEmbarcador);
+		}
+		public function solicitaDescricaoVeiculo(handler:Function, codVeiculo:String):void
+		{
+			var operation:Operation = createOperation("solicitaDescricaoVeiculo", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,codVeiculo);
+		}
+		public function solicitaDescricaoMotorista(handler:Function,codMotorista:String):void
+		{
+			var operation:Operation = createOperation("solicitaDescricaoMotorista", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,codMotorista);
+		}
+		public function solicitaDescricaoPGR(handler:Function,codPGR:String):void
+		{
+			var operation:Operation = createOperation("solicitaDescricaoPGR", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,codPGR);
 		}
     }
 }

@@ -45,12 +45,31 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 		}
 		public var view:MonitoringRequestWiew;
-		public function veiculoZoomDispatcher():void
+		public function veiculoZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
-			var veiculoZoom:VeiculoZoom = new VeiculoZoom();
-			veiculoZoom.addEventListener(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,selectedVehicleEventHandler);
-			PopUpManager.addPopUp(veiculoZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(veiculoZoom);
+			if(event.type == ZoomCodDetailEvent.CLICK)
+			{
+				var veiculoZoom:VeiculoZoom = new VeiculoZoom();
+				veiculoZoom.addEventListener(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,selectedVehicleEventHandler);
+				PopUpManager.addPopUp(veiculoZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
+				PopUpManager.centerPopUp(veiculoZoom);
+			}
+			else if(event.type == ZoomCodDetailEvent.TAB)
+			{
+				TrafegusWS.getIntance().solicitaDescricaoVeiculo(solicitaDescricaoVeiculoResultHandler,event.cod);
+			}
+		}
+		private function solicitaDescricaoVeiculoResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			if(resultArray.length == 0)
+			{
+				this.view.veiculoZoom.detail = "";
+			}
+			for each (var obj:Object in resultArray)
+			{
+				this.view.veiculoZoom.detail = obj.veic_placa.toString();
+			}
 		}
 		public function selectedVehicleEventHandler(event:SelectedVehicleEvent):void
 		{
@@ -71,12 +90,31 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			PopUpManager.addPopUp(addParadasView,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(addParadasView);
 		}
-		public function motoristaZoomDispatcher():void
+		public function motoristaZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
-			var motoristaZoom:MotoristaZoom = new MotoristaZoom();
-			motoristaZoom.addEventListener(SelectedDriverEvent.SELECTED_DRIVER_EVENT,selectedDriverEventHandler);
-			PopUpManager.addPopUp(motoristaZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(motoristaZoom);
+			if(event.type == ZoomCodDetailEvent.CLICK)
+			{
+				var motoristaZoom:MotoristaZoom = new MotoristaZoom();
+				motoristaZoom.addEventListener(SelectedDriverEvent.SELECTED_DRIVER_EVENT,selectedDriverEventHandler);
+				PopUpManager.addPopUp(motoristaZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
+				PopUpManager.centerPopUp(motoristaZoom);
+			}
+			else if(event.type == ZoomCodDetailEvent.TAB)
+			{
+				TrafegusWS.getIntance().solicitaDescricaoMotorista(solicitaDescricaoMotoristaResultHandler,event.cod);
+			}
+		}
+		private function solicitaDescricaoMotoristaResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			if(resultArray.length == 0)
+			{
+				this.view.motoristaZoom.detail = "";
+			}
+			for each (var obj:Object in resultArray)
+			{
+				this.view.motoristaZoom.detail = obj.pess_nome.toString();
+			}
 		}
 		private function selectedDriverEventHandler(event:SelectedDriverEvent):void
 		{
@@ -95,12 +133,31 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			this.view.rotaZoom.cod = event.route.codigo;
 			this.view.rotaZoom.detail = event.route.descricao;
 		}
-		public function embarcadoresZoomDispatcher():void
+		public function embarcadoresZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
-			var embarcadoresZoom:EmbarcadoresZoom = new EmbarcadoresZoom();
-			embarcadoresZoom.addEventListener(EmbarcadorSelecionadoEvent.EMBARCADOR_SELECIONADO_EVENT,embarcadorSelecionadoEventHandler);
-			PopUpManager.addPopUp(embarcadoresZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(embarcadoresZoom);
+			if(event.type == ZoomCodDetailEvent.CLICK)
+			{
+				var embarcadoresZoom:EmbarcadoresZoom = new EmbarcadoresZoom();
+				embarcadoresZoom.addEventListener(EmbarcadorSelecionadoEvent.EMBARCADOR_SELECIONADO_EVENT,embarcadorSelecionadoEventHandler);
+				PopUpManager.addPopUp(embarcadoresZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
+				PopUpManager.centerPopUp(embarcadoresZoom);
+			}
+			else if(event.type == ZoomCodDetailEvent.TAB)
+			{
+				TrafegusWS.getIntance().solicitaDescricaoEmbarcador(solicitaDescricaoEmbarcadorResultHandler,event.cod);
+			}
+		}
+		private function solicitaDescricaoEmbarcadorResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			if(resultArray.length == 0)
+			{
+				this.view.embarcadorZoom.detail = "";
+			}
+			for each (var obj:Object in resultArray)
+			{
+				this.view.embarcadorZoom.detail = obj.pess_nome.toString();
+			}
 		}
 		private function embarcadorSelecionadoEventHandler(event:EmbarcadorSelecionadoEvent):void
 		{
@@ -219,12 +276,31 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			MainModel.getInstance().paradasArray.addItem(event.parada);
 		}
-		public function planoGRZoomDispatcher():void
+		public function planoGRZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
-			var pgrZoom:PGRZoom = new PGRZoom();
-			pgrZoom.addEventListener(PGRSelecionadoEvent.PGR_SELECIONADO_EVENT,pgrSelecionadoEventHandler);
-			PopUpManager.addPopUp(pgrZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(pgrZoom);
+			if(event.type == ZoomCodDetailEvent.CLICK)
+			{
+				var pgrZoom:PGRZoom = new PGRZoom();
+				pgrZoom.addEventListener(PGRSelecionadoEvent.PGR_SELECIONADO_EVENT,pgrSelecionadoEventHandler);
+				PopUpManager.addPopUp(pgrZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
+				PopUpManager.centerPopUp(pgrZoom);
+			}
+			else if(event.type == ZoomCodDetailEvent.TAB)
+			{
+				TrafegusWS.getIntance().solicitaDescricaoPGR(solicitaDescricaoPGRResultHandler,event.cod);
+			}
+		}
+		private function solicitaDescricaoPGRResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			if(resultArray.length == 0)
+			{
+				this.view.pgrZoom.detail = "";
+			}
+			for each (var obj:Object in resultArray)
+			{
+				this.view.pgrZoom.detail = obj.pgpg_descricao.toString();
+			}
 		}
 		private function pgrSelecionadoEventHandler(event:PGRSelecionadoEvent):void
 		{
