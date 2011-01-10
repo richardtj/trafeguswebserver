@@ -147,7 +147,15 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		private function solicitaDescricaoTransportadorResultHandler(event:ResultEvent):void
 		{
-			
+			var resultArray:Array = ParserResult.parserDefault(event);
+			if(resultArray.length == 0)
+			{
+				this.view.transportadorZoom.detail = "";
+			}
+			for each (var obj:Object in resultArray)
+			{
+				this.view.transportadorZoom.detail = obj.pess_nome.toString();
+			}
 		}
 		private function transportadorSelecionadoEventHandler(event:TransportadorSelecionadoEvent):void
 		{
