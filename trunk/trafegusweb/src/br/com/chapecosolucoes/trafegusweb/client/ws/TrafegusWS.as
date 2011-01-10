@@ -319,7 +319,12 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 		public function solicitaDescricaoViagemPai(handler:Function,codViagemPai:String):void
 		{
 			var operation:Operation = createOperation("solicitaDescricaoViagemPai", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,codViagemPai);
+			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,codViagemPai);
+		}
+		public function solicitaDescricaoTransportador(handler:Function,codTransportador:String):void
+		{
+			var operation:Operation = createOperation("solicitaDescricaoTransportador", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,codTransportador);
 		}
     }
 }

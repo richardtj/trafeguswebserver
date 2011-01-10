@@ -131,12 +131,23 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			this.view.destinoZoom.cod = event.local.codigo;
 			this.view.destinoZoom.detail = event.local.descricao;
 		}
-		public function transportadorZoomDispatcher():void
+		public function transportadorZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
-			var transportadoresZoom:TransportadoresZoom = new TransportadoresZoom();
-			transportadoresZoom.addEventListener(TransportadorSelecionadoEvent.TRANSPORTADOR_SELECIONADO_EVENT,transportadorSelecionadoEventHandler);
-			PopUpManager.addPopUp(transportadoresZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(transportadoresZoom);
+			if(event.type == ZoomCodDetailEvent.CLICK)
+			{
+				var transportadoresZoom:TransportadoresZoom = new TransportadoresZoom();
+				transportadoresZoom.addEventListener(TransportadorSelecionadoEvent.TRANSPORTADOR_SELECIONADO_EVENT,transportadorSelecionadoEventHandler);
+				PopUpManager.addPopUp(transportadoresZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
+				PopUpManager.centerPopUp(transportadoresZoom);
+			}
+			else if(event.type == ZoomCodDetailEvent.TAB)
+			{
+				TrafegusWS.getIntance().solicitaDescricaoTransportador(solicitaDescricaoTransportadorResultHandler,event.cod);
+			}
+		}
+		private function solicitaDescricaoTransportadorResultHandler(event:ResultEvent):void
+		{
+			
 		}
 		private function transportadorSelecionadoEventHandler(event:TransportadorSelecionadoEvent):void
 		{
@@ -235,7 +246,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			}
 			for each (var obj:Object in resultArray)
 			{
-				this.view.viagemPaiZoom.detail = obj.ttra_descricao.toString();
+				this.view.viagemPaiZoom.detail = obj.viag_previsao_inicio.toString() + " / " + obj.viag_previsao_fim.toString();
 			}
 		}
 		private function viagemPaiSelecionadaResultHandler(event:ViagemPaiSelecionadaEvent):void
