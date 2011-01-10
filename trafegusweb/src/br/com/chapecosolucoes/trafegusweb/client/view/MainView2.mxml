@@ -55,6 +55,8 @@
 
             import com.roguedevelopment.objecthandles.Flex4ChildManager;
             import com.roguedevelopment.objecthandles.Flex4HandleFactory;
+            import com.roguedevelopment.objecthandles.HandleDescription;
+            import com.roguedevelopment.objecthandles.HandleRoles;
             import com.roguedevelopment.objecthandles.ObjectHandles;
 
             import mx.controls.Alert;
@@ -71,12 +73,21 @@
 
             private function init():void
             {
+                var handles:Array = new Array();
+
+                handles.push(new HandleDescription(HandleRoles.RESIZE_UP + HandleRoles.RESIZE_LEFT, new Point(0, 0), new Point(0, 0)));
+                handles.push(new HandleDescription(HandleRoles.RESIZE_UP + HandleRoles.RESIZE_RIGHT, new Point(100, 0), new Point(0, 0)));
+                handles.push(new HandleDescription(HandleRoles.RESIZE_DOWN + HandleRoles.RESIZE_RIGHT, new Point(100, 100), new Point(0, 0)));
+                handles.push(new HandleDescription(HandleRoles.RESIZE_DOWN + HandleRoles.RESIZE_LEFT, new Point(0, 100), new Point(0, 0)));
+
                 controller = new MainController();
                 controller.view = this;
+
                 oh = new ObjectHandles(this, null, new Flex4HandleFactory(), new Flex4ChildManager());
-                oh.registerComponent(veiculos, veiculos);
-                oh.registerComponent(detalhes, detalhes);
-                oh.registerComponent(mapa, mapa);
+
+                oh.registerComponent(veiculos, veiculos, handles);
+                oh.registerComponent(detalhes, detalhes, handles);
+                oh.registerComponent(mapa, mapa, handles);
                 //        registerDragSource(circleSource, CircleShape);
                 //       registerDragSource(squareSource, SquareShape);
                 //       oh.addEventListener(ObjectChangedEvent.OBJECT_MOVED, onObjectMoved);
