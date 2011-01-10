@@ -1237,4 +1237,59 @@ public class TrafegusWS {
         }
         return "";
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaDescricaoTipoTransporte")
+    public String solicitaDescricaoTipoTransporte(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codTipoTransporte")
+    String codTipoTransporte) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT TTRA_Codigo,");
+        sb.append("         TTRA_Descricao");
+        sb.append(" FROM TTRA_Tipo_Transporte");
+        sb.append(" WHERE TTRA_Codigo = ").append(codTipoTransporte);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaDescricaoViagemPai")
+    public String solicitaDescricaoViagemPai(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codEmpresa")
+    String codEmpresa,@WebParam(name = "codViagemPai")
+    String codViagemPai) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT ");
+        sb.append("     VIAG_CODIGO,");
+        sb.append("     VIAG_PREVISAO_INICIO,");
+        sb.append("     VIAG_PREVISAO_FIM");
+        sb.append(" FROM VIAG_VIAGEM");
+        sb.append(" JOIN TRAN_TRANSPORTADOR ON (TRAN_PESS_ORAS_CODIGO = VIAG_TRAN_PESS_ORAS_CODIGO AND VIAG_TRAN_PESS_ORAS_CODIGO = ").append(codEmpresa).append(") ");
+        sb.append(" WHERE VIAG_CODIGO = ").append(codViagemPai);
+        System.out.print(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaDescricaoTransportador")
+    public String solicitaDescricaoTransportador(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codTransportador")
+    String codTransportador) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT TRAN_Transportador.TRAN_PESS_ORAS_Codigo,");
+        //sb.append("       TEST_Tipo_Estabelecimento.*,");
+        sb.append("         PESS_Pessoa.PESS_Nome,");
+        sb.append("    FROM TRAN_Transportador");
+        sb.append(" WHERE TRAN_Transportador.TRAN_PESS_ORAS_Codigo = '").append(codTransportador).append("'");
+        System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
 }
