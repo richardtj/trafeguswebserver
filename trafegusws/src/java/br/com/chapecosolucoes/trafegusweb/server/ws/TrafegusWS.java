@@ -573,16 +573,22 @@ public class TrafegusWS {
     public String solicitaDadosLocal(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codLocal") String codLocal) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT REFE_Referencia.REFE_Codigo, REFE_Referencia.REFE_Descricao, REFE_Referencia.REFE_Latitude,");
-        sb.append("      REFE_Referencia.REFE_Longitude, CREF_Classe_Referencia.CREF_Codigo, CREF_Classe_Referencia.CREF_Descricao,");
-        sb.append("      REFE_Referencia.REFE_Raio, REFE_Referencia.REFE_KM, REFE_Referencia.REFE_Bandeira,");
-        sb.append("      REFE_Referencia.REFE_Utilizado_Sistema");
-        sb.append("      FROM TRAN_Transportador JOIN TLOC_Transportador_Local ON (TLOC_TRAN_PESS_ORAS_Codigo = TRAN_PESS_ORAS_Codigo)");
-        sb.append("      JOIN REFE_Referencia ON (REFE_Codigo = TLOC_REFE_Codigo)");
-        sb.append("      JOIN CREF_Classe_Referencia ON (CREF_Codigo = REFE_CREF_Codigo)");
-        sb.append("      JOIN TLOC_Tipo_Local ON (TLOC_Tipo_Local.TLOC_Codigo = TLOC_Transportador_Local.TLOC_TLOC_Codigo)");
-        sb.append("  WHERE (CREF_Classe_Referencia.cref_pess_oras_codigo is null or CREF_Classe_Referencia.cref_pess_oras_codigo = TRAN_Transportador.tran_pess_oras_codigo)");
-        sb.append("      AND TRAN_Transportador.tran_pess_oras_codigo = ").append(codLocal);
+        sb.append(" SELECT ");
+        sb.append("	REFE_Referencia.REFE_Codigo, ");
+        sb.append("	REFE_Referencia.REFE_Descricao, ");
+        sb.append("	REFE_Referencia.REFE_Latitude,      ");
+        sb.append("	REFE_Referencia.REFE_Longitude, ");
+        sb.append("	CREF_Classe_Referencia.CREF_Codigo, ");
+        sb.append("	CREF_Classe_Referencia.CREF_Descricao,      ");
+        sb.append("	REFE_Referencia.REFE_Raio, ");
+        sb.append("	REFE_Referencia.REFE_KM, ");
+        sb.append("	REFE_Referencia.REFE_Bandeira,      ");
+        sb.append("	REFE_Referencia.REFE_Utilizado_Sistema      ");
+        sb.append(" FROM ");
+        sb.append("	REFE_Referencia");
+        sb.append(" JOIN ");
+        sb.append("	CREF_Classe_Referencia ON (CREF_Codigo = REFE_CREF_Codigo)      ");
+        sb.append("  WHERE REFE_Referencia.REFE_Codigo = ").append(codLocal);
 
         System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
