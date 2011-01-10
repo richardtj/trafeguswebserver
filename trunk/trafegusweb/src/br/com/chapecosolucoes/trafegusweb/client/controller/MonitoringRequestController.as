@@ -121,12 +121,31 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			this.view.motoristaZoom.cod = event.motorista.codigo;
 			this.view.motoristaZoom.detail = event.motorista.motoristaPrincipal;
 		}
-		public function rotaZoomDispatcher():void
+		public function rotaZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
-			var rotaZoom:RotaZoom = new RotaZoom();
-			rotaZoom.addEventListener(SelectedRouteEvent.SELECTED_ROUTE_EVENT,selectedRouteEventHandler);
-			PopUpManager.addPopUp(rotaZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(rotaZoom);
+			if(event.type == ZoomCodDetailEvent.CLICK)
+			{
+				var rotaZoom:RotaZoom = new RotaZoom();
+				rotaZoom.addEventListener(SelectedRouteEvent.SELECTED_ROUTE_EVENT,selectedRouteEventHandler);
+				PopUpManager.addPopUp(rotaZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
+				PopUpManager.centerPopUp(rotaZoom);
+			}
+			else if(event.type == ZoomCodDetailEvent.TAB)
+			{
+				TrafegusWS.getIntance().solicitaDescricaoRota(solicitaDescricaoRotaResultHandler,event.cod);
+			}
+		}
+		private function solicitaDescricaoRotaResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			if(resultArray.length == 0)
+			{
+				this.view.rotaZoom.detail = "";
+			}
+			for each (var obj:Object in resultArray)
+			{
+				this.view.rotaZoom.detail = obj.rota_descricao.toString();
+			}
 		}
 		private function selectedRouteEventHandler(event:SelectedRouteEvent):void
 		{
@@ -164,19 +183,57 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			this.view.embarcadorZoom.cod = event.embarcador.codigo;
 			this.view.embarcadorZoom.detail = event.embarcador.nome;
 		}
-		public function locaisZoomDispatcher(enum:LocaisEnum):void
+		public function locaisZoomDispatcher(enum:LocaisEnum,event:ZoomCodDetailEvent):void
 		{
-			var locaisZoom:LocaisZoom = new LocaisZoom();
-			if(enum == LocaisEnum.ORIGEM)
+			if(event.type == ZoomCodDetailEvent.CLICK)
 			{
-				locaisZoom.addEventListener(SelectedLocalEvent.SELECTED_LOCAL_EVENT,origemSelecionadaEventHandler);
+				var locaisZoom:LocaisZoom = new LocaisZoom();
+				if(enum == LocaisEnum.ORIGEM)
+				{
+					locaisZoom.addEventListener(SelectedLocalEvent.SELECTED_LOCAL_EVENT,origemSelecionadaEventHandler);
+				}
+				else if(enum == LocaisEnum.DESTINO)
+				{
+					locaisZoom.addEventListener(SelectedLocalEvent.SELECTED_LOCAL_EVENT,destinoSelecionadoEventHandler);
+				}
+				PopUpManager.addPopUp(locaisZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
+				PopUpManager.centerPopUp(locaisZoom);
 			}
-			else if(enum == LocaisEnum.DESTINO)
+			else if(event.type == ZoomCodDetailEvent.TAB)
 			{
-				locaisZoom.addEventListener(SelectedLocalEvent.SELECTED_LOCAL_EVENT,destinoSelecionadoEventHandler);
+				if(enum == LocaisEnum.ORIGEM)
+				{
+					TrafegusWS.getIntance().solicitaDescricaoLocal(solicitaDescricaoLocalOrigemResultHandler,event.cod);
+				}
+				else if(enum == LocaisEnum.DESTINO)
+				{
+					TrafegusWS.getIntance().solicitaDescricaoLocal(solicitaDescricaoLocalDestinoResultHandler,event.cod);
+				}
 			}
-			PopUpManager.addPopUp(locaisZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(locaisZoom);
+		}
+		private function solicitaDescricaoLocalOrigemResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			if(resultArray.length == 0)
+			{
+				this.view.origemZoom.detail = "";
+			}
+			for each (var obj:Object in resultArray)
+			{
+				this.view.origemZoom.detail = obj.refe_descricao.toString();
+			}
+		}
+		private function solicitaDescricaoLocalDestinoResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			if(resultArray.length == 0)
+			{
+				this.view.destinoZoom.detail = "";
+			}
+			for each (var obj:Object in resultArray)
+			{
+				this.view.destinoZoom.detail = obj.refe_descricao.toString();
+			}
 		}
 		private function origemSelecionadaEventHandler(event:SelectedLocalEvent):void
 		{

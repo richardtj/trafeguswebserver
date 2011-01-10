@@ -70,16 +70,16 @@
 				</mx:FormItem>
 				<mx:HRule width="60%"/>
 				<mx:FormItem label="Rota">
-					<view:ZoomCodDetailView id="rotaZoom" clickZoom="this.controller.rotaZoomDispatcher()"/>
+					<view:ZoomCodDetailView id="rotaZoom" clickZoom="this.controller.rotaZoomDispatcher(event)" tabZoom="this.controller.rotaZoomDispatcher(event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Origem" required="true">
-					<view:ZoomCodDetailView id="origemZoom" clickZoom="this.controller.locaisZoomDispatcher(LocaisEnum.ORIGEM)"/>
+					<view:ZoomCodDetailView id="origemZoom" clickZoom="this.controller.locaisZoomDispatcher(LocaisEnum.ORIGEM,event)" tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.ORIGEM,event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Prev. inicio" required="true">
 					<mx:DateField/>
 				</mx:FormItem>
 				<mx:FormItem label="Destino" required="true">
-					<view:ZoomCodDetailView id="destinoZoom" clickZoom="this.controller.locaisZoomDispatcher(LocaisEnum.DESTINO)"/>
+					<view:ZoomCodDetailView id="destinoZoom" clickZoom="this.controller.locaisZoomDispatcher(LocaisEnum.DESTINO,event)" tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.DESTINO,event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Prev. fim" required="true">
 					<mx:DateField/>
