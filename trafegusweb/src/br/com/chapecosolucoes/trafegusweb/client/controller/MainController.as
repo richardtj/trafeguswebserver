@@ -16,11 +16,13 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
     import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
-
+    
     import com.google.maps.LatLng;
-
+    
     import flash.display.DisplayObject;
+    import flash.display.Sprite;
     import flash.utils.getQualifiedClassName;
+    
     import mx.controls.Alert;
     import mx.core.FlexGlobals;
     import mx.core.IFlexDisplayObject;
@@ -81,8 +83,12 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			// if you scope your popups to PopUpManagerChildList.POPUP
 			// this is all you should have to check to clear all popups
 
-			while(systemManager.popUpChildren.numChildren > 0){
-				PopUpManager.removePopUp(IFlexDisplayObject(systemManager.popUpChildren.getChildAt(0)));
+			while(systemManager.popUpChildren.numChildren > 0)
+			{
+				if(systemManager.popUpChildren.getChildAt(0) is DisplayObject)
+				{
+					PopUpManager.removePopUp(IFlexDisplayObject(systemManager.popUpChildren.getChildAt(0)));
+				}
 			}
 			
 			// if you scope your popups to other than PopUpManagerChildList.POPUP

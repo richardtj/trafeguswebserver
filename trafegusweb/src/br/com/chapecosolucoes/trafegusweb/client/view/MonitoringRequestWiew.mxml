@@ -54,19 +54,19 @@
 					<view:ZoomCodDetailView id="transportadorZoom" clickZoom="this.controller.transportadorZoomDispatcher(event)" tabZoom="this.controller.transportadorZoomDispatcher(event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Embarcador">
-					<view:ZoomCodDetailView id="embarcadorZoom" clickZoom="this.controller.embarcadoresZoomDispatcher()"/>
+					<view:ZoomCodDetailView id="embarcadorZoom" clickZoom="this.controller.embarcadoresZoomDispatcher(event)" tabZoom="this.controller.embarcadoresZoomDispatcher(event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Veiculo do Transportador" required="true">
-					<view:ZoomCodDetailView id="veiculoZoom" clickZoom="this.controller.veiculoZoomDispatcher()"/>
+					<view:ZoomCodDetailView id="veiculoZoom" clickZoom="this.controller.veiculoZoomDispatcher(event)" tabZoom="this.controller.veiculoZoomDispatcher(event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Carretas">
 					<mx:Image source="@Embed(source='assets/plus-icon.png')" buttonMode="true" click="this.controller.addCarretas()"/>
 				</mx:FormItem>
 				<mx:FormItem label="Motorista" required="true">
-					<view:ZoomCodDetailView id="motoristaZoom" clickZoom="this.controller.motoristaZoomDispatcher()"/>
+					<view:ZoomCodDetailView id="motoristaZoom" clickZoom="this.controller.motoristaZoomDispatcher(event)" tabZoom="this.controller.motoristaZoomDispatcher(event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Plano de G.R." required="true">
-					<view:ZoomCodDetailView id="pgrZoom" clickZoom="this.controller.planoGRZoomDispatcher()"/>
+					<view:ZoomCodDetailView id="pgrZoom" clickZoom="this.controller.planoGRZoomDispatcher(event)" tabZoom="this.controller.planoGRZoomDispatcher(event)"/>
 				</mx:FormItem>
 				<mx:HRule width="60%"/>
 				<mx:FormItem label="Rota">
