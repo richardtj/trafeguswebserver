@@ -20,11 +20,14 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.TipoTransporteSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.ViagemPaiSelecionadaEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.ZoomCodDetailEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddCarretasView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddParadasView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoViagemVO;
+	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
 	import flash.display.DisplayObject;
 	
@@ -32,6 +35,9 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
 	import mx.managers.PopUpManagerChildList;
+	import mx.rpc.events.ResultEvent;
+	
+	import org.flexunit.runner.Result;
 
 	public class MonitoringRequestController
 	{
@@ -137,12 +143,31 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			this.view.transportadorZoom.cod = event.transportador.codigo;
 			this.view.transportadorZoom.detail = event.transportador.nome;
 		}
-		public function tipoTransporteZoomDispatcher():void
+		public function tipoTransporteZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
-			var tipoTransporteZoom:TipoTransporteZoom = new TipoTransporteZoom();
-			tipoTransporteZoom.addEventListener(TipoTransporteSelecionadoEvent.TIPO_TRANSPORTE_SELECIONADO_EVENT,tipoTransporteSelecionadoEventHandler);
-			PopUpManager.addPopUp(tipoTransporteZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(tipoTransporteZoom);
+			if(event.type == ZoomCodDetailEvent.CLICK)
+			{
+				var tipoTransporteZoom:TipoTransporteZoom = new TipoTransporteZoom();
+				tipoTransporteZoom.addEventListener(TipoTransporteSelecionadoEvent.TIPO_TRANSPORTE_SELECIONADO_EVENT,tipoTransporteSelecionadoEventHandler);
+				PopUpManager.addPopUp(tipoTransporteZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
+				PopUpManager.centerPopUp(tipoTransporteZoom);
+			}
+			else if(event.type == ZoomCodDetailEvent.TAB)
+			{
+				TrafegusWS.getIntance().solicitaDescricaoTipoTransporte(solicitaDescricaoTipoTransporteEventHandler,event.cod);
+			}
+		}
+		private function solicitaDescricaoTipoTransporteEventHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			if(resultArray.length == 0)
+			{
+				this.view.tipoViagemZoom.detail = "";
+			}
+			for each (var obj:Object in resultArray)
+			{
+				this.view.tipoViagemZoom.detail = obj.ttra_descricao.toString();
+			}
 		}
 		private function tipoTransporteSelecionadoEventHandler(event:TipoTransporteSelecionadoEvent):void
 		{
@@ -187,12 +212,31 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			this.view.pgrZoom.cod = event.pgr.codigo;
 			this.view.pgrZoom.detail = event.pgr.descricao;
 		}
-		public function viagemPaiZoomDispatcher():void
+		public function viagemPaiZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
-			var viagemPaiZoom:ViagemPaiZoom = new ViagemPaiZoom();
-			viagemPaiZoom.addEventListener(ViagemPaiSelecionadaEvent.VIAGEM_PAI_SELECIONADA_EVENT,viagemPaiSelecionadaResultHandler);
-			PopUpManager.addPopUp(viagemPaiZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(viagemPaiZoom);
+			if(event.type == ZoomCodDetailEvent.CLICK)
+			{
+				var viagemPaiZoom:ViagemPaiZoom = new ViagemPaiZoom();
+				viagemPaiZoom.addEventListener(ViagemPaiSelecionadaEvent.VIAGEM_PAI_SELECIONADA_EVENT,viagemPaiSelecionadaResultHandler);
+				PopUpManager.addPopUp(viagemPaiZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
+				PopUpManager.centerPopUp(viagemPaiZoom);
+			}
+			else if(event.type == ZoomCodDetailEvent.TAB)
+			{
+				TrafegusWS.getIntance().solicitaDescricaoViagemPai(solicitaDescricaoViagemPaiResultHandler,event.cod);
+			}
+		}
+		private function solicitaDescricaoViagemPaiResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			if(resultArray.length == 0)
+			{
+				this.view.viagemPaiZoom.detail = "";
+			}
+			for each (var obj:Object in resultArray)
+			{
+				this.view.viagemPaiZoom.detail = obj.ttra_descricao.toString();
+			}
 		}
 		private function viagemPaiSelecionadaResultHandler(event:ViagemPaiSelecionadaEvent):void
 		{

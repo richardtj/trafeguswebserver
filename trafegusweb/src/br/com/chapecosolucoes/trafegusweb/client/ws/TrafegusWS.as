@@ -311,6 +311,16 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			var operation:Operation = createOperation("logout", handler);
 			operation.send(UsuarioLogado.getInstance().IdSessao);
 		}
+		public function solicitaDescricaoTipoTransporte(handler:Function,codTipoTransporte:String):void
+		{
+			var operation:Operation = createOperation("solicitaDescricaoTipoTransporte", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,codTipoTransporte);
+		}
+		public function solicitaDescricaoViagemPai(handler:Function,codViagemPai:String):void
+		{
+			var operation:Operation = createOperation("solicitaDescricaoViagemPai", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,codViagemPai);
+		}
     }
 }
 
