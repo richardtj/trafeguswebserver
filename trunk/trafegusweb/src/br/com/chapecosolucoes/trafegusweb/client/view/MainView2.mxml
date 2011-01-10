@@ -55,6 +55,7 @@
 			
 			import com.roguedevelopment.objecthandles.Flex4ChildManager;
 			import com.roguedevelopment.objecthandles.Flex4HandleFactory;
+			import com.roguedevelopment.objecthandles.HandleDefinitions;
 			import com.roguedevelopment.objecthandles.HandleDescription;
 			import com.roguedevelopment.objecthandles.HandleRoles;
 			import com.roguedevelopment.objecthandles.ObjectHandles;
@@ -62,6 +63,7 @@
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
 			import mx.events.MenuEvent;
+			import mx.utils.ObjectUtil;
 			
 			import org.osmf.layout.AbsoluteLayoutFacet;
 
@@ -73,28 +75,22 @@
 
             private function init():void
             {
-                var handles:Array = new Array();
-
-                handles.push(new HandleDescription(HandleRoles.RESIZE_UP + HandleRoles.RESIZE_LEFT, new Point(0, 0), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.RESIZE_UP + HandleRoles.RESIZE_RIGHT, new Point(100, 0), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.RESIZE_DOWN + HandleRoles.RESIZE_RIGHT, new Point(100, 100), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.RESIZE_DOWN + HandleRoles.RESIZE_LEFT, new Point(0, 100), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 0), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 100), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(0, 50), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(100, 50), new Point(0, 0)));
+                var handles:Array = HandleDefinitions.NO_ROTATE_DEFINITION;
+                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, -10), new Point(0, 0)));
+                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 110), new Point(0, 0)));
+                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(-5, 50), new Point(0, 0)));
+                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(105, 50), new Point(0, 0)));
 
                 controller = new MainController();
                 controller.view = this;
+
                 oh = new ObjectHandles(this, null, new Flex4HandleFactory(), new Flex4ChildManager());
                 oh.defaultHandles = handles;
-				
 
                 oh.registerComponent(veiculos, veiculos);
                 oh.registerComponent(detalhes, detalhes);
                 oh.registerComponent(mapa, mapa);
             }
-
 
             public function creationComplete():void
             {
