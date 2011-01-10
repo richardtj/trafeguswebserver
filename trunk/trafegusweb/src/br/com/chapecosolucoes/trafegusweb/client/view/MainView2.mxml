@@ -88,11 +88,8 @@
                 oh.registerComponent(veiculos, veiculos, handles);
                 oh.registerComponent(detalhes, detalhes, handles);
                 oh.registerComponent(mapa, mapa, handles);
-                //        registerDragSource(circleSource, CircleShape);
-                //       registerDragSource(squareSource, SquareShape);
-                //       oh.addEventListener(ObjectChangedEvent.OBJECT_MOVED, onObjectMoved);
-                //       oh.addDefaultConstraint(new SnapToGridConstraint());
             }
+
 
             public function creationComplete():void
             {
