@@ -1286,9 +1286,141 @@ public class TrafegusWS {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT TRAN_Transportador.TRAN_PESS_ORAS_Codigo,");
         //sb.append("       TEST_Tipo_Estabelecimento.*,");
-        sb.append("         PESS_Pessoa.PESS_Nome,");
-        sb.append("    FROM TRAN_Transportador");
+        sb.append("         PESS_Pessoa.PESS_Nome");
+        sb.append(" FROM TRAN_Transportador");
+        sb.append(" JOIN PESS_Pessoa ON (PESS_ORAS_Codigo = TRAN_PESS_ORAS_Codigo)");
         sb.append(" WHERE TRAN_Transportador.TRAN_PESS_ORAS_Codigo = '").append(codTransportador).append("'");
+        System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaDescricaoEmbarcador")
+    public String solicitaDescricaoEmbarcador(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codEmbarcador")
+    String codEmbarcador) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT EMBA_PJUR_PESS_ORAS_Codigo,");
+        sb.append("      PESS_Pessoa.PESS_Nome");
+        sb.append(" FROM EMBA_Embarcador");
+        sb.append(" JOIN PJUR_Pessoa_Juridica ON (PJUR_PESS_ORAS_Codigo = EMBA_PJUR_PESS_ORAS_Codigo)");
+        sb.append(" JOIN PESS_Pessoa ON (PESS_ORAS_Codigo = PJUR_PESS_ORAS_Codigo)");
+        sb.append(" JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = PESS_ORAS_Codigo AND ORAS_EOBJ_Codigo = 1)");
+        sb.append(" WHERE EMBA_Embarcador.EMBA_PJUR_PESS_ORAS_Codigo = ").append(codEmbarcador);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaDescricaoVeiculo")
+    public String solicitaDescricaoVeiculo(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codEmpresa")
+    String codEmpresa,@WebParam(name = "codVeic")
+    String codVeic) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT ORAS_OBJETO_RASTREADO.ORAS_CODIGO,");
+        sb.append("       VEIC_VEICULO.VEIC_PLACA");
+        sb.append("    FROM VEIC_Veiculo");
+        sb.append("    JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = VEIC_ORAS_Codigo AND ORAS_EOBJ_Codigo = 1)");
+        sb.append("    JOIN TVEI_Tipo_Veiculo ON (VEIC_TVEI_Codigo = TVEI_Codigo)");
+        sb.append("    JOIN VTRA_Veiculo_Transportador ON (VTRA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
+        sb.append("    JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = VTRA_TRAN_PESS_ORAS_Codigo");
+        sb.append("     AND TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(")");
+        sb.append(" LEFT JOIN vcar_veiculo_carreta ON (VEIC_ORAS_Codigo = VCAR_VEIC_ORAS_Codigo)");
+        sb.append(" LEFT JOIN vcav_veiculo_cavalo ON (VEIC_ORAS_Codigo = VCAV_VEIC_ORAS_Codigo)");
+        sb.append(" LEFT JOIN vmot_veiculo_moto ON (VEIC_ORAS_Codigo = VMOT_VEIC_ORAS_Codigo)");
+        sb.append(" LEFT JOIN vtru_veiculo_truck ON (VEIC_ORAS_Codigo = VTRU_VEIC_ORAS_Codigo)");
+        sb.append(" LEFT JOIN vuca_veiculo_utilitario_carga ON (VEIC_ORAS_Codigo = VUCA_VEIC_ORAS_Codigo)");
+        sb.append(" LEFT JOIN vupa_veiculo_utilitario_passe ON (VEIC_ORAS_Codigo = VUPA_VEIC_ORAS_Codigo)");
+        sb.append(" WHERE ORAS_OBJETO_RASTREADO.ORAS_CODIGO = ").append(codVeic);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaDescricaoMotorista")
+    public String solicitaDescricaoMotorista(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codEmpresa")
+    String codEmpresa, @WebParam(name = "codMotorista")
+    String codMotorista) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append("      SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
+        sb.append("           PESS_Pessoa.PESS_Nome");
+        sb.append("       FROM MOTO_Motorista");
+        sb.append("        JOIN PFIS_Pessoa_Fisica ON (PFIS_PESS_ORAS_Codigo = MOTO_PFIS_PESS_ORAS_Codigo)");
+        sb.append("        JOIN PESS_Pessoa ON (PESS_ORAS_codigo = PFIS_PESS_ORAS_Codigo)");
+        sb.append("        JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = PESS_ORAS_codigo AND ORAS_EOBJ_Codigo = 1)");
+        sb.append("        JOIN MTRA_Motorista_Transportador ON (MTRA_MOTO_PFIS_PESS_ORAS_Codigo = ORAS_Codigo)");
+        sb.append("        JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = MTRA_TRAN_PESS_ORAS_Codigo");
+        sb.append("         AND TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(")");
+        sb.append("    WHERE ORAS_Objeto_Rastreado.ORAS_Codigo = ").append(codMotorista);
+        System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaDescricaoPGR")
+    public String solicitaDescricaoPGR(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codPGR")
+    String codPGR) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT ");
+        sb.append("         PGPG_Codigo,");
+        sb.append("         PGPG_Descricao");
+        sb.append(" FROM PGPG_pg");
+        sb.append("         JOIN pgai_pg_associa_item ON (pgai_pgpg_codigo = pgpg_codigo)");
+        sb.append("         JOIN PITE_pg_item ON (pite_codigo = pgai_pite_codigo)");
+        sb.append(" WHERE PGPG_Estatus = 'A'");
+        sb.append("         AND pgpg_codigo = ").append(codPGR);
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaDescricaoRota")
+    public String solicitaDescricaoRota(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codEmpresa")
+    String codEmpresa, @WebParam(name = "codRota")
+    String codRota) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT ROTA_CODIGO,");
+        sb.append("	ROTA_DESCRICAO");
+        sb.append(" FROM ROTA_ROTA");
+        sb.append(" WHERE ROTA_CODIGO = ").append(codRota.toString());
+        sb.append(" AND ROTA_PESS_ORAS_CODIGO_DONO = ").append(codEmpresa.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaDescricaoLocal")
+    public String solicitaDescricaoLocal(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codLocal")
+    String codLocal) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT ");
+        sb.append("	REFE_Referencia.REFE_Codigo, ");
+        sb.append("	REFE_Referencia.REFE_Descricao ");
+        sb.append(" FROM ");
+        sb.append("	REFE_Referencia");
+        sb.append(" JOIN ");
+        sb.append("	CREF_Classe_Referencia ON (CREF_Codigo = REFE_CREF_Codigo)      ");
+        sb.append("  WHERE REFE_Referencia.REFE_Codigo = ").append(codLocal);
+
         System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
