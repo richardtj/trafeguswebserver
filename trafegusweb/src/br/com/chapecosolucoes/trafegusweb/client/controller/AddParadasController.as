@@ -14,6 +14,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
+	import mx.managers.PopUpManagerChildList;
 
 	public class AddParadasController
 	{
@@ -26,7 +27,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			var tipoTransporteZoom:TipoTransporteZoom = new TipoTransporteZoom();
 			tipoTransporteZoom.addEventListener(TipoTransporteSelecionadoEvent.TIPO_TRANSPORTE_SELECIONADO_EVENT,tipoTransporteSelecionadoEventHandler);
-			PopUpManager.addPopUp(tipoTransporteZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(tipoTransporteZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(tipoTransporteZoom);
 		}
 		public function localZoomDispatcher(enum:LocaisEnum):void
@@ -36,7 +37,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				locaisZoom.addEventListener(SelectedLocalEvent.SELECTED_LOCAL_EVENT,paradaSelecionadoEventHandler);
 			}
-			PopUpManager.addPopUp(locaisZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(locaisZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(locaisZoom);
 		}
 		public function closeHandler():void

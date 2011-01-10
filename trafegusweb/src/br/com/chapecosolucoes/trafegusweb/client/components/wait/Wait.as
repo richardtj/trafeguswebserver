@@ -5,6 +5,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.wait
     import mx.core.Application;
     import mx.core.FlexGlobals;
     import mx.managers.PopUpManager;
+    import mx.managers.PopUpManagerChildList;
 
     public class Wait
     {
@@ -33,7 +34,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.wait
             acesso++;
 			if(acesso == 1)
 			{
-	            PopUpManager.addPopUp(this.spinner, DisplayObject(FlexGlobals.topLevelApplication), true)
+	            PopUpManager.addPopUp(this.spinner, DisplayObject(FlexGlobals.topLevelApplication), true, PopUpManagerChildList.POPUP)
 	            PopUpManager.centerPopUp(this.spinner);
 				this.spinner.visible = true;
 				this.spinner.play();

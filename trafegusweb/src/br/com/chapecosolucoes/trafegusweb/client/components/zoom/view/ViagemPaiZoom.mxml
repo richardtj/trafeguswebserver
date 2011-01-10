@@ -5,6 +5,7 @@
 				layout="vertical"
 				width="720" height="420"
 				showCloseButton="true"
+				mouseOver="this.controller.mouseOverEventHandler()"
 				creationCompleteEffect="{dissolve,iris}"
 				removedEffect="{dissolve,iris}"
 				initialize="init()"
@@ -26,6 +27,7 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.ViagemPaiZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.events.ViagemPaiSelecionadaEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.ViagemPaiVO;
 			
@@ -44,6 +46,8 @@
 				this.controller.atualizaListaViagemPai();
 				MainModel.getInstance().viagemPaiArray.filterFunction = this.controller.viagemPaiFilterFunction;
 				MainModel.getInstance().viagemPaiArray.refresh();
+				
+				this.grid.addEventListener(ViagemPaiSelecionadaEvent.VIAGEM_PAI_SELECIONADA_EVENT,this.controller.viagemPaiSelecionadaEventHandler);
 			}
 		]]>
 	</fx:Script>

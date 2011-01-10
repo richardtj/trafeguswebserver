@@ -31,6 +31,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
+	import mx.managers.PopUpManagerChildList;
 
 	public class MonitoringRequestController
 	{
@@ -42,7 +43,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			var veiculoZoom:VeiculoZoom = new VeiculoZoom();
 			veiculoZoom.addEventListener(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,selectedVehicleEventHandler);
-			PopUpManager.addPopUp(veiculoZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(veiculoZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(veiculoZoom);
 		}
 		public function selectedVehicleEventHandler(event:SelectedVehicleEvent):void
@@ -55,20 +56,20 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public function addCarretas():void
 		{
 			var addCarretasView:AddCarretasView = new AddCarretasView();
-			PopUpManager.addPopUp(addCarretasView,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(addCarretasView,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(addCarretasView);
 		}
 		public function addParadas():void
 		{
 			var addParadasView:AddParadasView = new AddParadasView();
-			PopUpManager.addPopUp(addParadasView,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(addParadasView,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(addParadasView);
 		}
 		public function motoristaZoomDispatcher():void
 		{
 			var motoristaZoom:MotoristaZoom = new MotoristaZoom();
 			motoristaZoom.addEventListener(SelectedDriverEvent.SELECTED_DRIVER_EVENT,selectedDriverEventHandler);
-			PopUpManager.addPopUp(motoristaZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(motoristaZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(motoristaZoom);
 		}
 		private function selectedDriverEventHandler(event:SelectedDriverEvent):void
@@ -80,7 +81,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			var rotaZoom:RotaZoom = new RotaZoom();
 			rotaZoom.addEventListener(SelectedRouteEvent.SELECTED_ROUTE_EVENT,selectedRouteEventHandler);
-			PopUpManager.addPopUp(rotaZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(rotaZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(rotaZoom);
 		}
 		private function selectedRouteEventHandler(event:SelectedRouteEvent):void
@@ -92,7 +93,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			var embarcadoresZoom:EmbarcadoresZoom = new EmbarcadoresZoom();
 			embarcadoresZoom.addEventListener(EmbarcadorSelecionadoEvent.EMBARCADOR_SELECIONADO_EVENT,embarcadorSelecionadoEventHandler);
-			PopUpManager.addPopUp(embarcadoresZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(embarcadoresZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(embarcadoresZoom);
 		}
 		private function embarcadorSelecionadoEventHandler(event:EmbarcadorSelecionadoEvent):void
@@ -111,7 +112,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				locaisZoom.addEventListener(SelectedLocalEvent.SELECTED_LOCAL_EVENT,destinoSelecionadoEventHandler);
 			}
-			PopUpManager.addPopUp(locaisZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(locaisZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(locaisZoom);
 		}
 		private function origemSelecionadaEventHandler(event:SelectedLocalEvent):void
@@ -128,7 +129,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			var transportadoresZoom:TransportadoresZoom = new TransportadoresZoom();
 			transportadoresZoom.addEventListener(TransportadorSelecionadoEvent.TRANSPORTADOR_SELECIONADO_EVENT,transportadorSelecionadoEventHandler);
-			PopUpManager.addPopUp(transportadoresZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(transportadoresZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(transportadoresZoom);
 		}
 		private function transportadorSelecionadoEventHandler(event:TransportadorSelecionadoEvent):void
@@ -140,7 +141,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			var tipoTransporteZoom:TipoTransporteZoom = new TipoTransporteZoom();
 			tipoTransporteZoom.addEventListener(TipoTransporteSelecionadoEvent.TIPO_TRANSPORTE_SELECIONADO_EVENT,tipoTransporteSelecionadoEventHandler);
-			PopUpManager.addPopUp(tipoTransporteZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(tipoTransporteZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(tipoTransporteZoom);
 		}
 		private function tipoTransporteSelecionadoEventHandler(event:TipoTransporteSelecionadoEvent):void
@@ -167,7 +168,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			var addParada:AddParadasView = new AddParadasView();
 			addParada.addEventListener(AddParadaEvent.PARADA_ADICIONADA_EVENT,paradaAdicionadaEventHandler);
-			PopUpManager.addPopUp(addParada,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(addParada,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(addParada);
 		}
 		private function paradaAdicionadaEventHandler(event:AddParadaEvent):void
@@ -178,7 +179,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			var pgrZoom:PGRZoom = new PGRZoom();
 			pgrZoom.addEventListener(PGRSelecionadoEvent.PGR_SELECIONADO_EVENT,pgrSelecionadoEventHandler);
-			PopUpManager.addPopUp(pgrZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(pgrZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(pgrZoom);
 		}
 		private function pgrSelecionadoEventHandler(event:PGRSelecionadoEvent):void
@@ -190,7 +191,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			var viagemPaiZoom:ViagemPaiZoom = new ViagemPaiZoom();
 			viagemPaiZoom.addEventListener(ViagemPaiSelecionadaEvent.VIAGEM_PAI_SELECIONADA_EVENT,viagemPaiSelecionadaResultHandler);
-			PopUpManager.addPopUp(viagemPaiZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(viagemPaiZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(viagemPaiZoom);
 		}
 		private function viagemPaiSelecionadaResultHandler(event:ViagemPaiSelecionadaEvent):void

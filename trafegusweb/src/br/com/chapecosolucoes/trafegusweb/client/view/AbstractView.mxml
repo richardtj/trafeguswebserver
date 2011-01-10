@@ -39,6 +39,7 @@
 			private function mouseOverEventHandler():void
 			{
 				DriverDetails.SELECT_BUTTON_VISIBLE = false;
+				VehicleDetails.SELECT_BUTTON_VISIBLE = false;
 			}
 		]]>
 	</fx:Script>

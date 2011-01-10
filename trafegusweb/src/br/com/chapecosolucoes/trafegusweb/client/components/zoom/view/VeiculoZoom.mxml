@@ -7,6 +7,7 @@
 				showCloseButton="true"
 				creationCompleteEffect="{dissolve,iris}"
 				removedEffect="{dissolve,iris}"
+				mouseOver="this.controller.mouseOverEventHandler()"
 				initialize="init()"
 				creationComplete="creationComplete()"
 				close="this.controller.closeHandler()"
@@ -25,6 +26,7 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.VeiculoZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
 			import mx.controls.Alert;
@@ -42,6 +44,8 @@
 				this.controller.atualizaListaVeiculos();
 				MainModel.getInstance().veiculosArray.filterFunction = this.controller.veiculosFilterFunction;
 				MainModel.getInstance().veiculosArray.refresh();
+				
+				this.grid.addEventListener(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,this.controller.selectedVehicleEventHandler);
 			}
 		]]>
 	</fx:Script>

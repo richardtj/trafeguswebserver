@@ -15,7 +15,7 @@ package br.com.chapecosolucoes.trafegusweb.client.events
 		}
 		override public function clone():Event
 		{
-			return new SelectedLocalEvent(type,local);
+			return new SelectedLocalEvent(type,local,bubbles,cancelable);
 		}
 	}
 }

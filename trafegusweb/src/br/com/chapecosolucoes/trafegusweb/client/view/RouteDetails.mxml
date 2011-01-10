@@ -15,14 +15,22 @@
 		<mx:Dissolve id="dissolve" duration="500"/>
 		<mx:Iris id="iris" duration="500"/>
 	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="selectedRouteEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.SelectedRouteEvent")]		
+	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.controller.RouteDetailsController;
+			import br.com.chapecosolucoes.trafegusweb.client.events.SelectedRouteEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
 			
+			import com.google.maps.services.Route;
+			
 			import mx.managers.PopUpManager;
 			private var controller:RouteDetailsController;
+			[Bindable]
+			public static var SELECT_BUTTON_VISIBLE:Boolean = false;
 			private function closeHandler():void
 			{
 				PopUpManager.removePopUp(this);
@@ -31,6 +39,12 @@
 			{
 				this.controller = new RouteDetailsController();
 				this.controller.view = this;
+			}
+			private function rotaSelecionada():void
+			{
+				var event:SelectedRouteEvent = new SelectedRouteEvent(SelectedRouteEvent.SELECTED_ROUTE_EVENT,null,true,true);
+				this.dispatchEvent(event);
+				this.closeHandler();
 			}
 		]]>
 	</fx:Script>
@@ -48,4 +62,8 @@
 			<s:TextInput text="{MainModel.getInstance().dadosRotaVO.dataCadastro}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 	</mx:Form>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Selecionar" click="this.rotaSelecionada()" visible="{RouteDetails.SELECT_BUTTON_VISIBLE}"/>
+		<s:Button label="Voltar" click="this.closeHandler()"/>
+	</mx:ControlBar>
 </mx:TitleWindow>

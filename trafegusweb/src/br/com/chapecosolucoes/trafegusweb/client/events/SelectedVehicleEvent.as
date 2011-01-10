@@ -15,7 +15,7 @@ package br.com.chapecosolucoes.trafegusweb.client.events
 		}
 		public override function clone():Event 
 		{
-			return new SelectedVehicleEvent(SELECTED_VEHICLE_EVENT,veiculo);
+			return new SelectedVehicleEvent(SELECTED_VEHICLE_EVENT,veiculo,bubbles,cancelable);
 		}
 	}
 }

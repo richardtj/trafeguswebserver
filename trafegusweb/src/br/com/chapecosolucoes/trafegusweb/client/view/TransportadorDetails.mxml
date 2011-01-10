@@ -11,6 +11,9 @@
 				close="closeHandler()"
 				title="Dados do Transportador"
 				titleIcon="@Embed(source='assets/transportador.png')">
+	<fx:Metadata>
+		[Event(name="transportadorSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent")]		
+	</fx:Metadata>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:Dissolve id="dissolve" duration="500"/>
@@ -19,12 +22,15 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.controller.TransportadorDetailsController;
+			import br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO;
 			
 			import mx.managers.PopUpManager;
 			private var controller:br.com.chapecosolucoes.trafegusweb.client.controller.TransportadorDetailsController;
 			public var codigo:String;
+			[Bindable]
+			public static var SELECT_BUTTON_VISIBLE:Boolean = false;
 			private function closeHandler():void
 			{
 				PopUpManager.removePopUp(this);
@@ -37,6 +43,12 @@
 			private function creationComplete():void
 			{
 				this.controller.solicitaDadosTransportador(codigo);
+			}
+			private function transportadorSelecionado():void
+			{
+				var event:TransportadorSelecionadoEvent = new TransportadorSelecionadoEvent(TransportadorSelecionadoEvent.TRANSPORTADOR_SELECIONADO_EVENT,null,true,true);
+				this.dispatchEvent(event);
+				this.closeHandler();
 			}
 		]]>
 	</fx:Script>
@@ -60,4 +72,8 @@
 			<s:TextInput text="{MainModel.getInstance().dadosTransportadorVO.site}" borderVisible="false" editable="false" width="200"/>
 		</mx:FormItem>
 	</mx:Form>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Selecionar" click="this.transportadorSelecionado()" visible="{TransportadorDetails.SELECT_BUTTON_VISIBLE}"/>
+		<s:Button label="Voltar" click="this.closeHandler()"/>
+	</mx:ControlBar>
 </mx:TitleWindow>

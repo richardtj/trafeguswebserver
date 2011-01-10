@@ -8,6 +8,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 	
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
+	import mx.managers.PopUpManagerChildList;
 
 	public class PGRItemRendererController
 	{
@@ -20,7 +21,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 			var pgrDetails:PGRDetails = new PGRDetails();
 			pgrDetails.codigo = codigo;
 			pgrDetails.addEventListener(PGRSelecionadoEvent.PGR_SELECIONADO_EVENT,pgrSelecionadoEventHandler);
-			PopUpManager.addPopUp(pgrDetails,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(pgrDetails,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(pgrDetails);
 		}
 		private function pgrSelecionadoEventHandler(event:PGRSelecionadoEvent):void

@@ -8,6 +8,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 	
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
+	import mx.managers.PopUpManagerChildList;
 
 	public class LocalItemRendererController
 	{
@@ -20,7 +21,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 			var localDetails:LocalDetailsView = new LocalDetailsView();
 			localDetails.codigo = codigo;
 			localDetails.addEventListener(SelectedLocalEvent.SELECTED_LOCAL_EVENT,localSelecionadoEventHandler);
-			PopUpManager.addPopUp(localDetails,DisplayObject(FlexGlobals.topLevelApplication));
+			PopUpManager.addPopUp(localDetails,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
 			PopUpManager.centerPopUp(localDetails);
 		}
 		private function localSelecionadoEventHandler(event:SelectedLocalEvent):void
