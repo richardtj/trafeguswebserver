@@ -26,7 +26,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 				this.motoristaPrincipal = obj.nomemotorista.toString();
 				this.cpfMotoristaPrincipal = obj.cpfmotorista.toString();
 				this.embarcador = obj.embarcador.toString();
-				this.dataEHora = obj.upos_data_computador_bordo.toString();
+				this.dataEHora = obj.upos_data_comp_bordo.toString();
 			}
 		}
 		public var codVeic:String;
