@@ -8,9 +8,9 @@ package br.com.chapecosolucoes.trafegusweb.client.model
     import br.com.chapecosolucoes.trafegusweb.client.vo.DadosVeiculoVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.DadosViagemPaiVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
-    import br.com.chapecosolucoes.trafegusweb.client.vo.SolicitacaoMonitoramentoVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.ViagemPaiVO;
     
     import com.google.maps.overlays.Polyline;
@@ -52,7 +52,7 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 
         public var dadosViagemPaiVO:ViagemPaiVO = new ViagemPaiVO();
 
-        public var solicitacaoMonitoramentoVO:SolicitacaoMonitoramentoVO = new SolicitacaoMonitoramentoVO();
+        public var smVO:MonitoringRequestVO = new MonitoringRequestVO();
 
         public var codEmpresa:int = 0;
 		
@@ -148,6 +148,9 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		
 		[ArrayElementType("com.google.maps.overlays.Marker")]
 		public var markers:ArrayCollection = new ArrayCollection();
+		
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.SMVO")]
+		public var smArray:ArrayCollection = new ArrayCollection();
 		
 		[Embed(source="assets/map/apartment.png")]
 		private var outrasCidades:Class;

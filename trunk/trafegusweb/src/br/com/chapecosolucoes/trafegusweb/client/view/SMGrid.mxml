@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				layout="vertical"
+				showCloseButton="true"
+				creationCompleteEffect="{dissolve,iris}"
+				removedEffect="{dissolve,iris}"
+				initialize="init()"
+				creationComplete="creationComplete()"
+				close="closeHandler()"
+				title="SMs do veiculo"
+				titleIcon="@Embed(source='assets/wifi.png')" xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.controller.SMGridController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			
+			import mx.managers.PopUpManager;
+			public var placaVeiculo:String;
+			public var controller:SMGridController;
+			private function closeHandler():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			private function init():void
+			{
+				this.controller = new SMGridController();
+				this.controller.view = this;
+			}
+			private function creationComplete():void
+			{
+				this.controller.solicitaSMVeiculo(this.placaVeiculo);
+				
+				MainModel.getInstance().smArray.filterFunction = this.controller.smFilterFunction;
+				MainModel.getInstance().smArray.refresh();
+			}
+		]]>
+	</fx:Script>
+	<searchInput:SearchInputFX
+		id="textInputFiltro"
+		width="100%" 
+		text="{MainModel.getInstance().zoomFilter}"
+		keyUp="MainModel.getInstance().smArray.refresh()"
+		refreshEvent="this.controller.atualizaListaSM()"/>
+	<mx:DataGrid
+		id="grid"
+		dataProvider="{MainModel.getInstance().smArray}"
+		width="650"
+		height="300">
+		<mx:columns>
+			<mx:DataGridColumn headerText="Número da Viagem" dataField="numeroViagem"/>
+			<mx:DataGridColumn headerText="Operação" dataField="operacao"/>
+			<mx:DataGridColumn headerText="Placa" dataField="placa"/>
+			<mx:DataGridColumn headerText="Terminal" dataField="terminal"/>
+			<mx:DataGridColumn headerText="Data Cadastro" dataField="dataCadastro"/>
+			<mx:DataGridColumn headerText="Transportador" dataField="transportador"/>
+			<mx:DataGridColumn headerText="Embarcador" dataField="embarcador"/>
+			<mx:DataGridColumn headerText="Origem" dataField="origem"/>
+			<mx:DataGridColumn headerText="Destino" dataField="destino"/>
+			<mx:DataGridColumn headerText="Prev. inicio" dataField="prevInicio"/>
+			<mx:DataGridColumn headerText="Prev. fim" dataField="prevFim"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Adicionar"/>
+		<s:Button label="Editar" click="this.controller.editarSM()"/>
+		<s:Button label="Voltar" click="this.closeHandler()"/>
+	</mx:ControlBar>
+</mx:TitleWindow>

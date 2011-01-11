@@ -199,7 +199,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaListaTerminais(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaListaTerminais", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().solicitacaoMonitoramentoVO.placaTruc);
+            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().smVO.placa);
         }
 
         public function solicitaTotalDadosGrid(handler:Function):void
@@ -355,6 +355,11 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 		{
 			var operation:Operation = createOperation("solicitaDescricaoLocal", handler);
 			operation.send(UsuarioLogado.getInstance().IdSessao,codLocal);
+		}
+		public function solicitaSMVeiculo(handler:Function,placaVeiculo:String):void
+		{
+			var operation:Operation = createOperation("solicitaSMVeiculo", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,placaVeiculo);
 		}
     }
 }
