@@ -1454,8 +1454,8 @@ public class TrafegusWS {
         sb.append(" where");
         sb.append("	cgsi_usua_pfis_pess_oras_codigo = ").append(codUsuario);
         sb.append(" and cgsi_tela = '").append(tela).append("'");
-        sb.append(" and	cgsi_grid = ''").append(grid).append("'");
-        sb.append(" and	cgsi_coluna = ''").append(coluna).append("'");
+        sb.append(" and	cgsi_grid = '").append(grid).append("'");
+        sb.append(" and	cgsi_coluna = '").append(coluna).append("'");
 
         String sql = sb.toString();
         sb = null;
@@ -1493,7 +1493,9 @@ public class TrafegusWS {
             sb.append("     cgsi_usua_pfis_pess_oras_codigo, cgsi_tela, cgsi_grid, cgsi_coluna, cgsi_visivel)");
             sb.append(" VALUES ('").append(codUsuario).append("', '").append(tela).append("', '").append(grid).append("', '").append(coluna).append("', '").append(visivel).append("')");
         }
-        Conexao.getInstance().getConnection(idSessao).createStatement().execute(sb.toString());
+        String sql = sb.toString();
+        sb = null;
+        Conexao.getInstance().getConnection(idSessao).createStatement().execute(sql);
         return "<results><row><result>OK</result></row></results>";
     }
 }
