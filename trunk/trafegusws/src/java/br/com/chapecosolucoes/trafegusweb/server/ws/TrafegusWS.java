@@ -295,6 +295,7 @@ public class TrafegusWS {
         sb.append("             END AS statusViagem,");
         sb.append("             0 as statusAtraso,");
         sb.append("             MOTO1.PESS_Nome AS NomeMotorista,");
+        sb.append("             TO_CHAR(UPOS_Data_Comp_Bordo,'DD/MM/YYYY HH24:MI:SS') AS UPOS_Data_Comp_Bordo,");
         sb.append("             MO1.PFIS_CPF AS CpfMotorista");
         sb.append("        FROM UPOS_Ultima_Posicao    ");
         sb.append("        JOIN TERM_Terminal ON (TERM_Numero_Terminal = UPOS_TERM_Numero_Terminal AND TERM_VTEC_Codigo = UPOS_VTEC_Codigo AND TERM_Ativo_WS = 'S')");
