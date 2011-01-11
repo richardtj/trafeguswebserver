@@ -1470,7 +1470,7 @@ public class TrafegusWS {
     }
 
     @WebMethod(operationName = "gravaVisibilidadeColuna")
-    public void gravaVisibilidadeColuna(@WebParam(name = "idSessao") String idSessao,
+    public String gravaVisibilidadeColuna(@WebParam(name = "idSessao") String idSessao,
             @WebParam(name = "codUsuario") String codUsuario,
             @WebParam(name = "tela") String tela,
             @WebParam(name = "grid") String grid,
@@ -1494,5 +1494,6 @@ public class TrafegusWS {
             sb.append(" VALUES ('").append(codUsuario).append("', '").append(tela).append("', '").append(grid).append("', '").append(coluna).append("', '").append(visivel).append("')");
         }
         Conexao.getInstance().getConnection(idSessao).createStatement().execute(sb.toString());
+        return "<results><row><result>OK</result></row></results>";
     }
 }
