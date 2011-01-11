@@ -1478,7 +1478,7 @@ public class TrafegusWS {
             @WebParam(name = "visivel") String visivel) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
-        
+
         if (existeConfiguracaoColuna(idSessao, codUsuario, tela, grid, coluna)) {
             sb.append(" UPDATE cgsi_configuracao_grid_site");
             sb.append(" SET");
