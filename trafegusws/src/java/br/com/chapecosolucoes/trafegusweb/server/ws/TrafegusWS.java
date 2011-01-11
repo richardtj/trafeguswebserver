@@ -1425,4 +1425,39 @@ public class TrafegusWS {
         System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaSMVeiculo")
+    public String solicitaSMVeiculo(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "placaVeiculo")
+    String placaVeiculo) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append("  SELECT VEIC_ORAS_Codigo,");
+        sb.append("         VEIC_Placa,");
+        sb.append("         Term_numero_terminal,");
+        sb.append("         Transp.Pess_nome AS Transportador,");
+        sb.append("         Emba.Pess_nome AS Embarcador,");
+        sb.append("         Ori.refe_descricao AS Origem,");
+        sb.append("         Dest.refe_descricao AS Destino,");
+        sb.append("         VIAG_Viagem.*");
+        sb.append("    FROM VIAG_Viagem");
+        sb.append("    JOIN VVEI_Viagem_Veiculo ON (VVEI_VIAG_Codigo = VIAG_Codigo)");
+        sb.append("    JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = VVEI_VEIC_ORAS_Codigo AND VEIC_Placa = 'CUB2115')");
+        sb.append("    JOIN VTER_VIAGEM_Terminal ON (VTER_Viag_Codigo = Viag_codigo AND VTer_Precedencia = '1' AND Vter_Ativo = 'S')");
+        sb.append("    JOIN Term_Terminal ON (Term_codigo = Vter_term_codigo)");
+        sb.append("    JOIN Pess_pessoa AS Transp ON (Transp.Pess_oras_codigo = Viag_Tran_Pess_oras_codigo)");
+        sb.append("    LEFT Join Pess_pessoa AS Emba ON (Emba.Pess_oras_codigo = Viag_Emba_PJUR_Pess_oras_codigo)");
+        sb.append("    JOIN VLOC_Viagem_local AS O ON (O.VLOC_Viag_codigo = Viag_codigo AND O.VLOC_Tpar_codigo = 4)");
+        sb.append("    JOIN Refe_Referencia AS Ori ON (Ori.Refe_codigo = O.VLoc_Refe_codigo)");
+        sb.append("    JOIN VLOC_Viagem_local AS D ON (D.VLOC_Viag_codigo = Viag_codigo AND D.VLOC_Tpar_codigo = 5)");
+        sb.append("    JOIN Refe_Referencia AS Dest ON (Dest.Refe_codigo = D.VLoc_Refe_codigo)");
+        sb.append("   WHERE VIAG_Data_Inicio IS NOT NULL");
+        sb.append("     AND VIAG_Data_Fim IS NOT NULL");
+        sb.append(" ORDER BY VIAG_Previsao_Inicio   ");
+         System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
 }
