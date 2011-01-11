@@ -110,6 +110,11 @@
                             <menuitem label="Mapa" 
                                 type="check" toggled="true"/>
                             <menuitem label="Referências"/>
+							<menuitem label="Distância">
+								<menuitem label="Entre veículos"/>
+								<menuitem label="Entre referências"/>
+								<menuitem label="Entre veículo e referência"/>
+							</menuitem>
                         </menuitem>
                     </XMLList>;
                 this.myMenuBar.dataProvider = xml;
