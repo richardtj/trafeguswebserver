@@ -11,7 +11,6 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
     import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
     import br.com.chapecosolucoes.trafegusweb.client.view.ClassesReferenciaView;
-    import br.com.chapecosolucoes.trafegusweb.client.view.MainView;
     import br.com.chapecosolucoes.trafegusweb.client.view.MainView2;
     import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
@@ -51,6 +50,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
         {
             this.view.map.posicaoVeiculoVO();
             this.view.details.posicaoVeiculoVO();
+			this.view.detalhes.title = event.
             if (event.enum == VehicleEnum.LIST)
             {
                 this.view.details.selectedIndex = event.index;
