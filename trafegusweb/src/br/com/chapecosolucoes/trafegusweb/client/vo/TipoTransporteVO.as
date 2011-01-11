@@ -11,7 +11,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.codigo = obj.ttra_codigo.toString();
 			this.descricao = obj.ttra_descricao.toString();
 		}
-		public var codigo:String;
-		public var descricao:String;
+		public var codigo:String = "";
+		public var descricao:String = "";
 	}
 }

@@ -74,8 +74,9 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public function selectedVehicleEventHandler(event:SelectedVehicleEvent):void
 		{
 			this.view.veiculoZoom.cod = event.veiculo.cod;
+			MainModel.getInstance().smVO.veiculo = event.veiculo.cod;
 			this.view.veiculoZoom.detail = event.veiculo.vehiclePlate;
-			MainModel.getInstance().solicitacaoMonitoramentoVO.placaTruc = event.veiculo.vehiclePlate;
+			MainModel.getInstance().smVO.placa = event.veiculo.vehiclePlate;
 			this.view.dadosAdicionaisView.atualizaTerminais();
 		}
 		public function addCarretas():void
@@ -119,6 +120,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		private function selectedDriverEventHandler(event:SelectedDriverEvent):void
 		{
 			this.view.motoristaZoom.cod = event.motorista.codigo;
+			MainModel.getInstance().smVO.motorista = event.motorista.codigo;
 			this.view.motoristaZoom.detail = event.motorista.motoristaPrincipal;
 		}
 		public function rotaZoomDispatcher(event:ZoomCodDetailEvent):void
@@ -150,6 +152,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		private function selectedRouteEventHandler(event:SelectedRouteEvent):void
 		{
 			this.view.rotaZoom.cod = event.route.codigo;
+			MainModel.getInstance().smVO.rota = event.route.codigo;
 			this.view.rotaZoom.detail = event.route.descricao;
 		}
 		public function embarcadoresZoomDispatcher(event:ZoomCodDetailEvent):void
@@ -181,6 +184,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		private function embarcadorSelecionadoEventHandler(event:EmbarcadorSelecionadoEvent):void
 		{
 			this.view.embarcadorZoom.cod = event.embarcador.codigo;
+			MainModel.getInstance().smVO.embarcador = event.embarcador.codigo;
 			this.view.embarcadorZoom.detail = event.embarcador.nome;
 		}
 		public function locaisZoomDispatcher(enum:LocaisEnum,event:ZoomCodDetailEvent):void
@@ -238,11 +242,13 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		private function origemSelecionadaEventHandler(event:SelectedLocalEvent):void
 		{
 			this.view.origemZoom.cod = event.local.codigo;
+			MainModel.getInstance().smVO.origem = event.local.codigo;
 			this.view.origemZoom.detail = event.local.descricao;
 		}
 		private function destinoSelecionadoEventHandler(event:SelectedLocalEvent):void
 		{
 			this.view.destinoZoom.cod = event.local.codigo;
+			MainModel.getInstance().smVO.destino = event.local.codigo;
 			this.view.destinoZoom.detail = event.local.descricao;
 		}
 		public function transportadorZoomDispatcher(event:ZoomCodDetailEvent):void
@@ -274,6 +280,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		private function transportadorSelecionadoEventHandler(event:TransportadorSelecionadoEvent):void
 		{
 			this.view.transportadorZoom.cod = event.transportador.codigo;
+			MainModel.getInstance().smVO.transportador = event.transportador.codigo;
 			this.view.transportadorZoom.detail = event.transportador.nome;
 		}
 		public function tipoTransporteZoomDispatcher(event:ZoomCodDetailEvent):void
@@ -295,17 +302,21 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				this.view.tipoViagemZoom.detail = "";
+				//this.view.tipoViagemZoom.detail = "";
+				MainModel.getInstance().smVO.tipoViagem.descricao = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
-				this.view.tipoViagemZoom.detail = obj.ttra_descricao.toString();
+				//this.view.tipoViagemZoom.detail = obj.ttra_descricao.toString();
+				MainModel.getInstance().smVO.tipoViagem.descricao = obj.ttra_descricao.toString();
 			}
 		}
 		private function tipoTransporteSelecionadoEventHandler(event:TipoTransporteSelecionadoEvent):void
 		{
-			this.view.tipoViagemZoom.cod = event.tipoTransporte.codigo;
-			this.view.tipoViagemZoom.detail = event.tipoTransporte.descricao;
+			//this.view.tipoViagemZoom.cod = event.tipoTransporte.codigo;
+			MainModel.getInstance().smVO.tipoViagem.codigo = event.tipoTransporte.codigo;
+			//this.view.tipoViagemZoom.detail = event.tipoTransporte.descricao;
+			MainModel.getInstance().smVO.tipoViagem.descricao = event.tipoTransporte.descricao;
 		}
 		public function paradaSelecionadoEventHandler(event:SelectedLocalEvent):void
 		{
@@ -362,6 +373,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		private function pgrSelecionadoEventHandler(event:PGRSelecionadoEvent):void
 		{
 			this.view.pgrZoom.cod = event.pgr.codigo;
+			MainModel.getInstance().smVO.pgr = event.pgr.codigo;
 			this.view.pgrZoom.detail = event.pgr.descricao;
 		}
 		public function viagemPaiZoomDispatcher(event:ZoomCodDetailEvent):void
@@ -383,17 +395,24 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				this.view.viagemPaiZoom.detail = "";
+				//this.view.viagemPaiZoom.detail = "";
+				MainModel.getInstance().smVO.viagemPai.previsaoInicio = "";
+				MainModel.getInstance().smVO.viagemPai.previsaoFim = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
-				this.view.viagemPaiZoom.detail = obj.viag_previsao_inicio.toString() + " / " + obj.viag_previsao_fim.toString();
+				//this.view.viagemPaiZoom.detail = obj.viag_previsao_inicio.toString() + " / " + obj.viag_previsao_fim.toString();
+				MainModel.getInstance().smVO.viagemPai.previsaoInicio = obj.viag_previsao_inicio.toString();
+				MainModel.getInstance().smVO.viagemPai.previsaoFim = obj.viag_previsao_fim.toString();
 			}
 		}
 		private function viagemPaiSelecionadaResultHandler(event:ViagemPaiSelecionadaEvent):void
 		{
-			this.view.viagemPaiZoom.cod = event.viagemPai.codigo;
-			this.view.viagemPaiZoom.detail = event.viagemPai.previsaoInicio + " / " + event.viagemPai.previsaoFim;
+			//this.view.viagemPaiZoom.cod = event.viagemPai.codigo;
+			MainModel.getInstance().smVO.viagemPai.codigo = event.viagemPai.codigo;
+			//this.view.viagemPaiZoom.detail = event.viagemPai.previsaoInicio + " / " + event.viagemPai.previsaoFim;
+			MainModel.getInstance().smVO.viagemPai.previsaoInicio = event.viagemPai.previsaoInicio;
+			MainModel.getInstance().smVO.viagemPai.previsaoFim = event.viagemPai.previsaoFim;
 		}
 	}
 }

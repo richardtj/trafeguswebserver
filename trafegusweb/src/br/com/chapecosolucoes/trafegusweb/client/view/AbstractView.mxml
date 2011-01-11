@@ -78,6 +78,7 @@
 				<mx:DataGridColumn headerText="Tipo veiculo"
 								   dataField="tipoVeiculo"/>
 				<mx:DataGridColumn headerText="SM"
+								   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.SMItemRenderer"
 								   dataField="statusViagem"/>
 				<mx:DataGridColumn headerText="Atraso"
 								   dataField="statusAtraso"/>

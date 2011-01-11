@@ -16,6 +16,7 @@
 			public var cod:String;
 			[Bindable]
 			public var detail:String;
+			
 			private function click(event:MouseEvent):void{
 				var zoomCodDetailEvent:ZoomCodDetailEvent = new ZoomCodDetailEvent(ZoomCodDetailEvent.CLICK);
 				this.dispatchEvent(zoomCodDetailEvent);

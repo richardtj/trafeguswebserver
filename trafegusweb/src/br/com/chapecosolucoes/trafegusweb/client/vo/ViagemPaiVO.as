@@ -12,8 +12,8 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.previsaoInicio = obj.viag_previsao_inicio.toString();
 			this.previsaoFim = obj.viag_previsao_fim.toString();
 		}
-		public var codigo:String;
-		public var previsaoInicio:String;
-		public var previsaoFim:String;
+		public var codigo:String = "";
+		public var previsaoInicio:String = "";
+		public var previsaoFim:String = "";
 	}
 }

@@ -85,10 +85,8 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 
 			while(systemManager.popUpChildren.numChildren > 0)
 			{
-				if(systemManager.popUpChildren.getChildAt(0) is DisplayObject)
-				{
-					PopUpManager.removePopUp(IFlexDisplayObject(systemManager.popUpChildren.getChildAt(0)));
-				}
+				PopUpManager.removePopUp(IFlexDisplayObject(systemManager.popUpChildren.getChildAt(0)));
+				trace(getQualifiedClassName(systemManager.popUpChildren.getChildAt(0)));
 			}
 			
 			// if you scope your popups to other than PopUpManagerChildList.POPUP
