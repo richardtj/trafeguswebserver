@@ -1243,9 +1243,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDescricaoTipoTransporte")
-    public String solicitaDescricaoTipoTransporte(@WebParam(name = "idSessao")
-    String idSessao, @WebParam(name = "codTipoTransporte")
-    String codTipoTransporte) throws Exception {
+    public String solicitaDescricaoTipoTransporte(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codTipoTransporte") String codTipoTransporte) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT TTRA_Codigo,");
@@ -1259,10 +1257,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDescricaoViagemPai")
-    public String solicitaDescricaoViagemPai(@WebParam(name = "idSessao")
-    String idSessao, @WebParam(name = "codEmpresa")
-    String codEmpresa,@WebParam(name = "codViagemPai")
-    String codViagemPai) throws Exception {
+    public String solicitaDescricaoViagemPai(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "codViagemPai") String codViagemPai) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ");
@@ -1280,9 +1275,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDescricaoTransportador")
-    public String solicitaDescricaoTransportador(@WebParam(name = "idSessao")
-    String idSessao, @WebParam(name = "codTransportador")
-    String codTransportador) throws Exception {
+    public String solicitaDescricaoTransportador(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codTransportador") String codTransportador) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT TRAN_Transportador.TRAN_PESS_ORAS_Codigo,");
@@ -1299,9 +1292,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDescricaoEmbarcador")
-    public String solicitaDescricaoEmbarcador(@WebParam(name = "idSessao")
-    String idSessao, @WebParam(name = "codEmbarcador")
-    String codEmbarcador) throws Exception {
+    public String solicitaDescricaoEmbarcador(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmbarcador") String codEmbarcador) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT EMBA_PJUR_PESS_ORAS_Codigo,");
@@ -1318,10 +1309,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDescricaoVeiculo")
-    public String solicitaDescricaoVeiculo(@WebParam(name = "idSessao")
-    String idSessao, @WebParam(name = "codEmpresa")
-    String codEmpresa,@WebParam(name = "codVeic")
-    String codVeic) throws Exception {
+    public String solicitaDescricaoVeiculo(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "codVeic") String codVeic) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ORAS_OBJETO_RASTREADO.ORAS_CODIGO,");
@@ -1346,10 +1334,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDescricaoMotorista")
-    public String solicitaDescricaoMotorista(@WebParam(name = "idSessao")
-    String idSessao, @WebParam(name = "codEmpresa")
-    String codEmpresa, @WebParam(name = "codMotorista")
-    String codMotorista) throws Exception {
+    public String solicitaDescricaoMotorista(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "codMotorista") String codMotorista) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append("      SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
@@ -1370,9 +1355,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDescricaoPGR")
-    public String solicitaDescricaoPGR(@WebParam(name = "idSessao")
-    String idSessao, @WebParam(name = "codPGR")
-    String codPGR) throws Exception {
+    public String solicitaDescricaoPGR(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codPGR") String codPGR) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ");
@@ -1390,10 +1373,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDescricaoRota")
-    public String solicitaDescricaoRota(@WebParam(name = "idSessao")
-    String idSessao, @WebParam(name = "codEmpresa")
-    String codEmpresa, @WebParam(name = "codRota")
-    String codRota) throws Exception {
+    public String solicitaDescricaoRota(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "codRota") String codRota) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ROTA_CODIGO,");
@@ -1408,9 +1388,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDescricaoLocal")
-    public String solicitaDescricaoLocal(@WebParam(name = "idSessao")
-    String idSessao, @WebParam(name = "codLocal")
-    String codLocal) throws Exception {
+    public String solicitaDescricaoLocal(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codLocal") String codLocal) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ");
@@ -1430,9 +1408,7 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaSMVeiculo")
-    public String solicitaSMVeiculo(@WebParam(name = "idSessao")
-    String idSessao, @WebParam(name = "placaVeiculo")
-    String placaVeiculo) throws Exception {
+    public String solicitaSMVeiculo(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "placaVeiculo") String placaVeiculo) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append("  SELECT VEIC_ORAS_Codigo,");
@@ -1457,7 +1433,62 @@ public class TrafegusWS {
         sb.append("   WHERE VIAG_Data_Inicio IS NOT NULL");
         sb.append("     AND VIAG_Data_Fim IS NOT NULL");
         sb.append(" ORDER BY VIAG_Previsao_Inicio   ");
-         System.out.println(sb.toString());
+        System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    private Boolean existeConfiguracaoColuna(String idSessao,
+            String codUsuario,
+            String tela,
+            String grid,
+            String coluna) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select");
+        sb.append("	count(*)");
+        sb.append(" from");
+        sb.append("	cgsi_configuracao_grid_site");
+        sb.append(" where");
+        sb.append("	cgsi_usua_pfis_pess_oras_codigo = ").append(codUsuario);
+        sb.append(" and cgsi_tela = '").append(tela).append("'");
+        sb.append(" and	cgsi_grid = ''").append(grid).append("'");
+        sb.append(" and	cgsi_coluna = ''").append(coluna).append("'");
+
+        String sql = sb.toString();
+        sb = null;
+
+        ResultSet rs = Conexao.getInstance().executeQuery(sql, idSessao);
+        rs.next();
+
+        int result = rs.getInt(1);
+        rs.close();
+
+        return (result > 0 ? true : false);
+    }
+
+    @WebMethod(operationName = "gravaVisibilidadeColuna")
+    public void gravaVisibilidadeColuna(@WebParam(name = "idSessao") String idSessao,
+            @WebParam(name = "codUsuario") String codUsuario,
+            @WebParam(name = "tela") String tela,
+            @WebParam(name = "grid") String grid,
+            @WebParam(name = "coluna") String coluna,
+            @WebParam(name = "visivel") String visivel) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        
+        if (existeConfiguracaoColuna(idSessao, codUsuario, tela, grid, coluna)) {
+            sb.append(" UPDATE cgsi_configuracao_grid_site");
+            sb.append(" SET");
+            sb.append("     cgsi_visivel= '").append(visivel).append("'");
+            sb.append(" WHERE");
+            sb.append("	    cgsi_usua_pfis_pess_oras_codigo = ").append(codUsuario);
+            sb.append(" and cgsi_tela = '").append(tela).append("'");
+            sb.append(" and cgsi_grid = ''").append(grid).append("'");
+            sb.append(" and cgsi_coluna = ''").append(coluna).append("'");
+        } else {
+            sb.append(" INSERT INTO cgsi_configuracao_grid_site(");
+            sb.append("     cgsi_usua_pfis_pess_oras_codigo, cgsi_tela, cgsi_grid, cgsi_coluna, cgsi_visivel)");
+            sb.append(" VALUES ('").append(codUsuario).append("', '").append(tela).append("', '").append(grid).append("', '").append(coluna).append("', '").append(visivel).append("')");
+        }
+        Conexao.getInstance().getConnection(idSessao).createStatement().execute(sb.toString());
     }
 }
