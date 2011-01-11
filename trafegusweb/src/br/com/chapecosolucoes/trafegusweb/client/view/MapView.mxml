@@ -111,7 +111,7 @@
 				var marker:Marker = new Marker(posicaoVeiculoVO.latLong, makerOp);
 				var tooltip:TooltipOverlay = new TooltipOverlay(posicaoVeiculoVO.latLong, posicaoVeiculoVO.gpsDescSis);
 				//marker.addEventListener(MapMouseEvent.CLICK, this.controller.mapMouseEventHandler);
-				var html:String = "<b>" + posicaoVeiculoVO.vehiclePlate + "</b> <br/>" + posicaoVeiculoVO.motoristaPrincipal + "<br/>" + posicaoVeiculoVO.gpsDescSis + "</br> Data e hora" ;
+				var html:String = "<b>" + posicaoVeiculoVO.vehiclePlate + "</b> <br/>" + posicaoVeiculoVO.motoristaPrincipal + "<br/>" + posicaoVeiculoVO.gpsDescSis + "<br/>" +posicaoVeiculoVO.dataEHora;
 				marker.addEventListener(MapMouseEvent.CLICK, function(e:MapMouseEvent):void
 				{
 					//this.view.map.setCenter(e.latLng,15);
