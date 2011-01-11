@@ -1418,10 +1418,14 @@ public class TrafegusWS {
         sb.append("         Emba.Pess_nome AS Embarcador,");
         sb.append("         Ori.refe_descricao AS Origem,");
         sb.append("         Dest.refe_descricao AS Destino,");
-        sb.append("         VIAG_Viagem.*");
+        sb.append("         VIAG_Viagem.viag_codigo,");
+        sb.append("         VIAG_Viagem.viag_tope_codigo,");
+        sb.append("         VIAG_Viagem.viag_data_cadastro,");
+        sb.append("         VIAG_Viagem.viag_previsao_inicio,");
+        sb.append("         VIAG_Viagem.viag_previsao_fim");
         sb.append("    FROM VIAG_Viagem");
         sb.append("    JOIN VVEI_Viagem_Veiculo ON (VVEI_VIAG_Codigo = VIAG_Codigo)");
-        sb.append("    JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = VVEI_VEIC_ORAS_Codigo AND VEIC_Placa = 'CUB2115')");
+        sb.append("    JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = VVEI_VEIC_ORAS_Codigo AND VEIC_Placa = '").append(placaVeiculo).append("')");
         sb.append("    JOIN VTER_VIAGEM_Terminal ON (VTER_Viag_Codigo = Viag_codigo AND VTer_Precedencia = '1' AND Vter_Ativo = 'S')");
         sb.append("    JOIN Term_Terminal ON (Term_codigo = Vter_term_codigo)");
         sb.append("    JOIN Pess_pessoa AS Transp ON (Transp.Pess_oras_codigo = Viag_Tran_Pess_oras_codigo)");
