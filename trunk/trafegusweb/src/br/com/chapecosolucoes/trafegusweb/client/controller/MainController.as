@@ -50,7 +50,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
         {
             this.view.map.posicaoVeiculoVO();
             this.view.details.posicaoVeiculoVO();
-			this.view.detalhes.title = event.
+			//this.view.detalhes.title = event.
             if (event.enum == VehicleEnum.LIST)
             {
                 this.view.details.selectedIndex = event.index;

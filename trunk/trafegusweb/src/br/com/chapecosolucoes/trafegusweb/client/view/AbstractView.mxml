@@ -70,12 +70,14 @@
 				<!--itemRenderer="mx.controls.ComboBox"-->
 				<mx:DataGridColumn headerText="Posição"
 								   dataField="gpsDescSis"/>
+				<mx:DataGridColumn headerText="Data e Hora"
+								   dataField="dataEHora"/>
 				<mx:DataGridColumn headerText="Ignicao"
 								   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.IgnitionItemRenderer"
 								   dataField="ignition"/>
 				<mx:DataGridColumn headerText="Tipo veiculo"
 								   dataField="tipoVeiculo"/>
-				<mx:DataGridColumn headerText="Viagem"
+				<mx:DataGridColumn headerText="SM"
 								   dataField="statusViagem"/>
 				<mx:DataGridColumn headerText="Atraso"
 								   dataField="statusAtraso"/>
