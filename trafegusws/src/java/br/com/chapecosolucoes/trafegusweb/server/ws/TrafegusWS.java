@@ -1486,8 +1486,8 @@ public class TrafegusWS {
             sb.append(" WHERE");
             sb.append("	    cgsi_usua_pfis_pess_oras_codigo = ").append(codUsuario);
             sb.append(" and cgsi_tela = '").append(tela).append("'");
-            sb.append(" and cgsi_grid = ''").append(grid).append("'");
-            sb.append(" and cgsi_coluna = ''").append(coluna).append("'");
+            sb.append(" and cgsi_grid = '").append(grid).append("'");
+            sb.append(" and cgsi_coluna = '").append(coluna).append("'");
         } else {
             sb.append(" INSERT INTO cgsi_configuracao_grid_site(");
             sb.append("     cgsi_usua_pfis_pess_oras_codigo, cgsi_tela, cgsi_grid, cgsi_coluna, cgsi_visivel)");
