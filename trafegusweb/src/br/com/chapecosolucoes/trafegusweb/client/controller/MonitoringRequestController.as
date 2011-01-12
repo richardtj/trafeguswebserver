@@ -64,19 +64,21 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				this.view.veiculoZoom.detail = "";
+				//this.view.veiculoZoom.detail = "";
+				MainModel.getInstance().smVO.veiculo.vehiclePlate = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
-				this.view.veiculoZoom.detail = obj.veic_placa.toString();
+				//this.view.veiculoZoom.detail = obj.veic_placa.toString();
+				MainModel.getInstance().smVO.veiculo.vehiclePlate = obj.veic_placa.toString();
 			}
 		}
 		public function selectedVehicleEventHandler(event:SelectedVehicleEvent):void
 		{
-			this.view.veiculoZoom.cod = event.veiculo.cod;
-			MainModel.getInstance().smVO.veiculo = event.veiculo.cod;
-			this.view.veiculoZoom.detail = event.veiculo.vehiclePlate;
-			MainModel.getInstance().smVO.placa = event.veiculo.vehiclePlate;
+			//this.view.veiculoZoom.cod = event.veiculo.cod;
+			MainModel.getInstance().smVO.veiculo.cod = event.veiculo.cod;
+			//this.view.veiculoZoom.detail = event.veiculo.vehiclePlate;
+			MainModel.getInstance().smVO.veiculo.vehiclePlate = event.veiculo.vehiclePlate;
 			this.view.dadosAdicionaisView.atualizaTerminais();
 		}
 		public function addCarretas():void
@@ -110,18 +112,21 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				this.view.motoristaZoom.detail = "";
+				//this.view.motoristaZoom.detail = "";
+				MainModel.getInstance().smVO.motorista.motoristaPrincipal = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
-				this.view.motoristaZoom.detail = obj.pess_nome.toString();
+				//this.view.motoristaZoom.detail = obj.pess_nome.toString();
+				MainModel.getInstance().smVO.motorista.motoristaPrincipal = obj.pess_nome.toString();
 			}
 		}
 		private function selectedDriverEventHandler(event:SelectedDriverEvent):void
 		{
-			this.view.motoristaZoom.cod = event.motorista.codigo;
-			MainModel.getInstance().smVO.motorista = event.motorista.codigo;
-			this.view.motoristaZoom.detail = event.motorista.motoristaPrincipal;
+			//this.view.motoristaZoom.cod = event.motorista.codigo;
+			MainModel.getInstance().smVO.motorista.codigo = event.motorista.codigo;
+			//this.view.motoristaZoom.detail = event.motorista.motoristaPrincipal;
+			MainModel.getInstance().smVO.motorista.motoristaPrincipal = event.motorista.motoristaPrincipal;
 		}
 		public function rotaZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
@@ -142,18 +147,21 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				this.view.rotaZoom.detail = "";
+				//this.view.rotaZoom.detail = "";
+				MainModel.getInstance().smVO.rota.descricao = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
-				this.view.rotaZoom.detail = obj.rota_descricao.toString();
+				//this.view.rotaZoom.detail = obj.rota_descricao.toString();
+				MainModel.getInstance().smVO.rota.descricao = obj.rota_descricao.toString();
 			}
 		}
 		private function selectedRouteEventHandler(event:SelectedRouteEvent):void
 		{
-			this.view.rotaZoom.cod = event.route.codigo;
-			MainModel.getInstance().smVO.rota = event.route.codigo;
-			this.view.rotaZoom.detail = event.route.descricao;
+			//this.view.rotaZoom.cod = event.route.codigo;
+			MainModel.getInstance().smVO.rota.codigo = event.route.codigo;
+			//this.view.rotaZoom.detail = event.route.descricao;
+			MainModel.getInstance().smVO.rota.descricao = event.route.descricao;
 		}
 		public function embarcadoresZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
@@ -174,18 +182,21 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				this.view.embarcadorZoom.detail = "";
+				//this.view.embarcadorZoom.detail = "";
+				MainModel.getInstance().smVO.embarcador.nome = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
-				this.view.embarcadorZoom.detail = obj.pess_nome.toString();
+				//this.view.embarcadorZoom.detail = obj.pess_nome.toString();
+				MainModel.getInstance().smVO.embarcador.nome = obj.pess_nome.toString();
 			}
 		}
 		private function embarcadorSelecionadoEventHandler(event:EmbarcadorSelecionadoEvent):void
 		{
-			this.view.embarcadorZoom.cod = event.embarcador.codigo;
-			MainModel.getInstance().smVO.embarcador = event.embarcador.codigo;
-			this.view.embarcadorZoom.detail = event.embarcador.nome;
+			//this.view.embarcadorZoom.cod = event.embarcador.codigo;
+			MainModel.getInstance().smVO.embarcador.codigo = event.embarcador.codigo;
+			//this.view.embarcadorZoom.detail = event.embarcador.nome;
+			MainModel.getInstance().smVO.embarcador.nome = event.embarcador.nome;
 		}
 		public function locaisZoomDispatcher(enum:LocaisEnum,event:ZoomCodDetailEvent):void
 		{
@@ -207,11 +218,11 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				if(enum == LocaisEnum.ORIGEM)
 				{
-					TrafegusWS.getIntance().solicitaDescricaoLocal(solicitaDescricaoLocalOrigemResultHandler,event.cod);
+					TrafegusWS.getIntance().solicitaDescricaoLocalOrigem(solicitaDescricaoLocalOrigemResultHandler,event.cod);
 				}
 				else if(enum == LocaisEnum.DESTINO)
 				{
-					TrafegusWS.getIntance().solicitaDescricaoLocal(solicitaDescricaoLocalDestinoResultHandler,event.cod);
+					TrafegusWS.getIntance().solicitaDescricaoLocalDestino(solicitaDescricaoLocalDestinoResultHandler,event.cod);
 				}
 			}
 		}
@@ -220,11 +231,13 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				this.view.origemZoom.detail = "";
+				//this.view.origemZoom.detail = "";
+				MainModel.getInstance().smVO.origem.descricao = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
-				this.view.origemZoom.detail = obj.refe_descricao.toString();
+				//this.view.origemZoom.detail = obj.refe_descricao.toString();
+				MainModel.getInstance().smVO.origem.descricao = obj.refe_descricao.toString();
 			}
 		}
 		private function solicitaDescricaoLocalDestinoResultHandler(event:ResultEvent):void
@@ -232,24 +245,28 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				this.view.destinoZoom.detail = "";
+				//this.view.destinoZoom.detail = "";
+				MainModel.getInstance().smVO.destino.descricao = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
-				this.view.destinoZoom.detail = obj.refe_descricao.toString();
+				//this.view.destinoZoom.detail = obj.refe_descricao.toString();
+				MainModel.getInstance().smVO.destino.descricao = obj.refe_descricao.toString();
 			}
 		}
 		private function origemSelecionadaEventHandler(event:SelectedLocalEvent):void
 		{
-			this.view.origemZoom.cod = event.local.codigo;
-			MainModel.getInstance().smVO.origem = event.local.codigo;
-			this.view.origemZoom.detail = event.local.descricao;
+			//this.view.origemZoom.cod = event.local.codigo;
+			MainModel.getInstance().smVO.origem.codigo = event.local.codigo;
+			//this.view.origemZoom.detail = event.local.descricao;
+			MainModel.getInstance().smVO.origem.descricao = event.local.descricao;
 		}
 		private function destinoSelecionadoEventHandler(event:SelectedLocalEvent):void
 		{
-			this.view.destinoZoom.cod = event.local.codigo;
-			MainModel.getInstance().smVO.destino = event.local.codigo;
-			this.view.destinoZoom.detail = event.local.descricao;
+			//this.view.destinoZoom.cod = event.local.codigo;
+			MainModel.getInstance().smVO.destino.codigo = event.local.codigo;
+			//this.view.destinoZoom.detail = event.local.descricao;
+			MainModel.getInstance().smVO.destino.descricao = event.local.descricao;
 		}
 		public function transportadorZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
@@ -270,18 +287,21 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				this.view.transportadorZoom.detail = "";
+				//this.view.transportadorZoom.detail = "";
+				MainModel.getInstance().smVO.transportador.nome = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
-				this.view.transportadorZoom.detail = obj.pess_nome.toString();
+				//this.view.transportadorZoom.detail = obj.pess_nome.toString();
+				MainModel.getInstance().smVO.transportador.nome = obj.pess_nome.toString();
 			}
 		}
 		private function transportadorSelecionadoEventHandler(event:TransportadorSelecionadoEvent):void
 		{
-			this.view.transportadorZoom.cod = event.transportador.codigo;
-			MainModel.getInstance().smVO.transportador = event.transportador.codigo;
-			this.view.transportadorZoom.detail = event.transportador.nome;
+			//this.view.transportadorZoom.cod = event.transportador.codigo;
+			MainModel.getInstance().smVO.transportador.codigo = event.transportador.codigo;
+			//this.view.transportadorZoom.detail = event.transportador.nome;
+			MainModel.getInstance().smVO.transportador.nome = event.transportador.nome;
 		}
 		public function tipoTransporteZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
@@ -363,18 +383,21 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				this.view.pgrZoom.detail = "";
+				//this.view.pgrZoom.detail = "";
+				MainModel.getInstance().smVO.pgr.descricao = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
-				this.view.pgrZoom.detail = obj.pgpg_descricao.toString();
+				//this.view.pgrZoom.detail = obj.pgpg_descricao.toString();
+				MainModel.getInstance().smVO.pgr.descricao = obj.pgpg_descricao.toString();
 			}
 		}
 		private function pgrSelecionadoEventHandler(event:PGRSelecionadoEvent):void
 		{
-			this.view.pgrZoom.cod = event.pgr.codigo;
-			MainModel.getInstance().smVO.pgr = event.pgr.codigo;
-			this.view.pgrZoom.detail = event.pgr.descricao;
+			//this.view.pgrZoom.cod = event.pgr.codigo;
+			MainModel.getInstance().smVO.pgr.codigo = event.pgr.codigo;
+			//this.view.pgrZoom.detail = event.pgr.descricao;
+			MainModel.getInstance().smVO.pgr.descricao = event.pgr.descricao;
 		}
 		public function viagemPaiZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
