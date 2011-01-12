@@ -5,11 +5,11 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
     import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
     import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
-    
+
     import flash.events.Event;
     import flash.net.URLLoader;
     import flash.net.URLRequest;
-    
+
     import mx.charts.chartClasses.InstanceCache;
     import mx.controls.Alert;
     import mx.events.FlexEvent;
@@ -18,7 +18,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
     import mx.rpc.soap.mxml.Operation;
     import mx.rpc.soap.mxml.WebService;
     import mx.utils.ObjectUtil;
-    
+
     import org.osmf.layout.AbsoluteLayoutFacet;
 
     public class TrafegusWS
@@ -79,121 +79,121 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaAcesso(solicitaAcessoHandler:Function, usuario:String, senha:String):void
         {
             var operation:Operation = createOperation("solicitaAcesso", solicitaAcessoHandler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,usuario, senha);
+            operation.send(UsuarioLogado.getInstance().IdSessao, usuario, senha);
         }
 
         public function solicitaListaVeiculos(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaVeiculos", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, offset);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaDadosGrid(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaDadosGrid", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, offset);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaHistoricoPosicoes(handler:Function, params:PosicaoVeiculoVO, offset:int):void
         {
             var operation:Operation = createOperation("SolicitaHistoricoPosicoes", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, params.vehiclePlate, offset, false);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, params.vehiclePlate, offset, false);
         }
 
         public function solicitaDadosMotorista(handler:Function, params:String):void
         {
             var operation:Operation = createOperation("solicitaDadosMotorista", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, params);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, params);
         }
 
         public function solicitaDadosVeiculo(handler:Function, params:String):void
         {
             var operation:Operation = createOperation("solicitaDadosVeiculo", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,params);
+            operation.send(UsuarioLogado.getInstance().IdSessao, params);
         }
 
         public function solicitaDadosGridEmViagem(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaDadosGridEmViagem", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, offset);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaMotoristas(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaMotoristas", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, offset);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaRotas(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaRotas", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, offset);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaEmbarcadores(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaEmbarcadores", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, offset);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaTransportadores(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaTransportadores", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,offset);
+            operation.send(UsuarioLogado.getInstance().IdSessao, offset);
         }
 
         public function solicitaDadosEmbarcador(handler:Function, param:String):void
         {
             var operation:Operation = createOperation("solicitaDadosEmbarcador", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,param);
+            operation.send(UsuarioLogado.getInstance().IdSessao, param);
         }
 
         public function solicitaDadosTransportador(handler:Function, param:String):void
         {
             var operation:Operation = createOperation("solicitaDadosTransportador", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,param);
+            operation.send(UsuarioLogado.getInstance().IdSessao, param);
         }
 
         public function solicitaListaLocais(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaLocais", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, offset);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaTipoTransporte(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaTipoTransporte", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,offset);
+            operation.send(UsuarioLogado.getInstance().IdSessao, offset);
         }
 
         public function solicitaDadosLocal(handler:Function, param:String):void
         {
             var operation:Operation = createOperation("solicitaDadosLocal", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,param);
+            operation.send(UsuarioLogado.getInstance().IdSessao, param);
         }
 
         public function solicitaListaCarretasDisponiveis(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaListaCarretasDisponiveis", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaListaPGR(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaPGR", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,offset);
+            operation.send(UsuarioLogado.getInstance().IdSessao, offset);
         }
 
         public function solicitaDadosPGR(handler:Function, param:String):void
         {
             var operation:Operation = createOperation("solicitaDadosPGR", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,param);
+            operation.send(UsuarioLogado.getInstance().IdSessao, param);
         }
 
         public function solicitaListaViagemPai(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaViagemPai", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, offset);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset);
         }
 
         public function solicitaListaTerminais(handler:Function):void
@@ -205,25 +205,25 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaTotalDadosGrid(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalDadosGrid", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalListaLocais(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaLocais", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalListaEmbarcadores(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaEmbarcadores", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalListaMotoristas(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaMotoristas", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalListaPGR(handler:Function):void
@@ -235,7 +235,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaTotalListaRotas(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaRotas", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalListaTipoTransporte(handler:Function):void
@@ -253,31 +253,31 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaTotalListaVeiculos(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaVeiculos", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalListaViagemPai(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaViagemPai", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaTotalHistoricoPosicoes(handler:Function, params:PosicaoVeiculoVO):void
         {
             var operation:Operation = createOperation("solicitaTotalHistoricoPosicoes", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, params.vehiclePlate);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, params.vehiclePlate);
         }
 
         public function solicitaDadosTerminalDefeituoso(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaDadosTerminalDefeituoso", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codTerminais);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codTerminais);
         }
 
         public function solicitaTotalDadosGridEmViagem(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalDadosGridEmViagem", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
         }
 
         public function salvarPosicaoTelas(handler:Function):void
@@ -285,77 +285,94 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
             var operation:Operation = createOperation("salvarPosicaoTelas", handler);
             with (UsuarioLogado.getInstance().posicaoTelasVO)
             {
-                operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codUsuario, gridVeiculosX, gridVeiculosY, gridVeiculosPercentWidth, gridVeiculosPercentHeight, mapaGoogleX, mapaGoogleY, mapaGooglePercentWidth, mapaGooglePercentHeight, gridDetalheX, gridDetalheY, gridDetalhePercentWidth, gridDetalhePercentHeight);
+                operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codUsuario, gridVeiculosX, gridVeiculosY, gridVeiculosPercentWidth, gridVeiculosPercentHeight, mapaGoogleX, mapaGoogleY, mapaGooglePercentWidth, mapaGooglePercentHeight, gridDetalheX, gridDetalheY, gridDetalhePercentWidth, gridDetalhePercentHeight);
             }
         }
 
         public function solicitaClassesReferencias(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaClassesReferencias", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
         }
 
         public function solicitaRefencias(handler:Function, codClasseReferencia:String):void
         {
             var operation:Operation = createOperation("solicitaRefencias", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, codClasseReferencia);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, codClasseReferencia);
         }
 
         public function lerPosicaoTelas(handler:Function):void
         {
             var operation:Operation = createOperation("lerPosicaoTelas", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codUsuario);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codUsuario);
         }
-		public function logout(handler:Function):void
-		{
-			var operation:Operation = createOperation("logout", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao);
-		}
-		public function solicitaDescricaoTipoTransporte(handler:Function,codTipoTransporte:String):void
-		{
-			var operation:Operation = createOperation("solicitaDescricaoTipoTransporte", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,codTipoTransporte);
-		}
-		public function solicitaDescricaoViagemPai(handler:Function,codViagemPai:String):void
-		{
-			var operation:Operation = createOperation("solicitaDescricaoViagemPai", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,codViagemPai);
-		}
-		public function solicitaDescricaoTransportador(handler:Function,codTransportador:String):void
-		{
-			var operation:Operation = createOperation("solicitaDescricaoTransportador", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,codTransportador);
-		}
-		public function solicitaDescricaoEmbarcador(handler:Function,codEmbarcador:String):void
-		{
-			var operation:Operation = createOperation("solicitaDescricaoEmbarcador", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,codEmbarcador);
-		}
-		public function solicitaDescricaoVeiculo(handler:Function, codVeiculo:String):void
-		{
-			var operation:Operation = createOperation("solicitaDescricaoVeiculo", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,codVeiculo);
-		}
-		public function solicitaDescricaoMotorista(handler:Function,codMotorista:String):void
-		{
-			var operation:Operation = createOperation("solicitaDescricaoMotorista", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,codMotorista);
-		}
-		public function solicitaDescricaoPGR(handler:Function,codPGR:String):void
-		{
-			var operation:Operation = createOperation("solicitaDescricaoPGR", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,codPGR);
-		}
-		public function solicitaDescricaoRota(handler:Function,codRota:String):void
-		{
-			var operation:Operation = createOperation("solicitaDescricaoRota", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,codRota);
-		}
-		public function solicitaDescricaoLocal(handler:Function,codLocal:String):void
-		{
-			var operation:Operation = createOperation("solicitaDescricaoLocal", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,codLocal);
-		}
+
+        public function logout(handler:Function):void
+        {
+            var operation:Operation = createOperation("logout", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao);
+        }
+
+        public function solicitaDescricaoTipoTransporte(handler:Function, codTipoTransporte:String):void
+        {
+            var operation:Operation = createOperation("solicitaDescricaoTipoTransporte", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao, codTipoTransporte);
+        }
+
+        public function solicitaDescricaoViagemPai(handler:Function, codViagemPai:String):void
+        {
+            var operation:Operation = createOperation("solicitaDescricaoViagemPai", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, codViagemPai);
+        }
+
+        public function solicitaDescricaoTransportador(handler:Function, codTransportador:String):void
+        {
+            var operation:Operation = createOperation("solicitaDescricaoTransportador", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao, codTransportador);
+        }
+
+        public function solicitaDescricaoEmbarcador(handler:Function, codEmbarcador:String):void
+        {
+            var operation:Operation = createOperation("solicitaDescricaoEmbarcador", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao, codEmbarcador);
+        }
+
+        public function solicitaDescricaoVeiculo(handler:Function, codVeiculo:String):void
+        {
+            var operation:Operation = createOperation("solicitaDescricaoVeiculo", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, codVeiculo);
+        }
+
+        public function solicitaDescricaoMotorista(handler:Function, codMotorista:String):void
+        {
+            var operation:Operation = createOperation("solicitaDescricaoMotorista", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, codMotorista);
+        }
+
+        public function solicitaDescricaoPGR(handler:Function, codPGR:String):void
+        {
+            var operation:Operation = createOperation("solicitaDescricaoPGR", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao, codPGR);
+        }
+
+        public function solicitaDescricaoRota(handler:Function, codRota:String):void
+        {
+            var operation:Operation = createOperation("solicitaDescricaoRota", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, codRota);
+        }
+
+        public function solicitaDescricaoLocal(handler:Function, codLocal:String):void
+        {
+            var operation:Operation = createOperation("solicitaDescricaoLocal", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao, codLocal);
+        }
+
+        public function gravaVisibilidadeColuna(handler:Function, tela:String, grid:String, coluna:String, visivel:Boolean):void
+        {
+            var operation:Operation = createOperation("gravaVisibilidadeColuna", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codUsuario, tela, grid, (visivel, "S", "N"));
+
+        }
 		public function solicitaSMVeiculo(handler:Function,placaVeiculo:String):void
 		{
 			var operation:Operation = createOperation("solicitaSMVeiculo", handler);
