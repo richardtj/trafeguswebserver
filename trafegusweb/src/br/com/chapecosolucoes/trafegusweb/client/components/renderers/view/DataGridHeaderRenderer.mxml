@@ -1,57 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 verticalScrollPolicy="off"
-		 horizontalScrollPolicy="off"
-		 horizontalAlign="center"
-		 verticalAlign="middle"
-		 width="20" height="20"
-		 creationComplete="creationComplete()">
-	<fx:Script>
-		<![CDATA[
-			
-			import mx.controls.Alert;
-			import mx.controls.CheckBox;
-			import mx.controls.DataGrid;
-			import mx.controls.List;
-			import mx.controls.dataGridClasses.DataGridColumn;
-			import mx.core.FlexGlobals;
-			import mx.events.FlexMouseEvent;
-			import mx.managers.PopUpManager;
-			import mx.utils.ObjectUtil;
-			private var dataProvider:Array;
-			private var list:List;
-			public function creationComplete():void
-			{
-				this.dataProvider = new Array();
-				for(var i:int=1;i<DataGrid(this.owner).columnCount;i++)
-				{
-					var dataGridColumn:DataGridColumn = DataGrid(this.owner).columns[i]; 
-					var obj:Object = new Object();
-					obj.dataGridColumn = dataGridColumn;
-					this.dataProvider.push(obj);
-				}
-			}
-			private function addPopup():void
-			{
-				list = new List();
-				list.setStyle("alternatingItemColors",["#EEEEEE", "white"]);
-				list.rowCount = DataGrid(this.owner).columnCount - 1;
-				list.dataProvider = this.dataProvider;
-				list.addEventListener(FlexMouseEvent.MOUSE_DOWN_OUTSIDE,this.mouseDownOutSideEventHandler);
-				list.itemRenderer = new ClassFactory(CheckBoxItemRenderer);
-				PopUpManager.addPopUp(list,DisplayObject(this));
-				PopUpManager.centerPopUp(list);
-			}
-			private function mouseDownOutSideEventHandler(event:FlexMouseEvent):void
-			{
-				PopUpManager.removePopUp(this.list);
-			}
-		]]>
-	</fx:Script>
-	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
-	</fx:Declarations>
-	<mx:Image source="@Embed(source='assets/down.png')" buttonMode="true" click="addPopup()"/>
+<mx:VBox 
+    width="20" height="20"
+    horizontalAlign="center"
+    verticalAlign="middle"
+    horizontalScrollPolicy="off"
+    verticalScrollPolicy="off"
+    creationComplete="creationComplete()"
+    xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:s="library://ns.adobe.com/flex/spark"
+    xmlns:mx="library://ns.adobe.com/flex/mx">
+    <fx:Script>
+        <![CDATA[
+            import br.com.chapecosolucoes.trafegusweb.client.events.CheckBoxItemRendererEvent;
+            import br.com.chapecosolucoes.trafegusweb.client.utils.Reflection;
+            import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
+            
+            import mx.controls.Alert;
+            import mx.controls.CheckBox;
+            import mx.controls.DataGrid;
+            import mx.controls.List;
+            import mx.controls.dataGridClasses.DataGridColumn;
+            import mx.core.FlexGlobals;
+            import mx.events.FlexMouseEvent;
+            import mx.managers.PopUpManager;
+            import mx.utils.ObjectUtil;
+            
+            import spark.components.TitleWindow;
+
+            private var dataProvider:Array;
+
+            private var list:List;
+
+            public function creationComplete():void
+            {
+                this.dataProvider = new Array();
+                for (var i:int = 1; i < DataGrid(this.owner).columnCount; i++)
+                {
+                    var dataGridColumn:DataGridColumn = DataGrid(this.owner).columns[i];
+                    var obj:Object = new Object();
+                    obj.dataGridColumn = dataGridColumn;
+                    this.dataProvider.push(obj);
+                }
+            }
+
+            private function addPopup():void
+            {
+                list = new List();
+                list.setStyle("alternatingItemColors", [ "#EEEEEE", "white" ]);
+                list.rowCount = DataGrid(this.owner).columnCount - 1;
+                list.dataProvider = this.dataProvider;
+                list.addEventListener(FlexMouseEvent.MOUSE_DOWN_OUTSIDE, this.mouseDownOutSideEventHandler);
+                list.addEventListener(CheckBoxItemRendererEvent.VISIBLE_CHANGED, this.visibleChangedEventHandler);
+                list.itemRenderer = new ClassFactory(CheckBoxItemRenderer);
+                PopUpManager.addPopUp(list, DisplayObject(this));
+                PopUpManager.centerPopUp(list);
+            }
+
+            private function visibleChangedEventHandler(event:CheckBoxItemRendererEvent):void
+            {
+                var grid:DataGrid = DataGrid(this.owner);
+                var tela:Object = Reflection.getContainerRoot(grid);
+                TrafegusWS.getIntance().gravaVisibilidadeColuna(function()
+                {
+                }, tela.name, grid.name, event.coluna, event.visible);
+            }
+
+            private function mouseDownOutSideEventHandler(event:FlexMouseEvent):void
+            {
+                PopUpManager.removePopUp(this.list);
+            }
+        ]]>
+    </fx:Script>
+    <fx:Declarations>
+        <!-- Place non-visual elements (e.g., services, value objects) here -->
+    </fx:Declarations>
+    <mx:Image 
+        source="@Embed(source='assets/down.png')"
+        click="addPopup()"
+        buttonMode="true"/>
 </mx:VBox>
