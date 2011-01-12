@@ -2,10 +2,10 @@ package br.com.chapecosolucoes.trafegusweb.client.utils
 {
     import flash.display.DisplayObject;
     import flash.display.DisplayObjectContainer;
-
+    
     import mx.containers.TitleWindow;
     import mx.utils.ObjectUtil;
-
+    
     import org.flexunit.internals.namespaces.classInternal;
 
     public class Reflection
@@ -70,13 +70,14 @@ package br.com.chapecosolucoes.trafegusweb.client.utils
             }
         }
 
-        public static function getContainerRoot(container:DisplayObjectContainer):Object
+        public static function getContainerWindow(container:DisplayObjectContainer):Object
         {
             var ob:DisplayObjectContainer = container;
             while (ob != null)
             {
-                if (ob is TitleWindow)
-                    return ob;
+				if (ob is TitleWindow) {
+					return ob;
+				}
                 ob = ob.parent;
             }
             return ob;
