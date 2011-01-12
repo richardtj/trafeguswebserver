@@ -64,10 +64,10 @@
                 var grid:DataGrid = DataGrid(this.owner);
                 var win:Object = Reflection.getContainerWindow(grid);
                 var tela:String = getQualifiedClassName(win) + "::" + win.name;
-                TrafegusWS.getIntance().gravaVisibilidadeColuna(gravaVisibilidadeColunaHandler, tela, grid.name, event.coluna, event.visible);
+                TrafegusWS.getIntance().gravaVisibilidadeColuna(gravaTamanhoPosicaoColuna, tela, grid.name, event.coluna, (event.visible, "S", "N"));
             }
 
-            private function gravaVisibilidadeColunaHandler(evt:ResultEvent):void
+            private function gravaTamanhoPosicaoColuna(event:ResultEvent):void
             {
 
             }

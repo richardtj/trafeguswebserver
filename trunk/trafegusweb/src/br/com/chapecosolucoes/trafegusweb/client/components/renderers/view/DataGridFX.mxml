@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:DataGrid 
     keyDown="{keyPressed(event)}"
+    columnStretch="columnStretchHandler(event)"
+    headerShift="headerShiftHandler(event)"
     xmlns:fx="http://ns.adobe.com/mxml/2009"
     xmlns:s="library://ns.adobe.com/flex/spark"
     xmlns:mx="library://ns.adobe.com/flex/mx"
-    columnStretch="columnStretchHandler(event)">
+    sortableColumns="true"
+    resizableColumns="true"
+    showHeaders="true"
+    draggableColumns="true">
     <fx:Declarations>
         <!-- Place non-visual elements (e.g., services, value objects) here -->
     </fx:Declarations>
     <fx:Script>
         <![CDATA[
             import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
+            import br.com.chapecosolucoes.trafegusweb.client.utils.Reflection;
+            import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 
+            import mx.binding.utils.BindingUtils;
+            import mx.collections.ArrayCollection;
+            import mx.controls.dataGridClasses.DataGridColumn;
+            import mx.events.CollectionEvent;
             import mx.events.DataGridEvent;
             import mx.events.FlexEvent;
+            import mx.events.IndexChangedEvent;
+            import mx.events.ResizeEvent;
+            import mx.rpc.events.ResultEvent;
 
             private function keyPressed(event:KeyboardEvent):void
             {
@@ -24,13 +38,36 @@
                 }
             }
 
-            protected function columnStretchHandler(event:DataGridEvent):void
+            private function columnStretchHandler(event:DataGridEvent):void
             {
-                MessageBox.informacao(event.columnIndex.toString());
+                var grid:DataGrid = DataGrid(event.target);
+                var win:Object = Reflection.getContainerWindow(grid);
+                var tela:String = getQualifiedClassName(win) + "::" + win.name;
+                var coluna:String = (DataGridColumn(grid.columns[event.columnIndex])).headerText;
+                var tamanho:int = (DataGridColumn(grid.columns[event.columnIndex])).width;
+                var posicao:int = event.columnIndex;
+
+                TrafegusWS.getIntance().gravaTamanhoPosicaoColuna(gravaTamanhoPosicaoColunaHandler, tela, grid.name, coluna, tamanho, posicao, "S");
+
+            }
+
+            private function headerShiftHandler(event:IndexChangedEvent):void
+            {
+                var grid:DataGrid = DataGrid(event.target);
+                var win:Object = Reflection.getContainerWindow(grid);
+                var tela:String = getQualifiedClassName(win) + "::" + win.name;
+                var coluna:String = (DataGridColumn(grid.columns[event.newIndex])).headerText;
+                var tamanho:int = (DataGridColumn(grid.columns[event.newIndex])).width;
+                var posicao:int = event.newIndex;
+
+                TrafegusWS.getIntance().gravaTamanhoPosicaoColuna(gravaTamanhoPosicaoColunaHandler, tela, grid.name, coluna, tamanho, posicao, "S");
+
+            }
+
+            private function gravaTamanhoPosicaoColunaHandler(evt:ResultEvent):void
+            {
+
             }
         ]]>
     </fx:Script>
-    <mx:columns>
-        <mx:DataGridColumn/>
-    </mx:columns>
 </mx:DataGrid>
