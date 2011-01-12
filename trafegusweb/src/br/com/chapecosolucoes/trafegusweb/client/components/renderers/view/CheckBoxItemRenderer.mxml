@@ -17,8 +17,10 @@
     <fx:Script>
         <![CDATA[
             import br.com.chapecosolucoes.trafegusweb.client.events.CheckBoxItemRendererEvent;
-
+            import br.com.chapecosolucoes.trafegusweb.client.utils.Reflection;
+            
             import mx.controls.DataGrid;
+            import mx.controls.dataGridClasses.DataGridColumn;
 
             private function change():void
             {

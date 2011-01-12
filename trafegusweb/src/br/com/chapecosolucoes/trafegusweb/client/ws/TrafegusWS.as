@@ -367,12 +367,20 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
             operation.send(UsuarioLogado.getInstance().IdSessao, codLocal);
         }
 
-        public function gravaVisibilidadeColuna(handler:Function, tela:String, grid:String, coluna:String, visivel:Boolean):void
+        public function gravaTamanhoPosicaoColuna(handler:Function, tela:String, grid:String, coluna:String, tamanho:int, posicao:int, visible:String):void
         {
-            var operation:Operation = createOperation("gravaVisibilidadeColuna", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codUsuario, tela, grid, coluna, (visivel, "S", "N"));
+            var operation:Operation = createOperation("gravaTamanhoPosicaoColuna", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codUsuario, tela, grid, coluna, tamanho, posicao, visible);
 
         }
+
+        public function gravaVisibilidadeColuna(handler:Function, tela:String, grid:String, coluna:String, visible:String):void
+        {
+            var operation:Operation = createOperation("gravaVisibilidadeColuna", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codUsuario, tela, grid, coluna, visible);
+
+        }
+
 
         public function solicitaSMVeiculo(handler:Function, placaVeiculo:String):void
         {

@@ -4,6 +4,8 @@ package br.com.chapecosolucoes.trafegusweb.client.utils
     import flash.display.DisplayObjectContainer;
     
     import mx.containers.TitleWindow;
+    import mx.controls.DataGrid;
+    import mx.controls.dataGridClasses.DataGridColumn;
     import mx.utils.ObjectUtil;
     
     import org.flexunit.internals.namespaces.classInternal;
@@ -75,12 +77,23 @@ package br.com.chapecosolucoes.trafegusweb.client.utils
             var ob:DisplayObjectContainer = container;
             while (ob != null)
             {
-				if (ob is TitleWindow) {
-					return ob;
-				}
+                if (ob is TitleWindow)
+                {
+                    return ob;
+                }
                 ob = ob.parent;
             }
             return ob;
+        }
+
+        public static function getColumnIndex(grid:DataGrid, columnName:String):int
+        {
+            for (var i:int = 0; i < grid.columnCount; i++)
+            {
+                if (DataGridColumn(grid.columns[i]).dataField == columnName)
+                    return i
+            }
+            return -1;
         }
     }
 }
