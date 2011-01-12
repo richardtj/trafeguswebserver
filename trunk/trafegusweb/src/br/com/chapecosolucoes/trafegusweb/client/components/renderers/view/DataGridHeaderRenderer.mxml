@@ -15,6 +15,8 @@
             import br.com.chapecosolucoes.trafegusweb.client.utils.Reflection;
             import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 
+            import flash.utils.getQualifiedClassName;
+
             import mx.controls.Alert;
             import mx.controls.CheckBox;
             import mx.controls.DataGrid;
@@ -60,8 +62,9 @@
             private function visibleChangedEventHandler(event:CheckBoxItemRendererEvent):void
             {
                 var grid:DataGrid = DataGrid(this.owner);
-                var tela:Object = Reflection.getContainerRoot(grid);
-                TrafegusWS.getIntance().gravaVisibilidadeColuna(gravaVisibilidadeColunaHandler, tela.name, grid.name, event.coluna, event.visible);
+                var win:Object = Reflection.getContainerWindow(grid);
+                var tela:String = getQualifiedClassName(win) + "::" + win.name;
+                TrafegusWS.getIntance().gravaVisibilidadeColuna(gravaVisibilidadeColunaHandler, tela, grid.name, event.coluna, event.visible);
             }
 
             private function gravaVisibilidadeColunaHandler(evt:ResultEvent):void
