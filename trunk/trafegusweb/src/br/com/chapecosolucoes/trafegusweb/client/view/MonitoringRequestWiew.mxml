@@ -30,7 +30,8 @@
 				this.controller = new MonitoringRequestController();
 				this.controller.view = this;
 			}
-			private function creationComplete():void{
+			private function creationComplete():void
+			{
 				
 			}
 			private function closeHandler():void
@@ -61,35 +62,75 @@
 				</mx:FormItem>
 				<mx:HRule width="60%"/>
 				<mx:FormItem label="Transportador" required="true">
-					<view:ZoomCodDetailView id="transportadorZoom" cod="{MainModel.getInstance().smVO.transportador}" clickZoom="this.controller.transportadorZoomDispatcher(event)" tabZoom="this.controller.transportadorZoomDispatcher(event)"/>
+					<view:ZoomCodDetailView 
+						id="transportadorZoom" 
+						cod="{MainModel.getInstance().smVO.transportador.codigo}"
+						detail="{MainModel.getInstance().smVO.transportador.nome}"
+						clickZoom="this.controller.transportadorZoomDispatcher(event)" 
+						tabZoom="this.controller.transportadorZoomDispatcher(event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Embarcador">
-					<view:ZoomCodDetailView id="embarcadorZoom" cod="{MainModel.getInstance().smVO.embarcador}" clickZoom="this.controller.embarcadoresZoomDispatcher(event)" tabZoom="this.controller.embarcadoresZoomDispatcher(event)"/>
+					<view:ZoomCodDetailView 
+						id="embarcadorZoom" 
+						cod="{MainModel.getInstance().smVO.embarcador.codigo}"
+						detail="{MainModel.getInstance().smVO.embarcador.nome}"
+						clickZoom="this.controller.embarcadoresZoomDispatcher(event)" 
+						tabZoom="this.controller.embarcadoresZoomDispatcher(event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Veiculo do Transportador" required="true">
-					<view:ZoomCodDetailView id="veiculoZoom" cod="{MainModel.getInstance().smVO.veiculo}" clickZoom="this.controller.veiculoZoomDispatcher(event)" tabZoom="this.controller.veiculoZoomDispatcher(event)"/>
+					<view:ZoomCodDetailView 
+						id="veiculoZoom" 
+						cod="{MainModel.getInstance().smVO.veiculo.cod}"
+						detail="{MainModel.getInstance().smVO.veiculo.vehiclePlate}"
+						clickZoom="this.controller.veiculoZoomDispatcher(event)" 
+						tabZoom="this.controller.veiculoZoomDispatcher(event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Carretas">
 					<mx:Image source="@Embed(source='assets/plus-icon.png')" buttonMode="true" click="this.controller.addCarretas()"/>
 				</mx:FormItem>
 				<mx:FormItem label="Motorista" required="true">
-					<view:ZoomCodDetailView id="motoristaZoom" cod="{MainModel.getInstance().smVO.motorista}" clickZoom="this.controller.motoristaZoomDispatcher(event)" tabZoom="this.controller.motoristaZoomDispatcher(event)"/>
+					<view:ZoomCodDetailView 
+						id="motoristaZoom" 
+						cod="{MainModel.getInstance().smVO.motorista.codigo}" 
+						detail="{MainModel.getInstance().smVO.motorista.motoristaPrincipal}"
+						clickZoom="this.controller.motoristaZoomDispatcher(event)" 
+						tabZoom="this.controller.motoristaZoomDispatcher(event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Plano de G.R." required="true">
-					<view:ZoomCodDetailView id="pgrZoom" cod="{MainModel.getInstance().smVO.pgr}" clickZoom="this.controller.planoGRZoomDispatcher(event)" tabZoom="this.controller.planoGRZoomDispatcher(event)"/>
+					<view:ZoomCodDetailView 
+						id="pgrZoom" 
+						cod="{MainModel.getInstance().smVO.pgr.codigo}"
+						detail="{MainModel.getInstance().smVO.pgr.descricao}"
+						clickZoom="this.controller.planoGRZoomDispatcher(event)" 
+						tabZoom="this.controller.planoGRZoomDispatcher(event)"/>
 				</mx:FormItem>
 				<mx:HRule width="60%"/>
 				<mx:FormItem label="Rota">
-					<view:ZoomCodDetailView id="rotaZoom" cod="{MainModel.getInstance().smVO.rota}" clickZoom="this.controller.rotaZoomDispatcher(event)" tabZoom="this.controller.rotaZoomDispatcher(event)"/>
+					<view:ZoomCodDetailView 
+						id="rotaZoom" 
+						cod="{MainModel.getInstance().smVO.rota.codigo}"
+						detail="{MainModel.getInstance().smVO.rota.descricao}"
+						clickZoom="this.controller.rotaZoomDispatcher(event)" 
+						tabZoom="this.controller.rotaZoomDispatcher(event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Origem" required="true">
-					<view:ZoomCodDetailView id="origemZoom" cod="{MainModel.getInstance().smVO.origem}" clickZoom="this.controller.locaisZoomDispatcher(LocaisEnum.ORIGEM,event)" tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.ORIGEM,event)"/>
+					<view:ZoomCodDetailView 
+						id="origemZoom" 
+						cod="{MainModel.getInstance().smVO.origem.codigo}"
+						detail="{MainModel.getInstance().smVO.origem.descricao}"
+						clickZoom="this.controller.locaisZoomDispatcher(LocaisEnum.ORIGEM,event)" 
+						tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.ORIGEM,event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Prev. inicio" required="true">
 					<mx:DateField/>
 				</mx:FormItem>
 				<mx:FormItem label="Destino" required="true">
-					<view:ZoomCodDetailView id="destinoZoom" cod="{MainModel.getInstance().smVO.destino}" clickZoom="this.controller.locaisZoomDispatcher(LocaisEnum.DESTINO,event)" tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.DESTINO,event)"/>
+					<view:ZoomCodDetailView 
+						id="destinoZoom" 
+						cod="{MainModel.getInstance().smVO.destino.codigo}"
+						detail="{MainModel.getInstance().smVO.destino.descricao}"
+						clickZoom="this.controller.locaisZoomDispatcher(LocaisEnum.DESTINO,event)" 
+						tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.DESTINO,event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Prev. fim" required="true">
 					<mx:DateField/>

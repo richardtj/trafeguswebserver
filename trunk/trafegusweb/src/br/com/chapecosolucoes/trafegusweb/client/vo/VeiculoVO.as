@@ -3,7 +3,10 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 	[Bindable]
 	public class VeiculoVO
 	{
-		public function VeiculoVO(obj:Object)
+		public function VeiculoVO()
+		{
+		}
+		public function setVeiculoVO(obj:Object):void
 		{
 			this.cod = obj.oras_codigo.toString();
 			this.vehiclePlate = obj.veic_placa.toString();

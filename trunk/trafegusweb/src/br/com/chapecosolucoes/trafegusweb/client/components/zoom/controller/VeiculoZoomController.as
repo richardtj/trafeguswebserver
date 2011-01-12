@@ -40,7 +40,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			MainModel.getInstance().veiculosArray.removeAll();
 			for each (var obj:Object in resultArray)
 			{
-				var veiculo:VeiculoVO = new VeiculoVO(obj);
+				var veiculo:VeiculoVO = new VeiculoVO();
+				veiculo.setVeiculoVO(obj);
 				MainModel.getInstance().veiculosArray.addItem(veiculo);
 			}
 		}
