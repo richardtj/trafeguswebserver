@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 horizontalScrollPolicy="off"
-		 verticalScrollPolicy="off">
-	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
-	</fx:Declarations>
-	<fx:Binding source="checkBox1.selected" destination="data.dataGridColumn.visible"/>
-	<mx:CheckBox id="checkBox1" selected="{data.dataGridColumn.visible}" label="{data.dataGridColumn.headerText}"/>
+<mx:VBox 
+    horizontalScrollPolicy="off"
+    verticalScrollPolicy="off"
+    xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:s="library://ns.adobe.com/flex/spark"
+    xmlns:mx="library://ns.adobe.com/flex/mx">
+    <fx:Declarations>
+        <!-- Place non-visual elements (e.g., services, value objects) here -->
+    </fx:Declarations>
+    <fx:Metadata>
+		[Event(name="visibleChanged",type="br.com.chapecosolucoes.trafegusweb.client.events.CheckBoxItemRendererEvent")]
+	</fx:Metadata>
+    <fx:Binding 
+        source="checkBox1.selected"
+        destination="data.dataGridColumn.visible"/>
+    <fx:Script>
+        <![CDATA[
+            import br.com.chapecosolucoes.trafegusweb.client.events.CheckBoxItemRendererEvent;
+
+            import mx.controls.DataGrid;
+
+            private function change():void
+            {
+                var event:CheckBoxItemRendererEvent = new CheckBoxItemRendererEvent(CheckBoxItemRendererEvent.VISIBLE_CHANGED, data.dataGridColumn.headerText, checkBox1.selected, true, true);
+                this.dispatchEvent(event);
+            }
+        ]]>
+    </fx:Script>
+    <mx:CheckBox id="checkBox1"
+        label="{data.dataGridColumn.headerText}"
+        selected="{data.dataGridColumn.visible}"
+        change="change()"/>
 </mx:VBox>
