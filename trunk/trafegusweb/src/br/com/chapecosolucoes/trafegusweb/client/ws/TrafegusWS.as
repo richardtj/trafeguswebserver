@@ -199,7 +199,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaListaTerminais(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaListaTerminais", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().smVO.placa);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().smVO.placa);
         }
 
         public function solicitaTotalDadosGrid(handler:Function):void
@@ -370,14 +370,15 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function gravaVisibilidadeColuna(handler:Function, tela:String, grid:String, coluna:String, visivel:Boolean):void
         {
             var operation:Operation = createOperation("gravaVisibilidadeColuna", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codUsuario, tela, grid, (visivel, "S", "N"));
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codUsuario, tela, grid, coluna, (visivel, "S", "N"));
 
         }
-		public function solicitaSMVeiculo(handler:Function,placaVeiculo:String):void
-		{
-			var operation:Operation = createOperation("solicitaSMVeiculo", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,placaVeiculo);
-		}
+
+        public function solicitaSMVeiculo(handler:Function, placaVeiculo:String):void
+        {
+            var operation:Operation = createOperation("solicitaSMVeiculo", handler);
+            operation.send(UsuarioLogado.getInstance().IdSessao, placaVeiculo);
+        }
     }
 }
 

@@ -72,12 +72,12 @@ package br.com.chapecosolucoes.trafegusweb.client.utils
 
         public static function getContainerRoot(container:DisplayObjectContainer):Object
         {
-            var ob:DisplayObjectContainer = container.parent;
-            while (ob.parent != null)
+            var ob:DisplayObjectContainer = container;
+            while (ob != null)
             {
-                ob = ob.parent;
                 if (ob is TitleWindow)
                     return ob;
+                ob = ob.parent;
             }
             return ob;
         }
