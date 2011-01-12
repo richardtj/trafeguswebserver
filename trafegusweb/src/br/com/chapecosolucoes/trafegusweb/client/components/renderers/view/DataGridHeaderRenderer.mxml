@@ -14,7 +14,7 @@
             import br.com.chapecosolucoes.trafegusweb.client.events.CheckBoxItemRendererEvent;
             import br.com.chapecosolucoes.trafegusweb.client.utils.Reflection;
             import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
-            
+
             import mx.controls.Alert;
             import mx.controls.CheckBox;
             import mx.controls.DataGrid;
@@ -23,8 +23,9 @@
             import mx.core.FlexGlobals;
             import mx.events.FlexMouseEvent;
             import mx.managers.PopUpManager;
+            import mx.rpc.events.ResultEvent;
             import mx.utils.ObjectUtil;
-            
+
             import spark.components.TitleWindow;
 
             private var dataProvider:Array;
@@ -60,9 +61,12 @@
             {
                 var grid:DataGrid = DataGrid(this.owner);
                 var tela:Object = Reflection.getContainerRoot(grid);
-                TrafegusWS.getIntance().gravaVisibilidadeColuna(function()
-                {
-                }, tela.name, grid.name, event.coluna, event.visible);
+                TrafegusWS.getIntance().gravaVisibilidadeColuna(gravaVisibilidadeColunaHandler, tela.name, grid.name, event.coluna, event.visible);
+            }
+
+            private function gravaVisibilidadeColunaHandler(evt:ResultEvent):void
+            {
+
             }
 
             private function mouseDownOutSideEventHandler(event:FlexMouseEvent):void
