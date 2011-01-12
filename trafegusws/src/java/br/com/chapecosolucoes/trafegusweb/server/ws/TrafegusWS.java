@@ -1476,7 +1476,8 @@ public class TrafegusWS {
             @WebParam(name = "grid") String grid,
             @WebParam(name = "coluna") String coluna,
             @WebParam(name = "tamanho") String tamanho,
-            @WebParam(name = "posicao") String posicao) throws Exception {
+            @WebParam(name = "posicao") String posicao,
+            @WebParam(name = "visible") String visible) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
 
@@ -1484,6 +1485,7 @@ public class TrafegusWS {
             sb.append(" UPDATE cgsi_configuracao_grid_site");
             sb.append(" SET");
             sb.append("     cgsi_posicao = '").append(posicao).append("',");
+            sb.append("     cgsi_visivel = '").append(visible).append("',");
             sb.append("     cgsi_tamanho = '").append(tamanho).append("'");
             sb.append(" WHERE");
             sb.append("	    cgsi_usua_pfis_pess_oras_codigo = ").append(codUsuario);
@@ -1492,8 +1494,8 @@ public class TrafegusWS {
             sb.append(" and cgsi_coluna = '").append(coluna).append("'");
         } else {
             sb.append(" INSERT INTO cgsi_configuracao_grid_site(");
-            sb.append("     cgsi_codigo, cgsi_usua_pfis_pess_oras_codigo, cgsi_tela, cgsi_grid, cgsi_coluna, cgsi_posicao, cgsi_tamanho)");
-            sb.append(" VALUES (nextval('s_cgsi_configuracao_grid_site'), '").append(codUsuario).append("', '").append(tela).append("', '").append(grid).append("', '").append(coluna).append("', '").append(posicao).append("', '").append(tamanho).append("')");
+            sb.append("     cgsi_codigo, cgsi_usua_pfis_pess_oras_codigo, cgsi_tela, cgsi_grid, cgsi_coluna, cgsi_posicao, cgsi_visivel, cgsi_tamanho)");
+            sb.append(" VALUES (nextval('s_cgsi_configuracao_grid_site'), '").append(codUsuario).append("', '").append(tela).append("', '").append(grid).append("', '").append(coluna).append("', '").append(posicao).append("', '").append(visible).append("', '").append(tamanho).append("')");
         }
         String sql = sb.toString();
         System.out.println(sql);
@@ -1508,14 +1510,14 @@ public class TrafegusWS {
             @WebParam(name = "tela") String tela,
             @WebParam(name = "grid") String grid,
             @WebParam(name = "coluna") String coluna,
-            @WebParam(name = "visivel") String visivel) throws Exception {
+            @WebParam(name = "visible") String visible) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
 
         if (existeConfiguracaoColuna(idSessao, codUsuario, tela, grid, coluna)) {
             sb.append(" UPDATE cgsi_configuracao_grid_site");
             sb.append(" SET");
-            sb.append("     cgsi_visivel= '").append(visivel).append("'");
+            sb.append("     cgsi_visivel = '").append(visible).append("'");
             sb.append(" WHERE");
             sb.append("	    cgsi_usua_pfis_pess_oras_codigo = ").append(codUsuario);
             sb.append(" and cgsi_tela = '").append(tela).append("'");
@@ -1524,7 +1526,7 @@ public class TrafegusWS {
         } else {
             sb.append(" INSERT INTO cgsi_configuracao_grid_site(");
             sb.append("     cgsi_codigo, cgsi_usua_pfis_pess_oras_codigo, cgsi_tela, cgsi_grid, cgsi_coluna, cgsi_visivel)");
-            sb.append(" VALUES (nextval('s_cgsi_configuracao_grid_site'), '").append(codUsuario).append("', '").append(tela).append("', '").append(grid).append("', '").append(coluna).append("', '").append(visivel).append("')");
+            sb.append(" VALUES (nextval('s_cgsi_configuracao_grid_site'), '").append(codUsuario).append("', '").append(tela).append("', '").append(grid).append("', '").append(coluna).append("', '").append(visible).append("')");
         }
         String sql = sb.toString();
         System.out.println(sql);
@@ -1532,5 +1534,4 @@ public class TrafegusWS {
         Conexao.getInstance().getConnection(idSessao).createStatement().execute(sql);
         return "<results><row><result>OK</result></row></results>";
     }
-
 }
