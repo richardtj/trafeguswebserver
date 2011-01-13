@@ -76,10 +76,10 @@
             private function init():void
             {
                 var handles:Array = HandleDefinitions.NO_ROTATE_DEFINITION;
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, -10), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 110), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(-5, 50), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(105, 50), new Point(0, 0)));
+                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, -5), new Point(0, 0)));
+                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 105), new Point(0, 0)));
+                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(-2, 50), new Point(0, 0)));
+                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(102, 50), new Point(0, 0)));
 
                 controller = new MainController();
                 controller.view = this;
