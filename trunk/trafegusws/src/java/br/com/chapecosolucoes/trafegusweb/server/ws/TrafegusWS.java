@@ -1404,7 +1404,7 @@ public class TrafegusWS {
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
-        /**
+    /**
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDescricaoLocalDestino")
@@ -1553,5 +1553,31 @@ public class TrafegusWS {
         sb = null;
         Conexao.getInstance().getConnection(idSessao).createStatement().execute(sql);
         return "<results><row><result>OK</result></row></results>";
+    }
+
+    @WebMethod(operationName = "leConfiguracaoGrid")
+    public String leConfiguracaoGrid(
+            @WebParam(name = "idSessao") String idSessao,
+            @WebParam(name = "codUsuario") String codUsuario,
+            @WebParam(name = "tela") String tela,
+            @WebParam(name = "grid") String grid) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+
+            sb.append(" SELECT");
+            sb.append("     cgsi_coluna,");
+            sb.append("     cgsi_posicao,");
+            sb.append("     cgsi_visivel,");
+            sb.append("     cgsi_tamanho");
+            sb.append(" FROM ");
+            sb.append("     cgsi_configuracao_grid_site");
+            sb.append(" WHERE");
+            sb.append("	    cgsi_usua_pfis_pess_oras_codigo = ").append(codUsuario);
+            sb.append(" and cgsi_tela = '").append(tela).append("'");
+            sb.append(" and cgsi_grid = '").append(grid).append("'");
+        String sql = sb.toString();
+        System.out.println(sql);
+        sb = null;
+        return Conexao.getInstance().queryToXML(sql, codUsuario);
     }
 }
