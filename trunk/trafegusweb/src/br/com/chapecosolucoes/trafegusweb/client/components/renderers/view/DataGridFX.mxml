@@ -15,18 +15,12 @@
     </fx:Declarations>
     <fx:Script>
         <![CDATA[
-            import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
             import br.com.chapecosolucoes.trafegusweb.client.utils.Reflection;
             import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
-
-            import mx.binding.utils.BindingUtils;
-            import mx.collections.ArrayCollection;
+            
             import mx.controls.dataGridClasses.DataGridColumn;
-            import mx.events.CollectionEvent;
             import mx.events.DataGridEvent;
-            import mx.events.FlexEvent;
             import mx.events.IndexChangedEvent;
-            import mx.events.ResizeEvent;
             import mx.rpc.events.ResultEvent;
 
             private function keyPressed(event:KeyboardEvent):void
