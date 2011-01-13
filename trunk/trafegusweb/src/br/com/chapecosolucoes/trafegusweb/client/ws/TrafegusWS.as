@@ -199,7 +199,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaListaTerminais(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaListaTerminais", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().smVO.veiculo.vehiclePlate);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().smVO.placaVeiculo);
         }
 
         public function solicitaTotalDadosGrid(handler:Function):void

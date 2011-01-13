@@ -65,20 +65,20 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(resultArray.length == 0)
 			{
 				//this.view.veiculoZoom.detail = "";
-				MainModel.getInstance().smVO.veiculo.vehiclePlate = "";
+				MainModel.getInstance().smVO.placaVeiculo = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
 				//this.view.veiculoZoom.detail = obj.veic_placa.toString();
-				MainModel.getInstance().smVO.veiculo.vehiclePlate = obj.veic_placa.toString();
+				MainModel.getInstance().smVO.placaVeiculo = obj.veic_placa.toString();
 			}
 		}
 		public function selectedVehicleEventHandler(event:SelectedVehicleEvent):void
 		{
 			//this.view.veiculoZoom.cod = event.veiculo.cod;
-			MainModel.getInstance().smVO.veiculo.cod = event.veiculo.cod;
+			MainModel.getInstance().smVO.codigoVeiculo = event.veiculo.cod;
 			//this.view.veiculoZoom.detail = event.veiculo.vehiclePlate;
-			MainModel.getInstance().smVO.veiculo.vehiclePlate = event.veiculo.vehiclePlate;
+			MainModel.getInstance().smVO.placaVeiculo = event.veiculo.vehiclePlate;
 			this.view.dadosAdicionaisView.atualizaTerminais();
 		}
 		public function addCarretas():void
@@ -113,20 +113,20 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(resultArray.length == 0)
 			{
 				//this.view.motoristaZoom.detail = "";
-				MainModel.getInstance().smVO.motorista.motoristaPrincipal = "";
+				MainModel.getInstance().smVO.nomeMotorista = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
 				//this.view.motoristaZoom.detail = obj.pess_nome.toString();
-				MainModel.getInstance().smVO.motorista.motoristaPrincipal = obj.pess_nome.toString();
+				MainModel.getInstance().smVO.nomeMotorista = obj.pess_nome.toString();
 			}
 		}
 		private function selectedDriverEventHandler(event:SelectedDriverEvent):void
 		{
 			//this.view.motoristaZoom.cod = event.motorista.codigo;
-			MainModel.getInstance().smVO.motorista.codigo = event.motorista.codigo;
+			MainModel.getInstance().smVO.codigoMotorista = event.motorista.codigo;
 			//this.view.motoristaZoom.detail = event.motorista.motoristaPrincipal;
-			MainModel.getInstance().smVO.motorista.motoristaPrincipal = event.motorista.motoristaPrincipal;
+			MainModel.getInstance().smVO.nomeMotorista = event.motorista.motoristaPrincipal;
 		}
 		public function rotaZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
@@ -148,20 +148,20 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(resultArray.length == 0)
 			{
 				//this.view.rotaZoom.detail = "";
-				MainModel.getInstance().smVO.rota.descricao = "";
+				MainModel.getInstance().smVO.descricaoRota = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
 				//this.view.rotaZoom.detail = obj.rota_descricao.toString();
-				MainModel.getInstance().smVO.rota.descricao = obj.rota_descricao.toString();
+				MainModel.getInstance().smVO.descricaoRota = obj.rota_descricao.toString();
 			}
 		}
 		private function selectedRouteEventHandler(event:SelectedRouteEvent):void
 		{
 			//this.view.rotaZoom.cod = event.route.codigo;
-			MainModel.getInstance().smVO.rota.codigo = event.route.codigo;
+			MainModel.getInstance().smVO.codigoRota = event.route.codigo;
 			//this.view.rotaZoom.detail = event.route.descricao;
-			MainModel.getInstance().smVO.rota.descricao = event.route.descricao;
+			MainModel.getInstance().smVO.descricaoRota = event.route.descricao;
 		}
 		public function embarcadoresZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
@@ -183,20 +183,20 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(resultArray.length == 0)
 			{
 				//this.view.embarcadorZoom.detail = "";
-				MainModel.getInstance().smVO.embarcador.nome = "";
+				MainModel.getInstance().smVO.nomeEmbarcador = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
 				//this.view.embarcadorZoom.detail = obj.pess_nome.toString();
-				MainModel.getInstance().smVO.embarcador.nome = obj.pess_nome.toString();
+				MainModel.getInstance().smVO.nomeEmbarcador = obj.pess_nome.toString();
 			}
 		}
 		private function embarcadorSelecionadoEventHandler(event:EmbarcadorSelecionadoEvent):void
 		{
 			//this.view.embarcadorZoom.cod = event.embarcador.codigo;
-			MainModel.getInstance().smVO.embarcador.codigo = event.embarcador.codigo;
+			MainModel.getInstance().smVO.codigoEmbarcador = event.embarcador.codigo;
 			//this.view.embarcadorZoom.detail = event.embarcador.nome;
-			MainModel.getInstance().smVO.embarcador.nome = event.embarcador.nome;
+			MainModel.getInstance().smVO.nomeEmbarcador = event.embarcador.nome;
 		}
 		public function locaisZoomDispatcher(enum:LocaisEnum,event:ZoomCodDetailEvent):void
 		{
@@ -232,12 +232,12 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(resultArray.length == 0)
 			{
 				//this.view.origemZoom.detail = "";
-				MainModel.getInstance().smVO.origem.descricao = "";
+				MainModel.getInstance().smVO.descricaoOrigem = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
 				//this.view.origemZoom.detail = obj.refe_descricao.toString();
-				MainModel.getInstance().smVO.origem.descricao = obj.refe_descricao.toString();
+				MainModel.getInstance().smVO.descricaoOrigem = obj.refe_descricao.toString();
 			}
 		}
 		private function solicitaDescricaoLocalDestinoResultHandler(event:ResultEvent):void
@@ -246,27 +246,27 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(resultArray.length == 0)
 			{
 				//this.view.destinoZoom.detail = "";
-				MainModel.getInstance().smVO.destino.descricao = "";
+				MainModel.getInstance().smVO.descricaoDestino = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
 				//this.view.destinoZoom.detail = obj.refe_descricao.toString();
-				MainModel.getInstance().smVO.destino.descricao = obj.refe_descricao.toString();
+				MainModel.getInstance().smVO.descricaoDestino = obj.refe_descricao.toString();
 			}
 		}
 		private function origemSelecionadaEventHandler(event:SelectedLocalEvent):void
 		{
 			//this.view.origemZoom.cod = event.local.codigo;
-			MainModel.getInstance().smVO.origem.codigo = event.local.codigo;
+			MainModel.getInstance().smVO.codigoOrigem = event.local.codigo;
 			//this.view.origemZoom.detail = event.local.descricao;
-			MainModel.getInstance().smVO.origem.descricao = event.local.descricao;
+			MainModel.getInstance().smVO.descricaoOrigem = event.local.descricao;
 		}
 		private function destinoSelecionadoEventHandler(event:SelectedLocalEvent):void
 		{
 			//this.view.destinoZoom.cod = event.local.codigo;
-			MainModel.getInstance().smVO.destino.codigo = event.local.codigo;
+			MainModel.getInstance().smVO.codigoDestino = event.local.codigo;
 			//this.view.destinoZoom.detail = event.local.descricao;
-			MainModel.getInstance().smVO.destino.descricao = event.local.descricao;
+			MainModel.getInstance().smVO.descricaoDestino = event.local.descricao;
 		}
 		public function transportadorZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
@@ -288,20 +288,20 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(resultArray.length == 0)
 			{
 				//this.view.transportadorZoom.detail = "";
-				MainModel.getInstance().smVO.transportador.nome = "";
+				MainModel.getInstance().smVO.nomeTransportador = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
 				//this.view.transportadorZoom.detail = obj.pess_nome.toString();
-				MainModel.getInstance().smVO.transportador.nome = obj.pess_nome.toString();
+				MainModel.getInstance().smVO.nomeTransportador = obj.pess_nome.toString();
 			}
 		}
 		private function transportadorSelecionadoEventHandler(event:TransportadorSelecionadoEvent):void
 		{
 			//this.view.transportadorZoom.cod = event.transportador.codigo;
-			MainModel.getInstance().smVO.transportador.codigo = event.transportador.codigo;
+			MainModel.getInstance().smVO.codigoTransportador = event.transportador.codigo;
 			//this.view.transportadorZoom.detail = event.transportador.nome;
-			MainModel.getInstance().smVO.transportador.nome = event.transportador.nome;
+			MainModel.getInstance().smVO.nomeTransportador = event.transportador.nome;
 		}
 		public function tipoTransporteZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
@@ -323,20 +323,20 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(resultArray.length == 0)
 			{
 				//this.view.tipoViagemZoom.detail = "";
-				MainModel.getInstance().smVO.tipoViagem.descricao = "";
+				MainModel.getInstance().smVO.descricaoTipoViagem = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
 				//this.view.tipoViagemZoom.detail = obj.ttra_descricao.toString();
-				MainModel.getInstance().smVO.tipoViagem.descricao = obj.ttra_descricao.toString();
+				MainModel.getInstance().smVO.descricaoTipoViagem = obj.ttra_descricao.toString();
 			}
 		}
 		private function tipoTransporteSelecionadoEventHandler(event:TipoTransporteSelecionadoEvent):void
 		{
 			//this.view.tipoViagemZoom.cod = event.tipoTransporte.codigo;
-			MainModel.getInstance().smVO.tipoViagem.codigo = event.tipoTransporte.codigo;
+			MainModel.getInstance().smVO.codigoTipoViagem = event.tipoTransporte.codigo;
 			//this.view.tipoViagemZoom.detail = event.tipoTransporte.descricao;
-			MainModel.getInstance().smVO.tipoViagem.descricao = event.tipoTransporte.descricao;
+			MainModel.getInstance().smVO.descricaoTipoViagem = event.tipoTransporte.descricao;
 		}
 		public function paradaSelecionadoEventHandler(event:SelectedLocalEvent):void
 		{
@@ -384,20 +384,20 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(resultArray.length == 0)
 			{
 				//this.view.pgrZoom.detail = "";
-				MainModel.getInstance().smVO.pgr.descricao = "";
+				MainModel.getInstance().smVO.descricaoPGR = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
 				//this.view.pgrZoom.detail = obj.pgpg_descricao.toString();
-				MainModel.getInstance().smVO.pgr.descricao = obj.pgpg_descricao.toString();
+				MainModel.getInstance().smVO.descricaoPGR = obj.pgpg_descricao.toString();
 			}
 		}
 		private function pgrSelecionadoEventHandler(event:PGRSelecionadoEvent):void
 		{
 			//this.view.pgrZoom.cod = event.pgr.codigo;
-			MainModel.getInstance().smVO.pgr.codigo = event.pgr.codigo;
+			MainModel.getInstance().smVO.codigoPGR = event.pgr.codigo;
 			//this.view.pgrZoom.detail = event.pgr.descricao;
-			MainModel.getInstance().smVO.pgr.descricao = event.pgr.descricao;
+			MainModel.getInstance().smVO.descricaoPGR = event.pgr.descricao;
 		}
 		public function viagemPaiZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
@@ -419,23 +419,23 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(resultArray.length == 0)
 			{
 				//this.view.viagemPaiZoom.detail = "";
-				MainModel.getInstance().smVO.viagemPai.previsaoInicio = "";
-				MainModel.getInstance().smVO.viagemPai.previsaoFim = "";
+				MainModel.getInstance().smVO.previsaoInicioViagemPai = "";
+				MainModel.getInstance().smVO.previsaoFimViagemPai = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
 				//this.view.viagemPaiZoom.detail = obj.viag_previsao_inicio.toString() + " / " + obj.viag_previsao_fim.toString();
-				MainModel.getInstance().smVO.viagemPai.previsaoInicio = obj.viag_previsao_inicio.toString();
-				MainModel.getInstance().smVO.viagemPai.previsaoFim = obj.viag_previsao_fim.toString();
+				MainModel.getInstance().smVO.previsaoInicioViagemPai = obj.viag_previsao_inicio.toString();
+				MainModel.getInstance().smVO.previsaoFimViagemPai = obj.viag_previsao_fim.toString();
 			}
 		}
 		private function viagemPaiSelecionadaResultHandler(event:ViagemPaiSelecionadaEvent):void
 		{
 			//this.view.viagemPaiZoom.cod = event.viagemPai.codigo;
-			MainModel.getInstance().smVO.viagemPai.codigo = event.viagemPai.codigo;
+			MainModel.getInstance().smVO.codigoViagemPai = event.viagemPai.codigo;
 			//this.view.viagemPaiZoom.detail = event.viagemPai.previsaoInicio + " / " + event.viagemPai.previsaoFim;
-			MainModel.getInstance().smVO.viagemPai.previsaoInicio = event.viagemPai.previsaoInicio;
-			MainModel.getInstance().smVO.viagemPai.previsaoFim = event.viagemPai.previsaoFim;
+			MainModel.getInstance().smVO.previsaoInicioViagemPai = event.viagemPai.previsaoInicio;
+			MainModel.getInstance().smVO.previsaoFimViagemPai = event.viagemPai.previsaoFim;
 		}
 	}
 }

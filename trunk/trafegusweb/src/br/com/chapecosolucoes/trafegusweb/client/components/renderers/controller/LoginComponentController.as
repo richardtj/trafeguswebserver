@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controller
 {
+    import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
     import br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.LoginComponent;
     import br.com.chapecosolucoes.trafegusweb.client.events.LoginEvent;
     import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
@@ -39,7 +40,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
             }
             else
             {
-                Alert.show("Usuario ou senha inválidos.");
+                MessageBox.atencao("Usuario ou senha inválidos.");
             }
         }
 		private function lerPosicaoTelasResultHandler(e:ResultEvent):void {

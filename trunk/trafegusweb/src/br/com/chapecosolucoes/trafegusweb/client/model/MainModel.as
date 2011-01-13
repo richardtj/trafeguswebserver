@@ -149,7 +149,7 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		[ArrayElementType("com.google.maps.overlays.Marker")]
 		public var markers:ArrayCollection = new ArrayCollection();
 		
-		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.SMVO")]
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO")]
 		public var smArray:ArrayCollection = new ArrayCollection();
 		
 		[Embed(source="assets/map/apartment.png")]

@@ -4,7 +4,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
 	import br.com.chapecosolucoes.trafegusweb.client.view.SMGrid;
-	import br.com.chapecosolucoes.trafegusweb.client.vo.SMVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
 	import mx.controls.Alert;
@@ -26,8 +26,8 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			MainModel.getInstance().smArray.removeAll();
 			for each (var obj:Object in resultArray)
 			{
-				var smvo:SMVO = new SMVO();
-				smvo.setSMVO(obj);
+				var smvo:MonitoringRequestVO = new MonitoringRequestVO();
+				smvo.setMonitoringRequestVO(obj);
 				MainModel.getInstance().smArray.addItem(smvo);
 			}
 		}
@@ -42,22 +42,26 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				
 			}
 		}
+		public function novaSM():void
+		{
+			
+		}
 		public function atualizaListaSM():void
 		{
 			
 		}
 		public function smFilterFunction(item:Object):Boolean{
-			return (String(SMVO(item).dataCadastro).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
-				(String(SMVO(item).destino).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
-				(String(SMVO(item).embarcador).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
-				(String(SMVO(item).numeroViagem).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
-				(String(SMVO(item).operacao).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
-				(String(SMVO(item).origem).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
-				(String(SMVO(item).placa).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
-				(String(SMVO(item).prevFim).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
-				(String(SMVO(item).prevInicio).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
-				(String(SMVO(item).terminal).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
-				(String(SMVO(item).transportador).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0);
+			return (String(MonitoringRequestVO(item).dataCadastro).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(MonitoringRequestVO(item).descricaoDestino).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(MonitoringRequestVO(item).nomeEmbarcador).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(MonitoringRequestVO(item).numeroViagem).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(MonitoringRequestVO(item).operacao).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(MonitoringRequestVO(item).descricaoOrigem).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(MonitoringRequestVO(item).placaVeiculo).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(MonitoringRequestVO(item).prevFim).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(MonitoringRequestVO(item).prevInicio).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(MonitoringRequestVO(item).terminal).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(MonitoringRequestVO(item).nomeTransportador).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0);
 		}
 		public function numeroViagemLabelFunction(data:Object):String
 		{
