@@ -57,19 +57,19 @@
 		<mx:columns>
 			<mx:DataGridColumn headerText="Número da Viagem" dataField="numeroViagem"/>
 			<mx:DataGridColumn headerText="Operação" dataField="operacao"/>
-			<mx:DataGridColumn headerText="Placa" dataField="placa"/>
+			<mx:DataGridColumn headerText="Placa" dataField="placaVeiculo"/>
 			<mx:DataGridColumn headerText="Terminal" dataField="terminal"/>
 			<mx:DataGridColumn headerText="Data Cadastro" dataField="dataCadastro"/>
-			<mx:DataGridColumn headerText="Transportador" dataField="transportador"/>
-			<mx:DataGridColumn headerText="Embarcador" dataField="embarcador"/>
-			<mx:DataGridColumn headerText="Origem" dataField="origem"/>
-			<mx:DataGridColumn headerText="Destino" dataField="destino"/>
+			<mx:DataGridColumn headerText="Transportador" dataField="nomeTransportador"/>
+			<mx:DataGridColumn headerText="Embarcador" dataField="nomeEmbarcador"/>
+			<mx:DataGridColumn headerText="Origem" dataField="descricaoOrigem"/>
+			<mx:DataGridColumn headerText="Destino" dataField="descricaoDestino"/>
 			<mx:DataGridColumn headerText="Prev. inicio" dataField="prevInicio"/>
 			<mx:DataGridColumn headerText="Prev. fim" dataField="prevFim"/>
 		</mx:columns>
 	</mx:DataGrid>
 	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Adicionar"/>
+		<s:Button label="Adicionar" click="this.controller.novaSM"/>
 		<s:Button label="Editar" click="this.controller.editarSM()"/>
 		<s:Button label="Voltar" click="this.closeHandler()"/>
 	</mx:ControlBar>
