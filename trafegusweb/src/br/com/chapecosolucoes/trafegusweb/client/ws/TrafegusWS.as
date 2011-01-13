@@ -5,11 +5,11 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
     import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
     import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
-
+    
     import flash.events.Event;
     import flash.net.URLLoader;
     import flash.net.URLRequest;
-
+    
     import mx.charts.chartClasses.InstanceCache;
     import mx.controls.Alert;
     import mx.events.FlexEvent;
@@ -18,7 +18,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
     import mx.rpc.soap.mxml.Operation;
     import mx.rpc.soap.mxml.WebService;
     import mx.utils.ObjectUtil;
-
+    
     import org.osmf.layout.AbsoluteLayoutFacet;
 
     public class TrafegusWS
@@ -361,11 +361,17 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
             operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, codRota);
         }
 
-        public function solicitaDescricaoLocal(handler:Function, codLocal:String):void
+        public function solicitaDescricaoLocalOrigem(handler:Function, codLocal:String):void
         {
-            var operation:Operation = createOperation("solicitaDescricaoLocal", handler);
+            var operation:Operation = createOperation("solicitaDescricaoLocalOrigem", handler);
             operation.send(UsuarioLogado.getInstance().IdSessao, codLocal);
         }
+		
+		public function solicitaDescricaoLocalDestino(handler:Function, codLocal:String):void
+		{
+			var operation:Operation = createOperation("solicitaDescricaoLocalDestino", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao, codLocal);
+		}
 
         public function gravaTamanhoPosicaoColuna(handler:Function, tela:String, grid:String, coluna:String, tamanho:int, posicao:int, visible:String):void
         {
