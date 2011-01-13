@@ -59,5 +59,9 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				(String(SMVO(item).terminal).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(SMVO(item).transportador).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0);
 		}
+		public function numeroViagemLabelFunction(data:Object):String
+		{
+			return "";
+		}
 	}
 }
