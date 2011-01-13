@@ -28,6 +28,8 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.descricaoDestino = obj.descricao_destino.toString();
 			this.prevInicio = obj.viag_previsao_inicio.toString();
 			this.prevFim = obj.viag_previsao_fim.toString();
+			this.codigoRota = obj.rota_codigo.toString();
+			this.descricaoRota = obj.rota_descricao.toString();
 		}
 		public var codigoTipoViagem:String = "";
 		public var descricaoTipoViagem:String = "";

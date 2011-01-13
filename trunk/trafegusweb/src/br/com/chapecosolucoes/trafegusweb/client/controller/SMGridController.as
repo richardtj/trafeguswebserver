@@ -3,11 +3,17 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
+	import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
 	import br.com.chapecosolucoes.trafegusweb.client.view.SMGrid;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
+	import flash.display.DisplayObject;
+	
 	import mx.controls.Alert;
+	import mx.core.FlexGlobals;
+	import mx.managers.PopUpManager;
+	import mx.managers.PopUpManagerChildList;
 	import mx.rpc.events.ResultEvent;
 
 	public class SMGridController
@@ -39,7 +45,10 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			}
 			else
 			{
-				
+				MainModel.getInstance().smVO = MonitoringRequestVO(this.view.grid.selectedItem);
+				var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
+				PopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
+				PopUpManager.centerPopUp(monitoringRequest);
 			}
 		}
 		public function novaSM():void
