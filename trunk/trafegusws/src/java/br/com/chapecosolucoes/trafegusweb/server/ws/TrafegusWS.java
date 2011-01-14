@@ -1575,6 +1575,7 @@ public class TrafegusWS {
             sb.append("	    cgsi_usua_pfis_pess_oras_codigo = ").append(codUsuario);
             sb.append(" and cgsi_tela = '").append(tela).append("'");
             sb.append(" and cgsi_grid = '").append(grid).append("'");
+            sb.append(" ORDER BY cgsi_posicao");
         String sql = sb.toString();
         System.out.println(sql);
         sb = null;
