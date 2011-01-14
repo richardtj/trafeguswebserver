@@ -91,6 +91,9 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 
         [ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO")]
         public var posVeiculosArray:ArrayCollection = new ArrayCollection();
+		
+        [ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO")]
+        public var posVeiculosArrayZoom:ArrayCollection = new ArrayCollection();
 
         [ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.HistoricoPosicoesVeiculoVO")]
         public var historicoPosicoesVeiculosArray:ArrayCollection = new ArrayCollection();
