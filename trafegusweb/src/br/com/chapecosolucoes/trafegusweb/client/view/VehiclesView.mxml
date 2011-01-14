@@ -1,80 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" 
-		 xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
-		 initialize="init()"
-		 creationComplete="creationComplete()" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
-	<s:layout>
-		<s:VerticalLayout/> 
-	</s:layout>
-	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().veiculoSelecionado"/>
-	<fx:Metadata>
+<s:Group 
+    creationComplete="creationComplete()"
+    initialize="init()"
+    xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:s="library://ns.adobe.com/flex/spark"
+    xmlns:mx="library://ns.adobe.com/flex/mx"
+    xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
+    xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+    <s:layout>
+        <s:VerticalLayout/>
+    </s:layout>
+    <fx:Binding 
+        source="this.textInputFiltro.text"
+        destination="MainModel.getInstance().veiculoSelecionado"/>
+    <fx:Metadata>
 		[Event(name="vehiclesReceivedEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent")]
 		[Event(name="vehicleSelectedEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent")]
 		[Event(name="pageChanged",type="br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent")]
 	</fx:Metadata>
-	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
-	</fx:Declarations>
-	<fx:Script>
-		<![CDATA[
-			import br.com.chapecosolucoes.trafegusweb.client.controller.VehiclesController;
-			import br.com.chapecosolucoes.trafegusweb.client.enum.PaginableEnum;
-			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
-			
-			import mx.controls.Alert;
-			private var controller:VehiclesController
-			public function set selectedIndex(index:int):void
-			{
-				this.veiculos.selectedIndex = index;
-			}
-			public function set paginaAtual(paginaAtual:int):void
-			{
-				this.controller.atualizaDadosGrid(paginaAtual);
-			}
-			private function init():void
-			{
-				controller = new VehiclesController();
-				controller.view = this;
-				MainModel.getInstance().posVeiculosArray.filterFunction = this.controller.veiculosFilterFunction;
-				this.controller.solicitaTotalDadosGrid();
-			}
-			private function creationComplete():void
-			{
-				this.controller.atualizaDadosGrid();
-			}
-		]]>
-	</fx:Script>
-	<s:VGroup width="100%" height="100%">
-		<searchInput:SearchInputFX
-			id="textInputFiltro" 
-			width="100%" 
-			keyUp="MainModel.getInstance().posVeiculosArray.refresh()"
-			text="{MainModel.getInstance().veiculoSelecionado}"
-			refreshEvent="this.controller.atualizaDadosGrid()"/>
-		<mx:DataGrid height="100%"
-					 width="100%"
-					 click="this.controller.veiculoSelecionadoHandler(event)"
-					 dataProvider="{MainModel.getInstance().posVeiculosArray}"
-					 id="veiculos">
-			<mx:columns>
-				<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
-				<mx:DataGridColumn 
-					headerText="Placa" 
-					dataField="vehiclePlate"
-					itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
-				<mx:DataGridColumn 
-					headerText="Posição Atual" 
-					dataField="gpsDescSis"/>
-			</mx:columns>
-		</mx:DataGrid>
-	</s:VGroup>
-	<view:PaginableComponent 
-		id="paginable" 
-		totalRecords="{MainModel.getInstance().totalDadosGrid}"
-		next="this.controller.solicitaDadosGrid(event)" 
-		prev="this.controller.solicitaDadosGrid(event)" 
-		first="this.controller.solicitaDadosGrid(event)" 
-		last="this.controller.solicitaDadosGrid(event)"/>
+    <fx:Declarations>
+        <!-- Place non-visual elements (e.g., services, value objects) here -->
+    </fx:Declarations>
+    <fx:Script>
+        <![CDATA[
+            import br.com.chapecosolucoes.trafegusweb.client.controller.VehiclesController;
+            import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+
+            private var controller:VehiclesController
+
+            public function set selectedIndex(index:int):void
+            {
+                this.veiculos.selectedIndex = index;
+            }
+
+            public function set paginaAtual(paginaAtual:int):void
+            {
+                this.controller.atualizaDadosGrid(paginaAtual);
+            }
+
+            private function init():void
+            {
+                controller = new VehiclesController();
+                controller.view = this;
+                MainModel.getInstance().posVeiculosArray.filterFunction = this.controller.veiculosFilterFunction;
+                this.controller.solicitaTotalDadosGrid();
+            }
+
+            private function creationComplete():void
+            {
+                this.controller.atualizaDadosGrid();
+            }
+        ]]>
+    </fx:Script>
+    <s:VGroup 
+        width="100%" height="100%">
+        <searchInput:SearchInputFX id="textInputFiltro"
+            width="100%"
+            text="{MainModel.getInstance().veiculoSelecionado}"
+            keyUp="MainModel.getInstance().posVeiculosArray.refresh()"
+            refreshEvent="this.controller.atualizaDadosGrid()"/>
+        <view:DataGridFX id="veiculos"
+            width="100%" height="100%"
+            dataProvider="{MainModel.getInstance().posVeiculosArray}"
+            click="this.controller.veiculoSelecionadoHandler(event)">
+            <view:columns>
+                <mx:DataGridColumn 
+                    width="20"
+                    sortable="false"
+                    headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+                <mx:DataGridColumn headerText="Placa"
+                    dataField="vehiclePlate"
+                    itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
+                <mx:DataGridColumn headerText="Posição Atual"
+                    dataField="gpsDescSis"/>
+            </view:columns>
+        </view:DataGridFX>
+    </s:VGroup>
+    <view:PaginableComponent id="paginable"
+        totalRecords="{MainModel.getInstance().totalDadosGrid}"
+        next="this.controller.solicitaDadosGrid(event)"
+        prev="this.controller.solicitaDadosGrid(event)"
+        first="this.controller.solicitaDadosGrid(event)"
+        last="this.controller.solicitaDadosGrid(event)"/>
 </s:Group>

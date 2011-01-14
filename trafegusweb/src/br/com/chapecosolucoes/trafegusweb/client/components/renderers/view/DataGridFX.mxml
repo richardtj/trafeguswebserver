@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:DataGrid 
-    initialize="initializeHandler(event)"
+    dataChange="dataChangeHandler(event)"
     keyDown="{keyPressed(event)}"
     columnStretch="columnStretchHandler(event)"
     headerShift="headerShiftHandler(event)"
@@ -15,17 +15,17 @@
     </fx:Declarations>
     <fx:Script>
         <![CDATA[
-            import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
             import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
             import br.com.chapecosolucoes.trafegusweb.client.utils.Reflection;
             import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 
             import mx.controls.dataGridClasses.DataGridColumn;
+            import mx.core.mx_internal;
             import mx.events.DataGridEvent;
             import mx.events.FlexEvent;
             import mx.events.IndexChangedEvent;
             import mx.rpc.events.ResultEvent;
-            import mx.utils.ObjectUtil;
+            use namespace mx_internal;
 
             private function keyPressed(event:KeyboardEvent):void
             {
@@ -62,23 +62,53 @@
 
             }
 
+            private function dataChangeHandler(event:FlexEvent):void
+            {
+                if (this.dataProvider != null)
+                {
+                    var win:Object = Reflection.getContainerWindow(this);
+                    var tela:String = getQualifiedClassName(win) + "::" + win.name;
+
+                    TrafegusWS.getIntance().leConfiguracaoGrid(leConfiguracaoGridHandler, tela, this.name);
+                }
+            }
+
+
             private function gravaTamanhoPosicaoColunaHandler(evt:ResultEvent):void
             {
 
             }
 
-            private function initializeHandler(event:FlexEvent):void
-            {
-                var win:Object = Reflection.getContainerWindow(this);
-                var tela:String = getQualifiedClassName(win) + "::" + win.name;
-
-                TrafegusWS.getIntance().leConfiguracaoGrid(leConfiguracaoGridHandler, tela, this.name);
-            }
-
             private function leConfiguracaoGridHandler(evt:ResultEvent):void
             {
                 var result:Array = ParserResult.parserDefault(evt);
-				
+                var posicaoAntiga:int;
+                var posicaoNova:int;
+                for (var i:int = 0; i < result.length; i++)
+                {
+                    posicaoAntiga = getPosicaoAntiga(result[i].cgsi_coluna);
+                    posicaoNova = result[i].cgsi_posicao;
+
+                    if (posicaoAntiga != posicaoNova)
+                    {
+                        this.mx_internal::shiftColumns(posicaoAntiga, posicaoNova);
+                    }
+                    DataGridColumn(this.columns[posicaoNova]).visible = (result[i].cgsi_visivel == "S");
+                    DataGridColumn(this.columns[posicaoNova]).width = (result[i].cgsi_tamanho != "", result[i].cgsi_tamanho, DataGridColumn(this.columns[posicaoNova]).width);
+                }
+
+            }
+
+            private function getPosicaoAntiga(colunmHeader:String):int
+            {
+                for (var i:int = 0; i < this.columnCount; i++)
+                {
+                    if (DataGridColumn(this.columns[i]).headerText == colunmHeader)
+                    {
+                        return i;
+                    }
+                }
+                return -1;
             }
         ]]>
     </fx:Script>
