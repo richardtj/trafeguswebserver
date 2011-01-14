@@ -13,6 +13,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import br.com.chapecosolucoes.trafegusweb.client.view.ClassesReferenciaView;
     import br.com.chapecosolucoes.trafegusweb.client.view.MainView2;
     import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
     import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
     
@@ -189,6 +190,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             }
             if (event.label == "Agendamento")
             {
+				MainModel.getInstance().smVO = new MonitoringRequestVO();
                 var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
                 PopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
                 PopUpManager.centerPopUp(monitoringRequest);
@@ -200,6 +202,18 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
                 PopUpManager.addPopUp(referencias, DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
                 PopUpManager.centerPopUp(referencias);
             }
+			if(event.label == "Entre veículos")
+			{
+				MessageBox.informacao("Veículos");
+			}
+			if(event.label == "Entre referências")
+			{
+				
+			}
+			if(event.label == "Entre veículo e referência")
+			{
+				
+			}
         }
 
         private function referenciasRecebidasResultHandler(event:ReferenciasRecebidasEvent):void

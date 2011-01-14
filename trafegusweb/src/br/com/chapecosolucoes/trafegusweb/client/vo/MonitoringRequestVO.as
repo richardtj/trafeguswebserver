@@ -15,7 +15,8 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.nomeTransportador = obj.nome_transportador.toString();
 			this.codigoEmbarcador = obj.codigo_embarcador.toString();
 			this.nomeEmbarcador = obj.nome_embarcador.toString();
-			this.nomeEmbarcador = obj.embarcador.toString();
+			this.codigoMotorista = obj.codigo_motorista.toString();
+			this.nomeMotorista = obj.nome_motorista.toString();
 			this.numeroViagem = obj.viag_codigo.toString();
 			this.operacao = obj.viag_tope_codigo.toString();
 			this.codigoVeiculo = obj.codigo_veiculo.toString();
@@ -30,6 +31,8 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.prevFim = obj.viag_previsao_fim.toString();
 			this.codigoRota = obj.rota_codigo.toString();
 			this.descricaoRota = obj.rota_descricao.toString();
+			this.codigoPGR = obj.pgpg_codigo.toString();
+			this.descricaoPGR = obj.pgpg_descricao.toString();
 		}
 		public var codigoTipoViagem:String = "";
 		public var descricaoTipoViagem:String = "";

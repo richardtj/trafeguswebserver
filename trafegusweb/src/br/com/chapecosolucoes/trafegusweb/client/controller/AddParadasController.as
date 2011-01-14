@@ -1,6 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
-	import br.com.chapecosolucoes.trafegusweb.client.components.renderers.AddParadasModel;
+	import br.com.chapecosolucoes.trafegusweb.client.model.AddParadasModel;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.LocaisZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.TipoTransporteZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;

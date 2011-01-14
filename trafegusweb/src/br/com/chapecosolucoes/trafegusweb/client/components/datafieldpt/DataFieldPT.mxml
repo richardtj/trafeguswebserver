@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:DateField	xmlns:mx="http://www.adobe.com/2006/mxml"  
+    dayNames="{dias}"
+    monthNames="{meses}"
+    formatString="DD/MM/YYYY"    
+    creationComplete="configApp();"
+    yearNavigationEnabled="true"
+    editable="true"              
+    restrict="0-9"        
+    width="94"            
+    valueCommit="validar(event);">
+
+    <mx:Script>
+        <![CDATA[
+            import mx.events.FlexEvent;            
+
+            private function configApp():void {
+            	this.selectedDate = new Date();            	
+            }
+
+	        private function validar(event:FlexEvent):void {
+				var str:String = event.target.text as String;
+				
+				if ( str.charAt(2) != "/" || str.charAt(5) != "/" ) {
+                    var mask:String;
+                    
+                    if ( str.length == 6 ) {
+                        mask = str.substr(0, 2) + "/" + str.substr(2,2) + "/" + str.substr(4, 4);
+						event.target.text = mask;
+					} else if ( str.length == 8 ) {
+                        mask = str.substr(0, 2) + "/" + str.substr(2,2) + "/" + str.substr(4, 4);
+						event.target.text = mask;
+					}
+				
+				}				                             
+			}		
+			                      
+		]]>
+	</mx:Script>
+
+    <mx:Array id="dias">
+    <mx:String>D</mx:String>
+    <mx:String>S</mx:String>
+    <mx:String>T</mx:String>
+    <mx:String>Q</mx:String>
+    <mx:String>Q</mx:String>
+    <mx:String>S</mx:String>
+    <mx:String>S</mx:String>
+    </mx:Array>
+
+    <mx:Array id="meses">
+    <mx:String>Janeiro</mx:String>
+    <mx:String>Fevereiro</mx:String>
+    <mx:String>Março</mx:String>
+    <mx:String>Abril</mx:String>
+    <mx:String>Maio</mx:String>
+    <mx:String>Junho</mx:String>
+    <mx:String>Julho</mx:String>
+    <mx:String>Agosto</mx:String>
+    <mx:String>Setembro</mx:String>
+    <mx:String>Outubro</mx:String>
+    <mx:String>Novembro</mx:String>
+    <mx:String>Dezembro</mx:String>
+    </mx:Array>              
+    
+</mx:DateField> 
