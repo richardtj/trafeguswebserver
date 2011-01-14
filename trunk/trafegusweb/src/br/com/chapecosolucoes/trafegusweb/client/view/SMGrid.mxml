@@ -10,7 +10,7 @@
 				creationComplete="creationComplete()"
 				close="closeHandler()"
 				title="SMs do veiculo"
-				titleIcon="@Embed(source='assets/wifi.png')" xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+				titleIcon="@Embed(source='assets/wifi.png')" xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -52,9 +52,12 @@
 	<mx:DataGrid
 		id="grid"
 		dataProvider="{MainModel.getInstance().smArray}"
+		doubleClickEnabled="true"
+		doubleClick="this.controller.editarSM()"
 		width="650"
 		height="300">
 		<mx:columns>
+			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
 			<mx:DataGridColumn headerText="Número da Viagem" dataField="numeroViagem"/>
 			<mx:DataGridColumn headerText="Operação" dataField="operacao"/>
 			<mx:DataGridColumn headerText="Placa" dataField="placaVeiculo"/>
@@ -68,8 +71,10 @@
 			<mx:DataGridColumn headerText="Prev. fim" dataField="prevFim"/>
 		</mx:columns>
 	</mx:DataGrid>
+	<view:PaginableComponent 
+		id="paginable"/>
 	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Adicionar" click="this.controller.novaSM"/>
+		<s:Button label="Adicionar" click="this.controller.novaSM()"/>
 		<s:Button label="Editar" click="this.controller.editarSM()"/>
 		<s:Button label="Voltar" click="this.closeHandler()"/>
 	</mx:ControlBar>

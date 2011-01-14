@@ -9,30 +9,30 @@
 				initialize="init()"
 				creationComplete="creationComplete()"
 				close="this.controller.closeHandler()"
-				title="Adicionar Entregas/Paradas"
-				titleIcon="@Embed(source='assets/Map3.png')" 
+				title="Distancia entre veículos"
+				titleIcon="@Embed(source='assets/1_DIST_32.png')" 
 				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:Dissolve id="dissolve" duration="500"/>
 		<mx:Iris id="iris" duration="500"/>
 		<mx:StringValidator 
-			source="{tipoViagemZoom}"
+			source="{veiculo1Zoom}"
 			property="cod"
-			requiredFieldError="Campo Tipo Viagem requerido."
+			requiredFieldError="Campo Veiculo 1 requerido."
 			required="true"
 			trigger="{ok}"
 			triggerEvent="click"
-			valid="this.tipoViagem = true;this.validaTodos()"
-			invalid="this.tipoViagem = false;MessageBox.informacao('Campo Tipo Viagem requerido.')"/>
+			valid="this.veiculo1 = true;this.validaTodos()"
+			invalid="this.veiculo1 = false;MessageBox.informacao('Campo Veiculo 1 requerido.')"/>
 		<mx:StringValidator 
-			source="{localZoom}"
+			source="{veiculo2Zoom}"
 			property="cod"
-			requiredFieldError="Campo Local requerido."
+			requiredFieldError="Campo Veiculo 2 requerido."
 			trigger="{ok}"
 			triggerEvent="click"
-			valid="this.local = true;this.validaTodos()"
-			invalid="this.local = false;MessageBox.informacao('Campo Local requerido.')"/>
+			valid="this.veiculo2 = true;this.validaTodos()"
+			invalid="this.veiculo2 = false;MessageBox.informacao('Campo Veiculo 2 requerido.')"/>
 	</fx:Declarations>
 	<fx:Metadata>
 		[Event(name="paradaAdicionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.AddParadaEvent")]
@@ -40,42 +40,37 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
-			import br.com.chapecosolucoes.trafegusweb.client.model.AddParadasModel;
-			import br.com.chapecosolucoes.trafegusweb.client.controller.AddParadasController;
-			import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
+			import br.com.chapecosolucoes.trafegusweb.client.controller.DistanciaEntreVeiculosController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
-			private var controller:AddParadasController;
+			private var controller:DistanciaEntreVeiculosController;
 			[Bindable]
-			private var model:AddParadasModel;
-			private var tipoViagem:Boolean;
-			private var local:Boolean;
+			private var veiculo1:Boolean;
+			private var veiculo2:Boolean;
 			private function init():void{
-				this.controller = new AddParadasController();
-				this.model = new AddParadasModel();
+				this.controller = new DistanciaEntreVeiculosController();
 				this.controller.view = this;
-				this.controller.model = this.model;
 			}
 			private function creationComplete():void{
 				
 			}
 			private function validaTodos():void
 			{
-				if(tipoViagem && local)
+				if(veiculo1 && veiculo2)
 				{
-					this.controller.paradaSelecionada();
+					this.controller.veiculosSelecionados();
 				}
 			}
 		]]>
 	</fx:Script>
 	<mx:Form width="100%" height="100%" defaultButton="{ok}">
 		<mx:FormItem label="Tipo de parada" required="true">
-			<view:ZoomCodDetailView id="tipoViagemZoom" clickZoom="this.controller.tipoParadaZoomDispatcher()" cod="{model.parada.codigoTipoTransporte}" detail="{model.parada.descricaoTipoTransporte}"/>
+			<view:ZoomCodDetailView id="veiculo1Zoom" clickZoom="this.controller.veiculoZoomDispatcher()" cod="{model.parada.codigoTipoTransporte}" detail="{model.parada.descricaoTipoTransporte}"/>
 		</mx:FormItem>
 		<mx:FormItem label="Local" required="true">
-			<view:ZoomCodDetailView id="localZoom" clickZoom="this.controller.localZoomDispatcher(LocaisEnum.PARADA)" cod="{model.parada.codigoReferencia}" detail="{model.parada.descricaoReferencia}"/>
+			<view:ZoomCodDetailView id="veiculo2Zoom" clickZoom="this.controller.veiculoZoomDispatcher()" cod="{model.parada.codigoReferencia}" detail="{model.parada.descricaoReferencia}"/>
 		</mx:FormItem>
 	</mx:Form>
 	<mx:ControlBar horizontalAlign="right">

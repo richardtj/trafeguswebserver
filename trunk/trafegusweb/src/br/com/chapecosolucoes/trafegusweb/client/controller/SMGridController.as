@@ -53,7 +53,10 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function novaSM():void
 		{
-			
+			MainModel.getInstance().smVO = new MonitoringRequestVO();
+			var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
+			PopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
+			PopUpManager.centerPopUp(monitoringRequest);
 		}
 		public function atualizaListaSM():void
 		{

@@ -11,7 +11,7 @@
 		 close="closeHandler()"
 		 title="Novo Monitoramento"
 		 titleIcon="@Embed(source='assets/wifi.png')"
-		 xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*" xmlns:view1="br.com.chapecosolucoes.trafegusweb.client.view.*">
+		 xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*" xmlns:view1="br.com.chapecosolucoes.trafegusweb.client.view.*" xmlns:datafieldpt="br.com.chapecosolucoes.trafegusweb.client.components.datafieldpt.*">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:Dissolve id="dissolve" duration="500"/>
@@ -122,7 +122,7 @@
 						tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.ORIGEM,event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Prev. inicio" required="true">
-					<mx:DateField/>
+					<datafieldpt:DataFieldPT text="{MainModel.getInstance().smVO.prevInicio}"/>
 				</mx:FormItem>
 				<mx:FormItem label="Destino" required="true">
 					<view:ZoomCodDetailView 
@@ -133,7 +133,7 @@
 						tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.DESTINO,event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Prev. fim" required="true">
-					<mx:DateField/>
+					<datafieldpt:DataFieldPT text="{MainModel.getInstance().smVO.prevFim}"/>
 				</mx:FormItem>
 				<!--mx:FormItem label="Entragas/Paradas">
 					<mx:Image source="@Embed(source='assets/plus-icon.png')" buttonMode="true" click="this.controller.addParadas()"/>

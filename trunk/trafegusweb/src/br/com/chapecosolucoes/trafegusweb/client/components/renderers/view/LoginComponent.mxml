@@ -59,6 +59,7 @@
 		valid="this.senha = true;validaTodos(event)"
 		invalid="{this.senha = false}"/>
 	<mx:Panel cornerRadius="5" width="332" height="190" layout="absolute" horizontalCenter="0" verticalCenter="0" title="Login" titleIcon="@Embed(source='assets/chave_amarela.png')" id="panel1">
+		<mx:Image source="@Embed(source='assets/logomarca_trafegus_48_x_37.png')" x="20" y="30"/>
 		<mx:Form id="form1" defaultButton="{entrar}" width="311" horizontalCenter="0" verticalCenter="0">
 			<mx:FormItem label="Usuário" required="true" id="formitem1" horizontalAlign="right" labelWidth="100">
 				<mx:TextInput id="textinput1" resizeEffect="Resize"/>
