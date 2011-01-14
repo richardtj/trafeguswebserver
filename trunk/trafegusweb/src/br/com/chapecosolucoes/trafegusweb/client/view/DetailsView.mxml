@@ -1,65 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
-		 xmlns:s="library://ns.adobe.com/flex/spark"
-		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 width="100%"
-		 height="100%"
-		 initialize="init()" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.view.*">
-	<fx:Metadata>
+<s:Group 
+    width="100%" height="100%"
+    initialize="init()"
+    xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:s="library://ns.adobe.com/flex/spark"
+    xmlns:mx="library://ns.adobe.com/flex/mx"
+    xmlns:view="br.com.chapecosolucoes.trafegusweb.client.view.*">
+    <fx:Metadata>
 		[Event(name="routeReceivedEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.VehiclesHistoricEvent")]
 		[Event(name="vehicleSelectedEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent")]
 		[Event(name="pageChanged",type="br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent")]
 	</fx:Metadata>
-	<s:layout>
-		<s:VerticalLayout paddingRight="10"
-						  paddingLeft="10"
-						  paddingBottom="10"/>
-	</s:layout>
-	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
-	</fx:Declarations>
-	<fx:Script>
-		<![CDATA[
-			import br.com.chapecosolucoes.trafegusweb.client.controller.DetailsController;
-			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
-			import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
-			import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
-			
-			import mx.controls.Alert;
-			public var controller:DetailsController;
-			public function set selectedIndex(index:int):void
-			{
-				this.abstractView.selectedIndex = index;
-			}
-			public function set paginaAtual(paginaAtual:int):void
-			{
-				this.abstractView.paginaAtual = paginaAtual;
-			}
-			private function init():void
-			{
-				this.controller = new DetailsController();
-				this.controller.view = this;
-			}
+    <s:layout>
+        <s:VerticalLayout 
+            paddingBottom="10"
+            paddingLeft="10"
+            paddingRight="10"/>
+    </s:layout>
+    <fx:Declarations>
+        <!-- Place non-visual elements (e.g., services, value objects) here -->
+    </fx:Declarations>
+    <fx:Script>
+        <![CDATA[
+            import br.com.chapecosolucoes.trafegusweb.client.controller.DetailsController;
+            import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 
-			public function posicaoVeiculoVO():void
-			{
-				this.vehicleHistoricoView.posicaoVeiculoVO(MainModel.getInstance().posicaoVeiculoVO);
-			}
-		]]>
-	</fx:Script>
-	<mx:ToggleButtonBar dataProvider="detailsViewStack"/>
-	<mx:ViewStack id="detailsViewStack"
-				  width="100%"
-				  height="100%"
-				  creationPolicy="all">
-		<s:NavigatorContent label="Resumo">
-			<view:AbstractView id="abstractView" width="100%" height="100%"/>
-		</s:NavigatorContent>
-		<s:NavigatorContent label="Histórico de posições">
-			<view:VehiclesHistoricView id="vehicleHistoricoView" width="100%" height="100%"/>
-		</s:NavigatorContent>
-		<s:NavigatorContent label="Viagem">
-			<view:TravelView id="vehicleViagemView" width="100%" height="100%"/>
-		</s:NavigatorContent>
-	</mx:ViewStack>
+            public var controller:DetailsController;
+
+            public function set selectedIndex(index:int):void
+            {
+                this.abstractView.selectedIndex = index;
+            }
+
+            public function set paginaAtual(paginaAtual:int):void
+            {
+                this.abstractView.paginaAtual = paginaAtual;
+            }
+
+            private function init():void
+            {
+                this.controller = new DetailsController();
+                this.controller.view = this;
+            }
+
+            public function posicaoVeiculoVO():void
+            {
+                this.vehicleHistoricoView.posicaoVeiculoVO(MainModel.getInstance().posicaoVeiculoVO);
+            }
+        ]]>
+    </fx:Script>
+    <mx:ToggleButtonBar dataProvider="detailsViewStack"/>
+    <mx:ViewStack id="detailsViewStack"
+        width="100%" height="100%"
+        creationPolicy="all">
+        <s:NavigatorContent label="Resumo">
+            <view:AbstractView id="abstractView"
+                width="100%" height="100%"/>
+        </s:NavigatorContent>
+        <s:NavigatorContent label="Histórico de posições">
+            <view:VehiclesHistoricView id="vehicleHistoricoView"
+                width="100%" height="100%"/>
+        </s:NavigatorContent>
+        <s:NavigatorContent label="Viagem">
+            <view:TravelView id="vehicleViagemView"
+                width="100%" height="100%"/>
+        </s:NavigatorContent>
+    </mx:ViewStack>
 </s:Group>
