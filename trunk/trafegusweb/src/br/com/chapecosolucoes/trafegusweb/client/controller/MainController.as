@@ -11,6 +11,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
     import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
     import br.com.chapecosolucoes.trafegusweb.client.view.ClassesReferenciaView;
+    import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreVeiculosView;
     import br.com.chapecosolucoes.trafegusweb.client.view.MainView2;
     import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
     import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
@@ -204,7 +205,10 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             }
 			if(event.label == "Entre veículos")
 			{
-				MessageBox.informacao("Veículos");
+				var distanciaEntreVeiculos:DistanciaEntreVeiculosView = new DistanciaEntreVeiculosView();
+				//posicaoVeiculoZoom.addEventListener(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,selectedVehicleEventHandler);
+				PopUpManager.addPopUp(distanciaEntreVeiculos,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
+				PopUpManager.centerPopUp(distanciaEntreVeiculos);
 			}
 			if(event.label == "Entre referências")
 			{

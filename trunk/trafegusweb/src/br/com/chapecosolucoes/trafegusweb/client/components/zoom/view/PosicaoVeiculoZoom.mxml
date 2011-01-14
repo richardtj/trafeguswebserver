@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				layout="vertical"
+				width="520" height="420"
+				showCloseButton="true"
+				creationCompleteEffect="{dissolve,iris}"
+				removedEffect="{dissolve,iris}"
+				initialize="init()"
+				creationComplete="creationComplete()"
+				close="this.controller.closeHandler()"
+				title="Posição veículo"
+				titleIcon="@Embed(source='assets/cam(Teal).png')"
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
+				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
+	<fx:Metadata>
+		[Event(name="selectedVehicleEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent")]		
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.PosicaoVeiculoZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			private var controller:PosicaoVeiculoZoomController;
+			private function init():void
+			{
+				this.controller = new PosicaoVeiculoZoomController();
+				this.controller.view = this;
+				
+				//this.controller.solicitaTotalListaVeiculos();
+			}
+			private function creationComplete():void
+			{
+				//this.controller.atualizaListaVeiculos();
+				MainModel.getInstance().posVeiculosArrayZoom.filterFunction = this.controller.posicaoVeiculosFilterFunction;
+				MainModel.getInstance().posVeiculosArrayZoom.refresh();
+				
+				//this.grid.addEventListener(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,this.controller.selectedVehicleEventHandler);
+			}
+		]]>
+	</fx:Script>
+	<searchInput:SearchInputFXBase 
+		id="textInputFiltro"
+		width="100%" 
+		keyUp="MainModel.getInstance().posVeiculosArrayZoom.refresh()"
+		text="{MainModel.getInstance().zoomFilter}"/>
+	<view:DataGridFX 
+		id="grid" 
+		width="100%" height="100%" 
+		doubleClickEnabled="true"
+		doubleClick="this.controller.veiculoSelecionado()"
+		dataProvider="{MainModel.getInstance().posVeiculosArrayZoom}"
+		toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
+		<view:columns>
+			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+			<mx:DataGridColumn headerText="Placa" 
+							   dataField="vehiclePlate" 
+							   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
+			<mx:DataGridColumn headerText="Posição" dataField="gpsDescSis"/>
+		</view:columns>
+	</view:DataGridFX>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalDadosGrid}"
+		next="this.controller.solicitaDadosGrid(event)" 
+		prev="this.controller.solicitaDadosGrid(event)" 
+		first="this.controller.solicitaDadosGrid(event)" 
+		last="this.controller.solicitaDadosGrid(event)"/>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Ok" click="this.controller.veiculoSelecionado()"/>
+		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
+	</mx:ControlBar>
+</mx:TitleWindow>
