@@ -19,6 +19,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 			import br.com.chapecosolucoes.trafegusweb.client.controller.MonitoringRequestController;
 			import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
@@ -36,7 +37,7 @@
 			}
 			private function closeHandler():void
 			{
-				PopUpManager.removePopUp(this);
+				MyPopUpManager.removePopUp(this);
 			}
 		]]>
 	</fx:Script>

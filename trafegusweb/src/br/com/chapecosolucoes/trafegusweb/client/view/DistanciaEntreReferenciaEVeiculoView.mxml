@@ -4,12 +4,13 @@
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				layout="vertical"
 				showCloseButton="true"
+				keyDown="this.controller.keyDownEventHandler(event)"
 				creationCompleteEffect="{dissolve,iris}"
 				removedEffect="{dissolve,iris}"
 				initialize="init()"
 				creationComplete="creationComplete()"
 				close="this.controller.closeHandler()"
-				title="Distancia entre veículos"
+				title="Distancia entre veículo e referência"
 				titleIcon="@Embed(source='assets/1_DIST_32.png')" 
 				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*">
 	<fx:Declarations>
@@ -17,22 +18,22 @@
 		<mx:Dissolve id="dissolve" duration="500"/>
 		<mx:Iris id="iris" duration="500"/>
 		<mx:StringValidator 
-			source="{veiculo1Zoom}"
+			source="{veiculoZoom}"
 			property="cod"
-			requiredFieldError="Campo Veiculo 1 requerido."
+			requiredFieldError="Campo Veiculo requerido."
 			required="true"
 			trigger="{ok}"
 			triggerEvent="click"
-			valid="this.veiculo1 = true;this.validaTodos()"
-			invalid="this.veiculo1 = false;MessageBox.informacao('Campo Veiculo 1 requerido.')"/>
+			valid="this.veiculo = true;this.validaTodos()"
+			invalid="this.veiculo = false;MessageBox.informacao('Campo Veiculo requerido.')"/>
 		<mx:StringValidator 
-			source="{veiculo2Zoom}"
+			source="{referenciaZoom}"
 			property="cod"
-			requiredFieldError="Campo Veiculo 2 requerido."
+			requiredFieldError="Campo Referencia requerido."
 			trigger="{ok}"
 			triggerEvent="click"
-			valid="this.veiculo2 = true;this.validaTodos()"
-			invalid="this.veiculo2 = false;MessageBox.informacao('Campo Veiculo 2 requerido.')"/>
+			valid="this.referencia = true;this.validaTodos()"
+			invalid="this.referencia = false;MessageBox.informacao('Campo Referencia requerido.')"/>
 	</fx:Declarations>
 	<fx:Metadata>
 		[Event(name="paradaAdicionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.AddParadaEvent")]
@@ -40,17 +41,17 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
-			import br.com.chapecosolucoes.trafegusweb.client.controller.DistanciaEntreVeiculosController;
+			import br.com.chapecosolucoes.trafegusweb.client.controller.DistanciaEntreReferenciaEVeiculoController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
-			private var controller:DistanciaEntreVeiculosController;
+			private var controller:DistanciaEntreReferenciaEVeiculoController;
 			[Bindable]
-			private var veiculo1:Boolean;
-			private var veiculo2:Boolean;
+			private var veiculo:Boolean;
+			private var referencia:Boolean;
 			private function init():void{
-				this.controller = new DistanciaEntreVeiculosController();
+				this.controller = new DistanciaEntreReferenciaEVeiculoController();
 				this.controller.view = this;
 			}
 			private function creationComplete():void{
@@ -58,19 +59,19 @@
 			}
 			private function validaTodos():void
 			{
-				if(veiculo1 && veiculo2)
+				if(veiculo && referencia)
 				{
-					this.controller.veiculosSelecionados();
+					this.controller.referenciaEVeiculoSelecionados();
 				}
 			}
 		]]>
 	</fx:Script>
 	<mx:Form width="100%" height="100%" defaultButton="{ok}">
-		<mx:FormItem label="Veículo origem" required="true">
-			<view:ZoomCodDetailView id="veiculo1Zoom" clickZoom="this.controller.veiculo1ZoomDispatcher()"/>
+		<mx:FormItem label="Veículo" required="true">
+			<view:ZoomCodDetailView id="veiculoZoom" clickZoom="this.controller.veiculoZoomDispatcher()"/>
 		</mx:FormItem>
-		<mx:FormItem label="Veiculo destino" required="true">
-			<view:ZoomCodDetailView id="veiculo2Zoom" clickZoom="this.controller.veiculo2ZoomDispatcher()"/>
+		<mx:FormItem label="Referencia" required="true">
+			<view:ZoomCodDetailView id="referenciaZoom" clickZoom="this.controller.referenciaZoomDispatcher()"/>
 		</mx:FormItem>
 	</mx:Form>
 	<mx:ControlBar horizontalAlign="right">
