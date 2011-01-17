@@ -389,6 +389,11 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
             var operation:Operation = createOperation("leConfiguracaoGrid", handler);
             operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codUsuario, tela, grid);
         }
+		public function solicitaDadosGridZoom(handler:Function,offset:int):void
+		{
+			var operation:Operation = createOperation("solicitaDadosGridZoom", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, offset);
+		}
     }
 }
 
