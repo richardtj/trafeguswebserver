@@ -149,11 +149,17 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.ReferenciaVO")]
 		public var referencias:ArrayCollection = new ArrayCollection();
 		
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.ReferenciaVO")]
+		public var referenciasZoom:ArrayCollection = new ArrayCollection();
+		
 		[ArrayElementType("com.google.maps.overlays.Marker")]
 		public var markers:ArrayCollection = new ArrayCollection();
 		
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO")]
 		public var smArray:ArrayCollection = new ArrayCollection();
+		
+		[ArrayElementType("mx.core.IFlexDisplayObject")]
+		public var popupsArray:ArrayCollection = new ArrayCollection();
 		
 		[Embed(source="assets/map/apartment.png")]
 		private var outrasCidades:Class;
