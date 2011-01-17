@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddCarretasView;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO;
@@ -39,7 +40,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function closeHandler():void
 		{
-			PopUpManager.removePopUp(this.view);
+			MyPopUpManager.removePopUp(this.view);
 		}
 		public function solicitaListaCarretasDisponiveis():void
 		{

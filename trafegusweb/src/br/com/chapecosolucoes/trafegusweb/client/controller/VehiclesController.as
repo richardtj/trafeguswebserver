@@ -91,7 +91,6 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				var dataPos:PosicaoVeiculoVO = new PosicaoVeiculoVO(obj);
 				MainModel.getInstance().posVeiculosArray.addItem(dataPos);
 			}
-			MainModel.getInstance().posVeiculosArrayZoom = new ArrayCollection(MainModel.getInstance().posVeiculosArray.source);
 			this.view.dispatchEvent(new VehiclesEvent(VehiclesEvent.VEHICLES_RECEIVED_EVENT));
 		}
 		public function solicitaTotalDadosGrid():void
