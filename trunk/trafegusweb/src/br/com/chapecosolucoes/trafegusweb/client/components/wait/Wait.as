@@ -1,5 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.wait
 {
+    import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
+    
     import flash.display.DisplayObject;
     
     import mx.core.Application;
@@ -34,7 +36,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.wait
             acesso++;
 			if(acesso == 1)
 			{
-	            PopUpManager.addPopUp(this.spinner, DisplayObject(FlexGlobals.topLevelApplication), true, PopUpManagerChildList.POPUP)
+	            PopUpManager.addPopUp(this.spinner, DisplayObject(FlexGlobals.topLevelApplication), true)
 	            PopUpManager.centerPopUp(this.spinner);
 				this.spinner.visible = true;
 				this.spinner.play();
