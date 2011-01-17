@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.RouteItemRendererView;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedRouteEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.view.RouteDetails;
@@ -21,8 +22,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 		{
 			var routeDetails:RouteDetails = new RouteDetails();
 			routeDetails.addEventListener(SelectedRouteEvent.SELECTED_ROUTE_EVENT,selectedRouteEventHandler);
-			PopUpManager.addPopUp(routeDetails,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(routeDetails);
+			MyPopUpManager.addPopUp(routeDetails,DisplayObject(FlexGlobals.topLevelApplication));
+			MyPopUpManager.centerPopUp(routeDetails);
 		}
 		private function selectedRouteEventHandler(event:SelectedRouteEvent):void
 		{

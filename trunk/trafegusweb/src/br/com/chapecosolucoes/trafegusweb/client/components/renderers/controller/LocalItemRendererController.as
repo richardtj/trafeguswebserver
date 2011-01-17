@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.LocalItemRendererView;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedLocalEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.view.LocalDetailsView;
@@ -21,8 +22,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 			var localDetails:LocalDetailsView = new LocalDetailsView();
 			localDetails.codigo = codigo;
 			localDetails.addEventListener(SelectedLocalEvent.SELECTED_LOCAL_EVENT,localSelecionadoEventHandler);
-			PopUpManager.addPopUp(localDetails,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(localDetails);
+			MyPopUpManager.addPopUp(localDetails,DisplayObject(FlexGlobals.topLevelApplication));
+			MyPopUpManager.centerPopUp(localDetails);
 		}
 		private function localSelecionadoEventHandler(event:SelectedLocalEvent):void
 		{

@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.SMItemRenderer;
 	import br.com.chapecosolucoes.trafegusweb.client.view.SMGrid;
 	
@@ -20,8 +21,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 		{
 			var smGrid:SMGrid = new SMGrid();
 			smGrid.placaVeiculo = placaVeiculo;
-			PopUpManager.addPopUp(smGrid,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(smGrid);
+			MyPopUpManager.addPopUp(smGrid,DisplayObject(FlexGlobals.topLevelApplication));
+			MyPopUpManager.centerPopUp(smGrid);
 		}
 	}
 }

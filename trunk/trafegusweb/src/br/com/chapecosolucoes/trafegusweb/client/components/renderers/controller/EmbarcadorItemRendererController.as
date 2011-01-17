@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.EmbarcadorItemRendererView;
 	import br.com.chapecosolucoes.trafegusweb.client.events.EmbarcadorSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.view.EmbarcadorDetails;
@@ -20,8 +21,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 			var embarcadorDetails:EmbarcadorDetails = new EmbarcadorDetails();
 			embarcadorDetails.codigo = param;
 			embarcadorDetails.addEventListener(EmbarcadorSelecionadoEvent.EMBARCADOR_SELECIONADO_EVENT,embarcadorSelecionadoEventHandler);
-			PopUpManager.addPopUp(embarcadorDetails,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(embarcadorDetails);
+			MyPopUpManager.addPopUp(embarcadorDetails,DisplayObject(FlexGlobals.topLevelApplication));
+			MyPopUpManager.centerPopUp(embarcadorDetails);
 		}
 		private function embarcadorSelecionadoEventHandler(event:EmbarcadorSelecionadoEvent):void
 		{
