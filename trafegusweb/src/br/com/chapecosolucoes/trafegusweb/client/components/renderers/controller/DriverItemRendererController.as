@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
+	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DriverItemRendererView;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.view.DriverDetails;
@@ -25,8 +26,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 			var driverDetails:DriverDetails = new DriverDetails();
 			driverDetails.cpfMotoristaPrincipal = param;
 			driverDetails.addEventListener(SelectedDriverEvent.SELECTED_DRIVER_EVENT,this.selectedDriverEventHandler);
-			PopUpManager.addPopUp(driverDetails,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(driverDetails);
+			MyPopUpManager.addPopUp(driverDetails,DisplayObject(FlexGlobals.topLevelApplication));
+			MyPopUpManager.centerPopUp(driverDetails);
 		}
 		private function selectedDriverEventHandler(e:SelectedDriverEvent):void
 		{

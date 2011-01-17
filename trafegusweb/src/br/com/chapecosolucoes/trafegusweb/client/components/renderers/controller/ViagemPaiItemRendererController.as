@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.ViagemPaiItemRendererView;
 	import br.com.chapecosolucoes.trafegusweb.client.events.ViagemPaiSelecionadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.view.ViagemPaiDetails;
@@ -21,8 +22,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 		{
 			var viagemPaiDetails:ViagemPaiDetails = new ViagemPaiDetails();
 			viagemPaiDetails.addEventListener(ViagemPaiSelecionadaEvent.VIAGEM_PAI_SELECIONADA_EVENT,this.viagemPaiSelecionadaEventHandler);
-			PopUpManager.addPopUp(viagemPaiDetails,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(viagemPaiDetails);
+			MyPopUpManager.addPopUp(viagemPaiDetails,DisplayObject(FlexGlobals.topLevelApplication));
+			MyPopUpManager.centerPopUp(viagemPaiDetails);
 		}
 		private function viagemPaiSelecionadaEventHandler(event:ViagemPaiSelecionadaEvent):void
 		{
