@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				layout="vertical"
+				width="520" height="420"
+				showCloseButton="true"
+				creationCompleteEffect="{dissolve,iris}"
+				removedEffect="{dissolve,iris}"
+				preinitialize="init()"
+				creationComplete="creationComplete()"
+				close="this.controller.closeHandler()"
+				title="Referência"
+				titleIcon="@Embed(source='assets/referencias.png')"
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
+				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
+	<fx:Metadata>
+		[Event(name="referenciaSelecionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.ReferenciaSelecionadaEvent")]		
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.ReferenciaZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.model.ReferenciaZoomModel;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.ReferenciaVO;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			private var controller:ReferenciaZoomController;
+			private var model:ReferenciaZoomModel;
+			public var excluirReferenciaListaZoom:String;
+			private function init():void
+			{
+				this.controller = new ReferenciaZoomController();
+				this.model = new ReferenciaZoomModel();
+				this.model.excluirReferenciaListaZoom = this.excluirReferenciaListaZoom;
+				this.controller.view = this;
+				this.controller.model = this.model;
+				
+				MainModel.getInstance().referenciasZoom = new ArrayCollection(MainModel.getInstance().referencias.source.slice(0,20));
+				
+			}
+			private function creationComplete():void
+			{
+				MainModel.getInstance().referenciasZoom.filterFunction = this.controller.referenciasFilterFunction;
+				MainModel.getInstance().referenciasZoom.refresh();
+			}
+		]]>
+	</fx:Script>
+	<searchInput:SearchInputFXBase 
+		id="textInputFiltro"
+		width="100%" 
+		keyUp="MainModel.getInstance().referenciasZoom.refresh()"
+		text="{MainModel.getInstance().zoomFilter}"/>
+	<mx:List 
+		id="list" 
+		width="100%"
+		height="100%" 
+		doubleClickEnabled="true"
+		doubleClick="this.controller.referenciaSelecionada()"
+		dataProvider="{MainModel.getInstance().referenciasZoom}"
+		borderStyle="none"
+		itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.ReferenciaItemRenderer"/>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().referencias.length}"
+		next="this.controller.solicitaReferenciasZoom(event)"
+		prev="this.controller.solicitaReferenciasZoom(event)"
+		first="this.controller.solicitaReferenciasZoom(event)"
+		last="this.controller.solicitaReferenciasZoom(event)"/>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Ok" click="this.controller.referenciaSelecionada()"/>
+		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
+	</mx:ControlBar>
+</mx:TitleWindow>
