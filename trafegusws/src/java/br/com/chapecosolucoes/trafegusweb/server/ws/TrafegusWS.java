@@ -321,6 +321,64 @@ public class TrafegusWS {
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
+     /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaDadosGridZoom")
+    public String solicitaDadosGridZoom(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "offset") String offset) throws Exception {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("SELECT DISTINCT");
+        sb.append("             VEIC_ORAS_Codigo,");
+        sb.append("             VEIC_Placa as placa,");
+        sb.append("             URPE_Valor as ignicao,");
+        sb.append("             UPOS_Descricao_Sistema AS posicao,");
+        sb.append("             UPOS_Longitude,");
+        sb.append("             UPOS_Latitude,");
+        sb.append("             VTEC_Descricao as versaoTecnologia,");
+        sb.append("             TERM_Numero_Terminal as numeroTerminal,");
+        sb.append("             '' as embarcador,");
+        sb.append("             TERM_Ativo,");
+        sb.append("             CASE");
+        sb.append("                WHEN (VUPA_VEIC_ORAS_Codigo IS NOT NULL) THEN 'UTILITARIO DE PASSEIO'");
+        sb.append("                WHEN (VUCA_VEIC_ORAS_Codigo IS NOT NULL) THEN 'UTILITARIO DE CARGA'");
+        sb.append("                WHEN (VTRU_VEIC_ORAS_Codigo IS NOT NULL) THEN 'TRUCK'");
+        sb.append("                WHEN (VMOT_VEIC_ORAS_Codigo IS NOT NULL) THEN 'MOTO'");
+        sb.append("                ELSE 'CAVALO'");
+        sb.append("             END AS tipoVeiculo,");
+        sb.append("             CASE");
+        sb.append("                WHEN (VIAG_Previsao_Inicio IS NOT NULL) AND (VIAG_Previsao_Fim IS NOT NULL) AND (VIAG_Data_Inicio IS NULL) AND (VIAG_Data_Fim IS NULL)  THEN 'AGENDADO'");
+        sb.append("                WHEN (VIAG_Previsao_Inicio IS NOT NULL) AND (VIAG_Previsao_Fim IS NOT NULL) AND (VIAG_Data_Inicio IS NOT NULL) AND (VIAG_Data_Fim IS NULL) THEN 'EM VIAGEM'");
+        sb.append("                ELSE 'SEM VIAGEM'");
+        sb.append("             END AS statusViagem,");
+        sb.append("             0 as statusAtraso,");
+        sb.append("             MOTO1.PESS_Nome AS NomeMotorista,");
+        sb.append("             TO_CHAR(UPOS_Data_Comp_Bordo,'DD/MM/YYYY HH24:MI:SS') AS UPOS_Data_Comp_Bordo,");
+        sb.append("             MO1.PFIS_CPF AS CpfMotorista");
+        sb.append("        FROM UPOS_Ultima_Posicao    ");
+        sb.append("        JOIN TERM_Terminal ON (TERM_Numero_Terminal = UPOS_TERM_Numero_Terminal AND TERM_VTEC_Codigo = UPOS_VTEC_Codigo AND TERM_Ativo_WS = 'S')");
+        sb.append("        JOIN VTEC_Versao_Tecnologia ON (VTEC_Codigo = TERM_VTEC_Codigo)                                     ");
+        sb.append("        JOIN ORTE_Objeto_Rastreado_Termina ON (ORTE_TERM_Codigo = TERM_Codigo AND ORTE_Sequencia = 'P')");
+        sb.append("        JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = ORTE_ORAS_Codigo)    ");
+        sb.append("        JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = ORAS_Codigo)");
+        sb.append("        JOIN VTRA_Veiculo_Transportador ON (VTRA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo AND VTRA_TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(")"); /*parametros*/
+        sb.append("    LEFT JOIN MOTO_Motorista AS M1 ON (M1.MOTO_PFIS_PESS_ORAS_Codigo = VEIC_MOTO_PFIS_PESS_ORAS_Codigo)");
+        sb.append("    LEFT JOIN PFIS_Pessoa_Fisica MO1 ON (MO1.PFIS_PESS_ORAS_Codigo = M1.MOTO_PFIS_PESS_ORAS_Codigo)");
+        sb.append("    LEFT JOIN PESS_Pessoa AS MOTO1 ON (MOTO1.PESS_ORAS_Codigo = MO1.PFIS_PESS_ORAS_Codigo)");
+        sb.append("    LEFT JOIN urpe_ultimo_rec_periferico ON (URPE_TERM_Numero_terminal = UPOS_TERM_Numero_Terminal AND URPE_VTEC_Codigo = UPOS_VTEC_codigo AND urpe_eppa_codigo = 30)");
+        sb.append("    LEFT JOIN vupa_veiculo_utilitario_passe ON (VUPA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
+        sb.append("    LEFT JOIN vuca_veiculo_utilitario_carga ON (VUCA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
+        sb.append("    LEFT JOIN vtru_veiculo_truck ON (VTRU_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
+        sb.append("    LEFT JOIN vmot_veiculo_moto ON (VMOT_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
+        sb.append("    LEFT JOIN vcav_veiculo_cavalo ON (VCAV_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
+        sb.append("    LEFT JOIN VVEI_Viagem_Veiculo ON (VVEI_VEIC_ORAS_Codigo = ORAS_Codigo AND VVEI_Precedencia = '1' AND VVEI_Ativo = 'S')");
+        sb.append("    LEFT JOIN VIAG_Viagem ON (VIAG_Codigo = VVEI_VIAG_Codigo)");
+        sb.append("    ORDER BY VEIC_ORAS_Codigo");
+        sb.append("    LIMIT 20 OFFSET ").append(offset);
+//        System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
     /**
      * Web service operation
      */
@@ -1432,31 +1490,52 @@ public class TrafegusWS {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append("  SELECT VEIC_ORAS_Codigo,");
-        sb.append("         VEIC_Placa,");
+        sb.append("         VEIC_ORAS_Codigo AS Codigo_veiculo,");
+        sb.append("         VEIC_Placa AS Placa_Veiculo,");
         sb.append("         Term_numero_terminal,");
-        sb.append("         Transp.Pess_nome AS Transportador,");
-        sb.append("         Emba.Pess_nome AS Embarcador,");
-        sb.append("         Ori.refe_descricao AS Origem,");
-        sb.append("         Dest.refe_descricao AS Destino,");
+        sb.append("         MOTO1.PESS_ORAS_Codigo AS Codigo_Motorista,");
+        sb.append("         MOTO1.PESS_Nome AS Nome_Motorista,");
+        sb.append("         Transp.Pess_oras_codigo AS Codigo_Transportador,");
+        sb.append("         Transp.Pess_nome AS Nome_Transportador,");
+        sb.append("         Emba.Pess_oras_codigo AS Codigo_Embarcador,");
+        sb.append("         Emba.Pess_nome AS Nome_Embarcador,");
+        sb.append("         Ori.Refe_codigo as Codigo_Origem,");
+        sb.append("         Ori.refe_descricao AS Descricao_Origem,");
+        sb.append("         Dest.refe_codigo AS Codigo_Destino,");
+        sb.append("         Dest.refe_descricao AS Descricao_Destino,");
         sb.append("         VIAG_Viagem.viag_codigo,");
         sb.append("         VIAG_Viagem.viag_tope_codigo,");
-        sb.append("         VIAG_Viagem.viag_data_cadastro,");
-        sb.append("         VIAG_Viagem.viag_previsao_inicio,");
-        sb.append("         VIAG_Viagem.viag_previsao_fim");
-        sb.append("    FROM VIAG_Viagem");
-        sb.append("    JOIN VVEI_Viagem_Veiculo ON (VVEI_VIAG_Codigo = VIAG_Codigo)");
-        sb.append("    JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = VVEI_VEIC_ORAS_Codigo AND VEIC_Placa = '").append(placaVeiculo).append("')");
-        sb.append("    JOIN VTER_VIAGEM_Terminal ON (VTER_Viag_Codigo = Viag_codigo AND VTer_Precedencia = '1' AND Vter_Ativo = 'S')");
-        sb.append("    JOIN Term_Terminal ON (Term_codigo = Vter_term_codigo)");
-        sb.append("    JOIN Pess_pessoa AS Transp ON (Transp.Pess_oras_codigo = Viag_Tran_Pess_oras_codigo)");
-        sb.append("    LEFT Join Pess_pessoa AS Emba ON (Emba.Pess_oras_codigo = Viag_Emba_PJUR_Pess_oras_codigo)");
-        sb.append("    JOIN VLOC_Viagem_local AS O ON (O.VLOC_Viag_codigo = Viag_codigo AND O.VLOC_Tpar_codigo = 4)");
-        sb.append("    JOIN Refe_Referencia AS Ori ON (Ori.Refe_codigo = O.VLoc_Refe_codigo)");
-        sb.append("    JOIN VLOC_Viagem_local AS D ON (D.VLOC_Viag_codigo = Viag_codigo AND D.VLOC_Tpar_codigo = 5)");
-        sb.append("    JOIN Refe_Referencia AS Dest ON (Dest.Refe_codigo = D.VLoc_Refe_codigo)");
-        sb.append("   WHERE VIAG_Data_Inicio IS NOT NULL");
-        sb.append("     AND VIAG_Data_Fim IS NOT NULL");
-        sb.append(" ORDER BY VIAG_Previsao_Inicio   ");
+        sb.append("         TO_CHAR(VIAG_Viagem.viag_data_cadastro,'DD/MM/YYYY') AS viag_data_cadastro,");
+        sb.append("         TO_CHAR(VIAG_Viagem.viag_previsao_inicio,'DD/MM/YYYY') AS viag_previsao_inicio,");
+        sb.append("         TO_CHAR(VIAG_Viagem.viag_previsao_fim,'DD/MM/YYYY') AS viag_previsao_fim,");
+        sb.append("         TTRA_Tipo_Transporte.TTRA_Codigo,");
+        sb.append("         TTRA_Tipo_Transporte.TTRA_Descricao,");
+        sb.append("         ROTA_CODIGO,");
+        sb.append("         ROTA_DESCRICAO,");
+        sb.append("         PGPG_PG.PGPG_CODIGO,");
+        sb.append("         PGPG_PG.PGPG_Descricao,");
+        sb.append("         Viag_Codigo_pai");
+        sb.append("   FROM VIAG_Viagem    ");
+        sb.append("   JOIN VVEI_Viagem_Veiculo ON (VVEI_VIAG_Codigo = VIAG_Codigo)  ");
+        sb.append("   JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = VVEI_VEIC_ORAS_Codigo AND VEIC_Placa = '").append(placaVeiculo).append("')    ");
+        sb.append("   JOIN VTER_VIAGEM_Terminal ON (VTER_Viag_Codigo = Viag_codigo AND VTer_Precedencia = '1' AND Vter_Ativo = 'S')   ");
+        sb.append("   JOIN Term_Terminal ON (Term_codigo = Vter_term_codigo)   ");
+        sb.append("   JOIN Pess_pessoa AS Transp ON (Transp.Pess_oras_codigo = Viag_Tran_Pess_oras_codigo) ");
+        sb.append("   JOIN VLOC_Viagem_local AS O ON (O.VLOC_Viag_codigo = Viag_codigo AND O.VLOC_Tpar_codigo = 4) ");
+        sb.append("   JOIN Refe_Referencia AS Ori ON (Ori.Refe_codigo = O.VLoc_Refe_codigo)    ");
+        sb.append("   JOIN VLOC_Viagem_local AS D ON (D.VLOC_Viag_codigo = Viag_codigo AND D.VLOC_Tpar_codigo = 5) ");
+        sb.append("   JOIN Refe_Referencia AS Dest ON (Dest.Refe_codigo = D.VLoc_Refe_codigo) ");
+        sb.append("   JOIN TTRA_Tipo_Transporte ON (TTRA_Tipo_Transporte.TTRA_Codigo = VIAG_Viagem.Viag_Ttra_Codigo)  ");
+        sb.append("   LEFT JOIN VROT_Viagem_rota ON (Viag_Viagem.Viag_codigo = VROT_Viagem_rota.VROT_VIAG_Codigo)");
+        sb.append("   LEFT JOIN ROTA_ROTA ON (VROT_Viagem_rota.VROT_ROTA_Codigo = ROTA_ROTA.ROTA_Codigo)  ");
+        sb.append("   LEFT Join Pess_pessoa AS Emba ON (Emba.Pess_oras_codigo = Viag_Emba_PJUR_Pess_oras_codigo) ");
+        sb.append("   JOIN PGPG_PG ON (PGPG_PG.PGPG_CODIGO = Viag_pgpg_codigo)");
+        sb.append("   LEFT JOIN MOTO_Motorista AS M1 ON (M1.MOTO_PFIS_PESS_ORAS_Codigo = VEIC_MOTO_PFIS_PESS_ORAS_Codigo)");
+        sb.append("   LEFT JOIN PFIS_Pessoa_Fisica MO1 ON (MO1.PFIS_PESS_ORAS_Codigo = M1.MOTO_PFIS_PESS_ORAS_Codigo)");
+        sb.append("   LEFT JOIN PESS_Pessoa AS MOTO1 ON (MOTO1.PESS_ORAS_Codigo = MO1.PFIS_PESS_ORAS_Codigo)");
+        sb.append("   WHERE VIAG_Data_Inicio IS NOT NULL   ");
+        sb.append("   AND VIAG_Data_Fim IS NOT NULL ");
+        sb.append("   ORDER BY VIAG_Previsao_Inicio ");
         System.out.println("\n" + sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
