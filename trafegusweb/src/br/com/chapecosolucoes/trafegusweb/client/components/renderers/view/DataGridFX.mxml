@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:DataGrid 
-    dataChange="dataChangeHandler(event)"
-    keyDown="{keyPressed(event)}"
+    initialize="initializeHandler(event)"
+    keyDown="keyPressed(event)"
     columnStretch="columnStretchHandler(event)"
     headerShift="headerShiftHandler(event)"
     xmlns:fx="http://ns.adobe.com/mxml/2009"
@@ -41,11 +41,12 @@
                 var grid:DataGrid = DataGrid(event.target);
                 var win:Object = Reflection.getContainerWindow(grid);
                 var tela:String = getQualifiedClassName(win) + "::" + win.name;
-                var coluna:String = (DataGridColumn(grid.columns[event.columnIndex])).headerText;
+                var coluna:String = (DataGridColumn(grid.columns[event.columnIndex])).dataField;
                 var tamanho:int = (DataGridColumn(grid.columns[event.columnIndex])).width;
                 var posicao:int = event.columnIndex;
+                var titulo:String = (DataGridColumn(grid.columns[event.columnIndex])).headerText
 
-                TrafegusWS.getIntance().gravaTamanhoPosicaoColuna(gravaTamanhoPosicaoColunaHandler, tela, grid.name, coluna, tamanho, posicao, "S");
+                TrafegusWS.getIntance().gravaTamanhoPosicaoColuna(gravaTamanhoPosicaoColunaHandler, tela, grid.name, coluna, tamanho, posicao, "S", titulo);
 
             }
 
@@ -54,25 +55,23 @@
                 var grid:DataGrid = DataGrid(event.target);
                 var win:Object = Reflection.getContainerWindow(grid);
                 var tela:String = getQualifiedClassName(win) + "::" + win.name;
-                var coluna:String = (DataGridColumn(grid.columns[event.newIndex])).headerText;
+                var coluna:String = (DataGridColumn(grid.columns[event.newIndex])).dataField;
                 var tamanho:int = (DataGridColumn(grid.columns[event.newIndex])).width;
                 var posicao:int = event.newIndex;
+                var titulo:String = (DataGridColumn(grid.columns[event.newIndex])).headerText;
 
-                TrafegusWS.getIntance().gravaTamanhoPosicaoColuna(gravaTamanhoPosicaoColunaHandler, tela, grid.name, coluna, tamanho, posicao, "S");
+
+                TrafegusWS.getIntance().gravaTamanhoPosicaoColuna(gravaTamanhoPosicaoColunaHandler, tela, grid.name, coluna, tamanho, posicao, "S", titulo);
 
             }
 
-            private function dataChangeHandler(event:FlexEvent):void
+            private function initializeHandler(event:FlexEvent):void
             {
-                if (this.dataProvider != null)
-                {
-                    var win:Object = Reflection.getContainerWindow(this);
-                    var tela:String = getQualifiedClassName(win) + "::" + win.name;
+                var win:Object = Reflection.getContainerWindow(this);
+                var tela:String = getQualifiedClassName(win) + "::" + win.name;
 
-                    TrafegusWS.getIntance().leConfiguracaoGrid(leConfiguracaoGridHandler, tela, this.name);
-                }
+                TrafegusWS.getIntance().leConfiguracaoGrid(leConfiguracaoGridHandler, tela, this.name);
             }
-
 
             private function gravaTamanhoPosicaoColunaHandler(evt:ResultEvent):void
             {
@@ -82,33 +81,24 @@
             private function leConfiguracaoGridHandler(evt:ResultEvent):void
             {
                 var result:Array = ParserResult.parserDefault(evt);
-                var posicaoAntiga:int;
-                var posicaoNova:int;
-                for (var i:int = 0; i < result.length; i++)
+                var dgColumns:Array = new Array();
+                var aColumn:DataGridColumn = null;
+
+                for (var i:int; i < result.length; i++)
                 {
-                    posicaoAntiga = getPosicaoAntiga(result[i].cgsi_coluna);
-                    posicaoNova = result[i].cgsi_posicao;
+                    aColumn = new DataGridColumn();
+                    aColumn.dataField = result[i].cgsi_coluna;
+                    aColumn.headerText = result[i].cgsi_titulo;
+                    aColumn.visible = (result[i].cgsi_visivel == "S", true, false);
+                    aColumn.width = result[i].cgsi_tamanho;
+                    aColumn.colNum = result[i].cgsi_posicao
 
-                    if (posicaoAntiga != posicaoNova)
-                    {
-                        this.mx_internal::shiftColumns(posicaoAntiga, posicaoNova);
-                    }
-                    DataGridColumn(this.columns[posicaoNova]).visible = (result[i].cgsi_visivel == "S");
-                    DataGridColumn(this.columns[posicaoNova]).width = (result[i].cgsi_tamanho != "", result[i].cgsi_tamanho, DataGridColumn(this.columns[posicaoNova]).width);
+                    dgColumns.push(aColumn);
                 }
-
-            }
-
-            private function getPosicaoAntiga(colunmHeader:String):int
-            {
-                for (var i:int = 0; i < this.columnCount; i++)
+                if (dgColumns.length > 0)
                 {
-                    if (DataGridColumn(this.columns[i]).headerText == colunmHeader)
-                    {
-                        return i;
-                    }
+        //            this.columns = dgColumns;
                 }
-                return -1;
             }
         ]]>
     </fx:Script>
