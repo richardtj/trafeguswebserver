@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
+	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.TipoTransporteZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.TipoTransporteSelecionadoEvent;
@@ -61,7 +62,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function closeHandler():void
 		{
-			PopUpManager.removePopUp(this.view);
+			MyPopUpManager.removePopUp(this.view);
 		}
 		public function solicitaTotalListaTipoTransporte():void
 		{
