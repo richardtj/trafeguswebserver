@@ -21,6 +21,7 @@
 	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 			import br.com.chapecosolucoes.trafegusweb.client.controller.VehicleDetailsController;
 			import br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent;
@@ -33,7 +34,7 @@
 			private var controller:VehicleDetailsController;
 			private function closeHandler():void
 			{
-				PopUpManager.removePopUp(this);
+				MyPopUpManager.removePopUp(this);
 			}
 			private function init():void
 			{
