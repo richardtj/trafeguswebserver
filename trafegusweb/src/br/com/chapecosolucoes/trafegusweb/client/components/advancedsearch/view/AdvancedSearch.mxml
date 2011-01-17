@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				layout="vertical"
+				width="400" height="210"
+				showCloseButton="true"
+				keyDown="this.controller.keyDownEventHandler(event)"
+				creationCompleteEffect="{dissolve,iris}"
+				removedEffect="{dissolve,iris}"
+				preinitialize="init()"
+				creationComplete="creationComplete()"
+				close="this.controller.closeHandler()"
+				title="Filtro avançado"
+				titleIcon="@Embed(source='assets/search.png')"
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
+				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.controller.AdvancedSearchController;
+			private var controller:AdvancedSearchController;
+			private function creationComplete():void
+			{
+				
+			}
+			private function init():void
+			{
+				this.controller = new AdvancedSearchController();
+				this.controller.view = this;
+			}
+		]]>
+	</fx:Script>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Ok" click="this.controller.search()"/>
+		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
+	</mx:ControlBar>
+</mx:TitleWindow>
