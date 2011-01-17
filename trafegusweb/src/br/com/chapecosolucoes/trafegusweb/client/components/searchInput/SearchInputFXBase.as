@@ -1,10 +1,14 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.searchInput
 {
+	import br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent;
+	
 	import flash.events.FocusEvent;
-
+	import flash.events.MouseEvent;
+	
 	import mx.controls.Image;
 	import mx.controls.TextInput;
 
+	[Event(name="advancedSearchEvent", type="br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent")]
 	public class SearchInputFXBase extends TextInput
 	{
 		[Embed(source='assets/search.png')]
@@ -97,6 +101,9 @@ package br.com.chapecosolucoes.trafegusweb.client.components.searchInput
 		{
 			super.createChildren();
 			_searchImg = new Image();
+			_searchImg.addEventListener(MouseEvent.CLICK,clickHandler);
+			_searchImg.useHandCursor = true;
+			_searchImg.buttonMode = true;
 			_searchImg.source = _searchIcon;
 			_searchImg.width = 15;
 			_searchImg.height = 15;
@@ -106,6 +113,11 @@ package br.com.chapecosolucoes.trafegusweb.client.components.searchInput
 			setStyle("paddingLeft", _searchImg.width + 2);
 			addChild(_searchImg);
 
+		}
+		private function clickHandler(e:MouseEvent):void
+		{
+			var event:AdvancedSearchEvent = new AdvancedSearchEvent(AdvancedSearchEvent.ADVANCED_SEARCH_EVENT);
+			this.dispatchEvent(event);
 		}
 
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
