@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
     import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
+    import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
     import br.com.chapecosolucoes.trafegusweb.client.enum.VehicleEnum;
     import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
     import br.com.chapecosolucoes.trafegusweb.client.events.DetailsEvent;
@@ -11,6 +12,8 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
     import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
     import br.com.chapecosolucoes.trafegusweb.client.view.ClassesReferenciaView;
+    import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreReferenciaEVeiculoView;
+    import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreReferenciasView;
     import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreVeiculosView;
     import br.com.chapecosolucoes.trafegusweb.client.view.MainView2;
     import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
@@ -72,35 +75,20 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
         {
             if (event.detail == Alert.OK)
             {
+				this.closeAllPopups();
+                UsuarioLogado.getInstance().cleanUp();
+                MainModel.getInstance().cleanUp();
                 var closeEvent:CloseAppEvent = new CloseAppEvent(CloseAppEvent.CLOSE_APP_EVENT);
                 this.view.dispatchEvent(closeEvent);
-                MainModel.getInstance().cleanUp();
-                UsuarioLogado.getInstance().cleanUp();
-				this.closeAllPopups();
             }
         }
 		private function closeAllPopups():void
 		{
-			var systemManager:SystemManager = FlexGlobals.topLevelApplication.systemManager.topLevelSystemManager;
-			// if you scope your popups to PopUpManagerChildList.POPUP
-			// this is all you should have to check to clear all popups
-
-			while(systemManager.popUpChildren.numChildren > 0)
+			var length:int = MainModel.getInstance().popupsArray.length;
+			for(var i:int=0;i < length;i++)
 			{
-				PopUpManager.removePopUp(IFlexDisplayObject(systemManager.popUpChildren.getChildAt(0)));
-				trace(getQualifiedClassName(systemManager.popUpChildren.getChildAt(0)));
+				MyPopUpManager.removePopUp(IFlexDisplayObject(MainModel.getInstance().popupsArray.removeItemAt(0)));
 			}
-			
-			// if you scope your popups to other than PopUpManagerChildList.POPUP
-			// you need to scan this and check the class name to decide if you need to remove the child
-			/*for (var i:int = systemManager.numChildren - 1 ; i >= 0 ; i--)
-			{
-				trace(getQualifiedClassName(systemManager.getChildAt(i)));
-				if(getQualifiedClassName(systemManager.getChildAt(i))=="Popup")
-				{
-					systemManager.removeChildAt(i);
-				}
-			}*/
 		}
 
         public function closeEventHandler(event:CloseEvent):void
@@ -193,30 +181,35 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             {
 				MainModel.getInstance().smVO = new MonitoringRequestVO();
                 var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
-                PopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-                PopUpManager.centerPopUp(monitoringRequest);
+                MyPopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication));
+                MyPopUpManager.centerPopUp(monitoringRequest);
             }
             if (event.label == "Referências")
             {
                 var referencias:ClassesReferenciaView = new ClassesReferenciaView();
                 referencias.addEventListener(ReferenciasRecebidasEvent.REFERENCIAS_RECEBIDAS_EVENT, referenciasRecebidasResultHandler);
-                PopUpManager.addPopUp(referencias, DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-                PopUpManager.centerPopUp(referencias);
+                MyPopUpManager.addPopUp(referencias, DisplayObject(FlexGlobals.topLevelApplication));
+                MyPopUpManager.centerPopUp(referencias);
             }
 			if(event.label == "Entre veículos")
 			{
 				var distanciaEntreVeiculos:DistanciaEntreVeiculosView = new DistanciaEntreVeiculosView();
 				//posicaoVeiculoZoom.addEventListener(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,selectedVehicleEventHandler);
-				PopUpManager.addPopUp(distanciaEntreVeiculos,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-				PopUpManager.centerPopUp(distanciaEntreVeiculos);
+				MyPopUpManager.addPopUp(distanciaEntreVeiculos,DisplayObject(FlexGlobals.topLevelApplication));
+				MyPopUpManager.centerPopUp(distanciaEntreVeiculos);
 			}
 			if(event.label == "Entre referências")
 			{
-				
+				var distanciaEntrereferencias:DistanciaEntreReferenciasView = new DistanciaEntreReferenciasView();
+				//posicaoVeiculoZoom.addEventListener(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,selectedVehicleEventHandler);
+				MyPopUpManager.addPopUp(distanciaEntrereferencias,DisplayObject(FlexGlobals.topLevelApplication));
+				MyPopUpManager.centerPopUp(distanciaEntrereferencias);
 			}
 			if(event.label == "Entre veículo e referência")
 			{
-				
+				var distanciaEntreReferenciaEVeiculo:DistanciaEntreReferenciaEVeiculoView = new DistanciaEntreReferenciaEVeiculoView();
+				MyPopUpManager.addPopUp(distanciaEntreReferenciaEVeiculo,DisplayObject(FlexGlobals.topLevelApplication));
+				MyPopUpManager.centerPopUp(distanciaEntreReferenciaEVeiculo);
 			}
         }
 

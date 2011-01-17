@@ -1,12 +1,13 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
-	import br.com.chapecosolucoes.trafegusweb.client.model.AddParadasModel;
+	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.LocaisZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.TipoTransporteZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
 	import br.com.chapecosolucoes.trafegusweb.client.events.AddParadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedLocalEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.TipoTransporteSelecionadoEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.model.AddParadasModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddParadasView;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.ParadaVO;
 	
@@ -27,8 +28,8 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			var tipoTransporteZoom:TipoTransporteZoom = new TipoTransporteZoom();
 			tipoTransporteZoom.addEventListener(TipoTransporteSelecionadoEvent.TIPO_TRANSPORTE_SELECIONADO_EVENT,tipoTransporteSelecionadoEventHandler);
-			PopUpManager.addPopUp(tipoTransporteZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(tipoTransporteZoom);
+			MyPopUpManager.addPopUp(tipoTransporteZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			MyPopUpManager.centerPopUp(tipoTransporteZoom);
 		}
 		public function localZoomDispatcher(enum:LocaisEnum):void
 		{
@@ -37,12 +38,12 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				locaisZoom.addEventListener(SelectedLocalEvent.SELECTED_LOCAL_EVENT,paradaSelecionadoEventHandler);
 			}
-			PopUpManager.addPopUp(locaisZoom,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(locaisZoom);
+			MyPopUpManager.addPopUp(locaisZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			MyPopUpManager.centerPopUp(locaisZoom);
 		}
 		public function closeHandler():void
 		{
-			PopUpManager.removePopUp(this.view);
+			MyPopUpManager.removePopUp(this.view);
 		}
 		private function paradaSelecionadoEventHandler(event:SelectedLocalEvent):void
 		{

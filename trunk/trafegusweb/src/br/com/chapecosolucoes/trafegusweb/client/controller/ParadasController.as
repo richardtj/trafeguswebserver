@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.events.AddParadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddParadasView;
@@ -22,8 +23,8 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			var addParada:AddParadasView = new AddParadasView();
 			addParada.addEventListener(AddParadaEvent.PARADA_ADICIONADA_EVENT,paradaAdicionadaEventHandler);
-			PopUpManager.addPopUp(addParada,DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(addParada);
+			MyPopUpManager.addPopUp(addParada,DisplayObject(FlexGlobals.topLevelApplication));
+			MyPopUpManager.centerPopUp(addParada);
 		}
 		private function paradaAdicionadaEventHandler(event:AddParadaEvent):void
 		{

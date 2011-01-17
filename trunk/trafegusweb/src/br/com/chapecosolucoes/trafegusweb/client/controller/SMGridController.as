@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
+	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
@@ -47,16 +48,16 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				MainModel.getInstance().smVO = MonitoringRequestVO(this.view.grid.selectedItem);
 				var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
-				PopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-				PopUpManager.centerPopUp(monitoringRequest);
+				MyPopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication));
+				MyPopUpManager.centerPopUp(monitoringRequest);
 			}
 		}
 		public function novaSM():void
 		{
 			MainModel.getInstance().smVO = new MonitoringRequestVO();
 			var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
-			PopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication),false,PopUpManagerChildList.POPUP);
-			PopUpManager.centerPopUp(monitoringRequest);
+			MyPopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication));
+			MyPopUpManager.centerPopUp(monitoringRequest);
 		}
 		public function atualizaListaSM():void
 		{
