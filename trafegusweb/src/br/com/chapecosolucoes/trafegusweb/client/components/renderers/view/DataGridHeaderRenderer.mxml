@@ -11,24 +11,25 @@
     xmlns:mx="library://ns.adobe.com/flex/mx">
     <fx:Script>
         <![CDATA[
-            import br.com.chapecosolucoes.trafegusweb.client.events.CheckBoxItemRendererEvent;
-            import br.com.chapecosolucoes.trafegusweb.client.utils.Reflection;
-            import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
-
-            import flash.utils.getQualifiedClassName;
-
-            import mx.controls.Alert;
-            import mx.controls.CheckBox;
-            import mx.controls.DataGrid;
-            import mx.controls.List;
-            import mx.controls.dataGridClasses.DataGridColumn;
-            import mx.core.FlexGlobals;
-            import mx.events.FlexMouseEvent;
-            import mx.managers.PopUpManager;
-            import mx.rpc.events.ResultEvent;
-            import mx.utils.ObjectUtil;
-
-            import spark.components.TitleWindow;
+			import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
+			import br.com.chapecosolucoes.trafegusweb.client.events.CheckBoxItemRendererEvent;
+			import br.com.chapecosolucoes.trafegusweb.client.utils.Reflection;
+			import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
+			
+			import flash.utils.getQualifiedClassName;
+			
+			import mx.controls.Alert;
+			import mx.controls.CheckBox;
+			import mx.controls.DataGrid;
+			import mx.controls.List;
+			import mx.controls.dataGridClasses.DataGridColumn;
+			import mx.core.FlexGlobals;
+			import mx.events.FlexMouseEvent;
+			import mx.managers.PopUpManager;
+			import mx.rpc.events.ResultEvent;
+			import mx.utils.ObjectUtil;
+			
+			import spark.components.TitleWindow;
 
             private var dataProvider:Array;
 
@@ -55,8 +56,8 @@
                 list.addEventListener(FlexMouseEvent.MOUSE_DOWN_OUTSIDE, this.mouseDownOutSideEventHandler);
                 list.addEventListener(CheckBoxItemRendererEvent.VISIBLE_CHANGED, this.visibleChangedEventHandler);
                 list.itemRenderer = new ClassFactory(CheckBoxItemRenderer);
-                PopUpManager.addPopUp(list, DisplayObject(this));
-                PopUpManager.centerPopUp(list);
+                MyPopUpManager.addPopUp(list, DisplayObject(this));
+				MyPopUpManager.centerPopUp(list);
             }
 
             private function visibleChangedEventHandler(event:CheckBoxItemRendererEvent):void
