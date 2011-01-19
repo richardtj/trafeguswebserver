@@ -9,8 +9,10 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.ReferenciaSelecionadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.ClassesReferenciaVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.ReferenciaVO;
+	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
 	import flash.display.DisplayObject;
 	
@@ -18,6 +20,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import mx.core.FlexGlobals;
 	import mx.core.IFlexDisplayObject;
 	import mx.managers.PopUpManager;
+	import mx.rpc.events.ResultEvent;
 
 	public class ReferenciaZoomController extends BaseZoomController
 	{
@@ -27,14 +30,30 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function atualizaReferenciasZoom():void
 		{
-			if(MainModel.getInstance().referencias.length == 0)
+			this.view.paginable.paginaAtual = 1;
+			TrafegusWS.getIntance().solicitaRefenciasZoom(solicitaReferenciasZoomResultHandler,0);
+		}
+		public function solicitaTotalRefencias():void
+		{
+			TrafegusWS.getIntance().solicitaTotalRefencias(solicitaTotalRefenciasResultHandler);
+		}
+		private function solicitaTotalRefenciasResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			for each (var obj:Object in resultArray)
 			{
-				MessageBox.informacao("Nenhum referencia carregada no mapa.");
+				MainModel.getInstance().totalReferenciasZoom = int(obj.total.toString());
 			}
-			else
+		}
+		private function solicitaReferenciasZoomResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			MainModel.getInstance().referenciasZoom.removeAll();
+			for each (var obj:Object in resultArray)
 			{
-				MainModel.getInstance().referenciasZoom = new ArrayCollection(MainModel.getInstance().referencias.source.slice(0,20));
-				MainModel.getInstance().totalReferenciasZoom = MainModel.getInstance().referencias.length;
+				var referenciaVO:ReferenciaVO = new ReferenciaVO();
+				referenciaVO.setReferenciaVO(obj);
+				MainModel.getInstance().referenciasZoom.addItem(referenciaVO);
 			}
 		}
 		public function referenciaSelecionada():void
@@ -57,8 +76,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function solicitaReferenciasZoom(event:PaginableEvent):void
 		{
-			MainModel.getInstance().referenciasZoom = new ArrayCollection(MainModel.getInstance().referencias.source.slice(event.paginaAtual,event.paginaAtual+20));
-			MainModel.getInstance().referenciasZoom.filterFunction = this.referenciasFilterFunction;
+			TrafegusWS.getIntance().solicitaRefenciasZoom(solicitaReferenciasZoomResultHandler,event.paginaAtual);
 		}
 		public function advancedSearchClickEventHandler(event:AdvancedSearchEvent):void
 		{

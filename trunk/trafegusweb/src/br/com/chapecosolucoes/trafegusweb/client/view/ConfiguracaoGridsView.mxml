@@ -9,7 +9,7 @@
 				removedEffect="{dissolve,iris}"
 				creationComplete="this.creationComplete()"
 				close="this.controller.closeHandler()"
-				title="Configuração Grids"
+				title="Configuração das Grids"
 				titleIcon="@Embed(source='assets/configure-48.png')"
 				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
 				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
@@ -24,6 +24,7 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.controller.ConfiguracaoGridsController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
 			public var controller:ConfiguracaoGridsController;
 			private function creationComplete():void
@@ -35,7 +36,7 @@
 	</fx:Script>
 	<mx:Form id="form">
 		<mx:FormItem label="Itens por página">
-			<s:TextInput/>
+			<s:TextInput id="itensPorPagina" text="{MainModel.getInstance().itensPorPagina}"/>
 		</mx:FormItem>
 	</mx:Form>
 	<mx:ControlBar width="100%" horizontalAlign="right">

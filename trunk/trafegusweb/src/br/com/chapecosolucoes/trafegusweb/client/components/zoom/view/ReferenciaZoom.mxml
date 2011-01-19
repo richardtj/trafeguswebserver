@@ -45,12 +45,14 @@
 				this.controller.view = this;
 				this.controller.model = this.model;
 				
-				this.controller.atualizaReferenciasZoom();
+				this.controller.solicitaTotalRefencias();
 			}
 			private function creationComplete():void
 			{
 				MainModel.getInstance().referenciasZoom.filterFunction = this.controller.referenciasFilterFunction;
 				MainModel.getInstance().referenciasZoom.refresh();
+				
+				this.controller.atualizaReferenciasZoom();
 			}
 		]]>
 	</fx:Script>

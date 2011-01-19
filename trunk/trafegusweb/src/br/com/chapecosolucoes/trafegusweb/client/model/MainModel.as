@@ -92,6 +92,8 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		
 		public var totalReferenciasZoom:int = 0;
 		
+		public var itensPorPagina:int = 20;
+		
 		public var rota:Polyline = null;
 		
 		public var distanciaEntreVeiculos:DistanciaDeAteVeiculosVO = null;
