@@ -33,6 +33,8 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.descricaoRota = obj.rota_descricao.toString();
 			this.codigoPGR = obj.pgpg_codigo.toString();
 			this.descricaoPGR = obj.pgpg_descricao.toString();
+			this.prevHoraInicio = obj.viag_previsao_hora_inicio.toString();
+			this.prevHoraFim = obj.viag_previsao_hora_fim.toString();
 		}
 		public var codigoTipoViagem:String = "";
 		public var descricaoTipoViagem:String = "";
@@ -56,7 +58,9 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public var codigoDestino:String = "";
 		public var descricaoDestino:String = "";
 		public var prevInicio:String = "";
+		public var prevHoraInicio:String = "";
 		public var prevFim:String = "";
+		public var prevHoraFim:String = "";
 		public var dataCadastro:String = "";
 		public var operacao:String = "";
 		public var numeroViagem:String = "";

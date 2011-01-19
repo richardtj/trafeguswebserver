@@ -2,8 +2,12 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.PosicaoVeiculoZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreVeiculosSelecionadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PosicaoVeiculoSelecionadaEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.model.DistanciaEntreVeiculosModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreVeiculosView;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteVeiculosVO;
 	
 	import flash.display.DisplayObject;
 	
@@ -17,6 +21,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 		}
 		public var view:DistanciaEntreVeiculosView;
+		public var model:DistanciaEntreVeiculosModel;
 		public function closeHandler():void
 		{
 			MyPopUpManager.removePopUp(this.view);			
@@ -39,17 +44,18 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		private function posicaoVeiculo1SelecionadaEventHandler(event:PosicaoVeiculoSelecionadaEvent):void
 		{
-			this.view.veiculo1Zoom.cod = event.posicaoVeiculoVO.codVeic;
-			this.view.veiculo1Zoom.detail = event.posicaoVeiculoVO.vehiclePlate;
+			this.model.veiculoDe = event.posicaoVeiculoVO;
 		}
 		private function posicaoVeiculo2SelecionadaEventHandler(event:PosicaoVeiculoSelecionadaEvent):void
 		{
-			this.view.veiculo2Zoom.cod = event.posicaoVeiculoVO.codVeic;
-			this.view.veiculo2Zoom.detail = event.posicaoVeiculoVO.vehiclePlate;
+			this.model.veiculoAte = event.posicaoVeiculoVO;
 		}
 		public function veiculosSelecionados():void
 		{
-			
+			var distanciaEntreVeiculos:DistanciaDeAteVeiculosVO = new DistanciaDeAteVeiculosVO(this.model.veiculoDe,this.model.veiculoAte);
+			var event:DistanciaEntreVeiculosSelecionadaEvent = new DistanciaEntreVeiculosSelecionadaEvent(DistanciaEntreVeiculosSelecionadaEvent.DISTANCIA_ENTRE_VEICULOS_SELECIONADA_EVENT,distanciaEntreVeiculos);
+			this.view.dispatchEvent(event);
+			this.closeHandler();
 		}
 	}
 }

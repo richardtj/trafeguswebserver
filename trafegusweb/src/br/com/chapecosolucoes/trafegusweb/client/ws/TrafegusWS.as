@@ -197,6 +197,12 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
             var operation:Operation = createOperation("solicitaTotalDadosGrid", handler);
             operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
         }
+		
+		public function solicitaTotalDadosGridZoom(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaTotalDadosGridZoom", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
+		}
 
         public function solicitaTotalListaLocais(handler:Function):void
         {
@@ -393,6 +399,11 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 		{
 			var operation:Operation = createOperation("solicitaDadosGridZoom", handler);
 			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, offset);
+		}
+		public function procuraDadosGrid(handler:Function,posVeiculoVO:PosicaoVeiculoVO):void
+		{
+			var operation:Operation = createOperation("procuraDadosGrid", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, posVeiculoVO.vehiclePlate,posVeiculoVO.gpsDescSis);
 		}
     }
 }

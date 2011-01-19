@@ -26,6 +26,8 @@
 				public var totalRecords:int=20;
 				[Bindable]
 				public var paginaAtual:int=1;
+				[Bindable]
+				public var itensPorPagina:int=20;
 				public function init():void
 				{
 					this.controller = new PaginableComponentController();

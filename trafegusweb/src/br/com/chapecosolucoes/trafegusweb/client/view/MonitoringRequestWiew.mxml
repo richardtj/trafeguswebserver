@@ -11,7 +11,7 @@
 		 close="closeHandler()"
 		 title="Novo Monitoramento"
 		 titleIcon="@Embed(source='assets/wifi.png')"
-		 xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*" xmlns:view1="br.com.chapecosolucoes.trafegusweb.client.view.*" xmlns:datafieldpt="br.com.chapecosolucoes.trafegusweb.client.components.datafieldpt.*">
+		 xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*" xmlns:view1="br.com.chapecosolucoes.trafegusweb.client.view.*" xmlns:datafieldpt="br.com.chapecosolucoes.trafegusweb.client.components.datafieldpt.*" xmlns:controls="com.flexpernambuco.controls.*">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:Dissolve id="dissolve" duration="500"/>
@@ -123,7 +123,10 @@
 						tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.ORIGEM,event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Prev. inicio" required="true">
-					<datafieldpt:DataFieldPT text="{MainModel.getInstance().smVO.prevInicio}"/>
+					<mx:HBox>
+						<datafieldpt:DataFieldPT text="{MainModel.getInstance().smVO.prevInicio}"/>
+						<controls:MasterTextInput inputMask="99:99:99" blankMaskChar=" " width="80" fullText="{MainModel.getInstance().smVO.prevHoraInicio}"/>
+					</mx:HBox>
 				</mx:FormItem>
 				<mx:FormItem label="Destino" required="true">
 					<view:ZoomCodDetailView 
@@ -134,7 +137,10 @@
 						tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.DESTINO,event)"/>
 				</mx:FormItem>
 				<mx:FormItem label="Prev. fim" required="true">
-					<datafieldpt:DataFieldPT text="{MainModel.getInstance().smVO.prevFim}"/>
+					<mx:HBox>
+						<datafieldpt:DataFieldPT text="{MainModel.getInstance().smVO.prevFim}"/>
+						<controls:MasterTextInput inputMask="99:99:99" blankMaskChar=" " width="80" fullText="{MainModel.getInstance().smVO.prevHoraFim}"/>
+					</mx:HBox>
 				</mx:FormItem>
 				<!--mx:FormItem label="Entragas/Paradas">
 					<mx:Image source="@Embed(source='assets/plus-icon.png')" buttonMode="true" click="this.controller.addParadas()"/>

@@ -116,6 +116,9 @@
 								<menuitem label="Entre veículo e referência"/>
 							</menuitem>
                         </menuitem>
+						<menuitem label="Configurações">
+							<menuitem label="Grids"/>
+						</menuitem>
                     </XMLList>;
                 this.myMenuBar.dataProvider = xml;
 

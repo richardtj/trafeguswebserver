@@ -1,7 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.vo
 {
 	import com.google.maps.LatLng;
-
+	[Bindable]
 	public class PosicaoVeiculoVO
 	{
 		public function PosicaoVeiculoVO(obj:Object=null)

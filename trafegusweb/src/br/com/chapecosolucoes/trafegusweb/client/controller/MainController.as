@@ -5,6 +5,9 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import br.com.chapecosolucoes.trafegusweb.client.enum.VehicleEnum;
     import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
     import br.com.chapecosolucoes.trafegusweb.client.events.DetailsEvent;
+    import br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciaEVeiculoSelecionadoEvent;
+    import br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciasSelecionadaEvent;
+    import br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreVeiculosSelecionadaEvent;
     import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
     import br.com.chapecosolucoes.trafegusweb.client.events.ReferenciasRecebidasEvent;
     import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent;
@@ -12,6 +15,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
     import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
     import br.com.chapecosolucoes.trafegusweb.client.view.ClassesReferenciaView;
+    import br.com.chapecosolucoes.trafegusweb.client.view.ConfiguracaoGridsView;
     import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreReferenciaEVeiculoView;
     import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreReferenciasView;
     import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreVeiculosView;
@@ -55,7 +59,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
         {
             this.view.map.posicaoVeiculoVO();
             this.view.details.posicaoVeiculoVO();
-			//this.view.detalhes.title = event.
+			this.view.detalhes.status = ObjectUtil.toString(event.placa);
             if (event.enum == VehicleEnum.LIST)
             {
                 this.view.details.selectedIndex = event.index;
@@ -194,24 +198,45 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(event.label == "Entre veículos")
 			{
 				var distanciaEntreVeiculos:DistanciaEntreVeiculosView = new DistanciaEntreVeiculosView();
-				//posicaoVeiculoZoom.addEventListener(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,selectedVehicleEventHandler);
+				distanciaEntreVeiculos.addEventListener(DistanciaEntreVeiculosSelecionadaEvent.DISTANCIA_ENTRE_VEICULOS_SELECIONADA_EVENT,distanciaEntreVeiculosSelecionadaEventHandler);
 				MyPopUpManager.addPopUp(distanciaEntreVeiculos,DisplayObject(FlexGlobals.topLevelApplication));
 				MyPopUpManager.centerPopUp(distanciaEntreVeiculos);
 			}
 			if(event.label == "Entre referências")
 			{
-				var distanciaEntrereferencias:DistanciaEntreReferenciasView = new DistanciaEntreReferenciasView();
-				//posicaoVeiculoZoom.addEventListener(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,selectedVehicleEventHandler);
-				MyPopUpManager.addPopUp(distanciaEntrereferencias,DisplayObject(FlexGlobals.topLevelApplication));
-				MyPopUpManager.centerPopUp(distanciaEntrereferencias);
+				var distanciaEntreReferencias:DistanciaEntreReferenciasView = new DistanciaEntreReferenciasView();
+				distanciaEntreReferencias.addEventListener(DistanciaEntreReferenciasSelecionadaEvent.DISTANCIA_ENTRE_REFERENCIAS_SELECIONADA_EVENT,distanciaEntreReferenciasSelecionadaEventHandler);
+				MyPopUpManager.addPopUp(distanciaEntreReferencias,DisplayObject(FlexGlobals.topLevelApplication));
+				MyPopUpManager.centerPopUp(distanciaEntreReferencias);
 			}
 			if(event.label == "Entre veículo e referência")
 			{
 				var distanciaEntreReferenciaEVeiculo:DistanciaEntreReferenciaEVeiculoView = new DistanciaEntreReferenciaEVeiculoView();
+				distanciaEntreReferenciaEVeiculo.addEventListener(DistanciaEntreReferenciaEVeiculoSelecionadoEvent.DISTANCIA_ENTRE_REFERENCIA_E_VEICULO_SELECIONADA_EVENT,distanciaEntreReferenciaEVeiculoSelecionadaEventHandler);
 				MyPopUpManager.addPopUp(distanciaEntreReferenciaEVeiculo,DisplayObject(FlexGlobals.topLevelApplication));
 				MyPopUpManager.centerPopUp(distanciaEntreReferenciaEVeiculo);
 			}
+			if(event.label == "Grids")
+			{
+				var configuracaoGris:ConfiguracaoGridsView = new ConfiguracaoGridsView();
+				MyPopUpManager.addPopUp(configuracaoGris,DisplayObject(FlexGlobals.topLevelApplication));
+				MyPopUpManager.centerPopUp(configuracaoGris);
+			}
         }
+		
+		private function distanciaEntreReferenciasSelecionadaEventHandler(event:DistanciaEntreReferenciasSelecionadaEvent):void
+		{
+			this.view.map.distanciaEntreReferencias(event.distanciaEntreReferenciasVO);
+		}
+		
+		private function distanciaEntreVeiculosSelecionadaEventHandler(event:DistanciaEntreVeiculosSelecionadaEvent):void
+		{
+			this.view.map.distanciaEntreVeiculos(event.distanciaEntreVeiculosVO);
+		}
+		private function distanciaEntreReferenciaEVeiculoSelecionadaEventHandler(event:DistanciaEntreReferenciaEVeiculoSelecionadoEvent):void
+		{
+			this.view.map.distanciaEntreReferenciaEVeiculo(event.distanciaEntreReferenciaEVeiculoVO);
+		}
 
         private function referenciasRecebidasResultHandler(event:ReferenciasRecebidasEvent):void
         {

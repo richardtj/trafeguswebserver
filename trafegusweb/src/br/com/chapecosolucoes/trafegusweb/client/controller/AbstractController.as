@@ -20,7 +20,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			if(event.currentTarget.selectedItem != null)
 			{
 				MainModel.getInstance().posicaoVeiculoVO = PosicaoVeiculoVO(event.currentTarget.selectedItem);
-				var vehicleEvent:VehiclesEvent = new VehiclesEvent(VehiclesEvent.VEHICLE_SELECTED_EVENT,event.currentTarget.selectedIndex,VehicleEnum.DETAILS,true);
+				var vehicleEvent:VehiclesEvent = new VehiclesEvent(VehiclesEvent.VEHICLE_SELECTED_EVENT,event.currentTarget.selectedIndex,VehicleEnum.DETAILS,"",true);
 				this.view.dispatchEvent(vehicleEvent);
 			}
 		}
