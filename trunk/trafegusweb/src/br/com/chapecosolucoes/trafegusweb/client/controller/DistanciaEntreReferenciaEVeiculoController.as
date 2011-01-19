@@ -4,9 +4,15 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.BaseZoomController;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.PosicaoVeiculoZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.ReferenciaZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciaEVeiculoSelecionadoEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreVeiculosSelecionadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PosicaoVeiculoSelecionadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.ReferenciaSelecionadaEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.model.DistanciaEntreReferenciaEVeiculoModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreReferenciaEVeiculoView;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteReferenciaEVeiculoVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteVeiculosVO;
 	
 	import flash.display.DisplayObject;
 	import flash.events.KeyboardEvent;
@@ -19,9 +25,13 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public function DistanciaEntreReferenciaEVeiculoController()
 		{
 		}
+		public var model:DistanciaEntreReferenciaEVeiculoModel;
 		public function referenciaEVeiculoSelecionados():void
 		{
-			
+			var distanciaEntreVeiculoEReferencia:DistanciaDeAteReferenciaEVeiculoVO = new DistanciaDeAteReferenciaEVeiculoVO(this.model.posicaoVeiculoVO,this.model.referenciaVO);
+			var event:DistanciaEntreReferenciaEVeiculoSelecionadoEvent = new DistanciaEntreReferenciaEVeiculoSelecionadoEvent(DistanciaEntreReferenciaEVeiculoSelecionadoEvent.DISTANCIA_ENTRE_REFERENCIA_E_VEICULO_SELECIONADA_EVENT,distanciaEntreVeiculoEReferencia);
+			this.view.dispatchEvent(event);
+			this.closeHandler();
 		}
 		public function veiculoZoomDispatcher():void
 		{
@@ -32,8 +42,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		private function posicaoVeiculoSelecionadaEventHandler(event:PosicaoVeiculoSelecionadaEvent):void
 		{
-			this.view.veiculoZoom.cod = event.posicaoVeiculoVO.codVeic;
-			this.view.veiculoZoom.detail = event.posicaoVeiculoVO.vehiclePlate;
+			this.model.posicaoVeiculoVO = event.posicaoVeiculoVO;
 		}
 		public function referenciaZoomDispatcher():void
 		{
@@ -44,8 +53,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		private function referenciaSelecionadaEventHandler(event:ReferenciaSelecionadaEvent):void
 		{
-			this.view.referenciaZoom.cod = event.referenciaVO.codigo;
-			this.view.referenciaZoom.detail = event.referenciaVO.refeDescricao;
+			this.model.referenciaVO = event.referenciaVO;
 		}
 	}
 }

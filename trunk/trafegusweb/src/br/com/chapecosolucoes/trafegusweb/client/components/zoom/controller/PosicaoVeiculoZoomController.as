@@ -1,6 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.view.AdvancedSearch;
+	import br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.view.AdvancedSearchVeiculosImpl;
 	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.model.PosicaoVeiculoZoomModel;
@@ -8,18 +9,25 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PosicaoVeiculoSelecionadaEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
+	import br.com.chapecosolucoes.trafegusweb.client.view.VehicleDetails;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
 	import flash.display.DisplayObject;
 	
 	import mx.collections.ArrayCollection;
 	import mx.collections.XMLListCollection;
+	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	import mx.core.IFlexDisplayObject;
 	import mx.managers.PopUpManager;
 	import mx.rpc.events.ResultEvent;
+	import mx.utils.ObjectUtil;
+	import mx.utils.object_proxy;
 
 	public class PosicaoVeiculoZoomController extends BaseZoomController
 	{
@@ -32,11 +40,14 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			event.stopImmediatePropagation();
 			TrafegusWS.getIntance().solicitaDadosGridZoom(this.dadosGridZoomRecebidosHandler,event.paginaAtual);
 		}
+		private function procuraDadosGridHandler(event:ResultEvent):void
+		{
+			MainModel.getInstance().totalDadosGridZoom = ParserResult.parserDefault(event).length;
+			this.dadosGridZoomRecebidosHandler(event);
+		}
 		private function dadosGridZoomRecebidosHandler(event:ResultEvent):void
 		{
-			var xml:XML = XML(event.result);
-			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
-			var resultArray:Array = xmlListCollection.toArray();
+			var resultArray:Array = ParserResult.parserDefault(event);
 			MainModel.getInstance().posVeiculosArrayZoom = new ArrayCollection();
 			MainModel.getInstance().posVeiculosArrayZoom.filterFunction = posicaoVeiculosFilterFunction;
 			for each (var obj:Object in resultArray)
@@ -54,6 +65,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function atualizaDadosGridZoom():void
 		{
+			this.solicitaTotalDadosGridZoom();
 			TrafegusWS.getIntance().solicitaDadosGridZoom(this.dadosGridZoomRecebidosHandler,0);
 		}
 		public function posicaoVeiculosFilterFunction(item:Object):Boolean
@@ -79,11 +91,40 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			MainModel.getInstance().posVeiculosArrayZoom.addItem(this.model.posicaoVeiculoVOExcluido);
 			MyPopUpManager.removePopUp(IFlexDisplayObject(this.view));
 		}
-		public function advancedSearchEventHandler(event:AdvancedSearchEvent):void
+		public function advancedSearchClickEventHandler(event:AdvancedSearchEvent):void
 		{
-			var advancedSearch:AdvancedSearch = new AdvancedSearch();
+			var advancedSearch:AdvancedSearchVeiculosImpl = new AdvancedSearchVeiculosImpl();
+			advancedSearch.addEventListener(AdvancedSearchEvent.ADVANCED_SEARCH_EVENT,advancedSearchEventHandler);
 			MyPopUpManager.addPopUp(advancedSearch,DisplayObject(FlexGlobals.topLevelApplication));
 			MyPopUpManager.centerPopUp(advancedSearch);
+		}
+		public function selectedVehicleEventHandler(event:SelectedVehicleEvent):void
+		{
+			event.stopImmediatePropagation();
+			this.veiculoSelecionado();
+		}
+		public function mouseOverEventHandler():void
+		{
+			VehicleDetails.SELECT_BUTTON_VISIBLE = true;
+		}
+		private function advancedSearchEventHandler(event:AdvancedSearchEvent):void
+		{
+			var posicaoVeiculoVO:PosicaoVeiculoVO = PosicaoVeiculoVO(event.genericVO);
+			TrafegusWS.getIntance().procuraDadosGrid(procuraDadosGridHandler,posicaoVeiculoVO);
+		}
+		public function solicitaTotalDadosGridZoom():void
+		{
+			TrafegusWS.getIntance().solicitaTotalDadosGridZoom(solicitaTotalDadosGridResultHandler);
+		}
+		private function solicitaTotalDadosGridResultHandler(event:ResultEvent):void
+		{
+			var xml:XML = XML(event.result);
+			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
+			var resultArray:Array = xmlListCollection.toArray();
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().totalDadosGridZoom = int(obj.total.toString());
+			}
 		}
 	}
 }

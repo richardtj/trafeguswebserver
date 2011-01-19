@@ -9,10 +9,12 @@
 		 xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
 	<fx:Metadata>
 		[Event(name="refreshEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.RefreshEvent")]
+		[Event(name="advancedSearchEvent", type="br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent")]
 	</fx:Metadata>
 	<fx:Binding source="searchInput.text" destination="text"/>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.events.RefreshEvent;
 			[Bindable]
 			public var text:String = "";
@@ -21,13 +23,19 @@
 				var event:RefreshEvent = new RefreshEvent(RefreshEvent.REFRESH_EVENT);
 				this.dispatchEvent(event);
 			}
+			private function advancedSearchEventHandler(event:AdvancedSearchEvent):void
+			{
+				var event:AdvancedSearchEvent = AdvancedSearchEvent(event.clone());
+				this.dispatchEvent(event);
+			}
 		]]>
 	</fx:Script>
 	<searchInput:SearchInputFXBase 
 		id="searchInput"
 		width="100%" 
 		borderStyle="none"
-		text="{text}"/>
+		text="{text}"
+		advancedSearchEvent="advancedSearchEventHandler(event)"/>
 	<mx:Image 
 		source="@Embed(source='assets/refresh16x16.png')" 
 		buttonMode="true" 

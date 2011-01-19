@@ -116,7 +116,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.searchInput
 		}
 		private function clickHandler(e:MouseEvent):void
 		{
-			var event:AdvancedSearchEvent = new AdvancedSearchEvent(AdvancedSearchEvent.ADVANCED_SEARCH_EVENT);
+			var event:AdvancedSearchEvent = new AdvancedSearchEvent(AdvancedSearchEvent.ADVANCED_SEARCH_EVENT,null);
 			this.dispatchEvent(event);
 		}
 

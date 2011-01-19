@@ -7,6 +7,10 @@ package br.com.chapecosolucoes.trafegusweb.client.model
     import br.com.chapecosolucoes.trafegusweb.client.vo.DadosTransportadorVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.DadosVeiculoVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.DadosViagemPaiVO;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteReferenciaEVeiculoVO;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteReferenciasVO;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteVO;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteVeiculosVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
@@ -61,6 +65,8 @@ package br.com.chapecosolucoes.trafegusweb.client.model
         public var leftToRightEnabled:Boolean = true;
 
         public var totalDadosGrid:int = 0;
+		
+        public var totalDadosGridZoom:int = 0;
 
         public var totalListaLocais:int = 0;
 
@@ -84,7 +90,15 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 
         public var totalVeiculosViagem:int = 0;
 		
+		public var totalReferenciasZoom:int = 0;
+		
 		public var rota:Polyline = null;
+		
+		public var distanciaEntreVeiculos:DistanciaDeAteVeiculosVO = null;
+		
+		public var distanciaEntreReferenciaEVeiculo:DistanciaDeAteReferenciaEVeiculoVO = null;
+		
+		public var distanciaEntreReferencias:DistanciaDeAteReferenciasVO = null;
 		
         [ArrayElementType("br.com.chapecosolucoes.trafegusweb.vo.DataMsg")]
         public var dpMensagens:ArrayCollection;

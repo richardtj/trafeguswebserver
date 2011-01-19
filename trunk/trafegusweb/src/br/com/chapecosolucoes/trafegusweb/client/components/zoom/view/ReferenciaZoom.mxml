@@ -25,6 +25,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.ReferenciaZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.model.ReferenciaZoomModel;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
@@ -44,8 +45,7 @@
 				this.controller.view = this;
 				this.controller.model = this.model;
 				
-				MainModel.getInstance().referenciasZoom = new ArrayCollection(MainModel.getInstance().referencias.source.slice(0,20));
-				
+				this.controller.atualizaReferenciasZoom();
 			}
 			private function creationComplete():void
 			{
@@ -54,11 +54,13 @@
 			}
 		]]>
 	</fx:Script>
-	<searchInput:SearchInputFXBase 
+	<searchInput:SearchInputFX 
 		id="textInputFiltro"
 		width="100%" 
 		keyUp="MainModel.getInstance().referenciasZoom.refresh()"
-		text="{MainModel.getInstance().zoomFilter}"/>
+		text="{MainModel.getInstance().zoomFilter}"
+		refreshEvent="this.controller.atualizaReferenciasZoom()"
+		advancedSearchEvent="this.controller.advancedSearchClickEventHandler(event)"/>
 	<mx:List 
 		id="list" 
 		width="100%"
@@ -70,7 +72,7 @@
 		itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.ReferenciaItemRenderer"/>
 	<view:PaginableComponent 
 		id="paginable"
-		totalRecords="{MainModel.getInstance().referencias.length}"
+		totalRecords="{MainModel.getInstance().totalReferenciasZoom}"
 		next="this.controller.solicitaReferenciasZoom(event)"
 		prev="this.controller.solicitaReferenciasZoom(event)"
 		first="this.controller.solicitaReferenciasZoom(event)"

@@ -9,9 +9,13 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoTelasVO;
     import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
     
+    import flash.events.KeyboardEvent;
+    import flash.ui.Keyboard;
+    
     import mx.collections.XMLListCollection;
     import mx.controls.Alert;
     import mx.rpc.events.ResultEvent;
+    import mx.utils.ObjectUtil;
 
     public class LoginComponentController
     {
@@ -53,6 +57,17 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 			}
             var loginEvent:LoginEvent = new LoginEvent(LoginEvent.LOGIN_EVENT, true);
             this.view.dispatchEvent(loginEvent);
+		}
+		public function capslockHandler():void
+		{
+			if(Keyboard.capsLock)
+			{				
+				this.view.checkBox1.label = "Capslock on";
+			}
+			else
+			{
+				this.view.checkBox1.label = "";
+			}
 		}
     }
 }

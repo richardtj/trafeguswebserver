@@ -15,6 +15,11 @@
 			import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 			import br.com.chapecosolucoes.trafegusweb.client.controller.MapController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			import br.com.chapecosolucoes.trafegusweb.client.utils.PolyLineMidPoint;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteReferenciaEVeiculoVO;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteReferenciasVO;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteVO;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteVeiculosVO;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.HistoricoPosicoesVeiculoVO;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.ReferenciaVO;
@@ -27,6 +32,7 @@
 			import com.google.maps.overlays.MarkerOptions;
 			import com.google.maps.overlays.Polyline;
 			import com.google.maps.overlays.PolylineOptions;
+			import com.google.maps.services.Directions;
 			import com.google.maps.styles.StrokeStyle;
 			
 			import mx.collections.ArrayCollection;
@@ -51,6 +57,156 @@
 				{
 					MessageBox.atencao("Favor aguardar carga do mapa");
 				}
+			}
+			public function distanciaEntreReferencias(value:DistanciaDeAteReferenciasVO):void
+			{
+				if(MainModel.getInstance().distanciaEntreReferencias != null)
+				{
+					map.removeOverlay(MainModel.getInstance().distanciaEntreReferencias.marker);
+					map.removeOverlay(MainModel.getInstance().distanciaEntreReferencias.tooltip);
+					map.removeOverlay(MainModel.getInstance().distanciaEntreReferencias.polyLine);
+				}
+				else
+				{
+					MainModel.getInstance().distanciaEntreReferencias = value;
+				}
+				var pontos:Array = new Array();
+				pontos.push(value.de.latLong);
+				pontos.push(value.ate.latLong);
+				value.polyLine = new Polyline
+					(
+						pontos,
+						new PolylineOptions
+						({
+							strokeStyle: new StrokeStyle(
+								{
+									color: 0xff0000,
+									thickness: 4,
+									alpha: 0.7
+								})
+						})
+					);
+				value.marker = new Marker(value.meio);
+				value.tooltip = new TooltipOverlay(value.meio, value.distanciaDeAte());
+				value.marker.addEventListener(MapMouseEvent.CLICK, function(e:MapMouseEvent):void
+				{
+					value.marker.openInfoWindow(new InfoWindowOptions({contentHTML: value.getHtml()}));
+				});
+				value.marker.addEventListener(MapMouseEvent.ROLL_OVER, function(e:MapMouseEvent):void
+				{
+					map.addOverlay(value.tooltip);
+				});
+				value.marker.addEventListener(MapMouseEvent.ROLL_OUT, function(e:MapMouseEvent):void
+				{
+					map.removeOverlay(value.tooltip);
+				});
+				map.addOverlay(value.marker);
+				map.addOverlay(value.polyLine);
+				map.setCenter(value.meio);
+				map.setZoom(map.getBoundsZoomLevel(value.polyLine.getLatLngBounds()));
+				MainModel.getInstance().distanciaEntreReferencias.tooltip = value.tooltip;
+				MainModel.getInstance().distanciaEntreReferencias.marker = value.marker;
+				MainModel.getInstance().distanciaEntreReferencias.polyLine = value.polyLine;
+			}
+			public function distanciaEntreReferenciaEVeiculo(value:DistanciaDeAteReferenciaEVeiculoVO):void
+			{
+				if(MainModel.getInstance().distanciaEntreReferenciaEVeiculo != null)
+				{
+					map.removeOverlay(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.marker);
+					map.removeOverlay(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.tooltip);
+					map.removeOverlay(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.polyLine);
+				}
+				else
+				{
+					MainModel.getInstance().distanciaEntreReferenciaEVeiculo = value;
+				}
+				var pontos:Array = new Array();
+				pontos.push(value.de.latLong);
+				pontos.push(value.ate.latLong);
+				value.polyLine = new Polyline
+					(
+						pontos,
+						new PolylineOptions
+						({
+							strokeStyle: new StrokeStyle(
+								{
+									color: 0x00ff00,
+									thickness: 4,
+									alpha: 0.7
+								})
+						})
+					);
+				value.marker = new Marker(value.meio);
+				value.tooltip = new TooltipOverlay(value.meio, value.distanciaDeAte());
+				value.marker.addEventListener(MapMouseEvent.CLICK, function(e:MapMouseEvent):void
+				{
+					value.marker.openInfoWindow(new InfoWindowOptions({contentHTML: value.getHtml()}));
+				});
+				value.marker.addEventListener(MapMouseEvent.ROLL_OVER, function(e:MapMouseEvent):void
+				{
+					map.addOverlay(value.tooltip);
+				});
+				value.marker.addEventListener(MapMouseEvent.ROLL_OUT, function(e:MapMouseEvent):void
+				{
+					map.removeOverlay(value.tooltip);
+				});
+				map.addOverlay(value.marker);
+				map.addOverlay(value.polyLine);
+				map.setCenter(value.meio);
+				map.setZoom(map.getBoundsZoomLevel(value.polyLine.getLatLngBounds()));
+				MainModel.getInstance().distanciaEntreReferenciaEVeiculo.tooltip = value.tooltip;
+				MainModel.getInstance().distanciaEntreReferenciaEVeiculo.marker = value.marker;
+				MainModel.getInstance().distanciaEntreReferenciaEVeiculo.polyLine = value.polyLine;
+			}
+			public function distanciaEntreVeiculos(value:DistanciaDeAteVeiculosVO):void
+			{
+				if(MainModel.getInstance().distanciaEntreVeiculos != null)
+				{
+					map.removeOverlay(MainModel.getInstance().distanciaEntreVeiculos.marker);
+					map.removeOverlay(MainModel.getInstance().distanciaEntreVeiculos.tooltip);
+					map.removeOverlay(MainModel.getInstance().distanciaEntreVeiculos.polyLine);
+				}
+				else
+				{
+					MainModel.getInstance().distanciaEntreVeiculos = value;
+				}
+				var pontos:Array = new Array();
+				pontos.push(value.de.latLong);
+				pontos.push(value.ate.latLong);
+				value.polyLine = new Polyline
+					(
+						pontos,
+						new PolylineOptions
+						({
+							strokeStyle: new StrokeStyle(
+								{
+									color: 0x0000ff,
+									thickness: 4,
+									alpha: 0.7
+								})
+						})
+					);
+				value.marker = new Marker(value.meio);
+				value.tooltip = new TooltipOverlay(value.meio, value.distanciaDeAte());
+				value.marker.addEventListener(MapMouseEvent.CLICK, function(e:MapMouseEvent):void
+				{
+					value.marker.openInfoWindow(new InfoWindowOptions({contentHTML: value.getHtml()}));
+				});
+				value.marker.addEventListener(MapMouseEvent.ROLL_OVER, function(e:MapMouseEvent):void
+				{
+					map.addOverlay(value.tooltip);
+				});
+				value.marker.addEventListener(MapMouseEvent.ROLL_OUT, function(e:MapMouseEvent):void
+				{
+					map.removeOverlay(value.tooltip);
+				});
+				map.addOverlay(value.marker);
+				map.addOverlay(value.polyLine);
+				map.setCenter(value.meio);
+				map.setZoom(map.getBoundsZoomLevel(value.polyLine.getLatLngBounds()));
+				MainModel.getInstance().distanciaEntreVeiculos.tooltip = value.tooltip;
+				MainModel.getInstance().distanciaEntreVeiculos.marker = value.marker;
+				MainModel.getInstance().distanciaEntreVeiculos.polyLine = value.polyLine;
 			}
 			public function rotaVeiculo(value:ArrayCollection):void
 			{
