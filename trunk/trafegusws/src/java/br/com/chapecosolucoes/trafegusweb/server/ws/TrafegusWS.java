@@ -64,7 +64,7 @@ public class TrafegusWS {
         sb.append("     cref_classe_sistema");
         sb.append(" FROM cref_classe_referencia");
         sb.append(" WHERE(cref_pess_oras_codigo IS NULL OR cref_pess_oras_codigo = '").append(codEmrpesa.toString()).append("')");
-        System.out.print(sb.toString());
+        //System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -131,7 +131,7 @@ public class TrafegusWS {
             sb.append("          AND CREF_CODIGO = '").append(codClasseReferencia.toString()).append("'");
         }
         sb.append(" ORDER BY REFE_DESCRICAO");
-        System.out.print(sb.toString());
+        //System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -162,8 +162,8 @@ public class TrafegusWS {
         sb.append(" JOIN REFE_REFERENCIA ON (REFE_CREF_CODIGO = CREF_CODIGO)");
         sb.append(" WHERE");
         sb.append("        (CREF_PESS_ORAS_CODIGO IS NULL OR CREF_PESS_ORAS_CODIGO = '").append(codEmpresa.toString()).append("')");
-        sb.append(" AS XXX");
-        System.out.print(sb.toString());
+        sb.append(" ) AS XXX");
+        //System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -193,8 +193,59 @@ public class TrafegusWS {
         sb.append(" JOIN REFE_REFERENCIA ON (REFE_CREF_CODIGO = CREF_CODIGO)");
         sb.append(" WHERE");
         sb.append("        (CREF_PESS_ORAS_CODIGO IS NULL OR CREF_PESS_ORAS_CODIGO = '").append(codEmpresa.toString()).append("')");
-        sb.append(" ORDER BY REFE_DESCRICAO");
+        sb.append(" ORDER BY CREF_CODIGO");
         sb.append(" LIMIT ").append(limit).append(" OFFSET ").append(offset);
+        //System.out.print(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "procuraRefenciasZoom")
+    public String procuraRefenciasZoom(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "refeDesc") String refeDesc, @WebParam(name = "grupoDesc") String grupoDesc) throws Exception {
+        if(refeDesc.equalsIgnoreCase(""))
+        {
+            refeDesc = " = UPPER(REFE_DESCRICAO)";
+        }
+        else
+        {
+            refeDesc = " LIKE '%"+refeDesc.toUpperCase()+"%'";
+        }
+        if(grupoDesc.equalsIgnoreCase(""))
+        {
+            grupoDesc = " = UPPER(CREF_DESCRICAO)";
+        }
+        else
+        {
+            grupoDesc = " LIKE '%"+grupoDesc.toUpperCase()+"%'";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT CREF_CODIGO,");
+        sb.append("        CREF_DESCRICAO,");
+        sb.append("        CREF_PESS_ORAS_CODIGO,");
+        sb.append("        CREF_CLASSE_SISTEMA,");
+        sb.append("        CREF_DATA_CADASTRO,");
+        sb.append("        REFE_CODIGO,");
+        sb.append("        REFE_DESCRICAO,");
+        sb.append("        REFE_LATITUDE,");
+        sb.append("        REFE_LONGITUDE,");
+        sb.append("        REFE_CREF_CODIGO,");
+        sb.append("        REFE_RAIO,");
+        sb.append("        REFE_KM,");
+        sb.append("        REFE_BANDEIRA,");
+        sb.append("        REFE_UTILIZADO_SISTEMA,");
+        sb.append("        REFE_DATA_CADASTRO");
+        sb.append(" FROM");
+        sb.append("        CREF_CLASSE_REFERENCIA");
+        sb.append(" JOIN REFE_REFERENCIA ON (REFE_CREF_CODIGO = CREF_CODIGO)");
+        sb.append(" WHERE ");
+        sb.append("        (CREF_PESS_ORAS_CODIGO IS NULL OR CREF_PESS_ORAS_CODIGO = '").append(codEmpresa.toString()).append("')");
+        sb.append(" AND ");
+        sb.append("         UPPER(REFE_DESCRICAO) ").append(refeDesc);
+        sb.append(" AND ");
+        sb.append("         UPPER(CREF_DESCRICAO) ").append(grupoDesc);
+        sb.append(" ORDER BY REFE_DESCRICAO");
         System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
@@ -542,7 +593,7 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN PESS_Pessoa ON (PESS_ORAS_Codigo = EMBA_PJUR_PESS_ORAS_Codigo)");
         sb.append("  ORDER BY VEIC_Placa");
         sb.append("  LIMIT ").append(limit).append(" OFFSET ").append(offset);
-        System.out.print(sb.toString());
+        //System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -602,7 +653,7 @@ public class TrafegusWS {
         sb.append("     JOIN TEST_Tipo_Estabelecimento ON (TEST_Codigo = EMBA_TEST_Codigo)");
         sb.append(" ORDER BY ORAS_Codigo");
         sb.append(" LIMIT ").append(limit).append(" OFFSET ").append(offset);
-        System.out.print(sb.toString());
+        //System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -789,7 +840,7 @@ public class TrafegusWS {
         sb.append(" JOIN TRAN_TRANSPORTADOR ON (TRAN_PESS_ORAS_CODIGO = VIAG_TRAN_PESS_ORAS_CODIGO AND VIAG_TRAN_PESS_ORAS_CODIGO = ").append(codEmpresa).append(") ");
         sb.append(" ORDER BY VIAG_CODIGO ");
         sb.append(" LIMIT ").append(limit).append(" OFFSET ").append(offset);
-        System.out.print(sb.toString());
+        //System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -941,7 +992,7 @@ public class TrafegusWS {
         sb.append("     JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = PESS_ORAS_Codigo AND ORAS_EOBJ_Codigo = 1)");
         sb.append("     JOIN TEST_Tipo_Estabelecimento ON (TEST_Codigo = EMBA_TEST_Codigo)");
         sb.append(" ) AS XXX");
-        System.out.print(sb.toString());
+        //System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -1101,7 +1152,7 @@ public class TrafegusWS {
         sb.append(" FROM VIAG_VIAGEM");
         sb.append(" JOIN TRAN_TRANSPORTADOR ON (TRAN_PESS_ORAS_CODIGO = VIAG_TRAN_PESS_ORAS_CODIGO AND VIAG_TRAN_PESS_ORAS_CODIGO = ").append(codEmpresa).append(") ");
         sb.append(" ) AS XXX ");
-        System.out.print(sb.toString());
+        //System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -1201,7 +1252,7 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN EMBA_Embarcador ON (EMBA_PJUR_PESS_ORAS_Codigo = VIAG_EMBA_PJUR_PESS_ORAS_Codigo)");
         sb.append(" LEFT JOIN PESS_Pessoa ON (PESS_ORAS_Codigo = EMBA_PJUR_PESS_ORAS_Codigo)");
         sb.append(" ) AS XXX");
-        System.out.print(sb.toString());
+        //System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -1389,7 +1440,7 @@ public class TrafegusWS {
         sb.append(" FROM VIAG_VIAGEM");
         sb.append(" JOIN TRAN_TRANSPORTADOR ON (TRAN_PESS_ORAS_CODIGO = VIAG_TRAN_PESS_ORAS_CODIGO AND VIAG_TRAN_PESS_ORAS_CODIGO = ").append(codEmpresa).append(") ");
         sb.append(" WHERE VIAG_CODIGO = ").append(codViagemPai);
-        System.out.print(sb.toString());
+        //System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -1602,7 +1653,7 @@ public class TrafegusWS {
         sb.append("   WHERE VIAG_Data_Inicio IS NOT NULL   ");
         sb.append("   AND VIAG_Data_Fim IS NOT NULL ");
         sb.append("   ORDER BY VIAG_Previsao_Inicio ");
-        System.out.println("\n" + sb.toString());
+        //System.out.println("\n" + sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -1663,7 +1714,7 @@ public class TrafegusWS {
             sb.append(" VALUES (nextval('s_cgsi_configuracao_grid_site'), '").append(codUsuario).append("', '").append(tela).append("', '").append(grid).append("', '").append(coluna).append("', '").append(posicao).append("', '").append(visible).append("', '").append(tamanho).append("')");
         }
         String sql = sb.toString();
-        System.out.println(sql);
+        //System.out.println(sql);
         sb = null;
         Conexao.getInstance().getConnection(idSessao).createStatement().execute(sql);
         return "<results><row><result>OK</result></row></results>";
@@ -1694,7 +1745,7 @@ public class TrafegusWS {
             sb.append(" VALUES (nextval('s_cgsi_configuracao_grid_site'), '").append(codUsuario).append("', '").append(tela).append("', '").append(grid).append("', '").append(coluna).append("', '").append(visible).append("')");
         }
         String sql = sb.toString();
-        System.out.println(sql);
+        //System.out.println(sql);
         sb = null;
         Conexao.getInstance().getConnection(idSessao).createStatement().execute(sql);
         return "<results><row><result>OK</result></row></results>";
@@ -1722,7 +1773,7 @@ public class TrafegusWS {
             sb.append(" and cgsi_grid = '").append(grid).append("'");
             sb.append(" ORDER BY cgsi_posicao");
         String sql = sb.toString();
-        System.out.println(sql);
+        //System.out.println(sql);
         sb = null;
         return Conexao.getInstance().queryToXML(sql, codUsuario);
     }
@@ -1805,7 +1856,7 @@ public class TrafegusWS {
         sb.append(" AND ");
         sb.append("       UPPER(UPOS_Descricao_Sistema) ").append(gpsDesc);
         sb.append("    ORDER BY VEIC_ORAS_Codigo");
-        System.out.println(sb.toString());
+        //System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
