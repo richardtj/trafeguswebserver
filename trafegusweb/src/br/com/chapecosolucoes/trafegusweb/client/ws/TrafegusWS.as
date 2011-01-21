@@ -5,6 +5,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
     import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
     import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.ReferenciaVO;
     
     import mx.rpc.events.FaultEvent;
     import mx.rpc.events.ResultEvent;
@@ -414,6 +415,11 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 		{
 			var operation:Operation = createOperation("solicitaTotalRefencias", handler);
 			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa);
+		}
+		public function procuraRefenciasZoom(handler:Function,referenciaVO:ReferenciaVO):void
+		{
+			var operation:Operation = createOperation("procuraRefenciasZoom", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,referenciaVO.refeDescricao,referenciaVO.descricao);
 		}
     }
 }

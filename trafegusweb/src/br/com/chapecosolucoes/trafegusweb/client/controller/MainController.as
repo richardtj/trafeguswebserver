@@ -2,12 +2,14 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 {
     import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
     import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
+    import br.com.chapecosolucoes.trafegusweb.client.enum.LimparDistanciasEnum;
     import br.com.chapecosolucoes.trafegusweb.client.enum.VehicleEnum;
     import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
     import br.com.chapecosolucoes.trafegusweb.client.events.DetailsEvent;
     import br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciaEVeiculoSelecionadoEvent;
     import br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciasSelecionadaEvent;
     import br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreVeiculosSelecionadaEvent;
+    import br.com.chapecosolucoes.trafegusweb.client.events.LimparDistanciasEvent;
     import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
     import br.com.chapecosolucoes.trafegusweb.client.events.ReferenciasRecebidasEvent;
     import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesEvent;
@@ -16,13 +18,19 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
     import br.com.chapecosolucoes.trafegusweb.client.view.ClassesReferenciaView;
     import br.com.chapecosolucoes.trafegusweb.client.view.ConfiguracaoGridsView;
+    import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaDeAteReferenciaEVeiculoView;
     import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreReferenciaEVeiculoView;
     import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreReferenciasView;
     import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreVeiculosView;
+    import br.com.chapecosolucoes.trafegusweb.client.view.LimparDistanciasView;
     import br.com.chapecosolucoes.trafegusweb.client.view.MainView2;
     import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteReferenciaEVeiculoVO;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteReferenciasVO;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteVeiculosVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.ReferenciaVO;
     import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
     
     import com.google.maps.LatLng;
@@ -195,6 +203,13 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
                 MyPopUpManager.addPopUp(referencias, DisplayObject(FlexGlobals.topLevelApplication));
                 MyPopUpManager.centerPopUp(referencias);
             }
+			if(event.label == "Limpar")
+			{
+				var limparDistancias:LimparDistanciasView = new LimparDistanciasView();
+				limparDistancias.addEventListener(LimparDistanciasEvent.LIMPAR_DISTANCIAS_EVENT,limparDistanciasEventHandler);
+				MyPopUpManager.addPopUp(limparDistancias,DisplayObject(FlexGlobals.topLevelApplication));
+				MyPopUpManager.centerPopUp(limparDistancias);
+			}
 			if(event.label == "Entre veículos")
 			{
 				var distanciaEntreVeiculos:DistanciaEntreVeiculosView = new DistanciaEntreVeiculosView();
@@ -211,10 +226,15 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			}
 			if(event.label == "Entre veículo e referência")
 			{
-				var distanciaEntreReferenciaEVeiculo:DistanciaEntreReferenciaEVeiculoView = new DistanciaEntreReferenciaEVeiculoView();
+				var distanciaDeAteReferenciaEVeiculoView:DistanciaDeAteReferenciaEVeiculoView = new DistanciaDeAteReferenciaEVeiculoView();
+				distanciaDeAteReferenciaEVeiculoView.addEventListener(DistanciaEntreReferenciaEVeiculoSelecionadoEvent.DISTANCIA_ENTRE_REFERENCIA_E_VEICULO_SELECIONADA_EVENT,distanciaEntreReferenciaEVeiculoSelecionadaEventHandler);
+				MyPopUpManager.addPopUp(distanciaDeAteReferenciaEVeiculoView,DisplayObject(FlexGlobals.topLevelApplication));
+				MyPopUpManager.centerPopUp(distanciaDeAteReferenciaEVeiculoView);
+				
+				/*var distanciaEntreReferenciaEVeiculo:DistanciaEntreReferenciaEVeiculoView = new DistanciaEntreReferenciaEVeiculoView();
 				distanciaEntreReferenciaEVeiculo.addEventListener(DistanciaEntreReferenciaEVeiculoSelecionadoEvent.DISTANCIA_ENTRE_REFERENCIA_E_VEICULO_SELECIONADA_EVENT,distanciaEntreReferenciaEVeiculoSelecionadaEventHandler);
 				MyPopUpManager.addPopUp(distanciaEntreReferenciaEVeiculo,DisplayObject(FlexGlobals.topLevelApplication));
-				MyPopUpManager.centerPopUp(distanciaEntreReferenciaEVeiculo);
+				MyPopUpManager.centerPopUp(distanciaEntreReferenciaEVeiculo);*/
 			}
 			if(event.label == "Grids")
 			{
@@ -222,10 +242,58 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				MyPopUpManager.addPopUp(configuracaoGris,DisplayObject(FlexGlobals.topLevelApplication));
 				MyPopUpManager.centerPopUp(configuracaoGris);
 			}
+			if(event.label == "A veículos")
+			{
+				
+			}
         }
+		private function limparDistanciasEventHandler(event:LimparDistanciasEvent):void
+		{
+			var length:int = 0;
+			var i:int = 0;
+			if(event.limparDistanciasVO.referencias == LimparDistanciasEnum.ULTIMA)
+			{
+				this.view.map.removerDistanciaEntreReferencias(DistanciaDeAteReferenciasVO(MainModel.getInstance().distanciaEntreReferencias.removeItemAt(MainModel.getInstance().distanciaEntreReferencias.length -1)));
+			}
+			else if(event.limparDistanciasVO.referencias == LimparDistanciasEnum.TODAS)
+			{
+				length = MainModel.getInstance().distanciaEntreReferencias.length;
+				for (i = 0;i < length;i++)
+				{
+					this.view.map.removerDistanciaEntreReferencias(DistanciaDeAteReferenciasVO(MainModel.getInstance().distanciaEntreReferencias.removeItemAt(0)));
+				}	
+			}
+			if(event.limparDistanciasVO.veiculoEReferencia == LimparDistanciasEnum.ULTIMA)
+			{
+				this.view.map.removerDistanciaEntreReferenciaEVeiculo(DistanciaDeAteReferenciaEVeiculoVO(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.removeItemAt(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.length -1)));
+			}
+			else if(event.limparDistanciasVO.veiculoEReferencia == LimparDistanciasEnum.TODAS)
+			{
+				length = MainModel.getInstance().distanciaEntreReferenciaEVeiculo.length;
+				for (i = 0;i < length;i++)
+				{
+					this.view.map.removerDistanciaEntreReferenciaEVeiculo(DistanciaDeAteReferenciaEVeiculoVO(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.removeItemAt(0)));
+				}	
+			}
+			if(event.limparDistanciasVO.veiculos == LimparDistanciasEnum.ULTIMA)
+			{
+				this.view.map.removerDistanciaEntreVeiculos(DistanciaDeAteVeiculosVO(MainModel.getInstance().distanciaEntreVeiculos.removeItemAt(MainModel.getInstance().distanciaEntreVeiculos.length -1)));
+			}
+			else if(event.limparDistanciasVO.veiculos == LimparDistanciasEnum.TODAS)
+			{
+				length = MainModel.getInstance().distanciaEntreVeiculos.length;
+				for (i = 0;i < length;i++)
+				{
+					this.view.map.removerDistanciaEntreVeiculos(DistanciaDeAteVeiculosVO(MainModel.getInstance().distanciaEntreVeiculos.removeItemAt(0)));
+				}	
+			}
+		}
 		
 		private function distanciaEntreReferenciasSelecionadaEventHandler(event:DistanciaEntreReferenciasSelecionadaEvent):void
 		{
+			this.view.map.carregarReferencia(ReferenciaVO(event.distanciaEntreReferenciasVO.de));
+			this.view.map.carregarReferencia(ReferenciaVO(event.distanciaEntreReferenciasVO.ate));
+			
 			this.view.map.distanciaEntreReferencias(event.distanciaEntreReferenciasVO);
 		}
 		
@@ -235,6 +303,14 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		private function distanciaEntreReferenciaEVeiculoSelecionadaEventHandler(event:DistanciaEntreReferenciaEVeiculoSelecionadoEvent):void
 		{
+			if(event.distanciaEntreReferenciaEVeiculoVO.de is ReferenciaVO)
+			{
+				this.view.map.carregarReferencia(ReferenciaVO(event.distanciaEntreReferenciaEVeiculoVO.de));
+			}
+			if(event.distanciaEntreReferenciaEVeiculoVO.ate is ReferenciaVO)
+			{
+				this.view.map.carregarReferencia(ReferenciaVO(event.distanciaEntreReferenciaEVeiculoVO.ate));
+			}
 			this.view.map.distanciaEntreReferenciaEVeiculo(event.distanciaEntreReferenciaEVeiculoVO);
 		}
 

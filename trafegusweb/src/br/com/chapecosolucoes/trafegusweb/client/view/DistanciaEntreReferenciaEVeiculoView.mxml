@@ -10,7 +10,7 @@
 				initialize="init()"
 				creationComplete="creationComplete()"
 				close="this.controller.closeHandler()"
-				title="Distancia entre veículo e referência"
+				title="Adicionar distancia entre veículo e referência"
 				titleIcon="@Embed(source='assets/1_DIST_32.png')" 
 				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*">
 	<fx:Declarations>

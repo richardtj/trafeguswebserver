@@ -13,6 +13,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public function setReferenciaVO(obj:Object):void{
 			this.codigo = obj.cref_codigo.toString();
 			this.descricao = obj.cref_descricao.toString();
+			this.refeCodigo = obj.refe_codigo.toString();
 			this.refeDescricao = obj.refe_descricao.toString();
 			
 			var gpsLatitudeString:String = obj.refe_latitude.toString().replace(",", ".");
@@ -23,6 +24,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public var codigo:String;
 		public var descricao:String;
+		public var refeCodigo:String;
 		public var refeDescricao:String;
 		public var latLong:LatLng;
 	}
