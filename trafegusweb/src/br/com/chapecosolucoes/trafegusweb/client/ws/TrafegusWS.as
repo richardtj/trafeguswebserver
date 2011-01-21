@@ -37,6 +37,20 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
             }
             return instance;
         }
+		
+		public function removeEventListener(operationName:String, result:Function = null):void
+		{
+			var operation:Operation = Operation(this.webservice.getOperation(operationName));
+			if (operation == null)
+			{
+				operation = new Operation(this.webservice, operationName);
+				operation.showBusyCursor = true;
+			}
+			if (result != null)
+			{
+				operation.removeEventListener(ResultEvent.RESULT, result);
+			}
+		}
 
         private function createOperation(operationName:String, result:Function = null):Operation
         {

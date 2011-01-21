@@ -65,14 +65,13 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				//this.view.veiculoZoom.detail = "";
 				MainModel.getInstance().smVO.placaVeiculo = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
-				//this.view.veiculoZoom.detail = obj.veic_placa.toString();
-				MainModel.getInstance().smVO.placaVeiculo = obj.veic_placa.toString();
+				MainModel.getInstance().smVO.placaVeiculo = obj.placa.toString();
 			}
+			TrafegusWS.getIntance().removeEventListener("solicitaDescricaoVeiculo",this.solicitaDescricaoVeiculoResultHandler);
 		}
 		public function selectedVehicleEventHandler(event:SelectedVehicleEvent):void
 		{

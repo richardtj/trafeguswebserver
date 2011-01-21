@@ -29,7 +29,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public function referenciaEVeiculoSelecionados():void
 		{
 			var distanciaEntreVeiculoEReferencia:DistanciaDeAteReferenciaEVeiculoVO = new DistanciaDeAteReferenciaEVeiculoVO(this.model.posicaoVeiculoVO,this.model.referenciaVO);
-			var event:DistanciaEntreReferenciaEVeiculoSelecionadoEvent = new DistanciaEntreReferenciaEVeiculoSelecionadoEvent(DistanciaEntreReferenciaEVeiculoSelecionadoEvent.DISTANCIA_ENTRE_REFERENCIA_E_VEICULO_SELECIONADA_EVENT,distanciaEntreVeiculoEReferencia);
+			var event:DistanciaEntreReferenciaEVeiculoSelecionadoEvent = new DistanciaEntreReferenciaEVeiculoSelecionadoEvent(DistanciaEntreReferenciaEVeiculoSelecionadoEvent.DISTANCIA_ENTRE_REFERENCIA_E_VEICULO_ADICIONADA_EVENT,distanciaEntreVeiculoEReferencia);
 			this.view.dispatchEvent(event);
 			this.closeHandler();
 		}

@@ -52,7 +52,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public function referenciasSelecionados():void
 		{
 			var distanciaEntreReferenciasSelecionadaVO:DistanciaDeAteReferenciasVO = new DistanciaDeAteReferenciasVO(this.model.referencia1VO,this.model.referencia2VO);
-			var event:DistanciaEntreReferenciasSelecionadaEvent = new DistanciaEntreReferenciasSelecionadaEvent(DistanciaEntreReferenciasSelecionadaEvent.DISTANCIA_ENTRE_REFERENCIAS_SELECIONADA_EVENT,distanciaEntreReferenciasSelecionadaVO);
+			var event:DistanciaEntreReferenciasSelecionadaEvent = new DistanciaEntreReferenciasSelecionadaEvent(DistanciaEntreReferenciasSelecionadaEvent.DISTANCIA_ENTRE_REFERENCIAS_ADICIONADA_EVENT,distanciaEntreReferenciasSelecionadaVO);
 			this.view.dispatchEvent(event);
 			this.closeHandler();
 		}

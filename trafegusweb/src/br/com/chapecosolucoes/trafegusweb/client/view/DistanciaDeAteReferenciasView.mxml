@@ -9,14 +9,14 @@
 				removedEffect="{dissolve,iris}"
 				creationComplete="this.creationComplete()"
 				close="this.controller.closeHandler()"
-				title="Distancia entre veículo e referencia"
+				title="Distancia entre referencias"
 				titleIcon="@Embed(source='assets/1_DIST_32.png')"
 				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
 				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
-		[Event(name="distanciaEntreReferenciaEVeiculoSelecionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciaEVeiculoSelecionadoEvent")]
-		[Event(name="distanciaEntreReferenciaEVeiculoAdicionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciaEVeiculoSelecionadoEvent")]
+		[Event(name="distanciaEntreReferenciasSelecionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciasSelecionadaEvent")]
+		[Event(name="distanciaEntreReferenciasAdicionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciasSelecionadaEvent")]
 		[Event(name="limparDistanciasEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.LimparDistanciasEvent")]
 	</fx:Metadata>
 	<fx:Declarations>
@@ -26,34 +26,32 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import br.com.chapecosolucoes.trafegusweb.client.controller.DistanciaDeAteReferenciaEVeiculoController;
+			import br.com.chapecosolucoes.trafegusweb.client.controller.DistanciaDeAteReferenciasController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteReferenciaEVeiculoVO;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteReferenciasVO;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteVO;
-			import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.ReferenciaVO;
-			public var controller:DistanciaDeAteReferenciaEVeiculoController;
+			public var controller:DistanciaDeAteReferenciasController;
 			public function creationComplete():void
 			{
-				this.controller = new DistanciaDeAteReferenciaEVeiculoController();
+				this.controller = new DistanciaDeAteReferenciasController();
 				this.controller.view = this;
 				
-				MainModel.getInstance().distanciaEntreReferenciaEVeiculo.filterFunction = this.controller.distanciaEntreReferenciaEVeiculoFilterFunction;
+				MainModel.getInstance().distanciaEntreReferencias.filterFunction = this.controller.distanciaEntreReferenciasFilterFunction;
 			}
 			private function labelFunction(item:Object,column:DataGridColumn):String
 			{
 				switch(column.headerText)
 				{
-					case "Placa":
-						return PosicaoVeiculoVO(DistanciaDeAteReferenciaEVeiculoVO(item).de).vehiclePlate;
-					case "Posição":
-						return PosicaoVeiculoVO(DistanciaDeAteReferenciaEVeiculoVO(item).de).gpsDescSis;
-					case "Data e hora":
-						return PosicaoVeiculoVO(DistanciaDeAteReferenciaEVeiculoVO(item).de).dataEHora;
-					case "Referencia":
-						return ReferenciaVO(DistanciaDeAteReferenciaEVeiculoVO(item).ate).refeDescricao;
-					case "Grupo":
-						return ReferenciaVO(DistanciaDeAteReferenciaEVeiculoVO(item).ate).descricao;
+					case "Referencia origem":
+						return ReferenciaVO(DistanciaDeAteReferenciasVO(item).de).refeDescricao;
+					case "Grupo origem":
+						return ReferenciaVO(DistanciaDeAteReferenciasVO(item).de).descricao;
+					case "Referencia destino":
+						return ReferenciaVO(DistanciaDeAteReferenciasVO(item).ate).refeDescricao;
+					case "Grupo destino":
+						return ReferenciaVO(DistanciaDeAteReferenciasVO(item).ate).descricao;
 					case "Distancia":
 						return DistanciaDeAteVO(item).distanciaDeAte();
 					default:
@@ -66,19 +64,18 @@
 		id="textInputFiltro"
 		width="100%" 
 		text="{MainModel.getInstance().zoomFilter}"
-		keyUp="MainModel.getInstance().distanciaEntreReferenciaEVeiculo.refresh()"/>
+		keyUp="MainModel.getInstance().distanciaEntreReferencias.refresh()"/>
 	<mx:DataGrid
 		id="grid"
 		allowMultipleSelection="true"
 		labelFunction="labelFunction"
 		itemClick="this.controller.itemClickEventHandler(event)"
-		dataProvider="{MainModel.getInstance().distanciaEntreReferenciaEVeiculo}">
+		dataProvider="{MainModel.getInstance().distanciaEntreReferencias}">
 		<mx:columns>
-			<mx:DataGridColumn headerText="Placa"/>
-			<mx:DataGridColumn headerText="Posição"/>
-			<mx:DataGridColumn headerText="Data e hora"/>
-			<mx:DataGridColumn headerText="Referencia"/>
-			<mx:DataGridColumn headerText="Grupo"/>
+			<mx:DataGridColumn headerText="Referencia origem"/>
+			<mx:DataGridColumn headerText="Grupo origem"/>
+			<mx:DataGridColumn headerText="Referencia destino"/>
+			<mx:DataGridColumn headerText="Grupo destino"/>
 			<mx:DataGridColumn headerText="Distancia"/>
 		</mx:columns>
 	</mx:DataGrid>
