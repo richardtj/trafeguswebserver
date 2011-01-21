@@ -19,6 +19,8 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import br.com.chapecosolucoes.trafegusweb.client.view.ClassesReferenciaView;
     import br.com.chapecosolucoes.trafegusweb.client.view.ConfiguracaoGridsView;
     import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaDeAteReferenciaEVeiculoView;
+    import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaDeAteReferenciasView;
+    import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaDeAteVeiculosView;
     import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreReferenciaEVeiculoView;
     import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreReferenciasView;
     import br.com.chapecosolucoes.trafegusweb.client.view.DistanciaEntreVeiculosView;
@@ -187,7 +189,6 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             if (event.label == "Sair")
             {
                 MessageBox.atencao("Deseja sair da aplicação", "", Alert.OK | Alert.CANCEL, this.view, this.closeApp);
-                    //Alert.show("Deseja sair da aplicação","Sair",Alert.OK | Alert.CANCEL,this.view,this.closeApp);
             }
             if (event.label == "Agendamento")
             {
@@ -203,38 +204,32 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
                 MyPopUpManager.addPopUp(referencias, DisplayObject(FlexGlobals.topLevelApplication));
                 MyPopUpManager.centerPopUp(referencias);
             }
-			if(event.label == "Limpar")
-			{
-				var limparDistancias:LimparDistanciasView = new LimparDistanciasView();
-				limparDistancias.addEventListener(LimparDistanciasEvent.LIMPAR_DISTANCIAS_EVENT,limparDistanciasEventHandler);
-				MyPopUpManager.addPopUp(limparDistancias,DisplayObject(FlexGlobals.topLevelApplication));
-				MyPopUpManager.centerPopUp(limparDistancias);
-			}
 			if(event.label == "Entre veículos")
 			{
-				var distanciaEntreVeiculos:DistanciaEntreVeiculosView = new DistanciaEntreVeiculosView();
-				distanciaEntreVeiculos.addEventListener(DistanciaEntreVeiculosSelecionadaEvent.DISTANCIA_ENTRE_VEICULOS_SELECIONADA_EVENT,distanciaEntreVeiculosSelecionadaEventHandler);
-				MyPopUpManager.addPopUp(distanciaEntreVeiculos,DisplayObject(FlexGlobals.topLevelApplication));
-				MyPopUpManager.centerPopUp(distanciaEntreVeiculos);
+				var distanciaDeAteVeiculosView:DistanciaDeAteVeiculosView = new DistanciaDeAteVeiculosView();
+				distanciaDeAteVeiculosView.addEventListener(DistanciaEntreVeiculosSelecionadaEvent.DISTANCIA_ENTRE_VEICULOS_ADICIONADA_EVENT,distanciaEntreVeiculosAdicionadaEventHandler);
+				distanciaDeAteVeiculosView.addEventListener(DistanciaEntreVeiculosSelecionadaEvent.DISTANCIA_ENTRE_VEICULOS_SELECIONADA_EVENT,distanciaEntreVeiculosSelecionadaEventHandler);
+				distanciaDeAteVeiculosView.addEventListener(LimparDistanciasEvent.LIMPAR_DISTANCIAS_EVENT,limparDistanciaEntreVeiculosEventHandler);
+				MyPopUpManager.addPopUp(distanciaDeAteVeiculosView,DisplayObject(FlexGlobals.topLevelApplication));
+				MyPopUpManager.centerPopUp(distanciaDeAteVeiculosView);
 			}
 			if(event.label == "Entre referências")
 			{
-				var distanciaEntreReferencias:DistanciaEntreReferenciasView = new DistanciaEntreReferenciasView();
-				distanciaEntreReferencias.addEventListener(DistanciaEntreReferenciasSelecionadaEvent.DISTANCIA_ENTRE_REFERENCIAS_SELECIONADA_EVENT,distanciaEntreReferenciasSelecionadaEventHandler);
-				MyPopUpManager.addPopUp(distanciaEntreReferencias,DisplayObject(FlexGlobals.topLevelApplication));
-				MyPopUpManager.centerPopUp(distanciaEntreReferencias);
+				var distanciaDeAteReferenciasView:DistanciaDeAteReferenciasView = new DistanciaDeAteReferenciasView();
+				distanciaDeAteReferenciasView.addEventListener(DistanciaEntreReferenciasSelecionadaEvent.DISTANCIA_ENTRE_REFERENCIAS_ADICIONADA_EVENT,distanciaEntreReferenciasAdicionadaEventHandler);
+				distanciaDeAteReferenciasView.addEventListener(DistanciaEntreReferenciasSelecionadaEvent.DISTANCIA_ENTRE_REFERENCIAS_SELECIONADA_EVENT,distanciaEntreReferenciasSelecionadaEventHandler);
+				distanciaDeAteReferenciasView.addEventListener(LimparDistanciasEvent.LIMPAR_DISTANCIAS_EVENT,limparDistanciasEntreReferenciasEventHandler);
+				MyPopUpManager.addPopUp(distanciaDeAteReferenciasView,DisplayObject(FlexGlobals.topLevelApplication));
+				MyPopUpManager.centerPopUp(distanciaDeAteReferenciasView);
 			}
 			if(event.label == "Entre veículo e referência")
 			{
 				var distanciaDeAteReferenciaEVeiculoView:DistanciaDeAteReferenciaEVeiculoView = new DistanciaDeAteReferenciaEVeiculoView();
+				distanciaDeAteReferenciaEVeiculoView.addEventListener(DistanciaEntreReferenciaEVeiculoSelecionadoEvent.DISTANCIA_ENTRE_REFERENCIA_E_VEICULO_ADICIONADA_EVENT,distanciaEntreReferenciaEVeiculoAdicionadaEventHandler);
 				distanciaDeAteReferenciaEVeiculoView.addEventListener(DistanciaEntreReferenciaEVeiculoSelecionadoEvent.DISTANCIA_ENTRE_REFERENCIA_E_VEICULO_SELECIONADA_EVENT,distanciaEntreReferenciaEVeiculoSelecionadaEventHandler);
+				distanciaDeAteReferenciaEVeiculoView.addEventListener(LimparDistanciasEvent.LIMPAR_DISTANCIAS_EVENT,limparDistanciasEntreReferenciaEVeiculoEventHandler);
 				MyPopUpManager.addPopUp(distanciaDeAteReferenciaEVeiculoView,DisplayObject(FlexGlobals.topLevelApplication));
 				MyPopUpManager.centerPopUp(distanciaDeAteReferenciaEVeiculoView);
-				
-				/*var distanciaEntreReferenciaEVeiculo:DistanciaEntreReferenciaEVeiculoView = new DistanciaEntreReferenciaEVeiculoView();
-				distanciaEntreReferenciaEVeiculo.addEventListener(DistanciaEntreReferenciaEVeiculoSelecionadoEvent.DISTANCIA_ENTRE_REFERENCIA_E_VEICULO_SELECIONADA_EVENT,distanciaEntreReferenciaEVeiculoSelecionadaEventHandler);
-				MyPopUpManager.addPopUp(distanciaEntreReferenciaEVeiculo,DisplayObject(FlexGlobals.topLevelApplication));
-				MyPopUpManager.centerPopUp(distanciaEntreReferenciaEVeiculo);*/
 			}
 			if(event.label == "Grids")
 			{
@@ -242,54 +237,37 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				MyPopUpManager.addPopUp(configuracaoGris,DisplayObject(FlexGlobals.topLevelApplication));
 				MyPopUpManager.centerPopUp(configuracaoGris);
 			}
-			if(event.label == "A veículos")
-			{
-				
-			}
         }
-		private function limparDistanciasEventHandler(event:LimparDistanciasEvent):void
+		private function limparDistanciaEntreVeiculosEventHandler(event:LimparDistanciasEvent):void
 		{
-			var length:int = 0;
-			var i:int = 0;
-			if(event.limparDistanciasVO.referencias == LimparDistanciasEnum.ULTIMA)
+			var length:int = event.limparDistanciasArray.length;
+			for (var i:int = 0;i < length;i++)
 			{
-				this.view.map.removerDistanciaEntreReferencias(DistanciaDeAteReferenciasVO(MainModel.getInstance().distanciaEntreReferencias.removeItemAt(MainModel.getInstance().distanciaEntreReferencias.length -1)));
+				this.view.map.removerDistanciaEntreVeiculos(DistanciaDeAteVeiculosVO(MainModel.getInstance().distanciaEntreVeiculos.removeItemAt(MainModel.getInstance().distanciaEntreVeiculos.getItemIndex(DistanciaDeAteVeiculosVO(event.limparDistanciasArray.getItemAt(i))))));
 			}
-			else if(event.limparDistanciasVO.referencias == LimparDistanciasEnum.TODAS)
+		}
+		private function limparDistanciasEntreReferenciasEventHandler(event:LimparDistanciasEvent):void
+		{
+			var length:int = event.limparDistanciasArray.length;
+			for (var i:int = 0;i < length;i++)
 			{
-				length = MainModel.getInstance().distanciaEntreReferencias.length;
-				for (i = 0;i < length;i++)
-				{
-					this.view.map.removerDistanciaEntreReferencias(DistanciaDeAteReferenciasVO(MainModel.getInstance().distanciaEntreReferencias.removeItemAt(0)));
-				}	
-			}
-			if(event.limparDistanciasVO.veiculoEReferencia == LimparDistanciasEnum.ULTIMA)
+				this.view.map.removerDistanciaEntreReferencias(DistanciaDeAteReferenciasVO(MainModel.getInstance().distanciaEntreReferencias.removeItemAt(MainModel.getInstance().distanciaEntreReferencias.getItemIndex(DistanciaDeAteReferenciasVO(event.limparDistanciasArray.getItemAt(i))))));
+			}	
+		}
+		private function limparDistanciasEntreReferenciaEVeiculoEventHandler(event:LimparDistanciasEvent):void
+		{
+			var length:int = event.limparDistanciasArray.length;
+			for (var i:int = 0;i < length;i++)
 			{
-				this.view.map.removerDistanciaEntreReferenciaEVeiculo(DistanciaDeAteReferenciaEVeiculoVO(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.removeItemAt(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.length -1)));
-			}
-			else if(event.limparDistanciasVO.veiculoEReferencia == LimparDistanciasEnum.TODAS)
-			{
-				length = MainModel.getInstance().distanciaEntreReferenciaEVeiculo.length;
-				for (i = 0;i < length;i++)
-				{
-					this.view.map.removerDistanciaEntreReferenciaEVeiculo(DistanciaDeAteReferenciaEVeiculoVO(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.removeItemAt(0)));
-				}	
-			}
-			if(event.limparDistanciasVO.veiculos == LimparDistanciasEnum.ULTIMA)
-			{
-				this.view.map.removerDistanciaEntreVeiculos(DistanciaDeAteVeiculosVO(MainModel.getInstance().distanciaEntreVeiculos.removeItemAt(MainModel.getInstance().distanciaEntreVeiculos.length -1)));
-			}
-			else if(event.limparDistanciasVO.veiculos == LimparDistanciasEnum.TODAS)
-			{
-				length = MainModel.getInstance().distanciaEntreVeiculos.length;
-				for (i = 0;i < length;i++)
-				{
-					this.view.map.removerDistanciaEntreVeiculos(DistanciaDeAteVeiculosVO(MainModel.getInstance().distanciaEntreVeiculos.removeItemAt(0)));
-				}	
-			}
+				this.view.map.removerDistanciaEntreReferenciaEVeiculo(DistanciaDeAteReferenciaEVeiculoVO(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.removeItemAt(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.getItemIndex(DistanciaDeAteReferenciaEVeiculoVO(event.limparDistanciasArray.getItemAt(i))))));
+			}	
 		}
 		
 		private function distanciaEntreReferenciasSelecionadaEventHandler(event:DistanciaEntreReferenciasSelecionadaEvent):void
+		{
+			this.view.map.focarDistancia(event.distanciaEntreReferenciasVO);
+		}
+		private function distanciaEntreReferenciasAdicionadaEventHandler(event:DistanciaEntreReferenciasSelecionadaEvent):void
 		{
 			this.view.map.carregarReferencia(ReferenciaVO(event.distanciaEntreReferenciasVO.de));
 			this.view.map.carregarReferencia(ReferenciaVO(event.distanciaEntreReferenciasVO.ate));
@@ -297,11 +275,19 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			this.view.map.distanciaEntreReferencias(event.distanciaEntreReferenciasVO);
 		}
 		
-		private function distanciaEntreVeiculosSelecionadaEventHandler(event:DistanciaEntreVeiculosSelecionadaEvent):void
+		private function distanciaEntreVeiculosAdicionadaEventHandler(event:DistanciaEntreVeiculosSelecionadaEvent):void
 		{
 			this.view.map.distanciaEntreVeiculos(event.distanciaEntreVeiculosVO);
 		}
+		private function distanciaEntreVeiculosSelecionadaEventHandler(event:DistanciaEntreVeiculosSelecionadaEvent):void
+		{
+			this.view.map.focarDistancia(event.distanciaEntreVeiculosVO);
+		}
 		private function distanciaEntreReferenciaEVeiculoSelecionadaEventHandler(event:DistanciaEntreReferenciaEVeiculoSelecionadoEvent):void
+		{
+			this.view.map.focarDistancia(event.distanciaEntreReferenciaEVeiculoVO);
+		}
+		private function distanciaEntreReferenciaEVeiculoAdicionadaEventHandler(event:DistanciaEntreReferenciaEVeiculoSelecionadoEvent):void
 		{
 			if(event.distanciaEntreReferenciaEVeiculoVO.de is ReferenciaVO)
 			{

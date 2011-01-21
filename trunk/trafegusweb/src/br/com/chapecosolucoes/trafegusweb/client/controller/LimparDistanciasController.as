@@ -20,9 +20,9 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public var model:LimparDistanciasModel;
 		public function limpar():void
 		{
-			var event:LimparDistanciasEvent = new LimparDistanciasEvent(LimparDistanciasEvent.LIMPAR_DISTANCIAS_EVENT,this.model.limparDistanciasVO);
+			/*var event:LimparDistanciasEvent = new LimparDistanciasEvent(LimparDistanciasEvent.LIMPAR_DISTANCIAS_EVENT,this.model.limparDistanciasVO);
 			this.view.dispatchEvent(event);
-			this.closeHandler();
+			this.closeHandler();*/
 		}
 		public function distanciaEntreVeiculoEReferencia(event:ItemClickEvent):void
 		{

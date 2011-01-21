@@ -29,6 +29,28 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 				this.dataEHora = obj.upos_data_comp_bordo.toString();
 			}
 		}
+		public function setPosicaoVeiculoVO(obj:Object):void
+		{
+			var gpsLatitudeString:String = obj.upos_latitude.toString().replace(",", ".");
+			var gpsLongitudeString:String = obj.upos_longitude.toString().replace(",", ".");
+			var gpsLatitude:Number = Number(gpsLatitudeString);
+			var gpsLongitude:Number = Number(gpsLongitudeString);
+			
+			this.codVeic = obj.veic_oras_codigo.toString();
+			this.vehiclePlate = obj.placa.toString();
+			this.latLong = new LatLng(gpsLatitude, gpsLongitude);
+			this.gpsDescSis = obj.posicao;
+			this.ignition = int(obj.ignicao);
+			this.versaoTecnologia = obj.versaotecnologia.toString();
+			this.numeroTerminal = obj.numeroterminal.toString();
+			this.tipoVeiculo = obj.tipoveiculo.toString();
+			this.statusViagem = obj.statusviagem.toString();
+			this.statusAtraso = obj.statusatraso.toString();
+			this.motoristaPrincipal = obj.nomemotorista.toString();
+			this.cpfMotoristaPrincipal = obj.cpfmotorista.toString();
+			this.embarcador = obj.embarcador.toString();
+			this.dataEHora = obj.upos_data_comp_bordo.toString();
+		}
 		public var codVeic:String;
 		public var vehiclePlate:String;
 		public var latLong:LatLng;

@@ -36,7 +36,7 @@
 			invalid="this.referencia = false;MessageBox.informacao('Campo Referencia requerido.')"/>
 	</fx:Declarations>
 	<fx:Metadata>
-		[Event(name="distanciaEntreReferenciaEVeiculoSelecionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciaEVeiculoSelecionadoEvent")]
+		[Event(name="distanciaEntreReferenciaEVeiculoAdicionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciaEVeiculoSelecionadoEvent")]
 	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[

@@ -111,7 +111,6 @@
                                 type="check" toggled="true"/>
                             <menuitem label="Referências"/>
 							<menuitem label="Distâncias">
-								<menuitem label="Limpar"/>
 								<menuitem label="Entre veículos"/>
 								<menuitem label="Entre referências"/>
 								<menuitem label="Entre veículo e referência"/>

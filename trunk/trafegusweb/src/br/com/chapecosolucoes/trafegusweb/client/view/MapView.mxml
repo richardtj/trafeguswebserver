@@ -47,6 +47,11 @@
 			{
 				this.createCategorie(referencia);
 			}
+			public function focarDistancia(value:DistanciaDeAteVO):void
+			{
+				map.setCenter(value.meio);
+				map.setZoom(map.getBoundsZoomLevel(value.polyLine.getLatLngBounds()));
+			}
 			public function carregarReferencias():void
 			{
 				if(MainModel.getInstance().mapReady == true)

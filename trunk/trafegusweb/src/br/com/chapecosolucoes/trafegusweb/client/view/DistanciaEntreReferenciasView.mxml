@@ -10,7 +10,7 @@
 				initialize="init()"
 				creationComplete="creationComplete()"
 				close="this.controller.closeHandler()"
-				title="Distancia entre referencias"
+				title="Adicionar distancia entre referencias"
 				titleIcon="@Embed(source='assets/1_DIST_32.png')" 
 				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*">
 	<fx:Declarations>
@@ -36,7 +36,7 @@
 			invalid="this.referencia2 = false;MessageBox.informacao('Campo referência 2 requerido.')"/>
 	</fx:Declarations>
 	<fx:Metadata>
-		[Event(name="distanciaEntreReferenciasSelecionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciasSelecionadaEvent")]
+		[Event(name="distanciaEntreReferenciasAdicionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciasSelecionadaEvent")]
 	</fx:Metadata>
 	<fx:Script>
 		<![CDATA[

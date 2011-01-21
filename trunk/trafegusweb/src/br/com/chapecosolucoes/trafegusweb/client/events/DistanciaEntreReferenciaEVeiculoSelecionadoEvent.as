@@ -10,6 +10,7 @@ package br.com.chapecosolucoes.trafegusweb.client.events
 	public class DistanciaEntreReferenciaEVeiculoSelecionadoEvent extends Event
 	{
 		public static const DISTANCIA_ENTRE_REFERENCIA_E_VEICULO_SELECIONADA_EVENT:String = "distanciaEntreReferenciaEVeiculoSelecionadaEvent";
+		public static const DISTANCIA_ENTRE_REFERENCIA_E_VEICULO_ADICIONADA_EVENT:String = "distanciaEntreReferenciaEVeiculoAdicionadaEvent";
 		public var distanciaEntreReferenciaEVeiculoVO:DistanciaDeAteReferenciaEVeiculoVO;
 		public function DistanciaEntreReferenciaEVeiculoSelecionadoEvent(type:String,distanciaEntreReferenciaEVeiculoVO:DistanciaDeAteReferenciaEVeiculoVO, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
