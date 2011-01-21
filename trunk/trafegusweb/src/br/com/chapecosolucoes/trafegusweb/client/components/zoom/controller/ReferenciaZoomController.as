@@ -31,6 +31,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public function atualizaReferenciasZoom():void
 		{
 			this.view.paginable.paginaAtual = 1;
+			this.solicitaTotalRefencias();
 			TrafegusWS.getIntance().solicitaRefenciasZoom(solicitaReferenciasZoomResultHandler,0);
 		}
 		public function solicitaTotalRefencias():void
@@ -87,37 +88,13 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		private function advancedSearchEventHandler(event:AdvancedSearchEvent):void
 		{
-			MainModel.getInstance().referenciasZoom.removeAll();
-			for each(var referenciaVO:ReferenciaVO in MainModel.getInstance().referencias)
-			{
-				if(event.genericVO.refeDescricao != "" && event.genericVO.descricao == "")
-				{
-					if(referenciaVO.refeDescricao.toUpperCase().search(event.genericVO.refeDescricao.toUpperCase()) >= 0)
-					{
-						MainModel.getInstance().referenciasZoom.addItem(referenciaVO);
-					}
-				}
-				else if(event.genericVO.refeDescricao == "" && event.genericVO.descricao != "")
-				{
-					if(referenciaVO.descricao.toUpperCase().search(event.genericVO.descricao.toUpperCase()) >= 0)
-					{
-						MainModel.getInstance().referenciasZoom.addItem(referenciaVO);
-					}
-				}
-				else if(event.genericVO.refeDescricao == "" && event.genericVO.descricao == "")
-				{
-					MainModel.getInstance().referenciasZoom.addItem(referenciaVO);
-				}
-				else if(event.genericVO.refeDescricao != "" && event.genericVO.descricao != "")
-				{
-					if(referenciaVO.refeDescricao.toUpperCase().search(event.genericVO.refeDescricao.toUpperCase()) >= 0 && referenciaVO.descricao.toUpperCase().search(event.genericVO.descricao.toUpperCase()) >= 0)
-					{
-						MainModel.getInstance().referenciasZoom.addItem(referenciaVO);
-					}
-				}
-				
-			}
-			MainModel.getInstance().totalReferenciasZoom = MainModel.getInstance().referenciasZoom.length;
+			var referenciaVO:ReferenciaVO = ReferenciaVO(event.genericVO);
+			TrafegusWS.getIntance().procuraRefenciasZoom(procuraRefenciasZoomResultHandler,referenciaVO);
+		}
+		private function procuraRefenciasZoomResultHandler(event:ResultEvent):void
+		{
+			MainModel.getInstance().totalReferenciasZoom = MainModel.getInstance().itensPorPagina;
+			this.solicitaReferenciasZoomResultHandler(event);
 		}
 	}
 }

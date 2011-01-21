@@ -96,11 +96,14 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		
 		public var rota:Polyline = null;
 		
-		public var distanciaEntreVeiculos:DistanciaDeAteVeiculosVO = null;
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteVeiculosVO")]
+		public var distanciaEntreVeiculos:ArrayCollection = new ArrayCollection();
 		
-		public var distanciaEntreReferenciaEVeiculo:DistanciaDeAteReferenciaEVeiculoVO = null;
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteReferenciaEVeiculoVO")]
+		public var distanciaEntreReferenciaEVeiculo:ArrayCollection = new ArrayCollection();
 		
-		public var distanciaEntreReferencias:DistanciaDeAteReferenciasVO = null;
+		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteReferenciasVO")]
+		public var distanciaEntreReferencias:ArrayCollection = new ArrayCollection();
 		
         [ArrayElementType("br.com.chapecosolucoes.trafegusweb.vo.DataMsg")]
         public var dpMensagens:ArrayCollection;

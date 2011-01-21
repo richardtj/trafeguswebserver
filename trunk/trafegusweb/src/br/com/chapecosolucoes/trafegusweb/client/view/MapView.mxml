@@ -43,6 +43,10 @@
 				controller = new MapController();
 				controller.view = this;
 			}
+			public function carregarReferencia(referencia:ReferenciaVO):void
+			{
+				this.createCategorie(referencia);
+			}
 			public function carregarReferencias():void
 			{
 				if(MainModel.getInstance().mapReady == true)
@@ -58,18 +62,17 @@
 					MessageBox.atencao("Favor aguardar carga do mapa");
 				}
 			}
+			public function removerDistanciaEntreReferencias(value:DistanciaDeAteReferenciasVO):void
+			{
+				if(value != null)
+				{
+					map.removeOverlay(value.marker);
+					map.removeOverlay(value.tooltip);
+					map.removeOverlay(value.polyLine);
+				}
+			}
 			public function distanciaEntreReferencias(value:DistanciaDeAteReferenciasVO):void
 			{
-				if(MainModel.getInstance().distanciaEntreReferencias != null)
-				{
-					map.removeOverlay(MainModel.getInstance().distanciaEntreReferencias.marker);
-					map.removeOverlay(MainModel.getInstance().distanciaEntreReferencias.tooltip);
-					map.removeOverlay(MainModel.getInstance().distanciaEntreReferencias.polyLine);
-				}
-				else
-				{
-					MainModel.getInstance().distanciaEntreReferencias = value;
-				}
 				var pontos:Array = new Array();
 				pontos.push(value.de.latLong);
 				pontos.push(value.ate.latLong);
@@ -104,22 +107,19 @@
 				map.addOverlay(value.polyLine);
 				map.setCenter(value.meio);
 				map.setZoom(map.getBoundsZoomLevel(value.polyLine.getLatLngBounds()));
-				MainModel.getInstance().distanciaEntreReferencias.tooltip = value.tooltip;
-				MainModel.getInstance().distanciaEntreReferencias.marker = value.marker;
-				MainModel.getInstance().distanciaEntreReferencias.polyLine = value.polyLine;
+				MainModel.getInstance().distanciaEntreReferencias.addItem(value);
+			}
+			public function removerDistanciaEntreReferenciaEVeiculo(value:DistanciaDeAteReferenciaEVeiculoVO):void
+			{
+				if(value != null)
+				{
+					map.removeOverlay(value.marker);
+					map.removeOverlay(value.tooltip);
+					map.removeOverlay(value.polyLine);
+				}
 			}
 			public function distanciaEntreReferenciaEVeiculo(value:DistanciaDeAteReferenciaEVeiculoVO):void
 			{
-				if(MainModel.getInstance().distanciaEntreReferenciaEVeiculo != null)
-				{
-					map.removeOverlay(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.marker);
-					map.removeOverlay(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.tooltip);
-					map.removeOverlay(MainModel.getInstance().distanciaEntreReferenciaEVeiculo.polyLine);
-				}
-				else
-				{
-					MainModel.getInstance().distanciaEntreReferenciaEVeiculo = value;
-				}
 				var pontos:Array = new Array();
 				pontos.push(value.de.latLong);
 				pontos.push(value.ate.latLong);
@@ -154,22 +154,19 @@
 				map.addOverlay(value.polyLine);
 				map.setCenter(value.meio);
 				map.setZoom(map.getBoundsZoomLevel(value.polyLine.getLatLngBounds()));
-				MainModel.getInstance().distanciaEntreReferenciaEVeiculo.tooltip = value.tooltip;
-				MainModel.getInstance().distanciaEntreReferenciaEVeiculo.marker = value.marker;
-				MainModel.getInstance().distanciaEntreReferenciaEVeiculo.polyLine = value.polyLine;
+				MainModel.getInstance().distanciaEntreReferenciaEVeiculo.addItem(value);
+			}
+			public function removerDistanciaEntreVeiculos(value:DistanciaDeAteVeiculosVO):void
+			{
+				if(value != null)
+				{
+					map.removeOverlay(value.marker);
+					map.removeOverlay(value.tooltip);
+					map.removeOverlay(value.polyLine);
+				}
 			}
 			public function distanciaEntreVeiculos(value:DistanciaDeAteVeiculosVO):void
 			{
-				if(MainModel.getInstance().distanciaEntreVeiculos != null)
-				{
-					map.removeOverlay(MainModel.getInstance().distanciaEntreVeiculos.marker);
-					map.removeOverlay(MainModel.getInstance().distanciaEntreVeiculos.tooltip);
-					map.removeOverlay(MainModel.getInstance().distanciaEntreVeiculos.polyLine);
-				}
-				else
-				{
-					MainModel.getInstance().distanciaEntreVeiculos = value;
-				}
 				var pontos:Array = new Array();
 				pontos.push(value.de.latLong);
 				pontos.push(value.ate.latLong);
@@ -204,9 +201,7 @@
 				map.addOverlay(value.polyLine);
 				map.setCenter(value.meio);
 				map.setZoom(map.getBoundsZoomLevel(value.polyLine.getLatLngBounds()));
-				MainModel.getInstance().distanciaEntreVeiculos.tooltip = value.tooltip;
-				MainModel.getInstance().distanciaEntreVeiculos.marker = value.marker;
-				MainModel.getInstance().distanciaEntreVeiculos.polyLine = value.polyLine;
+				MainModel.getInstance().distanciaEntreVeiculos.addItem(value);
 			}
 			public function rotaVeiculo(value:ArrayCollection):void
 			{
@@ -283,7 +278,7 @@
 				});
 				return marker;
 			}
-			private function removeCategories():void{
+			public function removeCategories():void{
 				for each(var marker:Marker in MainModel.getInstance().markers)
 				{
 					map.removeOverlay(marker);

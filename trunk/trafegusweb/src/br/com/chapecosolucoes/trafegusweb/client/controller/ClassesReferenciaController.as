@@ -52,12 +52,19 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public function classesReferenciaSelecionadas():void
 		{
 			MainModel.getInstance().referencias.removeAll();
+			var nenhumSelecionado:Boolean = true;
 			for each (var classe:ClassesReferenciaVO in MainModel.getInstance().classesReferencia)
 			{
 				if(classe.selected)
 				{
+					nenhumSelecionado = false;
 					TrafegusWS.getIntance().solicitaRefencias(solicitaRefenciasResultHandler,classe.codigo);
 				}
+			}
+			if(nenhumSelecionado)
+			{
+				var referenciasEvent:ReferenciasRecebidasEvent = new ReferenciasRecebidasEvent(ReferenciasRecebidasEvent.REFERENCIAS_RECEBIDAS_EVENT);
+				this.view.dispatchEvent(referenciasEvent);
 			}
 			this.closeHandler();
 		}

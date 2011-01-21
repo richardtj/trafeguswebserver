@@ -72,10 +72,10 @@
 	</fx:Script>
 	<mx:Form width="100%" height="100%" defaultButton="{ok}">
 		<mx:FormItem label="Referencia origem" required="true">
-			<view:ZoomCodDetailView id="referencia1Zoom" cod="{this.model.referencia1VO.codigo}" detail="{this.model.referencia1VO.refeDescricao}" clickZoom="this.controller.referencia1ZoomDispatcher()"/>
+			<view:ZoomCodDetailView id="referencia1Zoom" cod="{this.model.referencia1VO.refeCodigo}" detail="{this.model.referencia1VO.refeDescricao}" clickZoom="this.controller.referencia1ZoomDispatcher()"/>
 		</mx:FormItem>
 		<mx:FormItem label="Referencia destino" required="true">
-			<view:ZoomCodDetailView id="referencia2Zoom" cod="{this.model.referencia2VO.codigo}" detail="{this.model.referencia2VO.refeDescricao}" clickZoom="this.controller.referencia2ZoomDispatcher()"/>
+			<view:ZoomCodDetailView id="referencia2Zoom" cod="{this.model.referencia2VO.refeCodigo}" detail="{this.model.referencia2VO.refeDescricao}" clickZoom="this.controller.referencia2ZoomDispatcher()"/>
 		</mx:FormItem>
 	</mx:Form>
 	<mx:ControlBar horizontalAlign="right">
