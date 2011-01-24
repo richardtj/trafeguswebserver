@@ -145,6 +145,18 @@
 				<!--mx:FormItem label="Entragas/Paradas">
 					<mx:Image source="@Embed(source='assets/plus-icon.png')" buttonMode="true" click="this.controller.addParadas()"/>
 				</mx:FormItem-->
+				<mx:FormItem label="Distância da viagem" required="true">
+					<s:TextInput id="distanciaDaViagem"/>
+				</mx:FormItem>
+				<mx:FormItem label="Valor">
+					<s:TextInput id="valor"/>
+				</mx:FormItem>
+				<mx:FormItem label="Temperatura minima">
+					<s:TextInput id="temperaturaMinima"/>
+				</mx:FormItem>
+				<mx:FormItem label="Temperatura máxima">
+					<s:TextInput id="temperaturaMaxima"/>
+				</mx:FormItem>
 			</mx:Form>
 		</s:NavigatorContent>
 		<s:NavigatorContent id="paradasView" label="Entregas/Paradas">
