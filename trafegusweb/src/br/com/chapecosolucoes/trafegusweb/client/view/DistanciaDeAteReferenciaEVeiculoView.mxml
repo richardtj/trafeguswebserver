@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx"
 				layout="vertical"
@@ -12,7 +12,8 @@
 				title="Distancia entre veículo e referencia"
 				titleIcon="@Embed(source='assets/1_DIST_32.png')"
 				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
-				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*" 
+				xmlns:resize="flex.utils.ui.resize.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
 		[Event(name="distanciaEntreReferenciaEVeiculoSelecionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.DistanciaEntreReferenciaEVeiculoSelecionadoEvent")]
@@ -69,6 +70,8 @@
 		keyUp="MainModel.getInstance().distanciaEntreReferenciaEVeiculo.refresh()"/>
 	<mx:DataGrid
 		id="grid"
+		width="100%"
+		height="100%"
 		allowMultipleSelection="true"
 		labelFunction="labelFunction"
 		itemClick="this.controller.itemClickEventHandler(event)"
@@ -85,6 +88,6 @@
 	<mx:ControlBar width="100%" horizontalAlign="right">
 		<s:Button id="adicionar" label="Adicionar" click="this.controller.adicionar()"/>
 		<s:Button id="remover" label="Remover" click="this.controller.remover()"/>
-		<s:Button id="cancel" label="Cancel" click="this.controller.closeHandler()"/>
+		<s:Button id="cancel" label="Fechar" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
-</mx:TitleWindow>
+</resize:ResizableWindow>
