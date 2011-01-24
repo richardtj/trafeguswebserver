@@ -6,8 +6,8 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public function ParadaVO()
 		{
 		}
-		public var codigoTipoTransporte:String;
-		public var descricaoTipoTransporte:String;
+		public var codigoTipoParada:String;
+		public var descricaoTipoParada:String;
 		public var codigoReferencia:String;
 		public var descricaoReferencia:String;
 	}

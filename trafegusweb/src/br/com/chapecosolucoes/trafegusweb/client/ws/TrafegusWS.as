@@ -132,7 +132,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaListaRotas(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaRotas", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa,MainModel.getInstance().smVO.codigoEmbarcador, offset,MainModel.getInstance().itensPorPagina);
         }
 
         public function solicitaListaEmbarcadores(handler:Function, offset:int):void
@@ -186,7 +186,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaListaPGR(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaPGR", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, offset,MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, MainModel.getInstance().smVO.codigoEmbarcador, offset,MainModel.getInstance().itensPorPagina);
         }
 
         public function solicitaDadosPGR(handler:Function, param:String):void
@@ -240,13 +240,13 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaTotalListaPGR(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaPGR", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao);
+            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,MainModel.getInstance().smVO.codigoEmbarcador);
         }
 
         public function solicitaTotalListaRotas(handler:Function):void
         {
             var operation:Operation = createOperation("solicitaTotalListaRotas", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa,MainModel.getInstance().smVO.codigoEmbarcador);
         }
 
         public function solicitaTotalListaTipoTransporte(handler:Function):void
@@ -434,6 +434,16 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 		{
 			var operation:Operation = createOperation("procuraRefenciasZoom", handler);
 			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,referenciaVO.refeDescricao,referenciaVO.descricao);
+		}
+		public function solicitaListaTipoParada(handler:Function,offset:int):void
+		{
+			var operation:Operation = createOperation("solicitaListaTipoParada", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,offset,MainModel.getInstance().itensPorPagina);
+		}
+		public function solicitaTotalListaTipoParada(handler:Function):void
+		{
+			var operation:Operation = createOperation("solicitaTotalListaTipoParada", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao);
 		}
     }
 }

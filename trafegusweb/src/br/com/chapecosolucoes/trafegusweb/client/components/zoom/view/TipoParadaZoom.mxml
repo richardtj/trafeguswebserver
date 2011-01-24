@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				layout="vertical"
+				width="720" height="420"
+				showCloseButton="true"
+				creationCompleteEffect="{dissolve,iris}"
+				removedEffect="{dissolve,iris}"
+				initialize="init()"
+				creationComplete="creationComplete()"
+				close="this.controller.closeHandler()"
+				title="Tipo Parada"
+				titleIcon="@Embed(source='assets/Map3.png')"
+				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
+				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
+	<fx:Metadata>
+		[Event(name="tipoParadaSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.TipoParadaSelecionadoEvent")]		
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.TipoParadaZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			private var controller:TipoParadaZoomController;
+			private function init():void
+			{
+				this.controller = new TipoParadaZoomController();
+				this.controller.view = this;
+				MainModel.getInstance().tipoParadaArray.filterFunction = this.controller.tipoParadaFilterFunction;
+				MainModel.getInstance().tipoParadaArray.refresh();
+				
+				this.controller.solicitaTotalListaTipoParada();
+			}
+			private function creationComplete():void
+			{
+				this.controller.atualizaListaTipoParada();
+			}
+		]]>
+	</fx:Script>
+	<searchInput:SearchInputFX 
+		id="textInputFiltro"
+		width="100%" 
+		keyUp="MainModel.getInstance().tipoParadaArray.refresh()"
+		text="{MainModel.getInstance().zoomFilter}"
+		refreshEvent="this.controller.atualizaListaTipoParada()"/>
+	<view:DataGridFX 
+		id="grid" 
+		width="100%" height="100%" 
+		doubleClickEnabled="true"
+		doubleClick="this.controller.tipoParadaSelecionado()"
+		dataProvider="{MainModel.getInstance().tipoParadaArray}"
+		toolTip="Clique sobre o codigo da parada para exibir os detalhes.">
+		<view:columns>
+			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+			<mx:DataGridColumn headerText="Código" dataField="codigo"/>
+			<mx:DataGridColumn headerText="Descrição" dataField="descricao"/>
+		</view:columns>
+	</view:DataGridFX>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalListaTipoParada}"
+		next="this.controller.solicitaListaTipoParada(event)"
+		prev="this.controller.solicitaListaTipoParada(event)"
+		first="this.controller.solicitaListaTipoParada(event)"
+		last="this.controller.solicitaListaTipoParada(event)"/>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Ok" click="this.controller.tipoParadaSelecionado()"/>
+		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
+	</mx:ControlBar>
+</mx:TitleWindow>
