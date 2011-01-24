@@ -2,11 +2,11 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.LocaisZoom;
-	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.TipoTransporteZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.TipoParadaZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
 	import br.com.chapecosolucoes.trafegusweb.client.events.AddParadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedLocalEvent;
-	import br.com.chapecosolucoes.trafegusweb.client.events.TipoTransporteSelecionadoEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.TipoParadaSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.AddParadasModel;
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddParadasView;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.ParadaVO;
@@ -26,10 +26,10 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public var model:AddParadasModel;
 		public function tipoParadaZoomDispatcher():void
 		{
-			var tipoTransporteZoom:TipoTransporteZoom = new TipoTransporteZoom();
-			tipoTransporteZoom.addEventListener(TipoTransporteSelecionadoEvent.TIPO_TRANSPORTE_SELECIONADO_EVENT,tipoTransporteSelecionadoEventHandler);
-			MyPopUpManager.addPopUp(tipoTransporteZoom,DisplayObject(FlexGlobals.topLevelApplication));
-			MyPopUpManager.centerPopUp(tipoTransporteZoom);
+			var tipoParadaZoom:TipoParadaZoom = new TipoParadaZoom();
+			tipoParadaZoom.addEventListener(TipoParadaSelecionadoEvent.TIPO_PARADA_SELECIONADO_EVENT,tipoParadaSelecionadoEventHandler);
+			MyPopUpManager.addPopUp(tipoParadaZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			MyPopUpManager.centerPopUp(tipoParadaZoom);
 		}
 		public function localZoomDispatcher(enum:LocaisEnum):void
 		{
@@ -50,10 +50,10 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			this.model.parada.codigoReferencia = event.local.codigo;
 			this.model.parada.descricaoReferencia = event.local.descricao;
 		}
-		private function tipoTransporteSelecionadoEventHandler(event:TipoTransporteSelecionadoEvent):void
+		private function tipoParadaSelecionadoEventHandler(event:TipoParadaSelecionadoEvent):void
 		{
-			this.model.parada.codigoTipoTransporte = event.tipoTransporte.codigo;
-			this.model.parada.descricaoTipoTransporte = event.tipoTransporte.descricao;
+			this.model.parada.codigoTipoParada = event.tipoParada.codigo;
+			this.model.parada.descricaoTipoParada = event.tipoParada.descricao;
 		}
 		public function paradaSelecionada():void
 		{

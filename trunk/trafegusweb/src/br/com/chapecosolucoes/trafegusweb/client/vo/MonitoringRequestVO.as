@@ -65,5 +65,11 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public var operacao:String = "";
 		public var numeroViagem:String = "";
 		public var terminal:String = "";
+		public var valor:String = "";
+		public var tempMax:String = "";
+		public var tempMin:String = "";
+		public var distancia:String = "";
+		public var inicio:String = "";
+		public var horaInicio:String = "";
 	}
 }
