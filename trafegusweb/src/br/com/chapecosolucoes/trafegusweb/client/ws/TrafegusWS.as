@@ -404,10 +404,10 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         }
 
 
-        public function solicitaSMVeiculo(handler:Function, placaVeiculo:String):void
+        public function solicitaSMVeiculo(handler:Function, placaVeiculo:String,offset:int):void
         {
             var operation:Operation = createOperation("solicitaSMVeiculo", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, placaVeiculo);
+            operation.send(UsuarioLogado.getInstance().IdSessao, placaVeiculo, offset, MainModel.getInstance().itensPorPagina);
         }
 
         public function leConfiguracaoGrid(handler:Function, tela:String, grid:String):void
@@ -444,6 +444,11 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 		{
 			var operation:Operation = createOperation("solicitaTotalListaTipoParada", handler);
 			operation.send(UsuarioLogado.getInstance().IdSessao);
+		}
+		public function solicitaTotalSMVeiculo(handler:Function,placaVeiculo:String):void
+		{
+			var operation:Operation = createOperation("solicitaTotalSMVeiculo", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,placaVeiculo);
 		}
     }
 }

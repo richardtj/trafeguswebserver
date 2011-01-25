@@ -2,7 +2,9 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
+	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.model.SMGridModel;
 	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
 	import br.com.chapecosolucoes.trafegusweb.client.view.SMGrid;
@@ -23,9 +25,22 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 		}
 		public var view:SMGrid;
-		public function solicitaSMVeiculo(placaVeiculo:String):void
+		public var model:SMGridModel;
+		public function solicitaSMVeiculo(event:PaginableEvent):void
 		{
-			TrafegusWS.getIntance().solicitaSMVeiculo(solicitaSMVeiculoResultHandler,placaVeiculo);
+			TrafegusWS.getIntance().solicitaSMVeiculo(solicitaSMVeiculoResultHandler,this.model.placaVeiculo,event.paginaAtual);
+		}
+		public function solicitaTotalSMVeiculo():void
+		{
+			TrafegusWS.getIntance().solicitaTotalSMVeiculo(solicitaTotalSMVeiculoResultHandler,this.model.placaVeiculo);
+		}
+		private function solicitaTotalSMVeiculoResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().totalSMVeiculo = int(obj.total.toString());
+			}
 		}
 		private function solicitaSMVeiculoResultHandler(event:ResultEvent):void
 		{
@@ -61,7 +76,8 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function atualizaListaSM():void
 		{
-			
+			this.view.paginable.paginaAtual = 1;
+			TrafegusWS.getIntance().solicitaSMVeiculo(solicitaSMVeiculoResultHandler,this.model.placaVeiculo,0);
 		}
 		public function smFilterFunction(item:Object):Boolean{
 			return (String(MonitoringRequestVO(item).dataCadastro).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||

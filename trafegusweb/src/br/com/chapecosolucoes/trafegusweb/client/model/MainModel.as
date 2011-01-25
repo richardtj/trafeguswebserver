@@ -98,6 +98,8 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		
 		public var totalListaTipoParada:int = 0;
 		
+		public var totalSMVeiculo:int = 0;
+		
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.TipoParadaVO")]
 		public var tipoParadaArray:ArrayCollection = new ArrayCollection();
 		

@@ -35,6 +35,12 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.descricaoPGR = obj.pgpg_descricao.toString();
 			this.prevHoraInicio = obj.viag_previsao_hora_inicio.toString();
 			this.prevHoraFim = obj.viag_previsao_hora_fim.toString();
+			this.distancia = obj.viag_distancia.toString();
+			this.valor = obj.viag_valor_carga.toString();
+			this.inicio = obj.viag_data_inicio.toString();
+			this.horaInicio = obj.viag_hora_inicio.toString();
+			this.tempMin = obj.vtem_valor_minimo.toString();
+			this.tempMax = obj.vtem_valor_maximo.toString();
 		}
 		public var codigoTipoViagem:String = "";
 		public var descricaoTipoViagem:String = "";
