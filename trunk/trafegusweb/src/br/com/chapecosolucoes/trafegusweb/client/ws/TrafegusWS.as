@@ -90,19 +90,19 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaListaVeiculos(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaVeiculos", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
         }
 
         public function solicitaDadosGrid(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaDadosGrid", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
         }
 
         public function solicitaHistoricoPosicoes(handler:Function, params:PosicaoVeiculoVO, offset:int):void
         {
             var operation:Operation = createOperation("SolicitaHistoricoPosicoes", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, params.vehiclePlate, offset,MainModel.getInstance().itensPorPagina, false);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, params.vehiclePlate, offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina, false);
         }
 
         public function solicitaDadosMotorista(handler:Function, params:String):void
@@ -120,31 +120,31 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaDadosGridEmViagem(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaDadosGridEmViagem", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
         }
 
         public function solicitaListaMotoristas(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaMotoristas", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
         }
 
         public function solicitaListaRotas(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaRotas", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa,MainModel.getInstance().smVO.codigoEmbarcador, offset,MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa,MainModel.getInstance().smVO.codigoEmbarcador, offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
         }
 
         public function solicitaListaEmbarcadores(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaEmbarcadores", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
         }
 
         public function solicitaListaTransportadores(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaTransportadores", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, offset,MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao, offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
         }
 
         public function solicitaDadosEmbarcador(handler:Function, param:String):void
@@ -162,13 +162,13 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaListaLocais(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaLocais", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
         }
 
         public function solicitaListaTipoTransporte(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaTipoTransporte", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, offset,MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao, offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
         }
 
         public function solicitaDadosLocal(handler:Function, param:String):void
@@ -186,7 +186,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaListaPGR(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaPGR", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, MainModel.getInstance().smVO.codigoEmbarcador, offset,MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, MainModel.getInstance().smVO.codigoEmbarcador, offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
         }
 
         public function solicitaDadosPGR(handler:Function, param:String):void
@@ -198,7 +198,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaListaViagemPai(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaListaViagemPai", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
         }
 
         public function solicitaListaTerminais(handler:Function):void
@@ -314,7 +314,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaRefenciasZoom(handler:Function, offset:int):void
         {
             var operation:Operation = createOperation("solicitaRefenciasZoom", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset, MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, offset, MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
         }
 
         public function lerPosicaoTelas(handler:Function):void
@@ -407,7 +407,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
         public function solicitaSMVeiculo(handler:Function, placaVeiculo:String,offset:int):void
         {
             var operation:Operation = createOperation("solicitaSMVeiculo", handler);
-            operation.send(UsuarioLogado.getInstance().IdSessao, placaVeiculo, offset, MainModel.getInstance().itensPorPagina);
+            operation.send(UsuarioLogado.getInstance().IdSessao, placaVeiculo, offset, MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
         }
 
         public function leConfiguracaoGrid(handler:Function, tela:String, grid:String):void
@@ -418,7 +418,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 		public function solicitaDadosGridZoom(handler:Function,offset:int):void
 		{
 			var operation:Operation = createOperation("solicitaDadosGridZoom", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPagina);
+			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa, offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
 		}
 		public function procuraDadosGrid(handler:Function,posVeiculoVO:PosicaoVeiculoVO):void
 		{
@@ -438,7 +438,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 		public function solicitaListaTipoParada(handler:Function,offset:int):void
 		{
 			var operation:Operation = createOperation("solicitaListaTipoParada", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao,offset,MainModel.getInstance().itensPorPagina);
+			operation.send(UsuarioLogado.getInstance().IdSessao,offset,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
 		}
 		public function solicitaTotalListaTipoParada(handler:Function):void
 		{
@@ -449,6 +449,16 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 		{
 			var operation:Operation = createOperation("solicitaTotalSMVeiculo", handler);
 			operation.send(UsuarioLogado.getInstance().IdSessao,placaVeiculo);
+		}
+		public function salvarItensPorPagina(handler:Function):void
+		{
+			var operation:Operation = createOperation("salvarItensPorPagina", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,MainModel.getInstance().codUsuario,MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
+		}
+		public function lerItensPorPagina(handler:Function):void
+		{
+			var operation:Operation = createOperation("lerItensPorPagina", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,MainModel.getInstance().codUsuario);
 		}
     }
 }

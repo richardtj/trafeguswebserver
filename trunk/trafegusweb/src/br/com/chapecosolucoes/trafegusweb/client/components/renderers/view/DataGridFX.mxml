@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:DataGrid 
-    initialize="initializeHandler(event)"
     keyDown="keyPressed(event)"
-    columnStretch="columnStretchHandler(event)"
-    headerShift="headerShiftHandler(event)"
     xmlns:fx="http://ns.adobe.com/mxml/2009"
     xmlns:s="library://ns.adobe.com/flex/spark"
     xmlns:mx="library://ns.adobe.com/flex/mx"
@@ -36,7 +33,7 @@
                 }
             }
 
-            private function columnStretchHandler(event:DataGridEvent):void
+            /* private function columnStretchHandler(event:DataGridEvent):void
             {
                 var grid:DataGrid = DataGrid(event.target);
                 var win:Object = Reflection.getContainerWindow(grid);
@@ -48,9 +45,9 @@
 
                 TrafegusWS.getIntance().gravaTamanhoPosicaoColuna(gravaTamanhoPosicaoColunaHandler, tela, grid.name, coluna, tamanho, posicao, "S", titulo);
 
-            }
+            } */
 
-            private function headerShiftHandler(event:IndexChangedEvent):void
+            /* private function headerShiftHandler(event:IndexChangedEvent):void
             {
                 var grid:DataGrid = DataGrid(event.target);
                 var win:Object = Reflection.getContainerWindow(grid);
@@ -63,22 +60,22 @@
 
                 TrafegusWS.getIntance().gravaTamanhoPosicaoColuna(gravaTamanhoPosicaoColunaHandler, tela, grid.name, coluna, tamanho, posicao, "S", titulo);
 
-            }
+            } */
 
-            private function initializeHandler(event:FlexEvent):void
+            /* private function initializeHandler(event:FlexEvent):void
             {
                 var win:Object = Reflection.getContainerWindow(this);
                 var tela:String = getQualifiedClassName(win) + "::" + win.name;
 
                 TrafegusWS.getIntance().leConfiguracaoGrid(leConfiguracaoGridHandler, tela, this.name);
-            }
+            } */
 
-            private function gravaTamanhoPosicaoColunaHandler(evt:ResultEvent):void
+            /* private function gravaTamanhoPosicaoColunaHandler(evt:ResultEvent):void
             {
 
-            }
+            } */
 
-            private function leConfiguracaoGridHandler(evt:ResultEvent):void
+            /* private function leConfiguracaoGridHandler(evt:ResultEvent):void
             {
                 var result:Array = ParserResult.parserDefault(evt);
                 var dgColumns:Array = new Array();
@@ -99,7 +96,7 @@
                 {
         //            this.columns = dgColumns;
                 }
-            }
+            } */
         ]]>
     </fx:Script>
 </mx:DataGrid>

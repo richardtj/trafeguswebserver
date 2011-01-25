@@ -12,6 +12,7 @@ package br.com.chapecosolucoes.trafegusweb.client.model
     import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteVeiculosVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.ItensPorPaginaVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
@@ -92,7 +93,7 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		
 		public var totalReferenciasZoom:int = 0;
 		
-		public var itensPorPagina:int = 20;
+		public var itensPorPaginaVO:ItensPorPaginaVO = new ItensPorPaginaVO();
 		
 		public var rota:Polyline = null;
 		

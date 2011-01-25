@@ -185,6 +185,8 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
                 UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentHeight = (100 * this.view.detalhes.height) / FlexGlobals.topLevelApplication.width;
 
                 TrafegusWS.getIntance().salvarPosicaoTelas(salvarPosicaoTelasResultHandler);
+				
+				TrafegusWS.getIntance().salvarItensPorPagina(salvarItensPorPaginaResultHandler);
             }
             if (event.label == "Sair")
             {
@@ -321,5 +323,9 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
         {
             MessageBox.informacao("As posições atuais, foram salvas");
         }
+		private function salvarItensPorPaginaResultHandler(event:ResultEvent):void
+		{
+			MessageBox.informacao("Itens por pagina, foram salvas");
+		}
     }
 }

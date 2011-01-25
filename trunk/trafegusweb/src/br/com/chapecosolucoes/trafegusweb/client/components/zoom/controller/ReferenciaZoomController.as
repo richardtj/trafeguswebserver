@@ -93,7 +93,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		private function procuraRefenciasZoomResultHandler(event:ResultEvent):void
 		{
-			MainModel.getInstance().totalReferenciasZoom = MainModel.getInstance().itensPorPagina;
+			MainModel.getInstance().totalReferenciasZoom = MainModel.getInstance().itensPorPaginaVO.itensPorPagina;
 			this.solicitaReferenciasZoomResultHandler(event);
 		}
 	}

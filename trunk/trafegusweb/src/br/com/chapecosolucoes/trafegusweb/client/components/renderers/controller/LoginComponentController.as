@@ -41,12 +41,21 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
             if (resultArray.length != 0)
             {
 				TrafegusWS.getIntance().lerPosicaoTelas(lerPosicaoTelasResultHandler);
+				TrafegusWS.getIntance().lerItensPorPagina(lerItensPorPaginaResultHandler);
             }
             else
             {
                 MessageBox.atencao("Usuario ou senha inválidos.");
             }
         }
+		private function lerItensPorPaginaResultHandler(e:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(e);
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().itensPorPaginaVO .setItensPorPaginaVO(obj);
+			}
+		}
 		private function lerPosicaoTelasResultHandler(e:ResultEvent):void {
             this.view.textinput1.text = "";
             this.view.textinput2.text = "";
