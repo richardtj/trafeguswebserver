@@ -1,5 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.vo
 {
+	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+
 	[Bindable]
 	public class PosicaoTelasVO
 	{

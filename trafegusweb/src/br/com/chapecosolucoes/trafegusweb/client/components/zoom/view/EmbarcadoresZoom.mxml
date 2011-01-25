@@ -77,7 +77,7 @@
 	</view:DataGridFX>
 	<view:PaginableComponent 
 		id="paginable"
-		itensPorPagina="{MainModel.getInstance().itensPorPagina}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
 		totalRecords="{MainModel.getInstance().totalListaEmbarcadores}"
 		next="this.controller.solicitaListaEmbarcadores(event)"
 		first="this.controller.solicitaListaEmbarcadores(event)"

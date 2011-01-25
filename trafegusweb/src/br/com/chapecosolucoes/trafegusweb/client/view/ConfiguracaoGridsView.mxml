@@ -36,7 +36,8 @@
 	</fx:Script>
 	<mx:Form id="form">
 		<mx:FormItem label="Itens por página">
-			<s:TextInput id="itensPorPagina" text="{MainModel.getInstance().itensPorPagina}"/>
+			<s:NumericStepper id="itensPorPagina" minimum="0" maximum="{Number.MAX_VALUE}" width="200" value="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"/>
+			<!--s:TextInput id="itensPorPagina" text="{MainModel.getInstance().itensPorPagina}"/-->
 		</mx:FormItem>
 	</mx:Form>
 	<mx:ControlBar width="100%" horizontalAlign="right">
