@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:resize="flex.utils.ui.resize.*" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
 		 layout="vertical"
@@ -9,7 +9,7 @@
 		 initialize="init()"
 		 creationComplete="creationComplete()"
 		 close="closeHandler()"
-		 title="Novo Monitoramento"
+		 title="Solicitação de monitoramento"
 		 titleIcon="@Embed(source='assets/wifi.png')"
 		 xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*" xmlns:view1="br.com.chapecosolucoes.trafegusweb.client.view.*" xmlns:datafieldpt="br.com.chapecosolucoes.trafegusweb.client.components.datafieldpt.*" xmlns:controls="com.flexpernambuco.controls.*">
 	<fx:Declarations>
@@ -127,25 +127,27 @@
 						<mx:FormItem label="Origem" required="true">
 							<view:ZoomCodDetailView 
 								id="origemZoom" 
+								editable="{this.rotaZoom.cod == ''}"
 								cod="{MainModel.getInstance().smVO.codigoOrigem}"
 								detail="{MainModel.getInstance().smVO.descricaoOrigem}"
 								clickZoom="this.controller.locaisZoomDispatcher(LocaisEnum.ORIGEM,event)" 
 								tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.ORIGEM,event)"/>
 						</mx:FormItem>
-						<mx:FormItem label="Tipo local">
+						<!--mx:FormItem label="Tipo local">
 							<s:TextInput />
-						</mx:FormItem>
+						</mx:FormItem-->
 						<mx:FormItem label="Destino" required="true">
 							<view:ZoomCodDetailView 
-								id="destinoZoom" 
+								id="destinoZoom"
+								editable="{this.rotaZoom.cod == ''}"
 								cod="{MainModel.getInstance().smVO.codigoDestino}"
 								detail="{MainModel.getInstance().smVO.descricaoDestino}"
 								clickZoom="this.controller.locaisZoomDispatcher(LocaisEnum.DESTINO,event)" 
 								tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.DESTINO,event)"/>
 						</mx:FormItem>
-						<mx:FormItem label="Tipo local">
+						<!--mx:FormItem label="Tipo local">
 							<s:TextInput />
-						</mx:FormItem>
+						</mx:FormItem-->
 					</mx:VBox>
 					<mx:VBox horizontalAlign="right">
 						<mx:FormItem label="Viagem inicia em" required="true">
@@ -199,4 +201,4 @@
 		<s:Button label="OK"/>
 		<s:Button label="Cancel" click="this.closeHandler()"/>
 	</mx:ControlBar>
-</mx:TitleWindow>
+</resize:ResizableWindow>

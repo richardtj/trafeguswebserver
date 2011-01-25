@@ -16,6 +16,8 @@
 			public var cod:String;
 			[Bindable]
 			public var detail:String;
+			[Bindable]
+			public var editable:Boolean = true;
 			
 			private function click(event:MouseEvent):void{
 				var zoomCodDetailEvent:ZoomCodDetailEvent = new ZoomCodDetailEvent(ZoomCodDetailEvent.CLICK);
@@ -42,7 +44,7 @@
 			requiredFieldError="Código invalido."/>
 	</fx:Declarations>
 	<mx:HBox borderStyle="solid">
-		<s:TextInput id="codTextInput" editable="true" width="50" borderVisible="false" restrict="0-9" text="{cod}" keyDown="keyUpEventHandler(event)"/>
+		<s:TextInput id="codTextInput" editable="{this.editable}" width="50" borderVisible="false" restrict="0-9" text="{cod}" keyDown="keyUpEventHandler(event)"/>
 		<mx:Image source="@Embed(source='assets/Search-16.png')" useHandCursor="true" click="this.click(event)" buttonMode="true"/> 
 	</mx:HBox>
 	<s:TextInput id="detailTextInput" width="200" editable="false" text="{detail}"/>

@@ -97,7 +97,7 @@
                 xml = <XMLList>
                         <menuitem label="Arquivo">
                             <menuitem label="Novo">
-                                <menuitem label="Agendamento"/>
+                                <menuitem label="Solicitação de monitoramento"/>
                             </menuitem>
                             <menuitem label="Salvar"/>
                             <menuitem label="Sair"/>

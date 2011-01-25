@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow 
+<resize:ResizableWindow 
+	xmlns:resize="flex.utils.ui.resize.*" 
     width="720" height="420"
     cornerRadius="5"
     creationCompleteEffect="{dissolve,iris}"
@@ -89,4 +90,4 @@
 		<s:Button label="Ok" click="this.controller.localSelecionado()"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
-</mx:TitleWindow>
+</resize:ResizableWindow>
