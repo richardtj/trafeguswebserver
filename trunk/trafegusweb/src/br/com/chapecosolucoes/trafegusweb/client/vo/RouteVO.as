@@ -43,6 +43,14 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			//this.localDestino.codigoGrupo = obj.cref_codigo_destino.toString();
 			//this.localDestino.descricaoGrupo = obj.cref_descricao_destino.toString();
 		}
+		public function get vrot_codigo():String
+		{
+			return this.codigo==""?"nextval('s_vrot_viagem_rota')":this.codigo;
+		}
+		public function set vrot_codigo(vrot_codigo:String):void
+		{
+			this.codigo = vrot_codigo;
+		}
 		public var codigo:String;
 		public var descricao:String;
 		public var distancia:String;

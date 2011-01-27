@@ -31,7 +31,7 @@
 	<mx:VBox width="100%" height="100%">
 		<s:Label text="Terminais dos veículos"/>	
 		<mx:HBox width="100%" height="100%">
-			<mx:DataGrid width="100%" height="100%" dataProvider="{MainModel.getInstance().terminaisArray}">
+			<mx:DataGrid width="100%" height="100%" dataProvider="{MainModel.getInstance().smVO.terminaisArray}">
 				<mx:columns>
 					<mx:DataGridColumn sortable="false" 
 									   width="20"
@@ -60,7 +60,7 @@
 	<mx:VBox width="100%" height="100%">
 		<s:Label text="Terminais com problemas"/>
 		<mx:DataGrid
-			dataProvider="{MainModel.getInstance().terminaisDefeituososArray}"
+			dataProvider="{MainModel.getInstance().smVO.terminaisDefeituososArray}"
 			width="100%"
 			height="100%">
 			<mx:columns>

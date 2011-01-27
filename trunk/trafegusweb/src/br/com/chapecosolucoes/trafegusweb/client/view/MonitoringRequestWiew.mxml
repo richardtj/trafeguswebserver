@@ -8,10 +8,30 @@
 		 removedEffect="{dissolve,iris}"
 		 initialize="init()"
 		 creationComplete="creationComplete()"
-		 close="closeHandler()"
+		 close="this.controller.closeHandler()"
 		 title="Solicitação de monitoramento"
 		 titleIcon="@Embed(source='assets/wifi.png')"
-		 xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*" xmlns:view1="br.com.chapecosolucoes.trafegusweb.client.view.*" xmlns:datafieldpt="br.com.chapecosolucoes.trafegusweb.client.components.datafieldpt.*" xmlns:controls="com.flexpernambuco.controls.*">
+		 xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.zoomcoddetailcomponent.view.*" xmlns:view1="br.com.chapecosolucoes.trafegusweb.client.view.*" xmlns:datafieldpt="br.com.chapecosolucoes.trafegusweb.client.components.datafieldpt.*" xmlns:controls="com.flexpernambuco.controls.*" xmlns:view2="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Binding source="tipoViagemZoom.cod" destination="MainModel.getInstance().smVO.codigoTipoViagem"/>
+	<fx:Binding source="viagemPaiZoom.cod" destination="MainModel.getInstance().smVO.codigoViagemPai"/>
+	<fx:Binding source="transportadorZoom.cod" destination="MainModel.getInstance().smVO.codigoTransportador"/>
+	<fx:Binding source="embarcadorZoom.cod" destination="MainModel.getInstance().smVO.codigoEmbarcador"/>
+	<fx:Binding source="veiculoZoom.cod" destination="MainModel.getInstance().smVO.veiculoPrincipal.cod"/>
+	<fx:Binding source="motoristaZoom.cod" destination="MainModel.getInstance().smVO.codigoMotorista"/>
+	<fx:Binding source="pgrZoom.cod" destination="MainModel.getInstance().smVO.codigoPGR"/>
+	<fx:Binding source="rotaZoom.cod" destination="MainModel.getInstance().smVO.codigoRota"/>
+	<fx:Binding source="origemZoom.cod" destination="MainModel.getInstance().smVO.codigoOrigem"/>
+	<fx:Binding source="destinoZoom.cod" destination="MainModel.getInstance().smVO.codigoDestino"/>
+	<fx:Binding source="dataInicio.text" destination="MainModel.getInstance().smVO.inicio"/>
+	<fx:Binding source="horaInicio.text" destination="MainModel.getInstance().smVO.horaInicio"/>
+	<fx:Binding source="dataInicioPrev.text" destination="MainModel.getInstance().smVO.prevInicio"/>
+	<fx:Binding source="horaInicioPrev.text" destination="MainModel.getInstance().smVO.prevHoraInicio"/>
+	<fx:Binding source="dataFimPrev.text" destination="MainModel.getInstance().smVO.prevFim"/>
+	<fx:Binding source="horaFimPrev.text" destination="MainModel.getInstance().smVO.prevHoraFim"/>
+	<fx:Binding source="distanciaDaViagem.text" destination="MainModel.getInstance().smVO.distancia"/>
+	<fx:Binding source="valor.text" destination="MainModel.getInstance().smVO.valor"/>
+	<fx:Binding source="temperaturaMinima.text" destination="MainModel.getInstance().smVO.tempMin"/>
+	<fx:Binding source="temperaturaMaxima.text" destination="MainModel.getInstance().smVO.tempMax"/>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:Dissolve id="dissolve" duration="500"/>
@@ -23,21 +43,30 @@
 			import br.com.chapecosolucoes.trafegusweb.client.controller.MonitoringRequestController;
 			import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			private var controller:MonitoringRequestController;
+			public var smVO:MonitoringRequestVO;
 			private function init():void{
 				this.controller = new MonitoringRequestController();
 				this.controller.view = this;
 			}
 			private function creationComplete():void
 			{
-				
-			}
-			private function closeHandler():void
-			{
-				MyPopUpManager.removePopUp(this);
+				if(this.smVO != null)
+				{
+					MainModel.getInstance().smVO = this.smVO;
+					this.controller.solicitaParadasSM();
+					this.controller.solicitaDadosGridCarretas();
+					this.controller.solicitaListaTerminais();
+				}
+				else
+				{
+					this.smVO = new MonitoringRequestVO();
+					MainModel.getInstance().smVO = this.smVO;
+				}
 			}
 		]]>
 	</fx:Script>
@@ -87,8 +116,8 @@
 						<mx:FormItem label="Veiculo do Transportador" required="true">
 							<view:ZoomCodDetailView 
 								id="veiculoZoom" 
-								cod="{MainModel.getInstance().smVO.codigoVeiculo}"
-								detail="{MainModel.getInstance().smVO.placaVeiculo}"
+								cod="{MainModel.getInstance().smVO.veiculoPrincipal.cod}"
+								detail="{MainModel.getInstance().smVO.veiculoPrincipal.vehiclePlate}"
 								clickZoom="this.controller.veiculoZoomDispatcher(event)" 
 								tabZoom="this.controller.veiculoZoomDispatcher(event)"/>
 						</mx:FormItem>
@@ -110,7 +139,35 @@
 						</mx:FormItem>
 					</mx:VBox>
 					<mx:FormItem label="Carretas">
-						<mx:Image source="@Embed(source='assets/plus-icon.png')" buttonMode="true" click="this.controller.addCarretas()"/>
+						<!--mx:Image source="@Embed(source='assets/plus-icon.png')" buttonMode="true" click="this.controller.addCarretas()"/-->
+						<mx:VBox width="100%" height="130">
+							<mx:DataGrid
+								id="grid1" 
+								width="100%" height="100%" 
+								allowMultipleSelection="true"
+								allowDragSelection="true"
+								dragEnabled="true"
+								dropEnabled="true"
+								dragMoveEnabled="true"
+								dataProvider="{MainModel.getInstance().smVO.carretas}"
+								toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
+								<mx:columns>
+									<mx:DataGridColumn headerText="Sequencia"
+													   dataField="seq"/>
+									<mx:DataGridColumn headerText="Código"
+													   dataField="cod"/>
+									<mx:DataGridColumn headerText="Placa" 
+													   dataField="vehiclePlate" 
+													   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
+									<mx:DataGridColumn headerText="Descrição" dataField="desc"/>
+									<mx:DataGridColumn headerText="Cor" dataField="cor"/>
+								</mx:columns>
+							</mx:DataGrid>
+							<mx:HBox width="100%" horizontalAlign="right">
+								<s:Button label="Adicionar" click="this.controller.addCarretas()"/>
+								<s:Button label="Remover" click="this.controller.removeCarretas()"/>
+							</mx:HBox>
+						</mx:VBox>
 					</mx:FormItem>
 				</mx:HBox>
 				<mx:HRule width="60%"/>
@@ -152,27 +209,24 @@
 					<mx:VBox horizontalAlign="right">
 						<mx:FormItem label="Viagem inicia em" required="true">
 							<mx:HBox>
-								<datafieldpt:DataFieldPT text="{MainModel.getInstance().smVO.inicio}"/>
-								<s:TextInput text="{MainModel.getInstance().smVO.horaInicio}"/>
+								<datafieldpt:DataFieldPT id="dataInicio" text="{MainModel.getInstance().smVO.inicio}"/>
+								<s:TextInput id="horaInicio" text="{MainModel.getInstance().smVO.horaInicio}"/>
 							</mx:HBox>
 						</mx:FormItem>
 						<mx:FormItem label="Prev. inicio" required="true">
 							<mx:HBox>
-								<datafieldpt:DataFieldPT text="{MainModel.getInstance().smVO.prevInicio}"/>
-								<s:TextInput text="{MainModel.getInstance().smVO.prevHoraInicio}"/>
+								<datafieldpt:DataFieldPT id="dataInicioPrev" text="{MainModel.getInstance().smVO.prevInicio}"/>
+								<s:TextInput id="horaInicioPrev" text="{MainModel.getInstance().smVO.prevHoraInicio}"/>
 							</mx:HBox>
 						</mx:FormItem>
 						<mx:FormItem label="Prev. fim" required="true">
 							<mx:HBox>
-								<datafieldpt:DataFieldPT text="{MainModel.getInstance().smVO.prevFim}"/>
-								<s:TextInput text="{MainModel.getInstance().smVO.prevHoraFim}"/>
+								<datafieldpt:DataFieldPT id="dataFimPrev" text="{MainModel.getInstance().smVO.prevFim}"/>
+								<s:TextInput id="horaFimPrev" text="{MainModel.getInstance().smVO.prevHoraFim}"/>
 							</mx:HBox>
 						</mx:FormItem>
 					</mx:VBox>
 				</mx:HBox>
-				<!--mx:FormItem label="Entragas/Paradas">
-					<mx:Image source="@Embed(source='assets/plus-icon.png')" buttonMode="true" click="this.controller.addParadas()"/>
-				</mx:FormItem-->
 				<mx:HRule width="60%"/>
 				<mx:HBox>
 					<mx:FormItem label="Distância da viagem" required="true">
@@ -198,7 +252,7 @@
 		</s:NavigatorContent>
 	</mx:ViewStack>
 	<mx:ControlBar horizontalAlign="right">
-		<s:Button label="OK"/>
-		<s:Button label="Cancel" click="this.closeHandler()"/>
+		<s:Button label="OK" click="this.controller.salvarSM()" enabled="{MainModel.getInstance().salvarSMEnabled}"/>
+		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </resize:ResizableWindow>

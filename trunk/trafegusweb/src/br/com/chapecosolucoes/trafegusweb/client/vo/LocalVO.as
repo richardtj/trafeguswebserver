@@ -20,6 +20,14 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.codigoGrupo = obj.cref_codigo.toString();
 			this.descricaoGrupo = obj.cref_descricao.toString();
 		}
+		public function set vloc_codigo(vloc_codigo:String):void
+		{
+			this.codigo = vloc_codigo;
+		}
+		public function get vloc_codigo():String
+		{
+			return this.codigo==""?"nextval('s_vloc_viagem_local')":this.codigo;
+		}
 		public var codigo:String;
 		public var descricao:String;
 		public var latLong:LatLng;

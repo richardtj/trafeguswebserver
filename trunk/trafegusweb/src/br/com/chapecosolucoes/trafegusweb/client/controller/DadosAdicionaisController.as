@@ -19,32 +19,32 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public var view:DadosAdicionaisView;
 		public function solicitaListaTerminais():void
 		{
-			TrafegusWS.getIntance().solicitaListaTerminais(solicitaListaTerminaisResultHandler);
+			TrafegusWS.getIntance().solicitaListaTerminais(solicitaListaTerminaisResultHandler,MainModel.getInstance().smVO.veiculoPrincipal.vehiclePlate);
 		}
 		private function solicitaListaTerminaisResultHandler(event:ResultEvent):void
 		{
 			var xml:XML = XML(event.result);
 			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
 			var resultArray:Array = xmlListCollection.toArray();
-			MainModel.getInstance().terminaisArray.removeAll();
+			MainModel.getInstance().smVO.terminaisArray.removeAll();
 			for each (var obj:Object in resultArray)
 			{
 				var terminal:TerminalVO = new TerminalVO();
 				terminal.setTerminalVO(obj);
-				MainModel.getInstance().terminaisArray.addItem(terminal);
+				MainModel.getInstance().smVO.terminaisArray.addItem(terminal);
 			}
 			this.solicitaDadosTerminalDefeituoso();
 		}
 		public function solicitaDadosTerminalDefeituoso():void
 		{
-			MainModel.getInstance().codTerminais = "";
-			for each(var terminal:TerminalVO in MainModel.getInstance().terminaisArray)
+			MainModel.getInstance().smVO.codTerminais = "";
+			for each(var terminal:TerminalVO in MainModel.getInstance().smVO.terminaisArray)
 			{
-				if(MainModel.getInstance().codTerminais != "")
+				if(MainModel.getInstance().smVO.codTerminais != "")
 				{
-					MainModel.getInstance().codTerminais += ",";
+					MainModel.getInstance().smVO.codTerminais += ",";
 				}
-				MainModel.getInstance().codTerminais += terminal.codigo;
+				MainModel.getInstance().smVO.codTerminais += terminal.codigo;
 			}
 			TrafegusWS.getIntance().solicitaDadosTerminalDefeituoso(solicitaDadosTerminalDefeituosoResultHandler);
 		}
@@ -53,12 +53,12 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var xml:XML = XML(event.result);
 			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
 			var resultArray:Array = xmlListCollection.toArray();
-			MainModel.getInstance().terminaisDefeituososArray.removeAll();
+			MainModel.getInstance().smVO.terminaisDefeituososArray.removeAll();
 			for each (var obj:Object in resultArray)
 			{
 				var terminal:TerminalDefeituosoVO = new TerminalDefeituosoVO();
 				terminal.setTerminalDefeituosoVO(obj);
-				MainModel.getInstance().terminaisDefeituososArray.addItem(terminal);
+				MainModel.getInstance().smVO.terminaisDefeituososArray.addItem(terminal);
 			}
 		}
 	}

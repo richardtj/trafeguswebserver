@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:resize="flex.utils.ui.resize.*" 
+						xmlns:s="library://ns.adobe.com/flex/spark" 
+						xmlns:mx="library://ns.adobe.com/flex/mx"
+						layout="vertical"
+						showCloseButton="true"
+						creationCompleteEffect="{dissolve,iris}"
+						removedEffect="{dissolve,iris}"
+						initialize="init()"
+						creationComplete="creationComplete()"
+						close="this.controller.closeHandler()"
+						title="Adicionar Carretas"
+						titleIcon="@Embed(source='assets/cam(Vazio).png')" 
+						xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
+						xmlns:controller="br.com.chapecosolucoes.trafegusweb.client.components.renderers.controller.*" 
+						xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
+	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="carretasSelecionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.CarretaSelecionadaEvent")]
+	</fx:Metadata>
+	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.CarretasZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			
+			import mx.managers.PopUpManager;
+			private var controller:CarretasZoomController;
+			private function init():void{
+				this.controller = new CarretasZoomController();
+				this.controller.view = this;
+			}
+			private function creationComplete():void{
+				this.controller.solicitaListaCarretasDisponiveis();
+				MainModel.getInstance().carretasDisponiveisArray.filterFunction = this.controller.carretasFilterFunction;
+				MainModel.getInstance().carretasDisponiveisArray.refresh();
+			}
+		]]>
+	</fx:Script>
+	<searchInput:SearchInputFX
+		id="textInputFiltro"
+		width="100%"
+		keyUp="MainModel.getInstance().carretasDisponiveisArray.refresh()"
+		text="{MainModel.getInstance().zoomFilter}"
+		refreshEvent="this.controller.atualizaListaCarretasDisponiveis()"/>
+	<mx:DataGrid
+		id="grid" 
+		width="100%" height="100%" 
+		doubleClickEnabled="true"
+		doubleClick="this.controller.carretaSelecionada()"
+		dataProvider="{MainModel.getInstance().carretasDisponiveisArray}"
+		toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
+		<mx:columns>
+			<mx:DataGridColumn headerText="Codigo" dataField="cod"/>
+			<mx:DataGridColumn headerText="Placa" 
+							   dataField="vehiclePlate" 
+							   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
+			<mx:DataGridColumn headerText="Descrição" dataField="desc"/>
+			<mx:DataGridColumn headerText="Cor" dataField="cor"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<view:PaginableComponent />
+	<mx:ControlBar horizontalAlign="right">
+		<s:Button label="Ok" click="this.controller.carretaSelecionada()"/>
+		<s:Button label="Cancelar" click="this.controller.closeHandler()"/>
+	</mx:ControlBar>
+</resize:ResizableWindow>

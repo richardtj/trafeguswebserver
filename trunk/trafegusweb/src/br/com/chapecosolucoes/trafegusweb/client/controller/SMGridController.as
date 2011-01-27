@@ -9,6 +9,10 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
 	import br.com.chapecosolucoes.trafegusweb.client.view.SMGrid;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.ParadaVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.TerminalDefeituosoVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.TerminalVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
 	import flash.display.DisplayObject;
@@ -61,12 +65,13 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			}
 			else
 			{
-				MainModel.getInstance().smVO = MonitoringRequestVO(this.view.grid.selectedItem);
 				var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
+				monitoringRequest.smVO = MonitoringRequestVO(this.view.grid.selectedItem);
 				MyPopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication));
 				MyPopUpManager.centerPopUp(monitoringRequest);
 			}
 		}
+		
 		public function novaSM():void
 		{
 			MainModel.getInstance().smVO = new MonitoringRequestVO();
@@ -86,15 +91,11 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				(String(MonitoringRequestVO(item).numeroViagem).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(MonitoringRequestVO(item).operacao).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(MonitoringRequestVO(item).descricaoOrigem).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
-				(String(MonitoringRequestVO(item).placaVeiculo).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(VeiculoVO(MonitoringRequestVO(item).veiculoPrincipal).vehiclePlate).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(MonitoringRequestVO(item).prevFim).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(MonitoringRequestVO(item).prevInicio).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(MonitoringRequestVO(item).terminal).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(MonitoringRequestVO(item).nomeTransportador).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0);
-		}
-		public function numeroViagemLabelFunction(data:Object):String
-		{
-			return "";
 		}
 	}
 }
