@@ -19,9 +19,9 @@
 	<fx:Binding source="veiculoZoom.cod" destination="MainModel.getInstance().smVO.veiculoPrincipal.cod"/>
 	<fx:Binding source="motoristaZoom.cod" destination="MainModel.getInstance().smVO.codigoMotorista"/>
 	<fx:Binding source="pgrZoom.cod" destination="MainModel.getInstance().smVO.codigoPGR"/>
-	<fx:Binding source="rotaZoom.cod" destination="MainModel.getInstance().smVO.codigoRota"/>
-	<fx:Binding source="origemZoom.cod" destination="MainModel.getInstance().smVO.codigoOrigem"/>
-	<fx:Binding source="destinoZoom.cod" destination="MainModel.getInstance().smVO.codigoDestino"/>
+	<fx:Binding source="rotaZoom.cod" destination="MainModel.getInstance().smVO.rota.codigo"/>
+	<fx:Binding source="origemZoom.cod" destination="MainModel.getInstance().smVO.rota.localOrigem.codigo"/>
+	<fx:Binding source="destinoZoom.cod" destination="MainModel.getInstance().smVO.rota.localDestino.codigo"/>
 	<fx:Binding source="dataInicio.text" destination="MainModel.getInstance().smVO.inicio"/>
 	<fx:Binding source="horaInicio.text" destination="MainModel.getInstance().smVO.horaInicio"/>
 	<fx:Binding source="dataInicioPrev.text" destination="MainModel.getInstance().smVO.prevInicio"/>
@@ -176,8 +176,8 @@
 						<mx:FormItem label="Rota">
 							<view:ZoomCodDetailView 
 								id="rotaZoom" 
-								cod="{MainModel.getInstance().smVO.codigoRota}"
-								detail="{MainModel.getInstance().smVO.descricaoRota}"
+								cod="{MainModel.getInstance().smVO.rota.codigo}"
+								detail="{MainModel.getInstance().smVO.rota.descricao}"
 								clickZoom="this.controller.rotaZoomDispatcher(event)" 
 								tabZoom="this.controller.rotaZoomDispatcher(event)"/>
 						</mx:FormItem>
@@ -185,8 +185,8 @@
 							<view:ZoomCodDetailView 
 								id="origemZoom" 
 								editable="{this.rotaZoom.cod == ''}"
-								cod="{MainModel.getInstance().smVO.codigoOrigem}"
-								detail="{MainModel.getInstance().smVO.descricaoOrigem}"
+								cod="{MainModel.getInstance().smVO.rota.localOrigem.codigo}"
+								detail="{MainModel.getInstance().smVO.rota.localOrigem.descricao}"
 								clickZoom="this.controller.locaisZoomDispatcher(LocaisEnum.ORIGEM,event)" 
 								tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.ORIGEM,event)"/>
 						</mx:FormItem>
@@ -197,8 +197,8 @@
 							<view:ZoomCodDetailView 
 								id="destinoZoom"
 								editable="{this.rotaZoom.cod == ''}"
-								cod="{MainModel.getInstance().smVO.codigoDestino}"
-								detail="{MainModel.getInstance().smVO.descricaoDestino}"
+								cod="{MainModel.getInstance().smVO.rota.localDestino.codigo}"
+								detail="{MainModel.getInstance().smVO.rota.localDestino.descricao}"
 								clickZoom="this.controller.locaisZoomDispatcher(LocaisEnum.DESTINO,event)" 
 								tabZoom="this.controller.locaisZoomDispatcher(LocaisEnum.DESTINO,event)"/>
 						</mx:FormItem>

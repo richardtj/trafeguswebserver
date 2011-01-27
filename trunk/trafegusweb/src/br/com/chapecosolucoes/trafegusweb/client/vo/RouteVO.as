@@ -1,6 +1,11 @@
 package br.com.chapecosolucoes.trafegusweb.client.vo
 {
+	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.utils.MyDateFormatter;
+	
 	import com.google.maps.LatLng;
+	
+	import mx.utils.ObjectUtil;
 
 	[Bindable]
 	public class RouteVO
@@ -20,6 +25,10 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.coordenada = obj.rota_coordenada.toString();
 			this.dataCadastro = obj.rota_data_cadastro.toString();
 			this.coordenadasPipe = obj.rota_coordenadaspipe.toString();
+			this._vrotCodigo = obj.vrot_codigo.toString();
+			this._vrotUsuarioAdicionou = obj.vrot_usuario_adicionou.toString();
+			this._vrotUsuarioAlterou = obj.vrot_usuario_alterou.toString();
+			this._vrotDataCadastro = obj.vrot_data_cadastro.toString();
 			this.localOrigem = new LocalVO();
 			this.localDestino = new LocalVO();
 			
@@ -30,6 +39,13 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			gpsLatitude = Number(this.localOrigem.gpsLatitudeString);
 			gpsLongitude = Number(this.localOrigem.gpsLongitudeString);
 			this.localOrigem.latLong = new LatLng(gpsLatitude, gpsLongitude);
+			this.localOrigem.vlocCodigo = obj.vloc_codigo_origem.toString();
+			this.localOrigem.vlocDataCadastro = obj.vloc_data_cadastro_origem.toString();
+			this.localOrigem.vlocRaio = obj.vloc_raio_origem.toString();
+			this.localOrigem.vlocSequencia = obj.vloc_sequencia_origem.toString();
+			this.localOrigem.vlocTparCodigo = obj.vloc_tpar_codigo_origem.toString();
+			this.localOrigem.vlocUsuarioAdicionou = obj.vloc_usuario_adicionou_origem.toString();
+			//this.localOrigem.vlocUsuarioAlterou = obj.vloc_usuario_alterou_origem.toString();
 			//this.localOrigem.codigoGrupo = obj.cref_codigo_origem.toString();
 			//this.localOrigem.descricaoGrupo = obj.cref_descricao_origem.toString();
 			
@@ -42,16 +58,36 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.localDestino.latLong = new LatLng(gpsLatitude, gpsLongitude);
 			//this.localDestino.codigoGrupo = obj.cref_codigo_destino.toString();
 			//this.localDestino.descricaoGrupo = obj.cref_descricao_destino.toString();
+			this.localDestino.vlocCodigo = obj.vloc_codigo_destino.toString();
+			this.localDestino.vlocDataCadastro = obj.vloc_data_cadastro_destino.toString();
+			this.localDestino.vlocRaio = obj.vloc_raio_destino.toString();
+			this.localDestino.vlocSequencia = obj.vloc_sequencia_destino.toString();
+			this.localDestino.vlocTparCodigo = obj.vloc_tpar_codigo_destino.toString();
+			this.localDestino.vlocUsuarioAdicionou = obj.vloc_usuario_adicionou_destino.toString();
+			//this.localDestino.vlocUsuarioAlterou = obj.vloc_usuario_alterou_destino.toString();
 		}
-		public function get vrot_codigo():String
+		public function get vrotCodigo():String
 		{
-			return this.codigo==""?"nextval('s_vrot_viagem_rota')":this.codigo;
+			return this.vrotCodigo==""?"nextval('s_vrot_viagem_rota')":this.vrotCodigo;
 		}
-		public function set vrot_codigo(vrot_codigo:String):void
+		public function set vrotCodigo(vrot_codigo:String):void
 		{
-			this.codigo = vrot_codigo;
+			this.vrotCodigo = vrot_codigo;
+		}
+		public function get vrotDataCadastro():String
+		{
+			return ("'"+(this._vrotDataCadastro==""?MyDateFormatter.getInstance().parse(new Date()):this._vrotDataCadastro)+"'");
+		}
+		public function get vrotUsuarioAdicionou():String
+		{
+			return this._vrotUsuarioAdicionou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vrotUsuarioAdicionou;
+		}
+		public function get vrotUsuarioAlterou():String
+		{
+			return this._vrotUsuarioAlterou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vrotUsuarioAlterou;
 		}
 		public var codigo:String;
+		private var _vrotCodigo:String;
 		public var descricao:String;
 		public var distancia:String;
 		public var coordenada:String;
@@ -59,5 +95,8 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public var coordenadasPipe:String;
 		public var localOrigem:LocalVO;
 		public var localDestino:LocalVO;
+		private var _vrotUsuarioAdicionou:String = "";
+		private var _vrotUsuarioAlterou:String = "";
+		private var _vrotDataCadastro:String = "";
 	}
 }

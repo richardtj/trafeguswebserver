@@ -30,8 +30,10 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddParadasView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.CarretaSelecionadaEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.LocalVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.ParadaVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PesquisaMotoristaVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.TerminalDefeituosoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.TerminalVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO;
@@ -79,6 +81,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				MainModel.getInstance().smVO.veiculoPrincipal.vehiclePlate = obj.placa.toString();
 				MainModel.getInstance().smVO.veiculoPrincipal.precedencia = "1";
+				MainModel.getInstance().smVO.terminaisArray.removeAll();
 				this.view.dadosAdicionaisView.atualizaTerminais();
 			}
 			TrafegusWS.getIntance().removeEventListener("solicitaDescricaoVeiculo",this.solicitaDescricaoVeiculoResultHandler);
@@ -87,6 +90,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			MainModel.getInstance().smVO.veiculoPrincipal = event.veiculo;
 			MainModel.getInstance().smVO.veiculoPrincipal.precedencia = "1";
+			MainModel.getInstance().smVO.terminaisArray.removeAll();
 			this.view.dadosAdicionaisView.atualizaTerminais();
 		}
 		public function addCarretas():void
@@ -188,23 +192,16 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				MainModel.getInstance().smVO.descricaoRota = "";
+				MainModel.getInstance().smVO.rota = new RouteVO();
 			}
 			for each (var obj:Object in resultArray)
 			{
-				MainModel.getInstance().smVO.descricaoRota = obj.rota_descricao.toString();
+				MainModel.getInstance().smVO.rota.setRouteVO(obj);
 			}
 		}
 		private function selectedRouteEventHandler(event:SelectedRouteEvent):void
 		{
-			MainModel.getInstance().smVO.codigoRota = event.route.codigo;
-			MainModel.getInstance().smVO.descricaoRota = event.route.descricao;
-			
-			MainModel.getInstance().smVO.codigoOrigem = event.route.localOrigem.codigo;
-			MainModel.getInstance().smVO.descricaoOrigem = event.route.localOrigem.descricao;
-			
-			MainModel.getInstance().smVO.codigoDestino = event.route.localDestino.codigo;
-			MainModel.getInstance().smVO.descricaoDestino = event.route.localDestino.descricao;
+			MainModel.getInstance().smVO.rota = event.route;
 		}
 		public function embarcadoresZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
@@ -270,11 +267,11 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				MainModel.getInstance().smVO.descricaoOrigem = "";
+				MainModel.getInstance().smVO.rota.localOrigem = new LocalVO();
 			}
 			for each (var obj:Object in resultArray)
 			{
-				MainModel.getInstance().smVO.descricaoOrigem = obj.refe_descricao.toString();
+				MainModel.getInstance().smVO.rota.localOrigem.setLocalVO(obj);
 			}
 		}
 		private function solicitaDescricaoLocalDestinoResultHandler(event:ResultEvent):void
@@ -282,22 +279,20 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				MainModel.getInstance().smVO.descricaoDestino = "";
+				MainModel.getInstance().smVO.rota.localDestino = new LocalVO();
 			}
 			for each (var obj:Object in resultArray)
 			{
-				MainModel.getInstance().smVO.descricaoDestino = obj.refe_descricao.toString();
+				MainModel.getInstance().smVO.rota.localDestino.setLocalVO(obj);
 			}
 		}
 		private function origemSelecionadaEventHandler(event:SelectedLocalEvent):void
 		{
-			MainModel.getInstance().smVO.codigoOrigem = event.local.codigo;
-			MainModel.getInstance().smVO.descricaoOrigem = event.local.descricao;
+			MainModel.getInstance().smVO.rota.localOrigem = event.local;
 		}
 		private function destinoSelecionadoEventHandler(event:SelectedLocalEvent):void
 		{
-			MainModel.getInstance().smVO.codigoDestino = event.local.codigo;
-			MainModel.getInstance().smVO.descricaoDestino = event.local.descricao;
+			MainModel.getInstance().smVO.rota.localDestino = event.local;
 		}
 		public function transportadorZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
@@ -457,6 +452,38 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			this.closeHandler();
 		}
 		private function salvaViagViagemResultHandler(event:ResultEvent):void
+		{
+			MessageBox.informacao(event.message.toString());
+			TrafegusWS.getIntance().salvaVrotViagemRota(salvaVrotViagemRotaResultHandler);
+			with(MainModel.getInstance().smVO.veiculoPrincipal)
+			{
+				TrafegusWS.getIntance().salvaVveiViagemVeiculo(salvaVveiViagemVeiculoResultHandler,vveiCodigo,precedencia,cod,vveiMotoPfisPessOrasCodigo,vveiEvcaCodigo,seq,vveiUsuarioAdicionou,vveiUsuarioAlterou);
+			}
+			for each(var veiculoVO:VeiculoVO in VeiculoVO(MainModel.getInstance().smVO.carretas))
+			{
+				with(veiculoVO)
+				{
+					TrafegusWS.getIntance().salvaVveiViagemVeiculo(salvaVveiViagemVeiculoResultHandler,vveiCodigo,precedencia,cod,vveiMotoPfisPessOrasCodigo,vveiEvcaCodigo,seq,vveiUsuarioAdicionou,vveiUsuarioAlterou);
+				}
+			}
+			for each(var terminalVO:TerminalVO in TerminalVO(MainModel.getInstance().smVO.terminaisArray))
+			{
+				with(terminalVO)
+				{
+					TrafegusWS.getIntance().salvaVterViagemTerminal(salvaVterViagemTerminalResultHandler,vterCodigo,vtecCodigo,precedencia,tempoSatelital,tempoGPRS,vterUsuarioAdicionou,vterUsuarioAlterou,vterDataCadastro);
+				}
+			}
+			
+		}
+		private function salvaVrotViagemRotaResultHandler(event:ResultEvent):void
+		{
+			MessageBox.informacao(event.message.toString());
+		}
+		private function salvaVterViagemTerminalResultHandler(event:ResultEvent):void
+		{
+			MessageBox.informacao(event.message.toString());
+		}
+		private function salvaVveiViagemVeiculoResultHandler(event:ResultEvent):void
 		{
 			MessageBox.informacao(event.message.toString());
 		}
