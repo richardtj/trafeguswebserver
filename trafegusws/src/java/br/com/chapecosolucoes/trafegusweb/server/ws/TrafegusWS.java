@@ -1762,8 +1762,8 @@ public class TrafegusWS {
         sb.append("         O.VLOC_Data_cadastro AS Vloc_Data_Cadastro_Origem,");
         sb.append("         O.VLOC_Usuario_Adicionou AS Vloc_Usuario_Adicionou_Origem,");
         sb.append("         O.VLOC_Usuario_Alterou AS Vloc_Usuario_Alterou_Origem,");
-        sb.append("         Ori.Refe_codigo as Codigo_Origem,");
-        sb.append("         Ori.refe_descricao AS Descricao_Origem,");
+        sb.append("         Ori.Refe_codigo as refe_codigo_origem,");
+        sb.append("         Ori.refe_descricao AS refe_descricao_origem,");
         sb.append("         D.VLOC_codigo AS Vloc_Codigo_Destino,");
         sb.append("         D.VLOC_sequencia AS Vloc_Sequencia_Destino,");
         sb.append("         D.VLOC_Tpar_codigo AS Vloc_Tpar_codigo_Destino,");
@@ -1771,8 +1771,8 @@ public class TrafegusWS {
         sb.append("         D.VLOC_Data_cadastro AS Vloc_Data_Cadastro_Destino,");
         sb.append("         D.VLOC_Usuario_Adicionou AS Vloc_Usuario_Adicionou_Destino,");
         sb.append("         D.VLOC_Usuario_Alterou AS Vloc_Usuario_Alterou_Destino,");
-        sb.append("         Dest.refe_codigo AS Codigo_Destino,");
-        sb.append("         Dest.refe_descricao AS Descricao_Destino,");
+        sb.append("         Dest.refe_codigo AS refe_codigo_destino,");
+        sb.append("         Dest.refe_descricao AS refe_descricao_destino,");
         sb.append("         VIAG_Viagem.viag_codigo,");
         sb.append("         VIAG_Viagem.viag_tope_codigo,");
         sb.append("         TO_CHAR(VIAG_Viagem.viag_data_cadastro,'DD/MM/YYYY') AS viag_data_cadastro,");
