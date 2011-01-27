@@ -68,6 +68,7 @@
 	<view:PaginableComponent 
 		id="paginable"
 		totalRecords="{MainModel.getInstance().totalListaTipoParada}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
 		next="this.controller.solicitaListaTipoParada(event)"
 		prev="this.controller.solicitaListaTipoParada(event)"
 		first="this.controller.solicitaListaTipoParada(event)"

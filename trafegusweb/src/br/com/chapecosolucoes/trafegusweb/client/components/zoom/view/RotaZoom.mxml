@@ -78,6 +78,7 @@
 	<view:PaginableComponent 
 		id="paginable"
 		totalRecords="{MainModel.getInstance().totalListaRotas}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
 		next="this.controller.solicitaListaRotas(event)"
 		prev="this.controller.solicitaListaRotas(event)"
 		first="this.controller.solicitaListaRotas(event)"

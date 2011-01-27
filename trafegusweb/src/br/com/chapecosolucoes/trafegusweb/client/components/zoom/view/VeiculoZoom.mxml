@@ -1,85 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:resize="flex.utils.ui.resize.*" 
-				xmlns:s="library://ns.adobe.com/flex/spark" 
-				xmlns:mx="library://ns.adobe.com/flex/mx"
-				layout="vertical"
-				width="520" height="420"
-				showCloseButton="true"
-				creationCompleteEffect="{dissolve,iris}"
-				removedEffect="{dissolve,iris}"
-				mouseOver="this.controller.mouseOverEventHandler()"
-				initialize="init()"
-				creationComplete="creationComplete()"
-				close="this.controller.closeHandler()"
-				title="Veiculos do Transportador"
-				titleIcon="@Embed(source='assets/cam(Teal).png')"
-				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
-	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
-	<fx:Metadata>
+<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+                        xmlns:resize="flex.utils.ui.resize.*"
+                        xmlns:s="library://ns.adobe.com/flex/spark"
+                        xmlns:mx="library://ns.adobe.com/flex/mx"
+                        layout="vertical"
+                        width="520"
+                        height="420"
+                        showCloseButton="true"
+                        creationCompleteEffect="{dissolve,iris}"
+                        removedEffect="{dissolve,iris}"
+                        mouseOver="this.controller.mouseOverEventHandler()"
+                        initialize="init()"
+                        creationComplete="creationComplete()"
+                        close="this.controller.closeHandler()"
+                        title="Veiculos do Transportador"
+                        titleIcon="@Embed(source='assets/cam(Teal).png')"
+                        xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
+                        xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+    <fx:Binding source="this.textInputFiltro.text"
+                destination="MainModel.getInstance().zoomFilter"/>
+    <fx:Metadata>
 		[Event(name="selectedVehicleEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent")]		
 	</fx:Metadata>
-	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
-		<mx:Dissolve id="dissolve" duration="500"/>
-		<mx:Iris id="iris" duration="500"/>
-	</fx:Declarations>
-	<fx:Script>
-		<![CDATA[
-			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.VeiculoZoomController;
-			import br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent;
-			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
-			
-			import mx.controls.Alert;
-			import mx.managers.PopUpManager;
-			private var controller:VeiculoZoomController;
-			private function init():void
-			{
-				this.controller = new VeiculoZoomController();
-				this.controller.view = this;
-				
-				this.controller.solicitaTotalListaVeiculos();
-			}
-			private function creationComplete():void
-			{
-				this.controller.atualizaListaVeiculos();
-				MainModel.getInstance().veiculosArray.filterFunction = this.controller.veiculosFilterFunction;
-				MainModel.getInstance().veiculosArray.refresh();
-				
-				this.grid.addEventListener(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT,this.controller.selectedVehicleEventHandler);
-			}
-		]]>
-	</fx:Script>
-	<searchInput:SearchInputFX 
-		id="textInputFiltro"
-		width="100%" 
-		keyUp="MainModel.getInstance().veiculosArray.refresh()"
-		text="{MainModel.getInstance().zoomFilter}"
-		refreshEvent="this.controller.atualizaListaVeiculos()"/>
-	<view:DataGridFX 
-		id="grid" 
-		width="100%" height="100%" 
-		doubleClickEnabled="true"
-		doubleClick="this.controller.veiculoSelecionado()"
-		dataProvider="{MainModel.getInstance().veiculosArray}"
-		toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
-		<view:columns>
-			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
-			<mx:DataGridColumn headerText="Código" dataField="cod"/>
-			<mx:DataGridColumn headerText="Placa" 
-							   dataField="vehiclePlate" 
-							   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
-			<mx:DataGridColumn headerText="Descrição" dataField="desc"/>
-		</view:columns>
-	</view:DataGridFX>
-	<view:PaginableComponent 
-		id="paginable"
-		totalRecords="{MainModel.getInstance().totalListaVeiculos}"
-		first="this.controller.solicitaListaVeiculos(event)"
-		last="this.controller.solicitaListaVeiculos(event)"
-		next="this.controller.solicitaListaVeiculos(event)"
-		prev="this.controller.solicitaListaVeiculos(event)"/>
-	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Ok" click="this.controller.veiculoSelecionado()"/>
-		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
-	</mx:ControlBar>
+    <fx:Declarations>
+        <!-- Place non-visual elements (e.g., services, value objects) here -->
+        <mx:Dissolve id="dissolve"
+                     duration="500"/>
+        <mx:Iris id="iris"
+                 duration="500"/>
+    </fx:Declarations>
+    <fx:Script>
+        <![CDATA[
+            import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.VeiculoZoomController;
+            import br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent;
+            import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+
+            import mx.controls.Alert;
+            import mx.managers.PopUpManager;
+            private var controller:VeiculoZoomController;
+
+            private function init():void {
+                this.controller = new VeiculoZoomController();
+                this.controller.view = this;
+
+                this.controller.solicitaTotalListaVeiculos();
+            }
+
+            private function creationComplete():void {
+                this.controller.atualizaListaVeiculos();
+                MainModel.getInstance().veiculosArray.filterFunction = this.controller.veiculosFilterFunction;
+                MainModel.getInstance().veiculosArray.refresh();
+
+                this.grid.addEventListener(SelectedVehicleEvent.SELECTED_VEHICLE_EVENT, this.controller.selectedVehicleEventHandler);
+            }
+        ]]>
+    </fx:Script>
+    <searchInput:SearchInputFX id="textInputFiltro"
+                               width="100%"
+                               keyUp="MainModel.getInstance().veiculosArray.refresh()"
+                               text="{MainModel.getInstance().zoomFilter}"
+                               refreshEvent="this.controller.atualizaListaVeiculos()"/>
+    <view:DataGridFX id="grid"
+                     width="100%"
+                     height="100%"
+                     doubleClickEnabled="true"
+                     doubleClick="this.controller.veiculoSelecionado()"
+                     dataProvider="{MainModel.getInstance().veiculosArray}"
+                     toolTip="Clique sobre a placa do veiculo para exibir os detalhes.">
+        <view:columns>
+            <mx:DataGridColumn sortable="false"
+                               width="20"
+                               headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+            <mx:DataGridColumn headerText="Código"
+                               dataField="cod"/>
+            <mx:DataGridColumn headerText="Placa"
+                               dataField="vehiclePlate"
+                               itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.VehicleItemRendererView"/>
+            <mx:DataGridColumn headerText="Descrição"
+                               dataField="desc"/>
+        </view:columns>
+    </view:DataGridFX>
+    <view:PaginableComponent id="paginable"
+                             totalRecords="{MainModel.getInstance().totalListaVeiculos}"
+                             itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
+                             first="this.controller.solicitaListaVeiculos(event)"
+                             last="this.controller.solicitaListaVeiculos(event)"
+                             next="this.controller.solicitaListaVeiculos(event)"
+                             prev="this.controller.solicitaListaVeiculos(event)"/>
+    <mx:ControlBar width="100%"
+                   horizontalAlign="right">
+        <s:Button label="Ok"
+                  click="this.controller.veiculoSelecionado()"/>
+        <s:Button label="Cancel"
+                  click="this.controller.closeHandler()"/>
+    </mx:ControlBar>
 </resize:ResizableWindow>
