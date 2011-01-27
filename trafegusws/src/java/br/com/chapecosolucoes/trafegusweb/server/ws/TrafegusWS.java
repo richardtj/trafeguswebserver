@@ -7,7 +7,6 @@ package br.com.chapecosolucoes.trafegusweb.server.ws;
 import br.com.chapecosolucoes.trafegusweb.server.conexao.Conexao;
 import java.io.StringReader;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -340,6 +339,7 @@ public class TrafegusWS {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ORAS_OBJETO_RASTREADO.ORAS_CODIGO AS VEIC_ORAS_CODIGO,");
         sb.append("       VEIC_VEICULO.VEIC_PLACA,");
+        sb.append("       VEIC_VEICULO.VEIC_MOTO_PFIS_PESS_ORAS_CODIGO,");
         sb.append("       TVEI_TIPO_VEICULO.TVEI_DESCRICAO");
         sb.append("    FROM VEIC_Veiculo");
         sb.append("    JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = VEIC_ORAS_Codigo AND ORAS_EOBJ_Codigo = 1)");
@@ -814,6 +814,7 @@ public class TrafegusWS {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT VEIC_ORAS_Codigo,");
         sb.append("     VEIC_Veiculo.VEIC_COR,");
+        sb.append("     VEIC_VEICULO.VEIC_MOTO_PFIS_PESS_ORAS_CODIGO,");
         sb.append("     TVEI_TIPO_VEICULO.TVEI_DESCRICAO,");
         sb.append("     VEIC_VEICULO.VEIC_PLACA");
         sb.append("     FROM VEIC_Veiculo");
@@ -911,6 +912,9 @@ public class TrafegusWS {
         sb.append("   TERM_Terminal.term_ativo_ws,");
         sb.append("   TERM_Terminal.term_tempo_satelital_padrao,");
         sb.append("   TERM_Terminal.term_tempo_gprs_padrao,");
+        sb.append("   TERM_Terminal.term_usuario_adicionou,");
+        sb.append("   TERM_Terminal.term_usuario_alterou,");
+        sb.append("   TERM_Terminal.term_data_cadastro,");
         sb.append("   ORTE_Objeto_Rastreado_Termina.ORTE_Sequencia");
         sb.append(" FROM ORAS_Objeto_Rastreado");
         sb.append(" JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = ORAS_Codigo AND TRIM(REPLACE(REPLACE(REPLACE(REPLACE(VEIC_Placa,'.',''),'/',''),'\\\\',''),'-','')) = TRIM(REPLACE(REPLACE(REPLACE(REPLACE('").append(placa).append("','.',''),'/',''),'\\\\',''),'-','')))");
@@ -1657,14 +1661,41 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaDescricaoRota")
-    public String solicitaDescricaoRota(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "codRota") String codRota) throws Exception {
+    public String solicitaDescricaoRota(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa,@WebParam(name="codEmbarcador") String codEmbarcador, @WebParam(name = "codRota") String codRota) throws Exception {
         //TODO write your implementation code here:
+        if(codEmbarcador.equalsIgnoreCase(""))
+        {
+            codEmbarcador = "0";
+        }
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT DISTINCT ROTA_CODIGO,");
-        sb.append("	ROTA_DESCRICAO");
-        sb.append(" FROM ROTA_ROTA");
-        sb.append(" WHERE ROTA_CODIGO = ").append(codRota.toString());
-        sb.append(" AND ROTA_PESS_ORAS_CODIGO_DONO = ").append(codEmpresa.toString());
+         sb.append(" SELECT ");
+        sb.append("          ROTA_CODIGO,");
+        sb.append("          ROTA_DESCRICAO,");
+        sb.append("          ROTA_DISTANCIA,");
+        sb.append("          ROTA_COORDENADA,");
+        sb.append("          ROTA_DATA_CADASTRO,");
+        sb.append("          ROTA_COORDENADASPIPE,");
+        sb.append("          ROTA_PESS_ORAS_CODIGO_DONO,");
+        sb.append("          ORI.REFE_Codigo AS REFE_Codigo_origem,");
+        sb.append("          ORI.REFE_Descricao AS REFE_Descricao_origem,");
+        sb.append("          ORI.REFE_Latitude AS REFE_Latitude_origem,");
+        sb.append("          ORI.REFE_Longitude AS REFE_Longitude_origem,");
+        //sb.append("          ORI.CREF_Classe_Referencia.CREF_Codigo AS CREF_Codigo_origem,");
+        //sb.append("          ORI.CREF_Classe_Referencia.CREF_Descricao AS CREF_Descricao_origem,");
+        sb.append("          DES.REFE_Codigo AS REFE_Codigo_destino,");
+        sb.append("          DES.REFE_Descricao AS REFE_Descricao_destino,");
+        sb.append("          DES.REFE_Latitude AS REFE_Latitude_destino,");
+        sb.append("          DES.REFE_Longitude AS REFE_Longitude_destino");
+        //sb.append("          DES.CREF_Classe_Referencia.CREF_Codigo AS CREF_Codigo_destino,");
+        //sb.append("          DES.CREF_Classe_Referencia.CREF_Descricao AS CREF_Descricao_destino");
+        sb.append("     FROM ROTA_ROTA");
+        sb.append("     JOIN RPON_Rota_Ponto AS RPONORI ON (RPONORI.RPON_ROTA_Codigo = ROTA_Codigo AND RPONORI.RPON_TPAR_Codigo = 4 /* ORIGEM */)");
+        sb.append("     JOIN REFE_Referencia AS ORI ON (ORI.REFE_Codigo = RPONORI.RPON_REFE_Codigo)   ");
+        sb.append("     JOIN RPON_Rota_Ponto AS RPONDEST ON (RPONDEST.RPON_ROTA_Codigo = ROTA_Codigo AND RPONDEST.RPON_TPAR_Codigo = 5 /* DESTINO */)");
+        sb.append("     JOIN REFE_Referencia AS DES ON (DES.REFE_Codigo = RPONDEST.RPON_REFE_Codigo)   ");
+        sb.append("    WHERE ROTA_PESS_ORAS_CODIGO_DONO IN (").append(codEmpresa.toString()).append(",").append(codEmbarcador).append(")");
+        sb.append("    AND ROTA_CODIGO = ").append(codRota.toString());
+        sb.append("    AND ROTA_PESS_ORAS_CODIGO_DONO = ").append(codEmpresa.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -1724,8 +1755,22 @@ public class TrafegusWS {
         sb.append("         Transp.Pess_nome AS Nome_Transportador,");
         sb.append("         Emba.Pess_oras_codigo AS Codigo_Embarcador,");
         sb.append("         Emba.Pess_nome AS Nome_Embarcador,");
+        sb.append("         O.VLOC_codigo AS Vloc_Codigo_Origem,");
+        sb.append("         O.VLOC_sequencia AS Vloc_Sequencia_Origem,");
+        sb.append("         O.VLOC_Tpar_codigo AS Vloc_Tpar_codigo_Origem,");
+        sb.append("         O.VLOC_Raio AS Vloc_Raio_Origem,");
+        sb.append("         O.VLOC_Data_cadastro AS Vloc_Data_Cadastro_Origem,");
+        sb.append("         O.VLOC_Usuario_Adicionou AS Vloc_Usuario_Adicionou_Origem,");
+        sb.append("         O.VLOC_Usuario_Alterou AS Vloc_Usuario_Alterou_Origem,");
         sb.append("         Ori.Refe_codigo as Codigo_Origem,");
         sb.append("         Ori.refe_descricao AS Descricao_Origem,");
+        sb.append("         D.VLOC_codigo AS Vloc_Codigo_Destino,");
+        sb.append("         D.VLOC_sequencia AS Vloc_Sequencia_Destino,");
+        sb.append("         D.VLOC_Tpar_codigo AS Vloc_Tpar_codigo_Destino,");
+        sb.append("         D.VLOC_Raio AS Vloc_Raio_Destino,");
+        sb.append("         D.VLOC_Data_cadastro AS Vloc_Data_Cadastro_Destino,");
+        sb.append("         D.VLOC_Usuario_Adicionou AS Vloc_Usuario_Adicionou_Destino,");
+        sb.append("         D.VLOC_Usuario_Alterou AS Vloc_Usuario_Alterou_Destino,");
         sb.append("         Dest.refe_codigo AS Codigo_Destino,");
         sb.append("         Dest.refe_descricao AS Descricao_Destino,");
         sb.append("         VIAG_Viagem.viag_codigo,");
@@ -1747,7 +1792,11 @@ public class TrafegusWS {
         sb.append("         TO_CHAR(VIAG_Data_Inicio,'DD/MM/YYYY') AS VIAG_Data_Inicio,");
         sb.append("         TO_CHAR(VIAG_Data_Inicio,'HH24:MI:SS') AS VIAG_Hora_Inicio,");
         sb.append("         VTEM_Valor_Minimo,");
-        sb.append("         VTEM_Valor_Maximo");
+        sb.append("         VTEM_Valor_Maximo,");
+        sb.append("         VROT_Viagem_rota.vrot_codigo,");
+        sb.append("         VROT_Viagem_rota.vrot_usuario_adicionou,");
+        sb.append("         VROT_Viagem_rota.vrot_usuario_alterou,");
+        sb.append("         VROT_Viagem_rota.vrot_data_cadastro");
         sb.append("   FROM VIAG_Viagem   ");
         sb.append("   JOIN VVEI_Viagem_Veiculo ON (VVEI_VIAG_Codigo = VIAG_Codigo) ");
         sb.append("   JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = VVEI_VEIC_ORAS_Codigo AND VEIC_Placa = '").append(placaVeiculo).append("')");
@@ -1771,7 +1820,7 @@ public class TrafegusWS {
         sb.append("   AND VIAG_Data_Fim IS NOT NULL");
         sb.append("   ORDER BY VIAG_Previsao_Inicio ");
         sb.append("   LIMIT ").append(limit).append(" OFFSET ").append(offset);
-        //System.out.println("\n" + sb.toString());
+        System.out.println("\n" + sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -2134,7 +2183,13 @@ public class TrafegusWS {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT VEIC_Placa,");
+        sb.append("        VVEI_codigo,");
         sb.append("        VVEI_Sequencia,");
+        sb.append("        VVEI_Precedencia,");
+        sb.append("        VVEI_evca_codigo,");
+        sb.append("        VVEI_moto_pfis_pess_oras_codigo,");
+        sb.append("        VVEI_usuario_adicionou,");
+        sb.append("        VVEI_usuario_alterou,");
         sb.append("        VEIC_ORAS_Codigo,");
         sb.append("        VEIC_Veiculo.VEIC_COR,");
         sb.append("        TVEI_DESCRICAO,");
@@ -2365,7 +2420,7 @@ public class TrafegusWS {
     String vter_importado, @WebParam(name = "vter_ativo")
     String vter_ativo, @WebParam(name = "vter_usuario_adicionou")
     String vter_usuario_adicionou, @WebParam(name = "vter_usuario_alterou")
-    String vter_usuario_alterou) throws SQLException, Exception {
+    String vter_usuario_alterou) throws Exception {
         //TODO write your implementation code here:
         Connection con = Conexao.getInstance().getConnection(idSessao);
         StringBuilder sb = new StringBuilder();
