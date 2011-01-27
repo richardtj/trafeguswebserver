@@ -78,7 +78,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			for each (var obj:Object in resultArray)
 			{
 				MainModel.getInstance().smVO.veiculoPrincipal.vehiclePlate = obj.placa.toString();
-				MainModel.getInstance().smVO.veiculoPrincipal.seq = "1";
+				MainModel.getInstance().smVO.veiculoPrincipal.precedencia = "1";
 				this.view.dadosAdicionaisView.atualizaTerminais();
 			}
 			TrafegusWS.getIntance().removeEventListener("solicitaDescricaoVeiculo",this.solicitaDescricaoVeiculoResultHandler);
@@ -86,7 +86,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		public function selectedVehicleEventHandler(event:SelectedVehicleEvent):void
 		{
 			MainModel.getInstance().smVO.veiculoPrincipal = event.veiculo;
-			MainModel.getInstance().smVO.veiculoPrincipal.seq = "1";
+			MainModel.getInstance().smVO.veiculoPrincipal.precedencia = "1";
 			this.view.dadosAdicionaisView.atualizaTerminais();
 		}
 		public function addCarretas():void
