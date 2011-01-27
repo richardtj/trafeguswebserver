@@ -8,8 +8,10 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
 	import br.com.chapecosolucoes.trafegusweb.client.view.SMGrid;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.LocalVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.ParadaVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.TerminalDefeituosoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.TerminalVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO;
@@ -86,11 +88,11 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function smFilterFunction(item:Object):Boolean{
 			return (String(MonitoringRequestVO(item).dataCadastro).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
-				(String(MonitoringRequestVO(item).descricaoDestino).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(LocalVO(RouteVO(MonitoringRequestVO(item).rota).localDestino).descricao).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(MonitoringRequestVO(item).nomeEmbarcador).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(MonitoringRequestVO(item).numeroViagem).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(MonitoringRequestVO(item).operacao).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
-				(String(MonitoringRequestVO(item).descricaoOrigem).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
+				(String(LocalVO(RouteVO(MonitoringRequestVO(item).rota).localOrigem).descricao).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(VeiculoVO(MonitoringRequestVO(item).veiculoPrincipal).vehiclePlate).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(MonitoringRequestVO(item).prevFim).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||
 				(String(MonitoringRequestVO(item).prevInicio).toUpperCase().search(MainModel.getInstance().zoomFilter.toUpperCase()) >= 0) ||

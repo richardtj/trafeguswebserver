@@ -1,6 +1,9 @@
 package br.com.chapecosolucoes.trafegusweb.client.vo
 {
+	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	
 	import mx.collections.SortField;
+	import mx.utils.ObjectUtil;
 
 	[Bindable]
 	public class VeiculoVO
@@ -11,45 +14,48 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public function setVeiculoVO(obj:Object):void
 		{
 			this.cod = obj.veic_oras_codigo.toString();
-			this.vveiCodigo = obj.vvei_codigo.toString();
-			this.vveiEvcaCodigo = obj.vvei_evca_codigo.toString();
-			this.vveiMotoPfisPessOrasCodigo = obj.vvei_moto_pfis_pess_oras_codigo.toString();
+			this._vveiCodigo = obj.vvei_codigo.toString();
+			this._vveiEvcaCodigo = obj.vvei_evca_codigo.toString();
+			this._vveiMotoPfisPessOrasCodigo = obj.vvei_moto_pfis_pess_oras_codigo.toString();
 			this.vehiclePlate = obj.veic_placa.toString();
 			this.desc = obj.tvei_descricao.toString();
 			this.cor = obj.veic_cor.toString();
 			this.seq = obj.vvei_sequencia.toString();
+			this._vveiUsuarioAdicionou = obj.vvei_usuario_adicionou.toString();
+			this._vveiUsuarioAlterou = obj.vvei_usuario_alterou.toString();
 			this.precedencia = obj.vvei_precedencia.toString();
 		}
-		public function set vvei_veic_oras_codigo(vvei_veic_oras_codigo:String):void
+		public function get vveiCodigo():String
 		{
-			this.cod = vvei_veic_oras_codigo;
+			return this._vveiCodigo==""?"nextval('s_vvei_viagem_veiculo')":this._vveiCodigo;
 		}
-		public function get vvei_veic_oras_codigo():String
+		public function get vveiEvcaCodigo():String
 		{
-			return this.cod;
+			return this._vveiEvcaCodigo==""?"1":this._vveiEvcaCodigo;
 		}
-		public function get vvei_codigo():String
+		public function get vveiUsuarioAdicionou():String
 		{
-			return this.vveiCodigo==""?"nextval('s_vvei_viagem_veiculo')":this.vveiCodigo;
+			return this._vveiUsuarioAdicionou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vveiUsuarioAdicionou;
 		}
-		public function set vvei_sequencia(vvei_sequencia:String):void
+		public function get vveiUsuarioAlterou():String
 		{
-			this.seq = vvei_sequencia;
+			return ObjectUtil.toString(MainModel.getInstance().codUsuario);
 		}
-		public function get vvei_sequencia():String
+		public function get vveiMotoPfisPessOrasCodigo():String
 		{
-			return this.seq;
+			return this._vveiMotoPfisPessOrasCodigo;
 		}
 		public var cod:String;
-		public var vveiCodigo:String;
+		private var _vveiCodigo:String;
 		public var vehiclePlate:String;
 		public var desc:String;
 		public var cor:String;
 		public var seq:String;
 		public var precedencia:String;
-		public var vvei_precedencia:String;
-		public var vveiEvcaCodigo:String;
-		public var vveiMotoPfisPessOrasCodigo:String;
+		private var _vveiEvcaCodigo:String;
+		private var _vveiMotoPfisPessOrasCodigo:String;
+		private var _vveiUsuarioAdicionou:String;
+		private var _vveiUsuarioAlterou:String;
 		public var selected:Boolean=false;
 	}
 }

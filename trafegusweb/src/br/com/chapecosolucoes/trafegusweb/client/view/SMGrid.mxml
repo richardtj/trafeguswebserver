@@ -24,7 +24,9 @@
 			import br.com.chapecosolucoes.trafegusweb.client.controller.SMGridController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.model.SMGridModel;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.LocalVO;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO;
 			
 			import mx.managers.PopUpManager;
@@ -72,9 +74,9 @@
 					case "Embarcador":
 						return MonitoringRequestVO(item).nomeEmbarcador;
 					case "Origem":
-						return MonitoringRequestVO(item).descricaoOrigem;
+						return LocalVO(RouteVO(MonitoringRequestVO(item).rota).localOrigem).descricao;
 					case "Destino":
-						return MonitoringRequestVO(item).descricaoDestino;
+						return LocalVO(RouteVO(MonitoringRequestVO(item).rota).localDestino).descricao;
 					case "Prev. inicio":
 						return MonitoringRequestVO(item).prevInicio;
 					case "Prev. fim":
