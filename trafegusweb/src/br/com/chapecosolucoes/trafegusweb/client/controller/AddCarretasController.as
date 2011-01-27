@@ -81,5 +81,13 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			}
 			this.closeHandler();
 		}
+		public function salvarSelecao():void
+		{
+			MainModel.getInstance().smVO.carretas.removeAll();
+			for each(var veiculo:VeiculoVO in MainModel.getInstance().carretasSelecionadasArray)
+			{
+				MainModel.getInstance().smVO.carretas.addItem(veiculo);
+			}
+		}
 	}
 }

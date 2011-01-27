@@ -17,6 +17,14 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.tempoSatelital = obj.term_tempo_satelital.toString();
 			this.tempoGPRS = obj.term_tempo_gprs.toString();
 		}
+		public function get vter_codigo():String
+		{
+			return this.codigo==""?"nextval('s_vter_viagem_terminal')":this.codigo;
+		}
+		public function set vter_codigo(vter_codigo:String):void
+		{
+			this.codigo = vter_codigo
+		}
 		public var precedencia:String;
 		public var codigo:String;
 		public var numero:String;

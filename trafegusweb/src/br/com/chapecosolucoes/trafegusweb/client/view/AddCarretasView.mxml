@@ -113,7 +113,7 @@
 		</mx:VBox>
 	</mx:HBox>
 	<mx:ControlBar horizontalAlign="right">
-		<s:Button label="Ok" click="this.controller.closeHandler()"/>
+		<s:Button label="Ok" click="this.controller.salvarSelecao()"/>
 		<s:Button label="Cancelar" click="this.controller.cancelarSelecao()"/>
 	</mx:ControlBar>
 </resize:ResizableWindow>

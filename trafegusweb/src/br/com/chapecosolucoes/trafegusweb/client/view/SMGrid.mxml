@@ -24,6 +24,8 @@
 			import br.com.chapecosolucoes.trafegusweb.client.controller.SMGridController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.model.SMGridModel;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO;
 			
 			import mx.managers.PopUpManager;
 			public var placaVeiculo:String;
@@ -51,6 +53,36 @@
 				MainModel.getInstance().smArray.filterFunction = this.controller.smFilterFunction;
 				MainModel.getInstance().smArray.refresh();
 			}
+			private function labelFunction(item:Object,column:DataGridColumn):String
+			{
+				switch(column.headerText)
+				{
+					case "Número da Viagem":
+						return MonitoringRequestVO(item).numeroViagem;
+					case "Operação":
+						return MonitoringRequestVO(item).operacao;
+					case "Placa":
+						return VeiculoVO(MonitoringRequestVO(item).veiculoPrincipal).vehiclePlate;
+					case "Terminal":
+						return MonitoringRequestVO(item).terminal;
+					case "Data Cadastro":
+						return MonitoringRequestVO(item).dataCadastro;
+					case "Transportador":
+						return MonitoringRequestVO(item).nomeTransportador;
+					case "Embarcador":
+						return MonitoringRequestVO(item).nomeEmbarcador;
+					case "Origem":
+						return MonitoringRequestVO(item).descricaoOrigem;
+					case "Destino":
+						return MonitoringRequestVO(item).descricaoDestino;
+					case "Prev. inicio":
+						return MonitoringRequestVO(item).prevInicio;
+					case "Prev. fim":
+						return MonitoringRequestVO(item).prevFim;
+					default:
+						return "";
+				}
+			}
 		]]>
 	</fx:Script>
 	<searchInput:SearchInputFX
@@ -63,22 +95,23 @@
 		id="grid"
 		dataProvider="{MainModel.getInstance().smArray}"
 		doubleClickEnabled="true"
+		labelFunction="labelFunction"
 		doubleClick="this.controller.editarSM()"
 		width="100%"
 		height="100%">
 		<mx:columns>
 			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
-			<mx:DataGridColumn headerText="Número da Viagem" dataField="numeroViagem"/>
-			<mx:DataGridColumn headerText="Operação" dataField="operacao"/>
-			<mx:DataGridColumn headerText="Placa" dataField="placaVeiculo"/>
-			<mx:DataGridColumn headerText="Terminal" dataField="terminal"/>
-			<mx:DataGridColumn headerText="Data Cadastro" dataField="dataCadastro"/>
-			<mx:DataGridColumn headerText="Transportador" dataField="nomeTransportador"/>
-			<mx:DataGridColumn headerText="Embarcador" dataField="nomeEmbarcador"/>
-			<mx:DataGridColumn headerText="Origem" dataField="descricaoOrigem"/>
-			<mx:DataGridColumn headerText="Destino" dataField="descricaoDestino"/>
-			<mx:DataGridColumn headerText="Prev. inicio" dataField="prevInicio"/>
-			<mx:DataGridColumn headerText="Prev. fim" dataField="prevFim"/>
+			<mx:DataGridColumn headerText="Número da Viagem" />
+			<mx:DataGridColumn headerText="Operação" />
+			<mx:DataGridColumn headerText="Placa" />
+			<mx:DataGridColumn headerText="Terminal" />
+			<mx:DataGridColumn headerText="Data Cadastro" />
+			<mx:DataGridColumn headerText="Transportador" />
+			<mx:DataGridColumn headerText="Embarcador" />
+			<mx:DataGridColumn headerText="Origem" />
+			<mx:DataGridColumn headerText="Destino" />
+			<mx:DataGridColumn headerText="Prev. inicio" />
+			<mx:DataGridColumn headerText="Prev. fim" />
 		</mx:columns>
 	</mx:DataGrid>
 	<view:PaginableComponent 

@@ -1,6 +1,8 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
+	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.CarretasZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.EmbarcadoresZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.LocaisZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.MotoristaZoom;
@@ -27,6 +29,12 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddCarretasView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddParadasView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.CarretaSelecionadaEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.ParadaVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.PesquisaMotoristaVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.TerminalDefeituosoVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.TerminalVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoViagemVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
@@ -65,25 +73,45 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				MainModel.getInstance().smVO.placaVeiculo = "";
+				MainModel.getInstance().smVO.veiculoPrincipal.vehiclePlate = "";
 			}
 			for each (var obj:Object in resultArray)
 			{
-				MainModel.getInstance().smVO.placaVeiculo = obj.placa.toString();
+				MainModel.getInstance().smVO.veiculoPrincipal.vehiclePlate = obj.placa.toString();
+				MainModel.getInstance().smVO.veiculoPrincipal.seq = "1";
+				this.view.dadosAdicionaisView.atualizaTerminais();
 			}
 			TrafegusWS.getIntance().removeEventListener("solicitaDescricaoVeiculo",this.solicitaDescricaoVeiculoResultHandler);
 		}
 		public function selectedVehicleEventHandler(event:SelectedVehicleEvent):void
 		{
-			MainModel.getInstance().smVO.codigoVeiculo = event.veiculo.cod;
-			MainModel.getInstance().smVO.placaVeiculo = event.veiculo.vehiclePlate;
+			MainModel.getInstance().smVO.veiculoPrincipal = event.veiculo;
+			MainModel.getInstance().smVO.veiculoPrincipal.seq = "1";
 			this.view.dadosAdicionaisView.atualizaTerminais();
 		}
 		public function addCarretas():void
 		{
-			var addCarretasView:AddCarretasView = new AddCarretasView();
-			MyPopUpManager.addPopUp(addCarretasView,DisplayObject(FlexGlobals.topLevelApplication));
-			MyPopUpManager.centerPopUp(addCarretasView);
+			var carretasZoom:CarretasZoom = new CarretasZoom();
+			carretasZoom.addEventListener(CarretaSelecionadaEvent.CARRETA_SELECIONADA_EVENT,carretaSelecionadaEventHandler);
+			MyPopUpManager.addPopUp(carretasZoom,DisplayObject(FlexGlobals.topLevelApplication));
+			MyPopUpManager.centerPopUp(carretasZoom);
+		}
+		private function carretaSelecionadaEventHandler(event:CarretaSelecionadaEvent):void
+		{
+			MainModel.getInstance().carretasDisponiveisArray.removeItemAt(MainModel.getInstance().carretasDisponiveisArray.getItemIndex(event.carreta));
+			MainModel.getInstance().smVO.carretas.addItem(event.carreta);
+		}
+		public function removeCarretas():void
+		{
+			if(this.view.grid1.selectedItem != null)
+			{
+				var carreta:VeiculoVO = VeiculoVO(MainModel.getInstance().smVO.carretas.removeItemAt(MainModel.getInstance().smVO.carretas.getItemIndex(this.view.grid1.selectedItem)));
+				MainModel.getInstance().carretasDisponiveisArray.addItem(carreta);
+			}
+			else
+			{
+				MessageBox.informacao("Nenhuma carreta selecionada.");
+			}
 		}
 		public function addParadas():void
 		{
@@ -121,6 +149,25 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		{
 			MainModel.getInstance().smVO.codigoMotorista = event.motorista.codigo;
 			MainModel.getInstance().smVO.nomeMotorista = event.motorista.motoristaPrincipal;
+		}
+		private function validarPesquisaMotoristaResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			var pesquisaMotoristaVO:PesquisaMotoristaVO = new PesquisaMotoristaVO();
+			for each (var obj:Object in resultArray)
+			{
+				pesquisaMotoristaVO.setPesquisaMotoristaVO(obj);
+			}
+			MainModel.getInstance().pesquisaMotoristaVO = pesquisaMotoristaVO;
+			if(MainModel.getInstance().pesquisaMotoristaVO.codigo != "")
+			{
+				MessageBox.informacao("O motorista " + MainModel.getInstance().smVO.nomeMotorista + " não pode dirigir o veiculo "+MainModel.getInstance().smVO.veiculoPrincipal.vehiclePlate + " no PGR " + MainModel.getInstance().smVO.descricaoPGR);
+				MainModel.getInstance().salvarSMEnabled = false;
+			}
+			else
+			{
+				MainModel.getInstance().salvarSMEnabled = true;
+			}
 		}
 		public function rotaZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
@@ -314,32 +361,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			MainModel.getInstance().smVO.codigoTipoViagem = event.tipoTransporte.codigo;
 			MainModel.getInstance().smVO.descricaoTipoViagem = event.tipoTransporte.descricao;
 		}
-		public function paradaSelecionadoEventHandler(event:SelectedLocalEvent):void
-		{
-			MainModel.getInstance().paradasArray.addItem(event.local);
-		}
-		/*public function removeParada():void
-		{
-			if(this.view.grid.selectedIndex != -1)
-			{
-				MainModel.getInstance().paradasArray.removeItemAt(MainModel.getInstance().paradasArray.getItemIndex(this.view.grid.selectedItem));
-			}
-			else
-			{
-				Alert.show("Nenhum item selecionado.");
-			}				
-		}*/
-		public function addParadaZoomDispatcher():void
-		{
-			var addParada:AddParadasView = new AddParadasView();
-			addParada.addEventListener(AddParadaEvent.PARADA_ADICIONADA_EVENT,paradaAdicionadaEventHandler);
-			MyPopUpManager.addPopUp(addParada,DisplayObject(FlexGlobals.topLevelApplication));
-			MyPopUpManager.centerPopUp(addParada);
-		}
-		private function paradaAdicionadaEventHandler(event:AddParadaEvent):void
-		{
-			MainModel.getInstance().paradasArray.addItem(event.parada);
-		}
+		
 		public function planoGRZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
 			if(event.type == ZoomCodDetailEvent.CLICK)
@@ -364,12 +386,32 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			for each (var obj:Object in resultArray)
 			{
 				MainModel.getInstance().smVO.descricaoPGR = obj.pgpg_descricao.toString();
+				TrafegusWS.getIntance().necessitaValidarPesquisaMotorista(necessitaValidarPesquisaMotoristaResultHandler,MainModel.getInstance().smVO.codigoPGR);
 			}
 		}
 		private function pgrSelecionadoEventHandler(event:PGRSelecionadoEvent):void
 		{
 			MainModel.getInstance().smVO.codigoPGR = event.pgr.codigo;
 			MainModel.getInstance().smVO.descricaoPGR = event.pgr.descricao;
+			
+			TrafegusWS.getIntance().necessitaValidarPesquisaMotorista(necessitaValidarPesquisaMotoristaResultHandler,event.pgr.codigo);
+		}
+		private function necessitaValidarPesquisaMotoristaResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			MainModel.getInstance().necessarioConsultaMotorista = "";
+			for each (var obj:Object in resultArray)
+			{
+				MainModel.getInstance().necessarioConsultaMotorista = obj.necessarioconsultamotorista.toString();
+			}
+			if(MainModel.getInstance().necessarioConsultaMotorista == "SIM")
+			{
+				TrafegusWS.getIntance().validarPesquisaMotorista(validarPesquisaMotoristaResultHandler,MainModel.getInstance().smVO.veiculoPrincipal.cod,MainModel.getInstance().smVO.codigoMotorista);
+			}
+			else
+			{
+				MainModel.getInstance().salvarSMEnabled = true;
+			}
 		}
 		public function viagemPaiZoomDispatcher(event:ZoomCodDetailEvent):void
 		{
@@ -404,6 +446,91 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			MainModel.getInstance().smVO.codigoViagemPai = event.viagemPai.codigo;
 			MainModel.getInstance().smVO.previsaoInicioViagemPai = event.viagemPai.previsaoInicio;
 			MainModel.getInstance().smVO.previsaoFimViagemPai = event.viagemPai.previsaoFim;
+		}
+		public function closeHandler():void
+		{
+			MyPopUpManager.removePopUp(this.view);
+		}
+		public function salvarSM():void
+		{
+			TrafegusWS.getIntance().salvaViagViagem(salvaViagViagemResultHandler);
+			this.closeHandler();
+		}
+		private function salvaViagViagemResultHandler(event:ResultEvent):void
+		{
+			MessageBox.informacao(event.message.toString());
+		}
+		public function solicitaParadasSM():void
+		{
+			TrafegusWS.getIntance().solicitaParadasSM(this.solicitaParadasSMResultHandler,MainModel.getInstance().smVO.numeroViagem);
+		}
+		public function solicitaDadosGridCarretas():void
+		{
+			TrafegusWS.getIntance().solicitaDadosGridCarretas(this.solicitaDadosGridCarretasResultHandler,MainModel.getInstance().smVO.numeroViagem);
+		}
+		public function solicitaListaTerminais():void
+		{
+			TrafegusWS.getIntance().solicitaListaTerminais(this.solicitaListaTerminaisResultHandler,MainModel.getInstance().smVO.veiculoPrincipal.vehiclePlate);
+		}
+		private function solicitaParadasSMResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			MainModel.getInstance().smVO.paradas.removeAll();
+			for each (var obj:Object in resultArray)
+			{
+				var parada:ParadaVO = new ParadaVO();
+				parada.setParadaVO(obj);
+				MainModel.getInstance().smVO.paradas.addItem(parada);
+			}
+		}
+		private function solicitaDadosGridCarretasResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			MainModel.getInstance().smVO.carretas.removeAll();
+			for each (var obj:Object in resultArray)
+			{
+				var carreta:VeiculoVO = new VeiculoVO();
+				carreta.setVeiculoVO(obj);
+				TrafegusWS.getIntance().solicitaListaTerminais(solicitaListaTerminaisResultHandler,carreta.vehiclePlate);
+				MainModel.getInstance().smVO.carretas.addItem(carreta);
+			}
+			MainModel.getInstance().smVO.carretas.refresh();
+		}
+		private function solicitaListaTerminaisResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			//MainModel.getInstance().smVO.terminaisArray.removeAll();
+			for each (var obj:Object in resultArray)
+			{
+				var terminal:TerminalVO = new TerminalVO();
+				terminal.setTerminalVO(obj);
+				MainModel.getInstance().smVO.terminaisArray.addItem(terminal);
+			}
+			this.solicitaDadosTerminalDefeituoso();
+		}
+		private function solicitaDadosTerminalDefeituoso():void
+		{
+			MainModel.getInstance().smVO.codTerminais = "";
+			for each(var terminal:TerminalVO in MainModel.getInstance().smVO.terminaisArray)
+			{
+				if(MainModel.getInstance().smVO.codTerminais != "")
+				{
+					MainModel.getInstance().smVO.codTerminais += ",";
+				}
+				MainModel.getInstance().smVO.codTerminais += terminal.codigo;
+			}
+			TrafegusWS.getIntance().solicitaDadosTerminalDefeituoso(solicitaDadosTerminalDefeituosoResultHandler);
+		}
+		private function solicitaDadosTerminalDefeituosoResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			MainModel.getInstance().smVO.terminaisDefeituososArray.removeAll();
+			for each (var obj:Object in resultArray)
+			{
+				var terminal:TerminalDefeituosoVO = new TerminalDefeituosoVO();
+				terminal.setTerminalDefeituosoVO(obj);
+				MainModel.getInstance().smVO.terminaisDefeituososArray.addItem(terminal);
+			}
 		}
 	}
 }

@@ -194,7 +194,6 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             }
             if (event.label == "Solicitação de monitoramento")
             {
-				MainModel.getInstance().smVO = new MonitoringRequestVO();
                 var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
                 MyPopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication));
                 MyPopUpManager.centerPopUp(monitoringRequest);

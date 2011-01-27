@@ -14,6 +14,7 @@ package br.com.chapecosolucoes.trafegusweb.client.model
     import br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.ItensPorPaginaVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
+    import br.com.chapecosolucoes.trafegusweb.client.vo.PesquisaMotoristaVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
     import br.com.chapecosolucoes.trafegusweb.client.vo.ViagemPaiVO;
@@ -36,8 +37,6 @@ package br.com.chapecosolucoes.trafegusweb.client.model
         public var viagemSelecionada:String = "";
 
         public var zoomFilter:String = "";
-
-        public var codTerminais:String = "";
 
         public var posicaoVeiculoVO:PosicaoVeiculoVO = new PosicaoVeiculoVO();
 
@@ -101,6 +100,12 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		
 		public var totalSMVeiculo:int = 0;
 		
+		public var necessarioConsultaMotorista:String = "";
+		
+		public var pesquisaMotoristaVO:PesquisaMotoristaVO = new PesquisaMotoristaVO();
+		
+		public var salvarSMEnabled:Boolean = true;
+		
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.TipoParadaVO")]
 		public var tipoParadaArray:ArrayCollection = new ArrayCollection();
 		
@@ -140,17 +145,11 @@ package br.com.chapecosolucoes.trafegusweb.client.model
         [ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO")]
         public var embarcadoresArray:ArrayCollection = new ArrayCollection();
 
-        [ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO")]
-        public var carretasSelecionadasArray:ArrayCollection = new ArrayCollection();
-
         [ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.TransportadorVO")]
         public var transportadoresArray:ArrayCollection = new ArrayCollection();
 
         [ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.LocalVO")]
         public var locaisArray:ArrayCollection = new ArrayCollection();
-
-        [ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.ParadaVO")]
-        public var paradasArray:ArrayCollection = new ArrayCollection();
 
         [ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.TipoTransporteVO")]
         public var tipoTransporteArray:ArrayCollection = new ArrayCollection();
@@ -163,12 +162,6 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 
         [ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.ViagemPaiVO")]
         public var viagemPaiArray:ArrayCollection = new ArrayCollection();
-
-        [ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.TerminalVO")]
-        public var terminaisArray:ArrayCollection = new ArrayCollection();
-
-        [ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.TerminalDefeituosoVO")]
-        public var terminaisDefeituososArray:ArrayCollection = new ArrayCollection();
 
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.ClassesReferenciaVO")]
 		public var classesReferencia:ArrayCollection = new ArrayCollection();
