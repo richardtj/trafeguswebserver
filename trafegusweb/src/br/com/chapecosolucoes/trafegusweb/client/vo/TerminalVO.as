@@ -2,6 +2,8 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 {
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.utils.MyDateFormatter;
+	
+	import mx.utils.ObjectUtil;
 
 	[Bindable]
 	public class TerminalVO
@@ -37,9 +39,12 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public function get vterUsuarioAdicionou():String
 		{
-			return this._vterUsuarioAdicionou==""?MainModel.getInstance().codUsuario:this._vterUsuarioAdicionou;
+			return this._vterUsuarioAdicionou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vterUsuarioAdicionou;
 		}
-		public function get 
+		public function get vterUsuarioAlterou():String
+		{
+			return ObjectUtil.toString(MainModel.getInstance().codUsuario);
+		}
 		public var precedencia:String;
 		public var codigo:String;
 		public var numero:String;
