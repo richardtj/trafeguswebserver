@@ -84,7 +84,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public function get vrotUsuarioAlterou():String
 		{
-			return this._vrotUsuarioAlterou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vrotUsuarioAlterou;
+			return ObjectUtil.toString(MainModel.getInstance().codUsuario);
 		}
 		public var codigo:String;
 		private var _vrotCodigo:String;

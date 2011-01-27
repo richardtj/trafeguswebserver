@@ -1,5 +1,8 @@
 package br.com.chapecosolucoes.trafegusweb.client.vo
 {
+	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.utils.MyDateFormatter;
+
 	[Bindable]
 	public class TerminalVO
 	{
@@ -16,9 +19,9 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.tempoSatelital = obj.term_tempo_satelital.toString();
 			this.tempoGPRS = obj.term_tempo_gprs.toString();
 			this.vtecCodigo = obj.term_vtec_codigo.toString();
-			this.vterUsuarioAdicionou = obj.term_usuario_adicionou.toString();
-			this.vterUsuarioAlterou = obj.term_usuario_alterou.toString();
-			this.vterDataCadastro = obj.term_data_cadastro.toString();
+			this._vterUsuarioAdicionou = obj.term_usuario_adicionou.toString();
+			this._vterUsuarioAlterou = obj.term_usuario_alterou.toString();
+			this._vterDataCadastro = obj.term_data_cadastro.toString();
 		}
 		public function get vterCodigo():String
 		{
@@ -28,6 +31,15 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		{
 			this.codigo = vter_codigo
 		}
+		public function get vterDataCadastro():String
+		{
+			return this._vterDataCadastro==""?MyDateFormatter.getInstance().parse(new Date()):this._vterDataCadastro;
+		}
+		public function get vterUsuarioAdicionou():String
+		{
+			return this._vterUsuarioAdicionou==""?MainModel.getInstance().codUsuario:this._vterUsuarioAdicionou;
+		}
+		public function get 
 		public var precedencia:String;
 		public var codigo:String;
 		public var numero:String;
@@ -40,8 +52,8 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public var tempoSatelital:String;
 		public var tempoGPRS:String;
 		public var veiculo:String;
-		public var vterUsuarioAdicionou:String;
-		public var vterUsuarioAlterou:String;
-		public var vterDataCadastro:String;
+		private var _vterUsuarioAdicionou:String;
+		private var _vterUsuarioAlterou:String;
+		private var _vterDataCadastro:String;
 	}
 }
