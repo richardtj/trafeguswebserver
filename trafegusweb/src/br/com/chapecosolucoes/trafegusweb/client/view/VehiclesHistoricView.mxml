@@ -67,6 +67,7 @@
     </s:Group>
     <view:PaginableComponent id="paginable"
         totalRecords="{MainModel.getInstance().totalHistoricoPosicoes}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
         first="this.controller.solicitaHistoricoPosicoes(event)"
         last="this.controller.solicitaHistoricoPosicoes(event)"
         next="this.controller.solicitaHistoricoPosicoes(event)"

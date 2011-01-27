@@ -119,6 +119,7 @@
 	<view:PaginableComponent 
 		id="paginable"
 		totalRecords="{MainModel.getInstance().totalSMVeiculo}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
 		first="this.controller.solicitaSMVeiculo(event)"
 		last="this.controller.solicitaSMVeiculo(event)"
 		next="this.controller.solicitaSMVeiculo(event)"
