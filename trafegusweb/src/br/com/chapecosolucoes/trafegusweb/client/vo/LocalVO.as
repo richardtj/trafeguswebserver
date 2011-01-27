@@ -21,7 +21,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.vlocTparCodigo = obj.vloc_tpar_codigo.toString();
 			this.vlocRaio = obj.vloc_raio.toString();
 			this._vlocDataCadastro = obj.vloc_data_cadastro.toString();
-			this.vlocUsuarioAdicionou = obj.vloc_usuario_adicionou.toString();
+			this._vlocUsuarioAdicionou = obj.vloc_usuario_adicionou.toString();
 			//this.vlocUsuarioAlterou = obj.vloc_usuario_alterou.toString();
 			this.descricao = obj.refe_descricao.toString();
 			gpsLatitudeString = obj.refe_latitude.toString().replace(",", ".");
@@ -34,7 +34,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public function set vlocCodigo(vlocCodigo:String):void
 		{
-			this._vlocCodigo = vlocCodigo;
+			this.codigo = vlocCodigo;
 		}
 		public function get vlocCodigo():String
 		{
@@ -49,14 +49,17 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			return this._vlocDataCadastro==""?MyDateFormatter.getInstance().parseTime(new Date()):this._vlocDataCadastro;
 		}
 		public function set vlocUsuarioAdicionou(vlocUsuarioAdicionou:String):void
-		{
-			this._vlocUsuarioAdicionou = vlocUsuarioAdicionou;
-		}
+	    {
+			this._vlocUsuarioAdicionou = vlocUsuarioAdicionou;									 
+    	}
 		public function get vlocUsuarioAdicionou():String
 		{
 			return this._vlocUsuarioAdicionou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vlocUsuarioAdicionou;
 		}
-		
+		/*public function set vlocUsuarioAlterou(vlocUsuarioAlterou:String):void
+		{
+			this._vlocUsuarioAlterou;
+		}*/
 		public function get vlocUsuarioAlterou():String
 		{
 			return ObjectUtil.toString(MainModel.getInstance().codUsuario);
@@ -68,10 +71,10 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public var descricaoGrupo:String;
 		public var gpsLatitudeString:String;
 		public var gpsLongitudeString:String;
-		private var _vlocCodigo:String;
 		public var vlocSequencia:String;
 		public var vlocTparCodigo:String;
 		public var vlocRaio:String = "";
+		private var _vlocCodigo:String;
 		private var _vlocDataCadastro:String = "";
 		private var _vlocUsuarioAdicionou:String = "";
 		private var _vlocUsuarioAlterou:String = "";
