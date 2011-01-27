@@ -72,10 +72,10 @@
 	</fx:Script>
 	<mx:Form width="100%" height="100%" defaultButton="{ok}">
 		<mx:FormItem label="Tipo de parada" required="true">
-			<view:ZoomCodDetailView id="tipoParadaZoom" clickZoom="this.controller.tipoParadaZoomDispatcher()" cod="{model.parada.codigoTipoParada}" detail="{model.parada.descricaoTipoParada}"/>
+			<view:ZoomCodDetailView id="tipoParadaZoom" clickZoom="this.controller.tipoParadaZoomDispatcher()" cod="{model.parada.tipoParadaVO.codigo}" detail="{model.parada.tipoParadaVO.descricao}"/>
 		</mx:FormItem>
 		<mx:FormItem label="Local" required="true">
-			<view:ZoomCodDetailView id="localZoom" clickZoom="this.controller.localZoomDispatcher(LocaisEnum.PARADA)" cod="{model.parada.codigoReferencia}" detail="{model.parada.descricaoReferencia}"/>
+			<view:ZoomCodDetailView id="localZoom" clickZoom="this.controller.localZoomDispatcher(LocaisEnum.PARADA)" cod="{model.parada.localVO.codigo}" detail="{model.parada.localVO.descricao}"/>
 		</mx:FormItem>
 	</mx:Form>
 	<mx:ControlBar horizontalAlign="right">

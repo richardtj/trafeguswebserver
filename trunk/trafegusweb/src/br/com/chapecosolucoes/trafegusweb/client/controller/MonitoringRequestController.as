@@ -470,10 +470,25 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				with(terminalVO)
 				{
-					TrafegusWS.getIntance().salvaVterViagemTerminal(salvaVterViagemTerminalResultHandler,vterCodigo,vtecCodigo,precedencia,tempoSatelital,tempoGPRS,vterUsuarioAdicionou,vterUsuarioAlterou,vterDataCadastro);
+					TrafegusWS.getIntance().salvaVterViagemTerminal(salvaVterViagemTerminalResultHandler,vtecCodigo,codigo,precedencia,tempoSatelital,tempoGPRS,vterUsuarioAdicionou,vterUsuarioAlterou,vterDataCadastro);
 				}
 			}
-			
+			with(MainModel.getInstance().smVO.rota.localOrigem)
+			{
+				TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,vlocCodigo,vlocSequencia,codigo,vlocTparCodigo,vlocRaio,descricao,vlocUsuarioAdicionou,vlocUsuarioAlterou,vlocDataCadastro);
+			}
+			with(MainModel.getInstance().smVO.rota.localDestino)
+			{
+				TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,vlocCodigo,vlocSequencia,codigo,vlocTparCodigo,vlocRaio,descricao,vlocUsuarioAdicionou,vlocUsuarioAlterou,vlocDataCadastro);
+			}
+			for each(var paradaVO:ParadaVO in MainModel.getInstance().smVO.paradas)
+			{
+				//TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,vlocCodigo,vlocSequencia,codigo,vlocTparCodigo,vlocRaio,descricao,vlocUsuarioAdicionou,vlocUsuarioAlterou,vlocDataCadastro);
+			}
+		}
+		private function salvaVlocViagemLocalResultHandler(event:ResultEvent):void
+		{
+			MessageBox.informacao(event.message.toString());
 		}
 		private function salvaVrotViagemRotaResultHandler(event:ResultEvent):void
 		{

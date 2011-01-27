@@ -47,13 +47,11 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		private function paradaSelecionadoEventHandler(event:SelectedLocalEvent):void
 		{
-			this.model.parada.codigoReferencia = event.local.codigo;
-			this.model.parada.descricaoReferencia = event.local.descricao;
+			this.model.parada.localVO = event.local;
 		}
 		private function tipoParadaSelecionadoEventHandler(event:TipoParadaSelecionadoEvent):void
 		{
-			this.model.parada.codigoTipoParada = event.tipoParada.codigo;
-			this.model.parada.descricaoTipoParada = event.tipoParada.descricao;
+			this.model.parada.tipoParadaVO = event.tipoParada
 		}
 		public function paradaSelecionada():void
 		{
