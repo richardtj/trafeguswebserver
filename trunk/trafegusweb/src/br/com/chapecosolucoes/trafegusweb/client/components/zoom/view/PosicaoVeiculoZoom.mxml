@@ -82,6 +82,7 @@
 	<view:PaginableComponent 
 		id="paginable"
 		totalRecords="{MainModel.getInstance().totalDadosGridZoom}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
 		next="this.controller.solicitaDadosGridZoom(event)" 
 		prev="this.controller.solicitaDadosGridZoom(event)" 
 		first="this.controller.solicitaDadosGridZoom(event)" 

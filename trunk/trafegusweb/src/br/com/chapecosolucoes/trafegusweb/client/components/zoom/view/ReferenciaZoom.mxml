@@ -75,6 +75,7 @@
 	<view:PaginableComponent 
 		id="paginable"
 		totalRecords="{MainModel.getInstance().totalReferenciasZoom}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
 		next="this.controller.solicitaReferenciasZoom(event)"
 		prev="this.controller.solicitaReferenciasZoom(event)"
 		first="this.controller.solicitaReferenciasZoom(event)"

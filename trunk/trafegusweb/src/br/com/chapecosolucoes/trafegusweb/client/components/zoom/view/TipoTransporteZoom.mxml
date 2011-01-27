@@ -67,6 +67,7 @@
 	<view:PaginableComponent 
 		id="paginable"
 		totalRecords="{MainModel.getInstance().totalListaTipoTransporte}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
 		next="this.controller.solicitaListaTipoTransporte(event)"
 		prev="this.controller.solicitaListaTipoTransporte(event)"
 		first="this.controller.solicitaListaTipoTransporte(event)"

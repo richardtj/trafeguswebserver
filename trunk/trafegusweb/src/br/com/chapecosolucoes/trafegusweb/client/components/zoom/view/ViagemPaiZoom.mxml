@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:resize="flex.utils.ui.resize.*" 
-				xmlns:s="library://ns.adobe.com/flex/spark" 
-				xmlns:mx="library://ns.adobe.com/flex/mx"
-				layout="vertical"
-				width="720" height="420"
-				showCloseButton="true"
-				mouseOver="this.controller.mouseOverEventHandler()"
-				creationCompleteEffect="{dissolve,iris}"
-				removedEffect="{dissolve,iris}"
-				initialize="init()"
-				creationComplete="creationComplete()"
-				close="this.controller.closeHandler()"
-				title="Viagem Pai"
-				titleIcon="@Embed(source='assets/travel.png')"
-				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+                        xmlns:resize="flex.utils.ui.resize.*"
+                        xmlns:s="library://ns.adobe.com/flex/spark"
+                        xmlns:mx="library://ns.adobe.com/flex/mx"
+                        layout="vertical"
+                        width="720"
+                        height="420"
+                        showCloseButton="true"
+                        mouseOver="this.controller.mouseOverEventHandler()"
+                        creationCompleteEffect="{dissolve,iris}"
+                        removedEffect="{dissolve,iris}"
+                        initialize="init()"
+                        creationComplete="creationComplete()"
+                        close="this.controller.closeHandler()"
+                        title="Viagem Pai"
+                        titleIcon="@Embed(source='assets/travel.png')"
+                        xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
+                        xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Binding source="ViagemPaiVO(this.grid.selectedItem)" destination="MainModel.getInstance().dadosViagemPaiVO"/>
 	<fx:Metadata>
@@ -75,6 +78,7 @@
 	<view:PaginableComponent 
 		id="paginable"
 		totalRecords="{MainModel.getInstance().totalListaViagemPai}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
 		first="this.controller.solicitaListaViagemPai(event)"
 		last="this.controller.solicitaListaViagemPai(event)"
 		next="this.controller.solicitaListaViagemPai(event)"
