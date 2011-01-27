@@ -7,7 +7,10 @@ package br.com.chapecosolucoes.trafegusweb.server.ws;
 import br.com.chapecosolucoes.trafegusweb.server.conexao.Conexao;
 import java.io.StringReader;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -246,7 +249,7 @@ public class TrafegusWS {
         sb.append(" AND ");
         sb.append("         UPPER(CREF_DESCRICAO) ").append(grupoDesc);
         sb.append(" ORDER BY REFE_DESCRICAO");
-        System.out.print(sb.toString());
+        //System.out.print(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -335,7 +338,7 @@ public class TrafegusWS {
     @WebMethod(operationName = "solicitaListaVeiculos")
     public String solicitaListaVeiculos(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") Integer codEmpresa, @WebParam(name = "offset") Integer offset, @WebParam(name = "limit") Integer limit) throws Exception {
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT ORAS_OBJETO_RASTREADO.ORAS_CODIGO,");
+        sb.append(" SELECT ORAS_OBJETO_RASTREADO.ORAS_CODIGO AS VEIC_ORAS_CODIGO,");
         sb.append("       VEIC_VEICULO.VEIC_PLACA,");
         sb.append("       TVEI_TIPO_VEICULO.TVEI_DESCRICAO");
         sb.append("    FROM VEIC_Veiculo");
@@ -368,17 +371,35 @@ public class TrafegusWS {
             codEmbarcador = "0";
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT");
-        sb.append("    ROTA_CODIGO,");
-        sb.append("    ROTA_DESCRICAO,");
-        sb.append("    ROTA_DISTANCIA,");
-        sb.append("    ROTA_COORDENADA,");
-        sb.append("    ROTA_DATA_CADASTRO,");
-        sb.append("    ROTA_COORDENADASPIPE");
-        sb.append(" FROM ROTA_ROTA");
-        sb.append(" WHERE ROTA_PESS_ORAS_CODIGO_DONO IN (").append(codEmpresa.toString()).append(",").append(codEmbarcador).append(")");
-        sb.append(" ORDER BY ROTA_DESCRICAO");
+        sb.append(" SELECT ");
+        sb.append("          ROTA_CODIGO,");
+        sb.append("          ROTA_DESCRICAO,");
+        sb.append("          ROTA_DISTANCIA,");
+        sb.append("          ROTA_COORDENADA,");
+        sb.append("          ROTA_DATA_CADASTRO,");
+        sb.append("          ROTA_COORDENADASPIPE,");
+        sb.append("          ROTA_PESS_ORAS_CODIGO_DONO,");
+        sb.append("          ORI.REFE_Codigo AS REFE_Codigo_origem,");
+        sb.append("          ORI.REFE_Descricao AS REFE_Descricao_origem,");
+        sb.append("          ORI.REFE_Latitude AS REFE_Latitude_origem,");
+        sb.append("          ORI.REFE_Longitude AS REFE_Longitude_origem,");
+        //sb.append("          ORI.CREF_Classe_Referencia.CREF_Codigo AS CREF_Codigo_origem,");
+        //sb.append("          ORI.CREF_Classe_Referencia.CREF_Descricao AS CREF_Descricao_origem,");
+        sb.append("          DES.REFE_Codigo AS REFE_Codigo_destino,");
+        sb.append("          DES.REFE_Descricao AS REFE_Descricao_destino,");
+        sb.append("          DES.REFE_Latitude AS REFE_Latitude_destino,");
+        sb.append("          DES.REFE_Longitude AS REFE_Longitude_destino");
+        //sb.append("          DES.CREF_Classe_Referencia.CREF_Codigo AS CREF_Codigo_destino,");
+        //sb.append("          DES.CREF_Classe_Referencia.CREF_Descricao AS CREF_Descricao_destino");
+        sb.append("     FROM ROTA_ROTA");
+        sb.append("     JOIN RPON_Rota_Ponto AS RPONORI ON (RPONORI.RPON_ROTA_Codigo = ROTA_Codigo AND RPONORI.RPON_TPAR_Codigo = 4 /* ORIGEM */)");
+        sb.append("     JOIN REFE_Referencia AS ORI ON (ORI.REFE_Codigo = RPONORI.RPON_REFE_Codigo)   ");
+        sb.append("     JOIN RPON_Rota_Ponto AS RPONDEST ON (RPONDEST.RPON_ROTA_Codigo = ROTA_Codigo AND RPONDEST.RPON_TPAR_Codigo = 5 /* DESTINO */)");
+        sb.append("     JOIN REFE_Referencia AS DES ON (DES.REFE_Codigo = RPONDEST.RPON_REFE_Codigo)   ");
+        sb.append("    WHERE ROTA_PESS_ORAS_CODIGO_DONO IN (").append(codEmpresa.toString()).append(",").append(codEmbarcador).append(")");
+        sb.append(" ORDER BY ROTA_DESCRICAO ");
         sb.append(" LIMIT ").append(limit).append(" OFFSET ").append(offset);
+        //System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -398,7 +419,7 @@ public class TrafegusWS {
         sb.append("             UPOS_Latitude,");
         sb.append("             VTEC_Descricao as versaoTecnologia,");
         sb.append("             TERM_Numero_Terminal as numeroTerminal,");
-        sb.append("             '' as embarcador,");
+        sb.append("             EMBA1.PESS_Nome AS embarcador,");
         sb.append("             TERM_Ativo,");
         sb.append("             CASE");
         sb.append("                WHEN (VUPA_VEIC_ORAS_Codigo IS NOT NULL) THEN 'UTILITARIO DE PASSEIO'");
@@ -434,9 +455,11 @@ public class TrafegusWS {
         sb.append("    LEFT JOIN vcav_veiculo_cavalo ON (VCAV_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
         sb.append("    LEFT JOIN VVEI_Viagem_Veiculo ON (VVEI_VEIC_ORAS_Codigo = ORAS_Codigo AND VVEI_Precedencia = '1' AND VVEI_Ativo = 'S')");
         sb.append("    LEFT JOIN VIAG_Viagem ON (VIAG_Codigo = VVEI_VIAG_Codigo)");
+        sb.append("    LEFT JOIN EMBA_Embarcador ON (EMBA_PJUR_PESS_ORAS_Codigo = VIAG_EMBA_PJUR_PESS_ORAS_Codigo)");
+        sb.append("    LEFT JOIN PESS_Pessoa AS EMBA1 ON (EMBA1.PESS_ORAS_Codigo = EMBA_PJUR_PESS_ORAS_Codigo)");
         sb.append("    ORDER BY VEIC_ORAS_Codigo");
         sb.append("    LIMIT ").append(limit).append(" OFFSET ").append(offset);
-//        System.out.println(sb.toString());
+        //System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -587,7 +610,7 @@ public class TrafegusWS {
         sb.append("      JOIN ORTE_Objeto_Rastreado_Termina ON (ORTE_TERM_Codigo = TERM_Codigo AND ORTE_Sequencia = 'P')");
         sb.append("      JOIN ORAS_Objeto_Rastreado ON (ORAS_Codigo = ORTE_ORAS_Codigo)");
         sb.append("      JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = ORAS_Codigo)");
-        sb.append("      JOIN VTRA_Veiculo_Transportador ON (VTRA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo AND VTRA_TRAN_PESS_ORAS_Codigo = ").append(codEmpresa);
+        sb.append("      JOIN VTRA_Veiculo_Transportador ON (VTRA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo AND VTRA_TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(")");
         sb.append("      JOIN VTER_Viagem_Terminal ON (VTER_TERM_Codigo = TERM_Codigo AND VTER_Ativo = 'S' AND VTER_Precedencia = '1')");
         sb.append("      JOIN VIAG_Viagem ON (VIAG_Codigo = VTER_VIAG_Codigo AND VIAG_Data_Inicio IS NOT NULL AND VIAG_Data_Fim IS NULL)");
         sb.append("      JOIN VLOC_Viagem_Local AS O1 ON (O1.VLOC_VIAG_Codigo = VIAG_Codigo AND O1.VLOC_TPAR_Codigo = 4)");
@@ -601,7 +624,7 @@ public class TrafegusWS {
         sb.append(" LEFT JOIN vmot_veiculo_moto ON (VMOT_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
         sb.append(" LEFT JOIN vcav_veiculo_cavalo ON (VCAV_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
         sb.append(" LEFT JOIN EMBA_Embarcador ON (EMBA_PJUR_PESS_ORAS_Codigo = VIAG_EMBA_PJUR_PESS_ORAS_Codigo)");
-        sb.append(" LEFT JOIN PESS_Pessoa AS EMBA1 ON (PESS_ORAS_Codigo = EMBA_PJUR_PESS_ORAS_Codigo)");
+        sb.append(" LEFT JOIN PESS_Pessoa AS EMBA1 ON ( EMBA1.PESS_ORAS_Codigo = EMBA_PJUR_PESS_ORAS_Codigo)");
         sb.append(" LEFT JOIN MOTO_Motorista AS M1 ON (M1.MOTO_PFIS_PESS_ORAS_Codigo = VEIC_MOTO_PFIS_PESS_ORAS_Codigo)");
         sb.append(" LEFT JOIN PFIS_Pessoa_Fisica MO1 ON (MO1.PFIS_PESS_ORAS_Codigo = M1.MOTO_PFIS_PESS_ORAS_Codigo)");
         sb.append(" LEFT JOIN PESS_Pessoa AS MOTO1 ON (MOTO1.PESS_ORAS_Codigo = MO1.PFIS_PESS_ORAS_Codigo)");
@@ -789,9 +812,12 @@ public class TrafegusWS {
     public String solicitaListaCarretasDisponiveis(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT VEIC_Veiculo.VEIC_COR AS TVEI_DESCRICAO,");
+        sb.append(" SELECT VEIC_ORAS_Codigo,");
+        sb.append("     VEIC_Veiculo.VEIC_COR,");
+        sb.append("     TVEI_TIPO_VEICULO.TVEI_DESCRICAO,");
         sb.append("     VEIC_VEICULO.VEIC_PLACA");
         sb.append("     FROM VEIC_Veiculo");
+        sb.append("     JOIN TVEI_Tipo_Veiculo ON (VEIC_TVEI_Codigo = TVEI_Codigo)");
         sb.append("     JOIN VTRA_Veiculo_Transportador ON (VTRA_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
         sb.append("     JOIN TRAN_Transportador ON (TRAN_PESS_ORAS_Codigo = VTRA_TRAN_PESS_ORAS_Codigo AND TRAN_PESS_ORAS_Codigo = ").append(codEmpresa).append(")");
         sb.append("    JOIN vcar_veiculo_carreta ON (VEIC_ORAS_Codigo = VCAR_VEIC_ORAS_Codigo)");
@@ -826,7 +852,7 @@ public class TrafegusWS {
         sb.append(" WHERE PGPG_ESTATUS = 'A'");
         sb.append(" ORDER BY PGPG_DESCRICAO");
         sb.append(" LIMIT ").append(limit).append(" OFFSET ").append(offset);
-        System.out.println(sb.toString());
+        //System.out.println(sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
 
@@ -1324,6 +1350,15 @@ public class TrafegusWS {
         sb = null;
         con.createStatement().execute(sql);
     }
+    private void gravarItensPorPagina(String chave, String valor, String usuario, Connection con) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" INSERT INTO sreg_sistema_registro");
+        sb.append("    (sreg_sessao, sreg_chave, sreg_valor, sreg_usuario_adicionou)");
+        sb.append(" VALUES ('").append("TRAFEGUS_WEB_ITENS_POR_PAGINA").append("','").append(chave).append("','").append(valor).append("','").append(usuario).append("')");
+        String sql = sb.toString();
+        sb = null;
+        con.createStatement().execute(sql);
+    }
 
     @WebMethod(operationName = "salvarPosicaoTelas")
     public String salvarPosicaoTelas(
@@ -1362,6 +1397,7 @@ public class TrafegusWS {
 
         return "<registro>OK</registro>";
     }
+
 
     @WebMethod(operationName = "lerPosicaoTelas")
     public String lerPosicaoTelas(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "usuario") String usuario) throws Exception {
@@ -1463,7 +1499,7 @@ public class TrafegusWS {
     public String solicitaDescricaoTipoTransporte(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codTipoTransporte") String codTipoTransporte) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT TTRA_Codigo,");
+        sb.append(" SELECT DISTINCT TTRA_Codigo,");
         sb.append("         TTRA_Descricao");
         sb.append(" FROM TTRA_Tipo_Transporte");
         sb.append(" WHERE TTRA_Codigo = ").append(codTipoTransporte);
@@ -1477,7 +1513,7 @@ public class TrafegusWS {
     public String solicitaDescricaoViagemPai(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "codViagemPai") String codViagemPai) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT ");
+        sb.append(" SELECT DISTINCT ");
         sb.append("     VIAG_CODIGO,");
         sb.append("     VIAG_PREVISAO_INICIO,");
         sb.append("     VIAG_PREVISAO_FIM");
@@ -1495,7 +1531,7 @@ public class TrafegusWS {
     public String solicitaDescricaoTransportador(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codTransportador") String codTransportador) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT TRAN_Transportador.TRAN_PESS_ORAS_Codigo,");
+        sb.append(" SELECT DISTINCT TRAN_Transportador.TRAN_PESS_ORAS_Codigo,");
         //sb.append("       TEST_Tipo_Estabelecimento.*,");
         sb.append("         PESS_Pessoa.PESS_Nome");
         sb.append(" FROM TRAN_Transportador");
@@ -1512,7 +1548,7 @@ public class TrafegusWS {
     public String solicitaDescricaoEmbarcador(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmbarcador") String codEmbarcador) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT EMBA_PJUR_PESS_ORAS_Codigo,");
+        sb.append(" SELECT DISTINCT EMBA_PJUR_PESS_ORAS_Codigo,");
         sb.append("      PESS_Pessoa.PESS_Nome");
         sb.append(" FROM EMBA_Embarcador");
         sb.append(" JOIN PJUR_Pessoa_Juridica ON (PJUR_PESS_ORAS_Codigo = EMBA_PJUR_PESS_ORAS_Codigo)");
@@ -1585,7 +1621,7 @@ public class TrafegusWS {
     public String solicitaDescricaoMotorista(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "codMotorista") String codMotorista) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
-        sb.append("      SELECT ORAS_Objeto_Rastreado.ORAS_Codigo,");
+        sb.append("      SELECT DISTINCT ORAS_Objeto_Rastreado.ORAS_Codigo,");
         sb.append("           PESS_Pessoa.PESS_Nome");
         sb.append("       FROM MOTO_Motorista");
         sb.append("        JOIN PFIS_Pessoa_Fisica ON (PFIS_PESS_ORAS_Codigo = MOTO_PFIS_PESS_ORAS_Codigo)");
@@ -1606,7 +1642,7 @@ public class TrafegusWS {
     public String solicitaDescricaoPGR(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codPGR") String codPGR) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT ");
+        sb.append(" SELECT DISTINCT");
         sb.append("         PGPG_Codigo,");
         sb.append("         PGPG_Descricao");
         sb.append(" FROM PGPG_pg");
@@ -1624,7 +1660,7 @@ public class TrafegusWS {
     public String solicitaDescricaoRota(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codEmpresa") String codEmpresa, @WebParam(name = "codRota") String codRota) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT ROTA_CODIGO,");
+        sb.append(" SELECT DISTINCT ROTA_CODIGO,");
         sb.append("	ROTA_DESCRICAO");
         sb.append(" FROM ROTA_ROTA");
         sb.append(" WHERE ROTA_CODIGO = ").append(codRota.toString());
@@ -1639,7 +1675,7 @@ public class TrafegusWS {
     public String solicitaDescricaoLocalOrigem(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codLocal") String codLocal) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT ");
+        sb.append(" SELECT DISTINCT ");
         sb.append("	REFE_Referencia.REFE_Codigo, ");
         sb.append("	REFE_Referencia.REFE_Descricao ");
         sb.append(" FROM ");
@@ -1659,7 +1695,7 @@ public class TrafegusWS {
     public String solicitaDescricaoLocalDestino(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "codLocal") String codLocal) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT ");
+        sb.append(" SELECT DISTINCT ");
         sb.append("	REFE_Referencia.REFE_Codigo, ");
         sb.append("	REFE_Referencia.REFE_Descricao ");
         sb.append(" FROM ");
@@ -1676,12 +1712,11 @@ public class TrafegusWS {
      * Web service operation
      */
     @WebMethod(operationName = "solicitaSMVeiculo")
-    public String solicitaSMVeiculo(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "placaVeiculo") String placaVeiculo) throws Exception {
+    public String solicitaSMVeiculo(@WebParam(name = "idSessao") String idSessao, @WebParam(name = "placaVeiculo") String placaVeiculo,@WebParam(name = "offset") String offset,@WebParam(name = "limit") String limit) throws Exception {
         //TODO write your implementation code here:
         StringBuilder sb = new StringBuilder();
         sb.append("  SELECT VEIC_ORAS_Codigo,");
-        sb.append("         VEIC_ORAS_Codigo AS Codigo_veiculo,");
-        sb.append("         VEIC_Placa AS Placa_Veiculo,");
+        sb.append("         VEIC_Placa,");
         sb.append("         Term_numero_terminal,");
         sb.append("         MOTO1.PESS_ORAS_Codigo AS Codigo_Motorista,");
         sb.append("         MOTO1.PESS_Nome AS Nome_Motorista,");
@@ -1706,28 +1741,36 @@ public class TrafegusWS {
         sb.append("         ROTA_DESCRICAO,");
         sb.append("         PGPG_PG.PGPG_CODIGO,");
         sb.append("         PGPG_PG.PGPG_Descricao,");
-        sb.append("         Viag_Codigo_pai");
-        sb.append("   FROM VIAG_Viagem    ");
-        sb.append("   JOIN VVEI_Viagem_Veiculo ON (VVEI_VIAG_Codigo = VIAG_Codigo)  ");
-        sb.append("   JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = VVEI_VEIC_ORAS_Codigo AND VEIC_Placa = '").append(placaVeiculo).append("')    ");
-        sb.append("   JOIN VTER_VIAGEM_Terminal ON (VTER_Viag_Codigo = Viag_codigo AND VTer_Precedencia = '1' AND Vter_Ativo = 'S')   ");
-        sb.append("   JOIN Term_Terminal ON (Term_codigo = Vter_term_codigo)   ");
-        sb.append("   JOIN Pess_pessoa AS Transp ON (Transp.Pess_oras_codigo = Viag_Tran_Pess_oras_codigo) ");
-        sb.append("   JOIN VLOC_Viagem_local AS O ON (O.VLOC_Viag_codigo = Viag_codigo AND O.VLOC_Tpar_codigo = 4) ");
-        sb.append("   JOIN Refe_Referencia AS Ori ON (Ori.Refe_codigo = O.VLoc_Refe_codigo)    ");
-        sb.append("   JOIN VLOC_Viagem_local AS D ON (D.VLOC_Viag_codigo = Viag_codigo AND D.VLOC_Tpar_codigo = 5) ");
-        sb.append("   JOIN Refe_Referencia AS Dest ON (Dest.Refe_codigo = D.VLoc_Refe_codigo) ");
-        sb.append("   JOIN TTRA_Tipo_Transporte ON (TTRA_Tipo_Transporte.TTRA_Codigo = VIAG_Viagem.Viag_Ttra_Codigo)  ");
+        sb.append("         Viag_Codigo_pai,");
+        sb.append("         VIAG_Distancia,");
+        sb.append("         VIAG_Valor_Carga,");
+        sb.append("         TO_CHAR(VIAG_Data_Inicio,'DD/MM/YYYY') AS VIAG_Data_Inicio,");
+        sb.append("         TO_CHAR(VIAG_Data_Inicio,'HH24:MI:SS') AS VIAG_Hora_Inicio,");
+        sb.append("         VTEM_Valor_Minimo,");
+        sb.append("         VTEM_Valor_Maximo");
+        sb.append("   FROM VIAG_Viagem   ");
+        sb.append("   JOIN VVEI_Viagem_Veiculo ON (VVEI_VIAG_Codigo = VIAG_Codigo) ");
+        sb.append("   JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = VVEI_VEIC_ORAS_Codigo AND VEIC_Placa = '").append(placaVeiculo).append("')");
+        sb.append("   JOIN VTER_VIAGEM_Terminal ON (VTER_Viag_Codigo = Viag_codigo AND VTer_Precedencia = '1' AND Vter_Ativo = 'S')  ");
+        sb.append("   JOIN Term_Terminal ON (Term_codigo = Vter_term_codigo)  ");
+        sb.append("   JOIN Pess_pessoa AS Transp ON (Transp.Pess_oras_codigo = Viag_Tran_Pess_oras_codigo)");
+        sb.append("   JOIN VLOC_Viagem_local AS O ON (O.VLOC_Viag_codigo = Viag_codigo AND O.VLOC_Tpar_codigo = 4)");
+        sb.append("   JOIN Refe_Referencia AS Ori ON (Ori.Refe_codigo = O.VLoc_Refe_codigo)   ");
+        sb.append("   JOIN VLOC_Viagem_local AS D ON (D.VLOC_Viag_codigo = Viag_codigo AND D.VLOC_Tpar_codigo = 5)");
+        sb.append("   JOIN Refe_Referencia AS Dest ON (Dest.Refe_codigo = D.VLoc_Refe_codigo)");
+        sb.append("   JOIN TTRA_Tipo_Transporte ON (TTRA_Tipo_Transporte.TTRA_Codigo = VIAG_Viagem.Viag_Ttra_Codigo) ");
         sb.append("   LEFT JOIN VROT_Viagem_rota ON (Viag_Viagem.Viag_codigo = VROT_Viagem_rota.VROT_VIAG_Codigo)");
-        sb.append("   LEFT JOIN ROTA_ROTA ON (VROT_Viagem_rota.VROT_ROTA_Codigo = ROTA_ROTA.ROTA_Codigo)  ");
-        sb.append("   LEFT Join Pess_pessoa AS Emba ON (Emba.Pess_oras_codigo = Viag_Emba_PJUR_Pess_oras_codigo) ");
+        sb.append("   LEFT JOIN ROTA_ROTA ON (VROT_Viagem_rota.VROT_ROTA_Codigo = ROTA_ROTA.ROTA_Codigo) ");
+        sb.append("   LEFT Join Pess_pessoa AS Emba ON (Emba.Pess_oras_codigo = Viag_Emba_PJUR_Pess_oras_codigo)");
         sb.append("   JOIN PGPG_PG ON (PGPG_PG.PGPG_CODIGO = Viag_pgpg_codigo)");
         sb.append("   LEFT JOIN MOTO_Motorista AS M1 ON (M1.MOTO_PFIS_PESS_ORAS_Codigo = VEIC_MOTO_PFIS_PESS_ORAS_Codigo)");
         sb.append("   LEFT JOIN PFIS_Pessoa_Fisica MO1 ON (MO1.PFIS_PESS_ORAS_Codigo = M1.MOTO_PFIS_PESS_ORAS_Codigo)");
         sb.append("   LEFT JOIN PESS_Pessoa AS MOTO1 ON (MOTO1.PESS_ORAS_Codigo = MO1.PFIS_PESS_ORAS_Codigo)");
-        sb.append("   WHERE VIAG_Data_Inicio IS NOT NULL   ");
-        sb.append("   AND VIAG_Data_Fim IS NOT NULL ");
+        sb.append("   LEFT JOIN VTEM_Viagem_Temperatura ON (VTEM_VIAG_Codigo = VIAG_Codigo)");
+        sb.append("   WHERE VIAG_Data_Inicio IS NOT NULL  ");
+        sb.append("   AND VIAG_Data_Fim IS NOT NULL");
         sb.append("   ORDER BY VIAG_Previsao_Inicio ");
+        sb.append("   LIMIT ").append(limit).append(" OFFSET ").append(offset);
         //System.out.println("\n" + sb.toString());
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
     }
@@ -1971,5 +2014,578 @@ public class TrafegusWS {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT COUNT(*) AS TOTAL FROM ( SELECT tpar_codigo,tpar_descricao FROM tpar_tipo_parada ) AS XXX ");
         return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaTotalSMVeiculo")
+    public String solicitaTotalSMVeiculo(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "placaVeiculo")
+    String placaVeiculo) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT COUNT(*) AS TOTAL FROM ( ");
+        sb.append("  SELECT VEIC_ORAS_Codigo,");
+        sb.append("         VEIC_ORAS_Codigo AS Codigo_veiculo,");
+        sb.append("         VEIC_Placa AS Placa_Veiculo,");
+        sb.append("         Term_numero_terminal,");
+        sb.append("         MOTO1.PESS_ORAS_Codigo AS Codigo_Motorista,");
+        sb.append("         MOTO1.PESS_Nome AS Nome_Motorista,");
+        sb.append("         Transp.Pess_oras_codigo AS Codigo_Transportador,");
+        sb.append("         Transp.Pess_nome AS Nome_Transportador,");
+        sb.append("         Emba.Pess_oras_codigo AS Codigo_Embarcador,");
+        sb.append("         Emba.Pess_nome AS Nome_Embarcador,");
+        sb.append("         Ori.Refe_codigo as Codigo_Origem,");
+        sb.append("         Ori.refe_descricao AS Descricao_Origem,");
+        sb.append("         Dest.refe_codigo AS Codigo_Destino,");
+        sb.append("         Dest.refe_descricao AS Descricao_Destino,");
+        sb.append("         VIAG_Viagem.viag_codigo,");
+        sb.append("         VIAG_Viagem.viag_tope_codigo,");
+        sb.append("         TO_CHAR(VIAG_Viagem.viag_data_cadastro,'DD/MM/YYYY') AS viag_data_cadastro,");
+        sb.append("         TO_CHAR(VIAG_Viagem.viag_previsao_inicio,'DD/MM/YYYY') AS viag_previsao_inicio,");
+        sb.append("         TO_CHAR(VIAG_Viagem.viag_previsao_inicio,'HH24:MI:SS') AS viag_previsao_hora_inicio,");
+        sb.append("         TO_CHAR(VIAG_Viagem.viag_previsao_fim,'DD/MM/YYYY') AS viag_previsao_fim,");
+        sb.append("         TO_CHAR(VIAG_Viagem.viag_previsao_fim,'HH24:MI:SS') AS viag_previsao_hora_fim,");
+        sb.append("         TTRA_Tipo_Transporte.TTRA_Codigo,");
+        sb.append("         TTRA_Tipo_Transporte.TTRA_Descricao,");
+        sb.append("         ROTA_CODIGO,");
+        sb.append("         ROTA_DESCRICAO,");
+        sb.append("         PGPG_PG.PGPG_CODIGO,");
+        sb.append("         PGPG_PG.PGPG_Descricao,");
+        sb.append("         Viag_Codigo_pai,");
+        sb.append("         VIAG_Distancia,");
+        sb.append("         VIAG_Valor_Carga,");
+        sb.append("         TO_CHAR(VIAG_Data_Inicio,'DD/MM/YYYY') AS VIAG_Data_Inicio,");
+        sb.append("         TO_CHAR(VIAG_Data_Inicio,'HH24:MI:SS') AS VIAG_Hora_Inicio,");
+        sb.append("         VTEM_Valor_Minimo,");
+        sb.append("         VTEM_Valor_Maximo");
+        sb.append("   FROM VIAG_Viagem   ");
+        sb.append("   JOIN VVEI_Viagem_Veiculo ON (VVEI_VIAG_Codigo = VIAG_Codigo) ");
+        sb.append("   JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = VVEI_VEIC_ORAS_Codigo AND VEIC_Placa = '").append(placaVeiculo).append("')");
+        sb.append("   JOIN VTER_VIAGEM_Terminal ON (VTER_Viag_Codigo = Viag_codigo AND VTer_Precedencia = '1' AND Vter_Ativo = 'S')  ");
+        sb.append("   JOIN Term_Terminal ON (Term_codigo = Vter_term_codigo)  ");
+        sb.append("   JOIN Pess_pessoa AS Transp ON (Transp.Pess_oras_codigo = Viag_Tran_Pess_oras_codigo)");
+        sb.append("   JOIN VLOC_Viagem_local AS O ON (O.VLOC_Viag_codigo = Viag_codigo AND O.VLOC_Tpar_codigo = 4)");
+        sb.append("   JOIN Refe_Referencia AS Ori ON (Ori.Refe_codigo = O.VLoc_Refe_codigo)   ");
+        sb.append("   JOIN VLOC_Viagem_local AS D ON (D.VLOC_Viag_codigo = Viag_codigo AND D.VLOC_Tpar_codigo = 5)");
+        sb.append("   JOIN Refe_Referencia AS Dest ON (Dest.Refe_codigo = D.VLoc_Refe_codigo)");
+        sb.append("   JOIN TTRA_Tipo_Transporte ON (TTRA_Tipo_Transporte.TTRA_Codigo = VIAG_Viagem.Viag_Ttra_Codigo) ");
+        sb.append("   LEFT JOIN VROT_Viagem_rota ON (Viag_Viagem.Viag_codigo = VROT_Viagem_rota.VROT_VIAG_Codigo)");
+        sb.append("   LEFT JOIN ROTA_ROTA ON (VROT_Viagem_rota.VROT_ROTA_Codigo = ROTA_ROTA.ROTA_Codigo) ");
+        sb.append("   LEFT Join Pess_pessoa AS Emba ON (Emba.Pess_oras_codigo = Viag_Emba_PJUR_Pess_oras_codigo)");
+        sb.append("   JOIN PGPG_PG ON (PGPG_PG.PGPG_CODIGO = Viag_pgpg_codigo)");
+        sb.append("   LEFT JOIN MOTO_Motorista AS M1 ON (M1.MOTO_PFIS_PESS_ORAS_Codigo = VEIC_MOTO_PFIS_PESS_ORAS_Codigo)");
+        sb.append("   LEFT JOIN PFIS_Pessoa_Fisica MO1 ON (MO1.PFIS_PESS_ORAS_Codigo = M1.MOTO_PFIS_PESS_ORAS_Codigo)");
+        sb.append("   LEFT JOIN PESS_Pessoa AS MOTO1 ON (MOTO1.PESS_ORAS_Codigo = MO1.PFIS_PESS_ORAS_Codigo)");
+        sb.append("   LEFT JOIN VTEM_Viagem_Temperatura ON (VTEM_VIAG_Codigo = VIAG_Codigo)");
+        sb.append("   WHERE VIAG_Data_Inicio IS NOT NULL  ");
+        sb.append("   AND VIAG_Data_Fim IS NOT NULL");
+        sb.append(" ) AS XXX ");
+        //System.out.println("\n" + sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "salvarItensPorPagina")
+    public String salvarItensPorPagina(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codEmpresa")
+    String codEmpresa, @WebParam(name = "codUsuario")
+    String codUsuario, @WebParam(name = "itensPorPagina")
+    String itensPorPagina) throws Exception {
+        //TODO write your implementation code here:
+        Connection con = Conexao.getInstance().getConnection(idSessao);
+        gravarItensPorPagina("itensPorPagina", itensPorPagina, codUsuario, con);
+        return "<registro>OK</registro>";
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "lerItensPorPagina")
+    public String lerItensPorPagina(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codEmpresa")
+    String codEmpresa, @WebParam(name = "codUsuario")
+    String codUsuario) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(" SELECT ");
+        sb.append("  sreg_chave, ");
+        sb.append("  sreg_valor ");
+        sb.append(" FROM ");
+        sb.append(" sreg_sistema_registro ");
+        sb.append(" WHERE ");
+        sb.append("  sreg_sessao = 'TRAFEGUS_WEB_ITENS_POR_PAGINA' ");
+        sb.append(" AND	sreg_usuario_adicionou = '").append(codUsuario).append("'");
+
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaDadosGridCarretas")
+    public String solicitaDadosGridCarretas(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "numeroViagem")
+    String numeroViagem) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT VEIC_Placa,");
+        sb.append("        VVEI_Sequencia,");
+        sb.append("        VEIC_ORAS_Codigo,");
+        sb.append("        VEIC_Veiculo.VEIC_COR,");
+        sb.append("        TVEI_DESCRICAO,");
+        sb.append("        VVEI_Viag_Codigo");
+        sb.append(" FROM VVEI_Viagem_Veiculo");
+        sb.append(" JOIN VEIC_Veiculo ON (VEIC_ORAS_Codigo = VVEI_VEIC_ORAS_Codigo)");
+        sb.append(" JOIN VCAR_Veiculo_Carreta ON (VCAR_VEIC_ORAS_Codigo = VEIC_ORAS_Codigo)");
+        sb.append(" JOIN TVEI_Tipo_Veiculo ON (VEIC_TVEI_Codigo = TVEI_Codigo)");
+        sb.append(" WHERE VVEI_Viag_Codigo = ").append(numeroViagem);
+        //System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "solicitaParadasSM")
+    public String solicitaParadasSM(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codViagem")
+    String codViagem) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT VLOC_Codigo,");
+        sb.append("           VLOC_Sequencia,");
+        sb.append("           VLOC_VIAG_Codigo,");
+        sb.append("           VLOC_Descricao,");
+        sb.append("           VLOC_REFE_Codigo,");
+        sb.append("           REFE_Codigo,");
+        sb.append("           REFE_Descricao,");
+        sb.append("           REFE_Latitude,");
+        sb.append("           REFE_Longitude,");
+        sb.append("           TPAR_Codigo,");
+        sb.append("           TPAR_Descricao,");
+        sb.append("           VLOC_Data_Cadastro,");
+        sb.append("           CREF_Codigo,");
+        sb.append("           CREF_Descricao");
+        sb.append("      FROM VLOC_Viagem_Local");
+        sb.append("      JOIN TPAR_Tipo_Parada ON (TPAR_Codigo = VLOC_TPAR_Codigo)");
+        sb.append(" LEFT JOIN REFE_Referencia ON (REFE_Codigo = VLOC_REFE_Codigo)");
+        sb.append(" LEFT JOIN CREF_Classe_Referencia ON (CREF_Codigo = REFE_CREF_Codigo)");
+        sb.append("     WHERE VLOC_VIAG_Codigo = ").append(codViagem);
+        sb.append(" ORDER BY VLOC_Sequencia");
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "salvaViagViagem")
+    public String salvaViagViagem(@WebParam(name = "idSessao")
+    String idSessao,@WebParam(name = "viag_codigo")
+    String viag_codigo, @WebParam(name = "viag_data_cadastro")
+    String viag_data_cadastro, @WebParam(name = "viag_ttra_codigo")
+    String viag_ttra_codigo, @WebParam(name = "viag_tran_pess_oras_codigo")
+    String viag_tran_pess_oras_codigo, @WebParam(name = "viag_emba_pjur_pess_oras_codigo")
+    String viag_emba_pjur_pess_oras_codigo, @WebParam(name = "viag_pgpg_codigo")
+    String viag_pgpg_codigo, @WebParam(name = "viag_valor_carga")
+    String viag_valor_carga, @WebParam(name = "viag_previsao_inicio")
+    String viag_previsao_inicio, @WebParam(name = "viag_previsao_fim")
+    String viag_previsao_fim, @WebParam(name = "viag_data_inicio")
+    String viag_data_inicio, @WebParam(name = "viag_data_fim")
+    String viag_data_fim, @WebParam(name = "viag_distancia")
+    String viag_distancia, @WebParam(name = "viag_hpmo_codigo")
+    String viag_hpmo_codigo, @WebParam(name = "viag_tempo_term_fora_area_risco")
+    String viag_tempo_term_fora_area_risco, @WebParam(name = "viag_tempo_term_em_area_risco")
+    String viag_tempo_term_em_area_risco, @WebParam(name = "viag_tempo_term_fim_viagem")
+    String viag_tempo_term_fim_viagem, @WebParam(name = "viag_codigo_pai")
+    String viag_codigo_pai, @WebParam(name = "viag_codigo_gr")
+    String viag_codigo_gr, @WebParam(name = "viag_importado")
+    String viag_importado, @WebParam(name = "viag_tope_codigo")
+    String viag_tope_codigo, @WebParam(name = "viag_usuario_adicionou")
+    String viag_usuario_adicionou, @WebParam(name = "viag_usuario_alterou")
+    String viag_usuario_alterou) throws Exception {
+        //TODO write your implementation code here:
+        Connection con = Conexao.getInstance().getConnection(idSessao);
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT INTO viag_viagem(viag_codigo, viag_data_cadastro, viag_ttra_codigo, viag_tran_pess_oras_codigo, viag_emba_pjur_pess_oras_codigo, viag_pgpg_codigo, viag_valor_carga,");
+        sb.append("viag_previsao_inicio, viag_previsao_fim, viag_data_inicio, viag_data_fim, viag_distancia, viag_hpmo_codigo, viag_tempo_term_fora_area_risco,");
+        sb.append("viag_tempo_term_em_area_risco, viag_tempo_term_fim_viagem, viag_codigo_pai, viag_codigo_gr, viag_importado, viag_tope_codigo, viag_usuario_adicionou,");
+        sb.append("viag_usuario_alterou) VALUES (");
+        sb.append(viag_codigo).append(",");
+        sb.append(viag_data_cadastro).append(",");
+        sb.append(viag_ttra_codigo).append(",");
+        sb.append(viag_tran_pess_oras_codigo).append(",");
+        sb.append(viag_emba_pjur_pess_oras_codigo).append(",");
+        sb.append(viag_pgpg_codigo).append(",");
+        sb.append(viag_valor_carga).append(",");
+        sb.append(viag_previsao_inicio).append(",");
+        sb.append(viag_previsao_fim).append(",");
+        sb.append(viag_data_inicio).append(",");
+        sb.append(viag_data_fim).append(",");
+        sb.append(viag_distancia).append(",");
+        sb.append(viag_hpmo_codigo).append(",");
+        sb.append(viag_tempo_term_fora_area_risco).append(",");
+        sb.append(viag_tempo_term_em_area_risco).append(",");
+        sb.append(viag_tempo_term_fim_viagem).append(",");
+        sb.append(viag_codigo_pai).append(",");
+        sb.append(viag_codigo_gr).append(",");
+        sb.append(viag_importado).append(",");
+        sb.append(viag_tope_codigo).append(",");
+        sb.append(viag_usuario_adicionou).append(",");
+        sb.append(viag_usuario_alterou).append(")");
+        Statement s = con.createStatement();
+        try
+        {
+            System.out.println(sb.toString());
+            s.execute(sb.toString());
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+        return "<results><row><result>OK</result></row></results>";
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "necessitaValidarPesquisaMotorista")
+    public String necessitaValidarPesquisaMotorista(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codPGR")
+    String codPGR) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT 'SIM' AS NecessarioConsultaMotorista");
+        sb.append("   FROM PGPG_Pg");
+        sb.append("   JOIN PGAI_Pg_Associa_Item ON (PGAI_PGPG_Codigo = PGPG_Codigo)");
+        sb.append("   JOIN PITE_Pg_Item ON (PITE_Codigo = PGAI_PITE_Codigo AND PITE_Codigo = 47)");
+        sb.append("  WHERE PGPG_Codigo = ").append(codPGR);
+        //System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "validarPesquisaMotorista")
+    public String validarPesquisaMotorista(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "codVeiculo")
+    String codVeiculo, @WebParam(name = "codMotorista")
+    String codMotorista) throws Exception {
+        //TODO write your implementation code here:
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT HPMO_EPMO_Codigo, HPMO_Mensagem, HPMO_Prazo_Validade ");
+        sb.append(" FROM HPMO_Historico_Pesquisa_Motor hpmo ");
+        sb.append(" WHERE HPMO_MOTO_PFIS_PESS_ORAS_Codigo = ").append(codMotorista);
+        sb.append(" AND HPMO_VEIC_ORAS_Codigo = ").append(codVeiculo);
+        sb.append(" AND HPMO_Prazo_Validade >= TO_TIMESTAMP((TO_CHAR(CURRENT_DATE,'YYYY-MM-DD') || ' 00:00:00'),'YYYY-MM-DD HH24:MI:SS')");
+        //System.out.println(sb.toString());
+        return Conexao.getInstance().queryToXML(sb.toString(), idSessao);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "salvaVveiViagemVeiculo")
+    public String salvaVveiViagemVeiculo(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "vvei_codigo")
+    String vvei_codigo, @WebParam(name = "vvei_precedencia")
+    String vvei_precedencia, @WebParam(name = "vvei_viag_codigo")
+    String vvei_viag_codigo, @WebParam(name = "vvei_veic_oras_codigo")
+    String vvei_veic_oras_codigo, @WebParam(name = "vvei_moto_pfis_pess_oras_codigo")
+    String vvei_moto_pfis_pess_oras_codigo, @WebParam(name = "vvei_evca_codigo")
+    String vvei_evca_codigo, @WebParam(name = "vvei_comb_codigo")
+    String vvei_comb_codigo, @WebParam(name = "vvei_data_inicio_comboio")
+    String vvei_data_inicio_comboio, @WebParam(name = "vvei_data_fim_comboio")
+    String vvei_data_fim_comboio, @WebParam(name = "vvei_ativo")
+    String vvei_ativo, @WebParam(name = "vvei_sequencia")
+    String vvei_sequencia, @WebParam(name = "vvei_data_cadastro")
+    String vvei_data_cadastro, @WebParam(name = "vvei_codigo_gr")
+    String vvei_codigo_gr, @WebParam(name = "vvei_importado")
+    String vvei_importado, @WebParam(name = "vvei_usuario_adicionou")
+    String vvei_usuario_adicionou, @WebParam(name = "vvei_usuario_alterou")
+    String vvei_usuario_alterou) throws Exception {
+        //TODO write your implementation code here:
+        Connection con = Conexao.getInstance().getConnection(idSessao);
+        StringBuilder sb = new StringBuilder();
+        sb.append(" INSERT INTO vvei_viagem_veiculo(vvei_codigo, vvei_precedencia, vvei_viag_codigo, vvei_veic_oras_codigo, vvei_moto_pfis_pess_oras_codigo, vvei_evca_codigo, vvei_comb_codigo,");
+        sb.append(" vvei_data_inicio_comboio, vvei_data_fim_comboio, vvei_ativo, vvei_sequencia, vvei_data_cadastro, vvei_codigo_gr, vvei_importado, vvei_usuario_adicionou,");
+        sb.append(" vvei_usuario_alterou) VALUES (");
+        sb.append(vvei_codigo).append(",");
+        sb.append(vvei_precedencia).append(",");
+        sb.append(vvei_viag_codigo).append(",");
+        sb.append(vvei_veic_oras_codigo).append(",");
+        sb.append(vvei_moto_pfis_pess_oras_codigo).append(",");
+        sb.append(vvei_evca_codigo).append(",");
+        sb.append(vvei_comb_codigo).append(",");
+        sb.append(vvei_data_inicio_comboio).append(",");
+        sb.append(vvei_data_fim_comboio).append(",");
+        sb.append(vvei_ativo).append(",");
+        sb.append(vvei_sequencia).append(",");
+        sb.append(vvei_data_cadastro).append(",");
+        sb.append(vvei_codigo_gr).append(",");
+        sb.append(vvei_importado).append(",");
+        sb.append(vvei_usuario_adicionou).append(",");
+        sb.append(vvei_usuario_alterou).append(",");
+        sb.append(")");
+        Statement s = con.createStatement();
+        try
+        {
+            System.out.println(sb.toString());
+            s.execute(sb.toString());
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+        return "<results><row><result>OK</result></row></results>";
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "salvaVterViagemTerminal")
+    public String salvaVterViagemTerminal(@WebParam(name = "idSessao")
+    String idSessao,@WebParam(name = "vter_codigo")
+    String vter_codigo, @WebParam(name = "vter_viag_codigo")
+    String vter_viag_codigo, @WebParam(name = "vter_term_codigo")
+    String vter_term_codigo, @WebParam(name = "vter_precedencia")
+    String vter_precedencia, @WebParam(name = "vter_tempo_satelital")
+    String vter_tempo_satelital, @WebParam(name = "vter_tempo_gprs")
+    String vter_tempo_gprs, @WebParam(name = "vter_usua_pfis_pess_oras_codigo")
+    String vter_usua_pfis_pess_oras_codigo, @WebParam(name = "vter_data_cadastro")
+    String vter_data_cadastro, @WebParam(name = "vter_codigo_gr")
+    String vter_codigo_gr, @WebParam(name = "vter_importado")
+    String vter_importado, @WebParam(name = "vter_ativo")
+    String vter_ativo, @WebParam(name = "vter_usuario_adicionou")
+    String vter_usuario_adicionou, @WebParam(name = "vter_usuario_alterou")
+    String vter_usuario_alterou) throws SQLException, Exception {
+        //TODO write your implementation code here:
+        Connection con = Conexao.getInstance().getConnection(idSessao);
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT INTO vter_viagem_terminal(vter_codigo, vter_viag_codigo, vter_term_codigo, vter_precedencia, vter_tempo_satelital, vter_tempo_gprs, vter_usua_pfis_pess_oras_codigo, vter_data_cadastro,");
+        sb.append("vter_codigo_gr, vter_importado, vter_ativo, vter_usuario_adicionou, vter_usuario_alterou) VALUES (");
+        //?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+        sb.append(vter_codigo).append(",");
+        sb.append(vter_viag_codigo).append(",");
+        sb.append(vter_term_codigo).append(",");
+        sb.append(vter_precedencia).append(",");
+        sb.append(vter_tempo_satelital).append(",");
+        sb.append(vter_tempo_gprs).append(",");
+        sb.append(vter_usua_pfis_pess_oras_codigo).append(",");
+        sb.append(vter_data_cadastro).append(",");
+        sb.append(vter_codigo_gr).append(",");
+        sb.append(vter_importado).append(",");
+        sb.append(vter_ativo).append(",");
+        sb.append(vter_usuario_adicionou).append(",");
+        sb.append(vter_usuario_alterou).append(")");
+        Statement s = con.createStatement();
+        try
+        {
+            System.out.println(sb.toString());
+            s.execute(sb.toString());
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+        return "<results><row><result>OK</result></row></results>";
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "salvaVtemViagemTemperatura")
+    public String salvaVtemViagemTemperatura(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "vtem_codigo")
+    String vtem_codigo, @WebParam(name = "vtem_viag_codigo")
+    String vtem_viag_codigo, @WebParam(name = "vtem_valor_minimo")
+    String vtem_valor_minimo, @WebParam(name = "vtem_valor_maximo")
+    String vtem_valor_maximo, @WebParam(name = "vtem_ativo")
+    String vtem_ativo, @WebParam(name = "vtem_data_cadastro")
+    String vtem_data_cadastro, @WebParam(name = "vtem_importado")
+    String vtem_importado, @WebParam(name = "vtem_codigo_gr")
+    String vtem_codigo_gr, @WebParam(name = "vtem_usuario_adicionou")
+    String vtem_usuario_adicionou, @WebParam(name = "vtem_usuario_alterou")
+    String vtem_usuario_alterou) throws Exception {
+        //TODO write your implementation code here:
+        Connection con = Conexao.getInstance().getConnection(idSessao);
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT INTO vtem_viagem_temperatura(vtem_codigo, vtem_viag_codigo, vtem_valor_minimo, vtem_valor_maximo, vtem_ativo, vtem_data_cadastro, vtem_importado, vtem_codigo_gr,");
+        sb.append("vtem_usuario_adicionou, vtem_usuario_alterou) VALUES (");
+        //?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        sb.append(vtem_codigo).append(",");
+        sb.append(vtem_viag_codigo).append(",");
+        sb.append(vtem_valor_minimo).append(",");
+        sb.append(vtem_valor_maximo).append(",");
+        sb.append(vtem_ativo).append(",");
+        sb.append(vtem_data_cadastro).append(",");
+        sb.append(vtem_importado).append(",");
+        sb.append(vtem_codigo_gr).append(",");
+        sb.append(vtem_usuario_adicionou).append(",");
+        sb.append(vtem_usuario_alterou).append(")");
+        Statement s = con.createStatement();
+        try
+        {
+            System.out.println(sb.toString());
+            s.execute(sb.toString());
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+        return "<results><row><result>OK</result></row></results>";
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "salvaVrotViagemRota")
+    public String salvaVrotViagemRota(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "vrot_codigo")
+    String vrot_codigo, @WebParam(name = "vrot_viag_codigo")
+    String vrot_viag_codigo, @WebParam(name = "vrot_rota_codigo")
+    String vrot_rota_codigo, @WebParam(name = "vrot_data_cadastro")
+    String vrot_data_cadastro, @WebParam(name = "vrot_codigo_gr")
+    String vrot_codigo_gr, @WebParam(name = "vrot_importado")
+    String vrot_importado, @WebParam(name = "vrot_ativo")
+    String vrot_ativo, @WebParam(name = "vrot_usuario_adicionou")
+    String vrot_usuario_adicionou, @WebParam(name = "vrot_usuario_alterou")
+    String vrot_usuario_alterou) throws Exception {
+        //TODO write your implementation code here:
+        Connection con = Conexao.getInstance().getConnection(idSessao);
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT INTO vrot_viagem_rota(vrot_codigo, vrot_viag_codigo, vrot_rota_codigo, vrot_data_cadastro, vrot_codigo_gr, vrot_importado, vrot_ativo, vrot_usuario_adicionou, vrot_usuario_alterou)");
+        sb.append(" VALUES (");
+        //?, ?, ?, ?, ?, ?, ?, ?, ?
+        sb.append(vrot_codigo).append(",");
+        sb.append(vrot_viag_codigo).append(",");
+        sb.append(vrot_rota_codigo).append(",");
+        sb.append(vrot_data_cadastro).append(",");
+        sb.append(vrot_codigo_gr).append(",");
+        sb.append(vrot_importado).append(",");
+        sb.append(vrot_ativo).append(",");
+        sb.append(vrot_usuario_adicionou).append(",");
+        sb.append(vrot_usuario_alterou).append(")");
+        Statement s = con.createStatement();
+        try
+        {
+            System.out.println(sb.toString());
+            s.execute(sb.toString());
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+        return "<results><row><result>OK</result></row></results>";
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "salvaVlocViagemLocal")
+    public String salvaVlocViagemLocal(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "vloc_codigo")
+    String vloc_codigo, @WebParam(name = "vloc_sequencia")
+    String vloc_sequencia, @WebParam(name = "vloc_viag_codigo")
+    String vloc_viag_codigo, @WebParam(name = "vloc_refe_codigo")
+    String vloc_refe_codigo, @WebParam(name = "vloc_tpar_codigo")
+    String vloc_tpar_codigo, @WebParam(name = "vloc_raio")
+    String vloc_raio, @WebParam(name = "vloc_data_cadastro")
+    String vloc_data_cadastro, @WebParam(name = "vloc_codigo_gr")
+    String vloc_codigo_gr, @WebParam(name = "vloc_importado")
+    String vloc_importado, @WebParam(name = "vloc_descricao")
+    String vloc_descricao, @WebParam(name = "vloc_usuario_adicionou")
+    String vloc_usuario_adicionou, @WebParam(name = "vloc_usuario_alterou")
+    String vloc_usuario_alterou) throws Exception {
+        //TODO write your implementation code here:
+        Connection con = Conexao.getInstance().getConnection(idSessao);
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT INTO vloc_viagem_local(vloc_codigo, vloc_sequencia, vloc_viag_codigo, vloc_refe_codigo, vloc_tpar_codigo, vloc_raio, vloc_data_cadastro, vloc_codigo_gr, vloc_importado, vloc_descricao,");
+        sb.append("vloc_usuario_adicionou, vloc_usuario_alterou) VALUES (");
+        //?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+        sb.append(vloc_codigo).append(",");
+        sb.append(vloc_sequencia).append(",");
+        sb.append(vloc_viag_codigo).append(",");
+        sb.append(vloc_refe_codigo).append(",");
+        sb.append(vloc_tpar_codigo).append(",");
+        sb.append(vloc_raio).append(",");
+        sb.append(vloc_data_cadastro).append(",");
+        sb.append(vloc_codigo_gr).append(",");
+        sb.append(vloc_importado).append(",");
+        sb.append(vloc_descricao).append(",");
+        sb.append(vloc_usuario_adicionou).append(",");
+        sb.append(vloc_usuario_alterou).append(")");
+        Statement s = con.createStatement();
+        try
+        {
+            System.out.println(sb.toString());
+            s.execute(sb.toString());
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+        return "<results><row><result>OK</result></row></results>";
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "salvaVlevViagemLocalEvento")
+    public String salvaVlevViagemLocalEvento(@WebParam(name = "idSessao")
+    String idSessao, @WebParam(name = "vlev_codigo")
+    String vlev_codigo, @WebParam(name = "vlev_vloc_codigo")
+    String vlev_vloc_codigo, @WebParam(name = "vlev_sequencia")
+    String vlev_sequencia, @WebParam(name = "vlev_tlev_codigo")
+    String vlev_tlev_codigo, @WebParam(name = "vlev_data_previsao")
+    String vlev_data_previsao, @WebParam(name = "vlev_data")
+    String vlev_data, @WebParam(name = "vlev_cpat_codigo")
+    String vlev_cpat_codigo, @WebParam(name = "vlev_data_cadastro")
+    String vlev_data_cadastro, @WebParam(name = "vlev_codigo_gr")
+    String vlev_codigo_gr, @WebParam(name = "vlev_importado")
+    String vlev_importado, @WebParam(name = "vlev_usuario_adicionou")
+    String vlev_usuario_adicionou, @WebParam(name = "vlev_usuario_alterou")
+    String vlev_usuario_alterou) throws Exception {
+        //TODO write your implementation code here:
+        Connection con = Conexao.getInstance().getConnection(idSessao);
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT INTO vlev_viagem_local_evento(vlev_codigo, vlev_vloc_codigo, vlev_sequencia, vlev_tlev_codigo, vlev_data_previsao, vlev_data, vlev_cpat_codigo, vlev_data_cadastro, vlev_codigo_gr,");
+        sb.append("vlev_importado, vlev_usuario_adicionou, vlev_usuario_alterou) VALUES (");
+        //?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+        sb.append(vlev_codigo).append(",");
+        sb.append(vlev_vloc_codigo).append(",");
+        sb.append(vlev_sequencia).append(",");
+        sb.append(vlev_tlev_codigo).append(",");
+        sb.append(vlev_data_previsao).append(",");
+        sb.append(vlev_data).append(",");
+        sb.append(vlev_cpat_codigo).append(",");
+        sb.append(vlev_data_cadastro).append(",");
+        sb.append(vlev_codigo_gr).append(",");
+        sb.append(vlev_importado).append(",");
+        sb.append(vlev_usuario_adicionou).append(",");
+        sb.append(vlev_usuario_alterou).append(")");
+        Statement s = con.createStatement();
+        try
+        {
+            System.out.println(sb.toString());
+            s.execute(sb.toString());
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+        return "<results><row><result>OK</result></row></results>";
     }
 }
