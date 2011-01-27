@@ -78,6 +78,7 @@
     </s:VGroup>
     <view:PaginableComponent id="paginable"
         totalRecords="{MainModel.getInstance().totalDadosGrid}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
         next="this.controller.solicitaDadosGrid(event)"
         prev="this.controller.solicitaDadosGrid(event)"
         first="this.controller.solicitaDadosGrid(event)"

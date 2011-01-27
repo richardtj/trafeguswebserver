@@ -94,6 +94,7 @@
 	<view:PaginableComponent
 		id="paginable"
 		totalRecords="{MainModel.getInstance().totalVeiculosViagem}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
 		first="this.controller.solicitaDadosGridEmViagem(event)"
 		last="this.controller.solicitaDadosGridEmViagem(event)"
 		next="this.controller.solicitaDadosGridEmViagem(event)"

@@ -93,6 +93,7 @@
 	<view:PaginableComponent 
 		id="paginable"
 		totalRecords="{MainModel.getInstance().totalDadosGrid}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
 		first="this.controller.pageChanged(event)"
 		next="this.controller.pageChanged(event)"
 		last="this.controller.pageChanged(event)"
