@@ -79,7 +79,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		private function advancedSearchHistoricoEventHandler(event:AdvancedSearchEvent):void
 		{
-			TrafegusWS.getIntance().procuraHistoricoPosicoes(procuraHistoricoPosicoesResultHandler,AdvancedSearchHistoricoVO(event.genericVO));
+			TrafegusWS.getIntance().procuraHistoricoPosicoes(procuraHistoricoPosicoesResultHandler,this.view.param.vehiclePlate,AdvancedSearchHistoricoVO(event.genericVO));
 		}
 		private function procuraHistoricoPosicoesResultHandler(event:ResultEvent):void
 		{

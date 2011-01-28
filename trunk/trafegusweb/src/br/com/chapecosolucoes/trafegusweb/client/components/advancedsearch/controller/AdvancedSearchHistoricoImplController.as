@@ -23,9 +23,9 @@ package br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.cont
 			var formItemDataFinal:FormItem = FormItem(Form(this.view.form).getChildByName("formItemDataFinal"));
 			var formItemGPSDescSis:FormItem = FormItem(Form(this.view.form).getChildByName("formItemGPSDescSis"));
 			
-			var dfDataInicial:DataFieldPT = DataFieldPT(Form(formItemDataInicial).getChildByName("dfDataInicial"));
-			var dfDataFinal:DataFieldPT = DataFieldPT(Form(formItemDataFinal).getChildByName("dfDataFinal"));
-			var textInputGPSDescSis:TextInput = TextInput(Form(formItemGPSDescSis).getChildByName("textInputGPSDescSis"));
+			var dfDataInicial:DataFieldPT = DataFieldPT(FormItem(formItemDataInicial).getChildByName("dfDataInicial"));
+			var dfDataFinal:DataFieldPT = DataFieldPT(FormItem(formItemDataFinal).getChildByName("dfDataFinal"));
+			var textInputGPSDescSis:TextInput = TextInput(FormItem(formItemGPSDescSis).getChildByName("textInputGPSDescSis"));
 			
 			var historico:AdvancedSearchHistoricoVO = new AdvancedSearchHistoricoVO();
 			historico.gpsDescSis = textInputGPSDescSis.text;

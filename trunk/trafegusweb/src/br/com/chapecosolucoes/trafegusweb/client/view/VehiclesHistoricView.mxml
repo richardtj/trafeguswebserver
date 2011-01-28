@@ -52,6 +52,7 @@
     <s:Group id="group1"
         width="100%" height="100%">
         <view:DataGridFX 
+			id="grid1"
             width="100%" height="100%"
             dataProvider="{MainModel.getInstance().historicoPosicoesVeiculosArray}">
             <view:columns>
