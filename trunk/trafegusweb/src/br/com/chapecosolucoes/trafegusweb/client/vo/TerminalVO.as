@@ -15,15 +15,17 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		{
 			this._precedencia = obj.orte_sequencia.toString();
 			this.codigo = obj.term_codigo.toString();
+			this._vterCodigo = obj.vter_codigo.toString();
 			this.numero = obj.term_numero_terminal.toString();
 			this.ativo = obj.term_ativo.toString();
 			this.ativoWS = obj.term_ativo_ws.toString();
 			this._tempoSatelital = obj.term_tempo_satelital.toString();
 			this._tempoGPRS = obj.term_tempo_gprs.toString();
-			//this._vtecCodigo = obj.term_vtec_codigo.toString();
+			this.vtecCodigo = obj.term_vtec_codigo.toString();
 			this._vterUsuarioAdicionou = obj.term_usuario_adicionou.toString();
 			this._vterUsuarioAlterou = obj.term_usuario_alterou.toString();
 			this._vterDataCadastro = obj.term_data_cadastro.toString();
+			this.veicPlaca = obj.veic_placa.toString();
 		}
 		public function set precedencia(precedencia:String):void
 		{
@@ -41,9 +43,9 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		{
 			return this._tempoSatelital==""?"NULL":this._tempoSatelital;
 		}
-		public function get vtecCodigo():String
+		public function get vterCodigo():String
 		{
-			return this._vtecCodigo==""?"nextval('s_vter_viagem_terminal')":this._vtecCodigo;
+			return this._vterCodigo==""?"nextval('s_vter_viagem_terminal')":this._vterCodigo;
 		}
 		public function get vterDataCadastro():String
 		{
@@ -51,26 +53,28 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public function get vterUsuarioAdicionou():String
 		{
-			return this._vterUsuarioAdicionou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vterUsuarioAdicionou;
+			return "'"+(this._vterUsuarioAdicionou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vterUsuarioAdicionou)+"'";
 		}
 		public function get vterUsuarioAlterou():String
 		{
-			return ObjectUtil.toString(MainModel.getInstance().codUsuario);
+			return "'"+ObjectUtil.toString(MainModel.getInstance().codUsuario)+"'";
 		}
-		private var _precedencia:String;
-		public var codigo:String;
-		public var numero:String;
-		public var descricao:String;
-		public var tipoComunicacao:String;
-		public var tecnologia:String;
-		public var ativo:String;
-		public var ativoWS:String;
-		private var _tempoSatelital:String;
-		private var _tempoGPRS:String;
-		public var veiculo:String;
-		private var _vtecCodigo:String;
-		private var _vterUsuarioAdicionou:String;
-		private var _vterUsuarioAlterou:String;
-		private var _vterDataCadastro:String;
+		public var veicPlaca:String = "";
+		private var _precedencia:String = "";
+		public var codigo:String = "";
+		public var numero:String = "";
+		public var descricao:String = "";
+		public var tipoComunicacao:String = "";
+		public var tecnologia:String = "";
+		public var ativo:String = "";
+		public var ativoWS:String = "";
+		private var _tempoSatelital:String= "";
+		private var _tempoGPRS:String = "";
+		public var veiculo:String = "";
+		public var vtecCodigo:String = "";
+		private var _vterCodigo:String = "";
+		private var _vterUsuarioAdicionou:String = "";
+		private var _vterUsuarioAlterou:String = "";
+		private var _vterDataCadastro:String = "";
 	}
 }

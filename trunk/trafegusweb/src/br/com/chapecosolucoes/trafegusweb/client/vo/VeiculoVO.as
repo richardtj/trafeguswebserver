@@ -43,11 +43,11 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public function get vveiUsuarioAdicionou():String
 		{
-			return this._vveiUsuarioAdicionou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vveiUsuarioAdicionou;
+			return "'"+(this._vveiUsuarioAdicionou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vveiUsuarioAdicionou)+"'";
 		}
 		public function get vveiUsuarioAlterou():String
 		{
-			return ObjectUtil.toString(MainModel.getInstance().codUsuario);
+			return "'"+ObjectUtil.toString(MainModel.getInstance().codUsuario)+"'";
 		}
 		public function set vveiMotoPfisPessOrasCodigo(vveiMotoPfisPessOrasCodigo:String):void
 		{

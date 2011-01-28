@@ -59,8 +59,8 @@
 				{
 					MainModel.getInstance().smVO = this.smVO;
 					this.controller.solicitaParadasSM();
-					this.controller.solicitaDadosGridCarretas();
-					this.controller.solicitaListaTerminais();
+					this.controller.solicitaDadosGridCarretasSM();
+					this.controller.solicitaListaTerminaisSM();
 				}
 				else
 				{

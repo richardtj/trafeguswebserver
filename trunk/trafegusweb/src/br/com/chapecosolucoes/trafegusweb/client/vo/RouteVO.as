@@ -81,11 +81,11 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public function get vrotUsuarioAdicionou():String
 		{
-			return this._vrotUsuarioAdicionou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vrotUsuarioAdicionou;
+			return "'"+(this._vrotUsuarioAdicionou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vrotUsuarioAdicionou)+"'";
 		}
 		public function get vrotUsuarioAlterou():String
 		{
-			return ObjectUtil.toString(MainModel.getInstance().codUsuario);
+			return "'"+ObjectUtil.toString(MainModel.getInstance().codUsuario)+"'";
 		}
 		public var codigo:String;
 		private var _vrotCodigo:String;

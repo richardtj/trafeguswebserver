@@ -102,14 +102,29 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		private function carretaSelecionadaEventHandler(event:CarretaSelecionadaEvent):void
 		{
+			this.solicitaListaTerminais(event.carreta.vehiclePlate);
 			MainModel.getInstance().carretasDisponiveisArray.removeItemAt(MainModel.getInstance().carretasDisponiveisArray.getItemIndex(event.carreta));
 			MainModel.getInstance().smVO.carretas.addItem(event.carreta);
+		}
+		private function removeTerminais(placa:String):void
+		{
+			for (var i:int=0;i < MainModel.getInstance().smVO.terminaisArray.length;i++)
+			{
+				var terminal:TerminalVO = TerminalVO(MainModel.getInstance().smVO.terminaisArray.getItemAt(i));
+				if(terminal.veicPlaca == placa)
+				{
+					MessageBox.informacao("removendo terminal"+terminal.codigo);
+					MainModel.getInstance().smVO.terminaisArray.removeItemAt(i);
+					i--;
+				}
+			}
 		}
 		public function removeCarretas():void
 		{
 			if(this.view.grid1.selectedItem != null)
 			{
 				var carreta:VeiculoVO = VeiculoVO(MainModel.getInstance().smVO.carretas.removeItemAt(MainModel.getInstance().smVO.carretas.getItemIndex(this.view.grid1.selectedItem)));
+				this.removeTerminais(carreta.vehiclePlate);
 				MainModel.getInstance().carretasDisponiveisArray.addItem(carreta);
 			}
 			else
@@ -454,7 +469,6 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		private function salvaViagViagemResultHandler(event:ResultEvent):void
 		{
-			MessageBox.informacao(event.message.toString());
 			TrafegusWS.getIntance().salvaVrotViagemRota(salvaVrotViagemRotaResultHandler);
 			with(MainModel.getInstance().smVO.veiculoPrincipal)
 			{
@@ -471,7 +485,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				with(terminalVO)
 				{
-					TrafegusWS.getIntance().salvaVterViagemTerminal(salvaVterViagemTerminalResultHandler,vtecCodigo,codigo,precedencia,tempoSatelital,tempoGPRS,vterUsuarioAdicionou,vterUsuarioAlterou,vterDataCadastro);
+					TrafegusWS.getIntance().salvaVterViagemTerminal(salvaVterViagemTerminalResultHandler,vterCodigo,codigo,precedencia,tempoSatelital,tempoGPRS,vterUsuarioAdicionou,vterUsuarioAlterou,vterDataCadastro);
 				}
 			}
 			with(MainModel.getInstance().smVO.rota.localOrigem)
@@ -489,31 +503,31 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		private function salvaVlocViagemLocalResultHandler(event:ResultEvent):void
 		{
-			MessageBox.informacao(event.message.toString());
 		}
 		private function salvaVrotViagemRotaResultHandler(event:ResultEvent):void
 		{
-			MessageBox.informacao(event.message.toString());
 		}
 		private function salvaVterViagemTerminalResultHandler(event:ResultEvent):void
 		{
-			MessageBox.informacao(event.message.toString());
 		}
 		private function salvaVveiViagemVeiculoResultHandler(event:ResultEvent):void
 		{
-			MessageBox.informacao(event.message.toString());
 		}
 		public function solicitaParadasSM():void
 		{
 			TrafegusWS.getIntance().solicitaParadasSM(this.solicitaParadasSMResultHandler,MainModel.getInstance().smVO.numeroViagem);
 		}
-		public function solicitaDadosGridCarretas():void
+		public function solicitaDadosGridCarretasSM():void
 		{
-			TrafegusWS.getIntance().solicitaDadosGridCarretas(this.solicitaDadosGridCarretasResultHandler,MainModel.getInstance().smVO.numeroViagem);
+			TrafegusWS.getIntance().solicitaDadosGridCarretasSM(this.solicitaDadosGridCarretasSMResultHandler,MainModel.getInstance().smVO.numeroViagem);
 		}
-		public function solicitaListaTerminais():void
+		public function solicitaListaTerminaisSM():void
 		{
-			TrafegusWS.getIntance().solicitaListaTerminais(this.solicitaListaTerminaisResultHandler,MainModel.getInstance().smVO.veiculoPrincipal.vehiclePlate);
+			TrafegusWS.getIntance().solicitaListaTerminaisSM(this.solicitaListaTerminaisSMResultHandler,MainModel.getInstance().smVO.numeroViagem);
+		}
+		public function solicitaListaTerminais(placaVeiculo:String):void
+		{
+			TrafegusWS.getIntance().solicitaListaTerminais(this.solicitaListaTerminaisResultHandler,placaVeiculo);
 		}
 		private function solicitaParadasSMResultHandler(event:ResultEvent):void
 		{
@@ -526,7 +540,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				MainModel.getInstance().smVO.paradas.addItem(parada);
 			}
 		}
-		private function solicitaDadosGridCarretasResultHandler(event:ResultEvent):void
+		private function solicitaDadosGridCarretasSMResultHandler(event:ResultEvent):void
 		{
 			var resultArray:Array = ParserResult.parserDefault(event);
 			MainModel.getInstance().smVO.carretas.removeAll();
@@ -534,10 +548,22 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				var carreta:VeiculoVO = new VeiculoVO();
 				carreta.setVeiculoVO(obj);
-				TrafegusWS.getIntance().solicitaListaTerminais(solicitaListaTerminaisResultHandler,carreta.vehiclePlate);
+				//TrafegusWS.getIntance().solicitaListaTerminais(solicitaListaTerminaisResultHandler,carreta.vehiclePlate);
 				MainModel.getInstance().smVO.carretas.addItem(carreta);
 			}
 			MainModel.getInstance().smVO.carretas.refresh();
+		}
+		private function solicitaListaTerminaisSMResultHandler(event:ResultEvent):void
+		{
+			var resultArray:Array = ParserResult.parserDefault(event);
+			//MainModel.getInstance().smVO.terminaisArray.removeAll();
+			for each (var obj:Object in resultArray)
+			{
+				var terminal:TerminalVO = new TerminalVO();
+				terminal.setTerminalVO(obj);
+				MainModel.getInstance().smVO.terminaisArray.addItem(terminal);
+			}
+			this.solicitaDadosTerminalDefeituoso();
 		}
 		private function solicitaListaTerminaisResultHandler(event:ResultEvent):void
 		{
@@ -549,7 +575,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 				terminal.setTerminalVO(obj);
 				MainModel.getInstance().smVO.terminaisArray.addItem(terminal);
 			}
-			this.solicitaDadosTerminalDefeituoso();
+			//this.solicitaDadosTerminalDefeituoso();
 		}
 		private function solicitaDadosTerminalDefeituoso():void
 		{

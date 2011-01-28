@@ -83,11 +83,11 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
     	}
 		public function get vlocUsuarioAdicionou():String
 		{
-			return this._vlocUsuarioAdicionou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vlocUsuarioAdicionou;
+			return "'"+(this._vlocUsuarioAdicionou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vlocUsuarioAdicionou)+"'";
 		}
 		public function get vlocUsuarioAlterou():String
 		{
-			return ObjectUtil.toString(MainModel.getInstance().codUsuario);
+			return "'"+ObjectUtil.toString(MainModel.getInstance().codUsuario)+"'";
 		}
 		public function set vlocTparCodigo(vlocTparCodigo:String):void
 		{
