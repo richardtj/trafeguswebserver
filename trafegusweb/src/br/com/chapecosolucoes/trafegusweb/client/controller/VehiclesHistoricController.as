@@ -1,15 +1,24 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.view.AdvancedSearcHistoricoImpl;
+	import br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.view.AdvancedSearch;
+	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
+	import br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.VehiclesHistoricEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.utils.MyDateFormatter;
 	import br.com.chapecosolucoes.trafegusweb.client.view.VehiclesHistoricView;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.AdvancedSearchHistoricoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.HistoricoPosicoesVeiculoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
+	import flash.display.DisplayObject;
+	
 	import mx.collections.ArrayCollection;
 	import mx.collections.XMLListCollection;
+	import mx.core.FlexGlobals;
 	import mx.rpc.events.ResultEvent;
 
 	public class VehiclesHistoricController
@@ -60,6 +69,21 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				MainModel.getInstance().totalHistoricoPosicoes = int(obj.total.toString());
 			}
+		}
+		public function advancedSearchEventRandler(event:AdvancedSearchEvent):void
+		{
+			var advancedSearchHistoricoImpl:AdvancedSearcHistoricoImpl = new AdvancedSearcHistoricoImpl();
+			advancedSearchHistoricoImpl.addEventListener(AdvancedSearchEvent.ADVANCED_SEARCH_EVENT,advancedSearchHistoricoEventHandler);
+			MyPopUpManager.addPopUp(advancedSearchHistoricoImpl,DisplayObject(FlexGlobals.topLevelApplication));
+			MyPopUpManager.centerPopUp(advancedSearchHistoricoImpl);
+		}
+		private function advancedSearchHistoricoEventHandler(event:AdvancedSearchEvent):void
+		{
+			TrafegusWS.getIntance().procuraHistoricoPosicoes(procuraHistoricoPosicoesResultHandler,AdvancedSearchHistoricoVO(event.genericVO));
+		}
+		private function procuraHistoricoPosicoesResultHandler(event:ResultEvent):void
+		{
+			
 		}
 	}
 }

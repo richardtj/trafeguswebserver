@@ -1,6 +1,8 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.controller
 {
+	import br.com.chapecosolucoes.trafegusweb.client.components.datafieldpt.DataFieldPT;
 	import br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.AdvancedSearchHistoricoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.HistoricoPosicoesVeiculoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.ReferenciaVO;
@@ -19,10 +21,18 @@ package br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.cont
 		{
 			var formItemDataInicial:FormItem = FormItem(Form(this.view.form).getChildByName("formItemDataInicial"));
 			var formItemDataFinal:FormItem = FormItem(Form(this.view.form).getChildByName("formItemDataFinal"));
-			var historico:HistoricoPosicoesVeiculoVO = new HistoricoPosicoesVeiculoVO();
-			historico.= TextInput(formItemReferencia.getChildByName("textInputReferencia")).text;
-			referenciaVO.descricao = TextInput(formItemGrupo.getChildByName("textInputGrupo")).text;
-			var event:AdvancedSearchEvent = new AdvancedSearchEvent(AdvancedSearchEvent.ADVANCED_SEARCH_EVENT,referenciaVO);
+			var formItemGPSDescSis:FormItem = FormItem(Form(this.view.form).getChildByName("formItemGPSDescSis"));
+			
+			var dfDataInicial:DataFieldPT = DataFieldPT(Form(formItemDataInicial).getChildByName("dfDataInicial"));
+			var dfDataFinal:DataFieldPT = DataFieldPT(Form(formItemDataFinal).getChildByName("dfDataFinal"));
+			var textInputGPSDescSis:TextInput = TextInput(Form(formItemGPSDescSis).getChildByName("textInputGPSDescSis"));
+			
+			var historico:AdvancedSearchHistoricoVO = new AdvancedSearchHistoricoVO();
+			historico.gpsDescSis = textInputGPSDescSis.text;
+			historico.dataInicial = dfDataInicial.value;
+			historico.dataFinal = dfDataFinal.value;
+			
+			var event:AdvancedSearchEvent = new AdvancedSearchEvent(AdvancedSearchEvent.ADVANCED_SEARCH_EVENT,historico);
 			this.view.dispatchEvent(event);
 			this.closeHandler();
 		}
