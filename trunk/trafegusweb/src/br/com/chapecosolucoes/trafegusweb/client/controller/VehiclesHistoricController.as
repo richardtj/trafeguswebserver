@@ -1,7 +1,7 @@
 package br.com.chapecosolucoes.trafegusweb.client.controller
 {
-	import br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.view.AdvancedSearcHistoricoImpl;
 	import br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.view.AdvancedSearch;
+	import br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.view.AdvancedSearchHistoricoImpl;
 	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
@@ -72,7 +72,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function advancedSearchEventRandler(event:AdvancedSearchEvent):void
 		{
-			var advancedSearchHistoricoImpl:AdvancedSearcHistoricoImpl = new AdvancedSearcHistoricoImpl();
+			var advancedSearchHistoricoImpl:AdvancedSearchHistoricoImpl = new AdvancedSearchHistoricoImpl();
 			advancedSearchHistoricoImpl.addEventListener(AdvancedSearchEvent.ADVANCED_SEARCH_EVENT,advancedSearchHistoricoEventHandler);
 			MyPopUpManager.addPopUp(advancedSearchHistoricoImpl,DisplayObject(FlexGlobals.topLevelApplication));
 			MyPopUpManager.centerPopUp(advancedSearchHistoricoImpl);
