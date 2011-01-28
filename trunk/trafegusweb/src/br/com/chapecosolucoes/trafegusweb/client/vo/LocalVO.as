@@ -34,11 +34,11 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public function set vlocCodigo(vlocCodigo:String):void
 		{
-			this.codigo = vlocCodigo;
+			this._vlocCodigo = vlocCodigo;
 		}
 		public function get vlocCodigo():String
 		{
-			return this.codigo==""?"nextval('s_vloc_viagem_local')":this.codigo;
+			return this._vlocCodigo==""?"nextval('s_vloc_viagem_local')":this._vlocCodigo;
 		}
 		public function set vlocDataCadastro(vlocDataCadastro:String):void
 		{
