@@ -42,6 +42,8 @@
 				MainModel.getInstance().motoristasArray.filterFunction = this.controller.motoristaFilterFunction;
 				MainModel.getInstance().motoristasArray.refresh();
 				
+				this.controller.solicitaTotalListaMotoristas();
+				
 			}
 			
 			private function inicializaTotalListaMotoristas():void {
