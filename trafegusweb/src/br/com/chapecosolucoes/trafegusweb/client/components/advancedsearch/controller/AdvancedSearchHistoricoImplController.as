@@ -11,9 +11,9 @@ package br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.cont
 	import mx.containers.FormItem;
 	import mx.controls.TextInput;
 
-	public class AdvancedSearcHistoricoImplController extends AdvancedSearchController
+	public class AdvancedSearchHistoricoImplController extends AdvancedSearchController
 	{
-		public function AdvancedSearcHistoricoImplController()
+		public function AdvancedSearchHistoricoImplController()
 		{
 			super();
 		}
@@ -29,8 +29,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.cont
 			
 			var historico:AdvancedSearchHistoricoVO = new AdvancedSearchHistoricoVO();
 			historico.gpsDescSis = textInputGPSDescSis.text;
-			historico.dataInicial = dfDataInicial.value;
-			historico.dataFinal = dfDataFinal.value;
+			historico.dataInicial = dfDataInicial.text;
+			historico.dataFinal = dfDataFinal.text;
 			
 			var event:AdvancedSearchEvent = new AdvancedSearchEvent(AdvancedSearchEvent.ADVANCED_SEARCH_EVENT,historico);
 			this.view.dispatchEvent(event);
