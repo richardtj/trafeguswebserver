@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <cross-domain-policy>
     <!-- Place top level domain name -->
-    <allow-access-from domain="agencianeo.com.br" secure="false"/>
-    <allow-access-from domain="agencianeo.com.br" to-ports="80,443" /> 
-    <allow-http-request-headers-from domain="yourdomain.com" headers="*" />
-    <!-- use if you need access from subdomains. testing/www/staging.domain.com -->
+    <allow-access-from domain="172.1.2.66" secure="false"/>
+    <allow-access-from domain="172.1.2.66" to-ports="80,443,8080" /> 
+    <allow-http-request-headers-from domain="172.1.2.66" headers="*" />
+    <!-- use if you need access from subdomains. testing/www/staging.domain.com>
     <allow-access-from domain="*.agencianeo.com.br" secure="false"/>
     <allow-access-from domain="*.agencianeo.com.br" to-ports="80,443" /> 
-    <allow-http-request-headers-from domain="*.agencianeo.com.br" headers="*" />
+    <allow-http-request-headers-from domain="*.agencianeo.com.br" headers="*" /-->
 </cross-domain-policy>
