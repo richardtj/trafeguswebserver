@@ -55,6 +55,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function paradaSelecionada():void
 		{
+			this.model.parada.localVO.vlocTparCodigo = this.model.parada.tipoParadaVO.codigo;
 			var paradaEvent:AddParadaEvent = new AddParadaEvent(AddParadaEvent.PARADA_ADICIONADA_EVENT,this.model.parada);
 			this.view.dispatchEvent(paradaEvent);
 			this.closeHandler();

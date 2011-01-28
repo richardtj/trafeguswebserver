@@ -46,7 +46,7 @@
 			
 			private function inicializaTotalListaMotoristas():void {
 				if (MainModel.getInstance().motoristasArray.length == 0) {
-					this.controller.solicitaTotalListaMotoristas();
+					this.controller.atualizaListaMotoristas();
 				}
 			}
 			

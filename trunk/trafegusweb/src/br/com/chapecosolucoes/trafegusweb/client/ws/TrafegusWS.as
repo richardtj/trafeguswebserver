@@ -520,7 +520,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				UsuarioLogado.getInstance().IdSessao,
 				vvei_codigo,//vvei_codigo - auto-incremento da tabela, ou seja: nextval('s_vvei_viagem_veiculo');
 				vvei_precedencia,//vvei_precedencia - (1 - veículo principal, 2 - veículo secundário (geralmente carreta), 3 - veículo terciário (geralmente carreta), 4 - veículo quartenário (geralmente carreta);
-				MainModel.getInstance().smVO.numeroViagem,//vvei_viag_codigo - preencher com o código da viagem (SM) que está sendo criada;
+				"currval('s_viag_viagem')",//vvei_viag_codigo - preencher com o código da viagem (SM) que está sendo criada;
 				vvei_veic_oras_codigo,//vvei_veic_oras_codigo - código do veículo selecionado;
 				vvei_moto_pfis_pess_oras_codigo,//vvei_moto_pfis_pess_oras_codigo - código do motorista do veículo (preencher somente no veículo principal)
 				vvei_evca_codigo,//vvei_evca_codigo - preencher com a informação do estatus do veículo de carga (quando for um veículo de carga);
@@ -543,7 +543,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			(
 				UsuarioLogado.getInstance().IdSessao,
 				vter_codigo,//vter_codigo - auto-incremento da tabela, ou seja: nextval('s_vter_viagem_terminal');
-				MainModel.getInstance().smVO.numeroViagem,//vter_viag_codigo - preencher com o código da viagem;
+				"currval('s_viag_viagem')",//vter_viag_codigo - preencher com o código da viagem;
 				vter_term_codigo,//preencher com o código do terminal;
 				vter_precedencia,//preencher com a precedencia do terminal para a viagem (1 - primário; 2 secundário; 3 - outros);
 				vter_tempo_satelital,//preencher com o tempo de posicionamento Satelital padrão (buscar na tabela de vtec_versao_tecnologia conforme o terminal);
@@ -564,7 +564,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			(
 				UsuarioLogado.getInstance().IdSessao,
 				MainModel.getInstance().smVO.rota.vrotCodigo,//vrot_codigo - auto-incremento da tabela, ou seja: nextval('s_vrot_viagem_rota');
-				MainModel.getInstance().smVO.numeroViagem,//vrot_viag_codigo - preencher com o código da viagem;
+				"currval('s_viag_viagem')",//vrot_viag_codigo - preencher com o código da viagem;
 				MainModel.getInstance().smVO.rota.codigo,//vrot_rota_codigo - preencher com o código da rota selecionada / ou criada via site;
 				MainModel.getInstance().smVO.rota.vrotDataCadastro,//vrot_data_cadastro - preencher com current_timestamp;
 				"NULL",//vrot_codigo_gr - preencher com null;
@@ -582,7 +582,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				UsuarioLogado.getInstance().IdSessao,
 				vloc_codigo,//vloc_codigo - auto-incremento da tabela, ou seja: nextval('s_vloc_viagem_local');
 				vloc_sequencia,//vloc_sequencia - código de sequencia de passagem pelos locais no momento da viagem (1,2,3,4,5,6...);
-				MainModel.getInstance().smVO.numeroViagem,//vloc_viag_codigo - preencher com o codigo da viagem;
+				"currval('s_viag_viagem')",//vloc_viag_codigo - preencher com o codigo da viagem;
 				vloc_refe_codigo,//vloc_refe_codigo - preencher com o código da referencia que representa este local;
 				vloc_tpar_codigo,//vloc_tpar_codigo - preencher com o tipo de parada selecionado pelo usuário na interface;
 				vloc_raio,//vloc_raio - preencher com o raio do local selecionado - tabela de referencias por transportador / embarcador;
