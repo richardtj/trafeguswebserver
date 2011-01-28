@@ -211,6 +211,12 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			var operation:Operation=createOperation("solicitaListaTerminais", handler);
 			operation.send(UsuarioLogado.getInstance().IdSessao, placaVeiculo);
 		}
+		
+		public function solicitaListaTerminaisSM(handler:Function, numeroViagem:String):void
+		{
+			var operation:Operation=createOperation("solicitaListaTerminaisSM", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao, numeroViagem);
+		}
 
 		public function solicitaTotalDadosGrid(handler:Function):void
 		{
@@ -482,9 +488,9 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.send(UsuarioLogado.getInstance().IdSessao, numeroViagem);
 		}
 
-		public function solicitaDadosGridCarretas(handler:Function, placaVeiculo:String):void
+		public function solicitaDadosGridCarretasSM(handler:Function, placaVeiculo:String):void
 		{
-			var operation:Operation=createOperation("solicitaDadosGridCarretas", handler);
+			var operation:Operation=createOperation("solicitaDadosGridCarretasSM", handler);
 			operation.send(UsuarioLogado.getInstance().IdSessao, placaVeiculo);
 		}
 
@@ -536,7 +542,8 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 		public function salvaVterViagemTerminal(handler:Function, vter_codigo:String, vter_term_codigo:String, vter_precedencia:String, vter_tempo_satelital:String, vter_tempo_gprs:String, vter_usuario_adicionou:String, vter_usuario_alterou:String, vter_data_cadastro:String):void
 		{
 			var operation:Operation=createOperation("salvaVterViagemTerminal", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao, vter_codigo, //vter_codigo - auto-incremento da tabela, ou seja: nextval('s_vter_viagem_terminal');
+			operation.send(UsuarioLogado.getInstance().IdSessao, 
+				vter_codigo, //vter_codigo - auto-incremento da tabela, ou seja: nextval('s_vter_viagem_terminal');
 				"currval('s_viag_viagem')", //vter_viag_codigo - preencher com o código da viagem;
 				vter_term_codigo, //preencher com o código do terminal;
 				vter_precedencia, //preencher com a precedencia do terminal para a viagem (1 - primário; 2 secundário; 3 - outros);

@@ -39,15 +39,15 @@
 					<mx:DataGridColumn headerText="Prec." dataField="precedencia"/>
 					<mx:DataGridColumn headerText="Cod. Term." dataField="codigo"/>
 					<mx:DataGridColumn headerText="Num. Term." dataField="numero"/>
-					<mx:DataGridColumn headerText="Descrição"/>
+					<!--mx:DataGridColumn headerText="Descrição"/-->
 					<mx:DataGridColumn headerText="Versão" dataField="vtecCodigo"/>
-					<mx:DataGridColumn headerText="Tipo Comunicação"/>
-					<mx:DataGridColumn headerText="Tecnologia"/>
+					<!--mx:DataGridColumn headerText="Tipo Comunicação"/-->
+					<!--mx:DataGridColumn headerText="Tecnologia"/-->
 					<mx:DataGridColumn headerText="Ativo" dataField="ativo"/>
 					<mx:DataGridColumn headerText="Ativo WS" dataField="ativoWS"/>
 					<mx:DataGridColumn headerText="T.S." dataField="tempoSatelital"/>
 					<mx:DataGridColumn headerText="T.G." dataField="tempoGPRS"/>
-					<mx:DataGridColumn headerText="Veículo"/>
+					<mx:DataGridColumn headerText="Veículo" dataField="veicPlaca"/>
 				</mx:columns>
 			</mx:DataGrid>
 			<mx:HBox horizontalAlign="center" verticalAlign="middle" height="100%">

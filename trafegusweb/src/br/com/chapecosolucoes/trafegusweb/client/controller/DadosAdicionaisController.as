@@ -26,7 +26,6 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var xml:XML = XML(event.result);
 			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
 			var resultArray:Array = xmlListCollection.toArray();
-			MainModel.getInstance().smVO.terminaisArray.removeAll();
 			for each (var obj:Object in resultArray)
 			{
 				var terminal:TerminalVO = new TerminalVO();
@@ -37,7 +36,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function solicitaDadosTerminalDefeituoso():void
 		{
-			MainModel.getInstance().smVO.codTerminais = "";
+			//MainModel.getInstance().smVO.codTerminais = "";
 			for each(var terminal:TerminalVO in MainModel.getInstance().smVO.terminaisArray)
 			{
 				if(MainModel.getInstance().smVO.codTerminais != "")
