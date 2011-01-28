@@ -37,6 +37,15 @@ package br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.view
 			dfDataFinal.value = new Date();
 			formItemDataFinal.addChild(dfDataFinal);
 			this.form.addChild(formItemDataFinal);
+			
+			var formItemGPSDescSis:FormItem = new FormItem();
+			formItemGPSDescSis.name = "formItemGPSDescSis";
+			formItemGPSDescSis.label = "Posição";
+			var textInputGPSDescSis:TextInput = new TextInput();
+			textInputGPSDescSis.name = "textInputGPSDescSis";
+			formItemGPSDescSis.addChild(textInputGPSDescSis);
+			
+			this.form.addChild(formItemGPSDescSis);
 
 		}
 	}

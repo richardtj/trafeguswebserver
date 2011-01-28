@@ -5,10 +5,10 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
 	import br.com.chapecosolucoes.trafegusweb.client.utils.MyDateFormatter;
-	import br.com.chapecosolucoes.trafegusweb.client.vo.AdvancedSearcHistoricoVO;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.AdvancedSearchHistoricoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.ReferenciaVO;
-
+	
 	import mx.core.Application;
 	import mx.core.FlexGlobals;
 	import mx.formatters.DateFormatter;
@@ -603,11 +603,10 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				);
 		}
 
-		public function procuraHistoricoPosicoes(handler:Function, historicoVo:AdvancedSearcHistoricoVO):void
+		public function procuraHistoricoPosicoes(handler:Function, historicoVO:AdvancedSearchHistoricoVO):void
 		{
 			var operation:Operation=createOperation("procuraHistoricoPosicoes", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao, historicoVo.dataInicial, historicoVo.dataFinal, historicoVo.descricao);
-
+			operation.send(UsuarioLogado.getInstance().IdSessao, historicoVO.dataInicial, historicoVO.dataFinal, historicoVO.gpsDescSis);
 		}
 	}
 }
