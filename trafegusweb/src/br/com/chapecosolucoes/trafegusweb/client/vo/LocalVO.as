@@ -89,6 +89,14 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		{
 			return ObjectUtil.toString(MainModel.getInstance().codUsuario);
 		}
+		public function set vlocTparCodigo(vlocTparCodigo:String):void
+		{
+			this._vlocTparCodigo = vlocTparCodigo;
+		}
+		public function get vlocTparCodigo():String
+		{
+			return this._vlocTparCodigo==""?"NULL":this._vlocTparCodigo;
+		}
 		public var codigo:String;
 		public var descricao:String;
 		public var latLong:LatLng;
@@ -97,7 +105,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public var gpsLatitudeString:String;
 		public var gpsLongitudeString:String;
 		private var _vlocSequencia:String;
-		public var vlocTparCodigo:String;
+		private var _vlocTparCodigo:String;
 		private var _vlocRaio:String = "";
 		private var _vlocCodigo:String;
 		private var _vlocDataCadastro:String = "";

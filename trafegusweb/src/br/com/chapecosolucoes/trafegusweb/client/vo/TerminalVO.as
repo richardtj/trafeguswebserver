@@ -20,7 +20,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.ativoWS = obj.term_ativo_ws.toString();
 			this._tempoSatelital = obj.term_tempo_satelital.toString();
 			this._tempoGPRS = obj.term_tempo_gprs.toString();
-			this._vtecCodigo = obj.term_vtec_codigo.toString();
+			//this._vtecCodigo = obj.term_vtec_codigo.toString();
 			this._vterUsuarioAdicionou = obj.term_usuario_adicionou.toString();
 			this._vterUsuarioAlterou = obj.term_usuario_alterou.toString();
 			this._vterDataCadastro = obj.term_data_cadastro.toString();
