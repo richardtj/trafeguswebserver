@@ -448,6 +448,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function salvarSM():void
 		{
+			MainModel.getInstance().smVO.veiculoPrincipal.vveiMotoPfisPessOrasCodigo = MainModel.getInstance().smVO.codigoMotorista;
 			TrafegusWS.getIntance().salvaViagViagem(salvaViagViagemResultHandler);
 			this.closeHandler();
 		}
@@ -457,13 +458,13 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			TrafegusWS.getIntance().salvaVrotViagemRota(salvaVrotViagemRotaResultHandler);
 			with(MainModel.getInstance().smVO.veiculoPrincipal)
 			{
-				TrafegusWS.getIntance().salvaVveiViagemVeiculo(salvaVveiViagemVeiculoResultHandler,vveiCodigo,precedencia,cod,vveiMotoPfisPessOrasCodigo,vveiEvcaCodigo,seq,vveiUsuarioAdicionou,vveiUsuarioAlterou);
+				TrafegusWS.getIntance().salvaVveiViagemVeiculo(salvaVveiViagemVeiculoResultHandler,vveiCodigo,precedencia,cod,vveiMotoPfisPessOrasCodigo,vveiEvcaCodigo,vveiSequencia,vveiUsuarioAdicionou,vveiUsuarioAlterou);
 			}
 			for each(var veiculoVO:VeiculoVO in MainModel.getInstance().smVO.carretas)
 			{
 				with(veiculoVO)
 				{
-					TrafegusWS.getIntance().salvaVveiViagemVeiculo(salvaVveiViagemVeiculoResultHandler,vveiCodigo,precedencia,cod,vveiMotoPfisPessOrasCodigo,vveiEvcaCodigo,seq,vveiUsuarioAdicionou,vveiUsuarioAlterou);
+					TrafegusWS.getIntance().salvaVveiViagemVeiculo(salvaVveiViagemVeiculoResultHandler,vveiCodigo,precedencia,cod,vveiMotoPfisPessOrasCodigo,vveiEvcaCodigo,vveiSequencia,vveiUsuarioAdicionou,vveiUsuarioAlterou);
 				}
 			}
 			for each(var terminalVO:TerminalVO in MainModel.getInstance().smVO.terminaisArray)

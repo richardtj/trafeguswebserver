@@ -25,6 +25,14 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this._vveiUsuarioAlterou = obj.vvei_usuario_alterou.toString();
 			this.precedencia = obj.vvei_precedencia.toString();
 		}
+		public function set vveiSequencia(vveiSequencia:String):void
+		{
+			this.seq = vveiSequencia;
+		}
+		public function get vveiSequencia():String
+		{
+			return this.seq==""?"NULL":this.seq;
+		}
 		public function get vveiCodigo():String
 		{
 			return this._vveiCodigo==""?"nextval('s_vvei_viagem_veiculo')":this._vveiCodigo;
@@ -41,9 +49,21 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		{
 			return ObjectUtil.toString(MainModel.getInstance().codUsuario);
 		}
+		public function set vveiMotoPfisPessOrasCodigo(vveiMotoPfisPessOrasCodigo:String):void
+		{
+			this._vveiMotoPfisPessOrasCodigo = vveiMotoPfisPessOrasCodigo;
+		}
 		public function get vveiMotoPfisPessOrasCodigo():String
 		{
-			return this._vveiMotoPfisPessOrasCodigo;
+			return this._vveiMotoPfisPessOrasCodigo==""?"NULL":this._vveiMotoPfisPessOrasCodigo;
+		}
+		public function set precedencia(precedencia:String):void
+		{
+			this._precedencia = precedencia;
+		}
+		public function get precedencia():String
+		{
+			return this._precedencia==""?"NULL":this._precedencia
 		}
 		public var cod:String;
 		private var _vveiCodigo:String;
@@ -51,7 +71,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public var desc:String;
 		public var cor:String;
 		public var seq:String;
-		public var precedencia:String;
+		private var _precedencia:String;
 		private var _vveiEvcaCodigo:String;
 		private var _vveiMotoPfisPessOrasCodigo:String;
 		private var _vveiUsuarioAdicionou:String;
