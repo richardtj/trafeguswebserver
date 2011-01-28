@@ -46,7 +46,7 @@
 			}
 			private function creationComplete():void
 			{
-				this.controller.atualizaListaViagemPai();
+				this.controller.inicializaListaViagemPai();
 				MainModel.getInstance().viagemPaiArray.filterFunction = this.controller.viagemPaiFilterFunction;
 				MainModel.getInstance().viagemPaiArray.refresh();
 				

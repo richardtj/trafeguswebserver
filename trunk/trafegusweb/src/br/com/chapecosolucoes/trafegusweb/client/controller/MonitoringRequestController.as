@@ -75,11 +75,11 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			if(resultArray.length == 0)
 			{
-				MainModel.getInstance().smVO.veiculoPrincipal.vehiclePlate = "";
+				MainModel.getInstance().smVO.veiculoPrincipal= new VeiculoVO();
 			}
 			for each (var obj:Object in resultArray)
 			{
-				MainModel.getInstance().smVO.veiculoPrincipal.vehiclePlate = obj.placa.toString();
+				MainModel.getInstance().smVO.veiculoPrincipal.setVeiculoVO(obj);
 				MainModel.getInstance().smVO.veiculoPrincipal.precedencia = "1";
 				MainModel.getInstance().smVO.terminaisArray.removeAll();
 				this.view.dadosAdicionaisView.atualizaTerminais();
@@ -483,7 +483,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			}
 			for each(var paradaVO:ParadaVO in MainModel.getInstance().smVO.paradas)
 			{
-				//TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,vlocCodigo,vlocSequencia,codigo,vlocTparCodigo,vlocRaio,descricao,vlocUsuarioAdicionou,vlocUsuarioAlterou,vlocDataCadastro);
+				TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,paradaVO.localVO.vlocCodigo,paradaVO.localVO.vlocSequencia,paradaVO.localVO.codigo,paradaVO.tipoParadaVO.codigo,paradaVO.localVO.vlocRaio,paradaVO.localVO.descricao,paradaVO.localVO.vlocUsuarioAdicionou,paradaVO.localVO.vlocUsuarioAlterou,paradaVO.localVO.vlocDataCadastro);
 			}
 		}
 		private function salvaVlocViagemLocalResultHandler(event:ResultEvent):void
