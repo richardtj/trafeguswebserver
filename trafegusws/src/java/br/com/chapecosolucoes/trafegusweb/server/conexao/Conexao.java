@@ -62,7 +62,6 @@ public class Conexao {
         ResultSetMetaData rsmd = resultSet.getMetaData();
         int colCount = rsmd.getColumnCount();
 
-
         while (resultSet.next()) {
             result += "<row>/n";
             for (int ii = 1; ii <= colCount; ii++) {
@@ -84,11 +83,11 @@ public class Conexao {
         Connection con = null;
         if (map.containsKey(idSessao)) {
             con = map.get(idSessao);
-        } else {
-            con = this.createConnection();
-            this.map.put(idSessao, con);
+            con.close();
+            map.remove(idSessao);
         }
-        ConnectionManager.getInstance().setaConexaoAtiva(idSessao);
+        con = this.createConnection();
+        this.map.put(idSessao, con);
         return con;
     }
 
@@ -103,7 +102,6 @@ public class Conexao {
             map.remove(idSessao);
             con.close();
             con = null;
-            ConnectionManager.getInstance().setaConexaoInativa(idSessao);
         }
     }
 }
