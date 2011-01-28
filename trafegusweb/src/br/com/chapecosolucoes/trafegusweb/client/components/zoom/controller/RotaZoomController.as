@@ -38,7 +38,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		{
 			if(this.view.grid.selectedItem != null)
 			{
-				var routeEvent:SelectedRouteEvent = new SelectedRouteEvent(SelectedRouteEvent.SELECTED_ROUTE_EVENT,RouteVO(this.view.grid.selectedItem));
+				var rota:RouteVO = RouteVO(this.view.grid.selectedItem);
+				var routeEvent:SelectedRouteEvent = new SelectedRouteEvent(SelectedRouteEvent.SELECTED_ROUTE_EVENT,rota);
 				this.view.dispatchEvent(routeEvent);
 				this.closeHandler();
 			}

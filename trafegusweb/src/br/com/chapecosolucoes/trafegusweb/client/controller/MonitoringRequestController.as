@@ -459,14 +459,14 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			{
 				TrafegusWS.getIntance().salvaVveiViagemVeiculo(salvaVveiViagemVeiculoResultHandler,vveiCodigo,precedencia,cod,vveiMotoPfisPessOrasCodigo,vveiEvcaCodigo,seq,vveiUsuarioAdicionou,vveiUsuarioAlterou);
 			}
-			for each(var veiculoVO:VeiculoVO in VeiculoVO(MainModel.getInstance().smVO.carretas))
+			for each(var veiculoVO:VeiculoVO in MainModel.getInstance().smVO.carretas)
 			{
 				with(veiculoVO)
 				{
 					TrafegusWS.getIntance().salvaVveiViagemVeiculo(salvaVveiViagemVeiculoResultHandler,vveiCodigo,precedencia,cod,vveiMotoPfisPessOrasCodigo,vveiEvcaCodigo,seq,vveiUsuarioAdicionou,vveiUsuarioAlterou);
 				}
 			}
-			for each(var terminalVO:TerminalVO in TerminalVO(MainModel.getInstance().smVO.terminaisArray))
+			for each(var terminalVO:TerminalVO in MainModel.getInstance().smVO.terminaisArray)
 			{
 				with(terminalVO)
 				{
