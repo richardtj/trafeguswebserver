@@ -38,6 +38,7 @@
 			private var controller:PosicaoVeiculoZoomController;
 			private var model:PosicaoVeiculoZoomModel;
 			public var excluirVeiculoListaZoom:String;
+			
 			private function init():void
 			{
 				this.controller = new PosicaoVeiculoZoomController();
@@ -48,6 +49,7 @@
 				
 				this.controller.atualizaDadosGridZoom();
 			}
+			
 			private function creationComplete():void
 			{
 				MainModel.getInstance().posVeiculosArrayZoom.filterFunction = this.controller.posicaoVeiculosFilterFunction;

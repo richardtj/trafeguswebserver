@@ -1,88 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:resize="flex.utils.ui.resize.*" 
-				xmlns:s="library://ns.adobe.com/flex/spark" 
-				xmlns:mx="library://ns.adobe.com/flex/mx"
-				layout="vertical"
-				width="520" height="420"
-				showCloseButton="true"
-				creationCompleteEffect="{dissolve,iris}"
-				removedEffect="{dissolve,iris}"
-				mouseOver="this.controller.mouseOverEventHandler()"
-				initialize="init()"
-				creationComplete="creationComplete()"
-				close="this.controller.closeHandler()"
-				title="Transportadores"
-				titleIcon="@Embed(source='assets/transportador.png')"
-				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
-	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
+<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+						xmlns:resize="flex.utils.ui.resize.*"
+						xmlns:s="library://ns.adobe.com/flex/spark"
+						xmlns:mx="library://ns.adobe.com/flex/mx"
+						layout="vertical"
+						width="520"
+						height="420"
+						showCloseButton="true"
+						creationCompleteEffect="{dissolve,iris}"
+						removedEffect="{dissolve,iris}"
+						mouseOver="this.controller.mouseOverEventHandler()"
+						initialize="init()"
+						creationComplete="creationComplete()"
+						close="this.controller.closeHandler()"
+						title="Transportadores"
+						titleIcon="@Embed(source='assets/transportador.png')"
+						xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
+						xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Binding source="this.textInputFiltro.text"
+				destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
 		[Event(name="transportadorSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent")]		
 	</fx:Metadata>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
-		<mx:Dissolve id="dissolve" duration="500"/>
-		<mx:Iris id="iris" duration="500"/>
+		<mx:Dissolve id="dissolve"
+					 duration="500"/>
+		<mx:Iris id="iris"
+				 duration="500"/>
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.TransportadorZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
-			
+
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			private var controller:TransportadorZoomController;
+
 			private function init():void
 			{
-				this.controller = new TransportadorZoomController();
-				this.controller.view = this;
-				
+				this.controller=new TransportadorZoomController();
+				this.controller.view=this;
+
 				this.controller.solicitaTotalListaTransportadores();
 			}
+
+			private function inicializaListaTransportadores():void
+			{
+				if (MainModel.getInstance().transportadoresArray.length == 0)
+				{
+					this.controller.atualizaListaTransportadores();
+				}
+			}
+
 			private function creationComplete():void
 			{
-				this.controller.atualizaListaTransportadores();
-				MainModel.getInstance().transportadoresArray.filterFunction = this.controller.transportadoresFilterFunction;
+				this.inicializaListaTransportadores();
+				MainModel.getInstance().transportadoresArray.filterFunction=this.controller.transportadoresFilterFunction;
 				MainModel.getInstance().transportadoresArray.refresh();
-				
-				this.grid.addEventListener(TransportadorSelecionadoEvent.TRANSPORTADOR_SELECIONADO_EVENT,this.controller.transportadorSelecionadoEventHandler);
+
+				this.grid.addEventListener(TransportadorSelecionadoEvent.TRANSPORTADOR_SELECIONADO_EVENT, this.controller.transportadorSelecionadoEventHandler);
 			}
 		]]>
 	</fx:Script>
-	<searchInput:SearchInputFX 
-		id="textInputFiltro"
-		width="100%" 
-		keyUp="MainModel.getInstance().transportadoresArray.refresh()"
-		text="{MainModel.getInstance().zoomFilter}"
-		refreshEvent="this.controller.atualizaListaTransportadores()"/>
-	<view:DataGridFX 
-		id="grid" 
-		doubleClickEnabled="true"
-		doubleClick="this.controller.transportadorSelecionado()"
-		width="100%" height="100%" 
-		dataProvider="{MainModel.getInstance().transportadoresArray}"
-		toolTip="Clique sobre o codigo do transportador para exibir os detalhes.">
+	<searchInput:SearchInputFX id="textInputFiltro"
+							   width="100%"
+							   keyUp="MainModel.getInstance().transportadoresArray.refresh()"
+							   text="{MainModel.getInstance().zoomFilter}"
+							   refreshEvent="this.controller.atualizaListaTransportadores()"/>
+	<view:DataGridFX id="grid"
+					 doubleClickEnabled="true"
+					 doubleClick="this.controller.transportadorSelecionado()"
+					 width="100%"
+					 height="100%"
+					 dataProvider="{MainModel.getInstance().transportadoresArray}"
+					 toolTip="Clique sobre o codigo do transportador para exibir os detalhes.">
 		<view:columns>
-			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
-			<mx:DataGridColumn headerText="Código" dataField="codigo" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.TransportadorItemRendererView"/>
-			<mx:DataGridColumn headerText="Nome" dataField="nome"/>
-			<mx:DataGridColumn headerText="CNPJ" dataField="cnpj"/>
-			<mx:DataGridColumn headerText="CPF" dataField="cpf"/>
-			<mx:DataGridColumn headerText="IE" dataField="ie"/>
-			<mx:DataGridColumn headerText="Cadastro" dataField="dataCadastro"/>
-			<mx:DataGridColumn headerText="Site" dataField="site"/>
+			<mx:DataGridColumn sortable="false"
+							   width="20"
+							   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+			<mx:DataGridColumn headerText="Código"
+							   dataField="codigo"
+							   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.TransportadorItemRendererView"/>
+			<mx:DataGridColumn headerText="Nome"
+							   dataField="nome"/>
+			<mx:DataGridColumn headerText="CNPJ"
+							   dataField="cnpj"/>
+			<mx:DataGridColumn headerText="CPF"
+							   dataField="cpf"/>
+			<mx:DataGridColumn headerText="IE"
+							   dataField="ie"/>
+			<mx:DataGridColumn headerText="Cadastro"
+							   dataField="dataCadastro"/>
+			<mx:DataGridColumn headerText="Site"
+							   dataField="site"/>
 		</view:columns>
 	</view:DataGridFX>
-	<view:PaginableComponent 
-		id="paginable"
-		totalRecords="{MainModel.getInstance().totalListaTransportadores}"
-		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
-		first="this.controller.solicitaListaTransportadores(event)"
-		prev="this.controller.solicitaListaTransportadores(event)"
-		last="this.controller.solicitaListaTransportadores(event)"
-		next="this.controller.solicitaListaTransportadores(event)"/>
-	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Ok" click="this.controller.transportadorSelecionado()"/>
-		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
+	<view:PaginableComponent id="paginable"
+							 totalRecords="{MainModel.getInstance().totalListaTransportadores}"
+							 itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
+							 first="this.controller.solicitaListaTransportadores(event)"
+							 prev="this.controller.solicitaListaTransportadores(event)"
+							 last="this.controller.solicitaListaTransportadores(event)"
+							 next="this.controller.solicitaListaTransportadores(event)"/>
+	<mx:ControlBar width="100%"
+				   horizontalAlign="right">
+		<s:Button label="Ok"
+				  click="this.controller.transportadorSelecionado()"/>
+		<s:Button label="Cancel"
+				  click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </resize:ResizableWindow>

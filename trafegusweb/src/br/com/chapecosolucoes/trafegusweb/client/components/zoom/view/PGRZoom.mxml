@@ -1,83 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:resize="flex.utils.ui.resize.*" 
-				xmlns:s="library://ns.adobe.com/flex/spark" 
-				xmlns:mx="library://ns.adobe.com/flex/mx"
-				layout="vertical"
-				width="720" height="420"
-				showCloseButton="true"
-				creationCompleteEffect="{dissolve,iris}"
-				removedEffect="{dissolve,iris}"
-				initialize="init()"
-				mouseOver="this.controller.mouseOverEventHandler()"
-				creationComplete="creationComplete()"
-				close="this.controller.closeHandler()"
-				title="PGR"
-				titleIcon="@Embed(source='assets/warning.png')"
-				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
-	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
+<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+						xmlns:resize="flex.utils.ui.resize.*"
+						xmlns:s="library://ns.adobe.com/flex/spark"
+						xmlns:mx="library://ns.adobe.com/flex/mx"
+						layout="vertical"
+						width="720"
+						height="420"
+						showCloseButton="true"
+						creationCompleteEffect="{dissolve,iris}"
+						removedEffect="{dissolve,iris}"
+						initialize="init()"
+						mouseOver="this.controller.mouseOverEventHandler()"
+						creationComplete="creationComplete()"
+						close="this.controller.closeHandler()"
+						title="PGR"
+						titleIcon="@Embed(source='assets/warning.png')"
+						xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
+						xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Binding source="this.textInputFiltro.text"
+				destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
 		[Event(name="PGRSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent")]		
 	</fx:Metadata>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
-		<mx:Dissolve id="dissolve" duration="500"/>
-		<mx:Iris id="iris" duration="500"/>
+		<mx:Dissolve id="dissolve"
+					 duration="500"/>
+		<mx:Iris id="iris"
+				 duration="500"/>
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.PGRZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
-			
+
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			private var controller:PGRZoomController;
+
 			private function init():void
 			{
-				this.controller = new PGRZoomController();
-				this.controller.view = this;
-				MainModel.getInstance().pgrArray.filterFunction = this.controller.pgrFilterFunction;
+				this.controller=new PGRZoomController();
+				this.controller.view=this;
+				MainModel.getInstance().pgrArray.filterFunction=this.controller.pgrFilterFunction;
 				MainModel.getInstance().pgrArray.refresh();
-				
+
 				this.controller.solicitaTotalListaPGR();
 			}
+
+			private function inicializaListaPGR():void
+			{
+				if (MainModel.getInstance().pgrArray.length == 0)
+				{
+					this.controller.atualizaListaPGR();
+				}
+			}
+
 			private function creationComplete():void
 			{
-				this.controller.atualizaListaPGR();
-				this.grid.addEventListener(PGRSelecionadoEvent.PGR_SELECIONADO_EVENT,this.controller.pgrSelecionadoEventHandler);
+				this.inicializaListaPGR();
+				this.grid.addEventListener(PGRSelecionadoEvent.PGR_SELECIONADO_EVENT, this.controller.pgrSelecionadoEventHandler);
 			}
 		]]>
 	</fx:Script>
-	<searchInput:SearchInputFX 
-		id="textInputFiltro"
-		width="100%" 
-		keyUp="MainModel.getInstance().pgrArray.refresh()"
-		text="{MainModel.getInstance().zoomFilter}"
-		refreshEvent="this.controller.atualizaListaPGR()"/>
-	<view:DataGridFX 
-		id="grid" 
-		width="100%" height="100%" 
-		doubleClickEnabled="true"
-		doubleClick="this.controller.pgrSelecionado()"
-		dataProvider="{MainModel.getInstance().pgrArray}"
-		toolTip="Clique sobre o codigo do PGR para exibir os detalhes.">
+	<searchInput:SearchInputFX id="textInputFiltro"
+							   width="100%"
+							   keyUp="MainModel.getInstance().pgrArray.refresh()"
+							   text="{MainModel.getInstance().zoomFilter}"
+							   refreshEvent="this.controller.atualizaListaPGR()"/>
+	<view:DataGridFX id="grid"
+					 width="100%"
+					 height="100%"
+					 doubleClickEnabled="true"
+					 doubleClick="this.controller.pgrSelecionado()"
+					 dataProvider="{MainModel.getInstance().pgrArray}"
+					 toolTip="Clique sobre o codigo do PGR para exibir os detalhes.">
 		<view:columns>
-			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
-			<mx:DataGridColumn headerText="Código" dataField="codigo" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.PGRItemRendererView"/>
-			<mx:DataGridColumn headerText="Descrição" dataField="descricao"/>
-			<mx:DataGridColumn headerText="Cadastro" dataField="dataCadastro"/>
+			<mx:DataGridColumn sortable="false"
+							   width="20"
+							   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+			<mx:DataGridColumn headerText="Código"
+							   dataField="codigo"
+							   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.PGRItemRendererView"/>
+			<mx:DataGridColumn headerText="Descrição"
+							   dataField="descricao"/>
+			<mx:DataGridColumn headerText="Cadastro"
+							   dataField="dataCadastro"/>
 		</view:columns>
 	</view:DataGridFX>
-	<view:PaginableComponent 
-		id="paginable"
-		totalRecords="{MainModel.getInstance().totalListaPGR}"
-		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
-		next="this.controller.solicitaListaPGR(event)"
-		prev="this.controller.solicitaListaPGR(event)"
-		last="this.controller.solicitaListaPGR(event)"
-		first="this.controller.solicitaListaPGR(event)"/>
-	<mx:ControlBar width="100%" horizontalAlign="right">
-		<s:Button label="Ok" click="this.controller.pgrSelecionado()"/>
-		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
+	<view:PaginableComponent id="paginable"
+							 totalRecords="{MainModel.getInstance().totalListaPGR}"
+							 itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
+							 next="this.controller.solicitaListaPGR(event)"
+							 prev="this.controller.solicitaListaPGR(event)"
+							 last="this.controller.solicitaListaPGR(event)"
+							 first="this.controller.solicitaListaPGR(event)"/>
+	<mx:ControlBar width="100%"
+				   horizontalAlign="right">
+		<s:Button label="Ok"
+				  click="this.controller.pgrSelecionado()"/>
+		<s:Button label="Cancel"
+				  click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </resize:ResizableWindow>

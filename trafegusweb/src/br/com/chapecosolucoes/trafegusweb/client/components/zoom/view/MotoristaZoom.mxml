@@ -34,18 +34,25 @@
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			private var controller:MotoristaZoomController;
+
 			private function init():void
 			{
 				this.controller = new MotoristaZoomController();
 				this.controller.view = this;
 				MainModel.getInstance().motoristasArray.filterFunction = this.controller.motoristaFilterFunction;
-				MainModel.getInstance().locaisArray.refresh();
+				MainModel.getInstance().motoristasArray.refresh();
 				
-				this.controller.solicitaTotalListaMotoristas();
 			}
+			
+			private function inicializaTotalListaMotoristas():void {
+				if (MainModel.getInstance().motoristasArray.length == 0) {
+					this.controller.solicitaTotalListaMotoristas();
+				}
+			}
+			
 			private function creationComplete():void
 			{
-				this.controller.atualizaListaMotoristas();
+				this.inicializaTotalListaMotoristas();
 				this.grid.addEventListener(SelectedDriverEvent.SELECTED_DRIVER_EVENT,this.controller.selectedDriverEventHandler);
 			}
 			
