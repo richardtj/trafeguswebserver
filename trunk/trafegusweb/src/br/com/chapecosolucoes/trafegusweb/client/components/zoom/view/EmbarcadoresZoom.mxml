@@ -34,6 +34,7 @@
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			private var controller:EmbarcadoresZoomController;
+
 			private function init():void
 			{
 				this.controller = new EmbarcadoresZoomController();
@@ -41,9 +42,16 @@
 				
 				this.controller.solicitaTotalListaEmbarcadores();
 			}
+			
+			private function inicializaListaEmbarcadores():void {
+				if (MainModel.getInstance().embarcadoresArray.length == 0) {
+					this.controller.atualizaListaEmbarcadores();
+				}		
+			}
+			
 			private function creationComplete():void
 			{
-				this.controller.atualizaListaEmbarcadores();
+				inicializaListaEmbarcadores();
 				MainModel.getInstance().embarcadoresArray.filterFunction = this.controller.embarcadoresFilterFunction;
 				MainModel.getInstance().embarcadoresArray.refresh();
 				
