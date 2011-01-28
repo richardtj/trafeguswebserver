@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.vo
 {
+	import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.utils.MyDateFormatter;
 	
@@ -30,7 +31,9 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this._vrotUsuarioAlterou = obj.vrot_usuario_alterou.toString();
 			this._vrotDataCadastro = obj.vrot_data_cadastro.toString();
 			this.localOrigem = new LocalVO();
+			this.localOrigem.vlocTparCodigo = LocaisEnum.ORIGEM.toString();
 			this.localDestino = new LocalVO();
+			this.localDestino.vlocTparCodigo = LocaisEnum.DESTINO.toString();
 			
 			this.localOrigem.codigo = obj.refe_codigo_origem.toString();
 			this.localOrigem.descricao = obj.refe_descricao_origem.toString();
@@ -45,7 +48,6 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.localOrigem.vlocSequencia = obj.vloc_sequencia_origem.toString();
 			this.localOrigem.vlocTparCodigo = obj.vloc_tpar_codigo_origem.toString();
 			this.localOrigem.vlocUsuarioAdicionou = obj.vloc_usuario_adicionou_origem.toString();
-			//this.localOrigem.vlocUsuarioAlterou = obj.vloc_usuario_alterou_origem.toString();
 			//this.localOrigem.codigoGrupo = obj.cref_codigo_origem.toString();
 			//this.localOrigem.descricaoGrupo = obj.cref_descricao_origem.toString();
 			
@@ -64,11 +66,10 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.localDestino.vlocSequencia = obj.vloc_sequencia_destino.toString();
 			this.localDestino.vlocTparCodigo = obj.vloc_tpar_codigo_destino.toString();
 			this.localDestino.vlocUsuarioAdicionou = obj.vloc_usuario_adicionou_destino.toString();
-			//this.localDestino.vlocUsuarioAlterou = obj.vloc_usuario_alterou_destino.toString();
 		}
 		public function get vrotCodigo():String
 		{
-			return this.vrotCodigo==""?"nextval('s_vrot_viagem_rota')":this.vrotCodigo;
+			return this._vrotCodigo==""?"nextval('s_vrot_viagem_rota')":this._vrotCodigo;
 		}
 		public function set vrotCodigo(vrot_codigo:String):void
 		{

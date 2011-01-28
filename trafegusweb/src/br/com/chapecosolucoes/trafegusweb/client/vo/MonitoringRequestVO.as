@@ -79,7 +79,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public function get viagPrevisaoInicio():String
 		{
-			return "'" + this.prevInicio + this.prevHoraInicio + "'";
+			return "'" + this.prevInicio + " " + this.prevHoraInicio + "'";
 		}
 		public function set viagPrevisaoFim(viag_previsao_fim:String):void
 		{
@@ -87,7 +87,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public function get viagPrevisaoFim():String
 		{
-			return "'" + this.prevFim + this.prevHoraFim + "'" ;
+			return "'" + this.prevFim +" "+ this.prevHoraFim + "'" ;
 		}
 		public function set horaInicio(horaInicio:String):void
 		{

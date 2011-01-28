@@ -56,10 +56,6 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		{
 			return this._vlocUsuarioAdicionou==""?ObjectUtil.toString(MainModel.getInstance().codUsuario):this._vlocUsuarioAdicionou;
 		}
-		/*public function set vlocUsuarioAlterou(vlocUsuarioAlterou:String):void
-		{
-			this._vlocUsuarioAlterou;
-		}*/
 		public function get vlocUsuarioAlterou():String
 		{
 			return ObjectUtil.toString(MainModel.getInstance().codUsuario);

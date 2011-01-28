@@ -27,6 +27,12 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		{
 			TrafegusWS.getIntance().solicitaListaViagemPai(solicitaListaViagemPaiResultHandler,event.paginaAtual);
 		}
+		public function inicializaListaViagemPai():void{
+			if(MainModel.getInstance().viagemPaiArray.length == 0)
+			{
+				this.atualizaListaViagemPai();
+			}
+		}
 		public function atualizaListaViagemPai():void
 		{
 			TrafegusWS.getIntance().solicitaListaViagemPai(solicitaListaViagemPaiResultHandler,0);
