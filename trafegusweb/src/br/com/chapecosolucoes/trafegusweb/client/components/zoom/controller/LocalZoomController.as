@@ -38,6 +38,13 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		{
 			TrafegusWS.getIntance().solicitaListaLocais(solicitaListaLocaisResultEvent,event.paginaAtual);
 		}
+		public function inicializaListaLocais():void
+		{
+			if(MainModel.getInstance().locaisArray.length == 0)
+			{
+				this.atualizaListaLocais();
+			}
+		}
 		public function atualizaListaLocais():void
 		{
 			this.view.paginable.paginaAtual=1;

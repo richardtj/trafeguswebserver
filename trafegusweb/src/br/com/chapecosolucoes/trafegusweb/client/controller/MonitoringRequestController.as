@@ -475,15 +475,15 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			}
 			with(MainModel.getInstance().smVO.rota.localOrigem)
 			{
-				TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,vlocCodigo,vlocSequencia,codigo,vlocTparCodigo,vlocRaio,descricao,vlocUsuarioAdicionou,vlocUsuarioAlterou,vlocDataCadastro);
+				TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,vlocCodigo,vlocSequencia,codigo,vlocTparCodigo,vlocRaio,vlocDescricao,vlocUsuarioAdicionou,vlocUsuarioAlterou,vlocDataCadastro);
 			}
 			with(MainModel.getInstance().smVO.rota.localDestino)
 			{
-				TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,vlocCodigo,vlocSequencia,codigo,vlocTparCodigo,vlocRaio,descricao,vlocUsuarioAdicionou,vlocUsuarioAlterou,vlocDataCadastro);
+				TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,vlocCodigo,vlocSequencia,codigo,vlocTparCodigo,vlocRaio,vlocDescricao,vlocUsuarioAdicionou,vlocUsuarioAlterou,vlocDataCadastro);
 			}
 			for each(var paradaVO:ParadaVO in MainModel.getInstance().smVO.paradas)
 			{
-				TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,paradaVO.localVO.vlocCodigo,paradaVO.localVO.vlocSequencia,paradaVO.localVO.codigo,paradaVO.tipoParadaVO.codigo,paradaVO.localVO.vlocRaio,paradaVO.localVO.descricao,paradaVO.localVO.vlocUsuarioAdicionou,paradaVO.localVO.vlocUsuarioAlterou,paradaVO.localVO.vlocDataCadastro);
+				TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,paradaVO.localVO.vlocCodigo,paradaVO.localVO.vlocSequencia,paradaVO.localVO.codigo,paradaVO.tipoParadaVO.codigo,paradaVO.localVO.vlocRaio,paradaVO.localVO.vlocDescricao,paradaVO.localVO.vlocUsuarioAdicionou,paradaVO.localVO.vlocUsuarioAlterou,paradaVO.localVO.vlocDataCadastro);
 			}
 		}
 		private function salvaVlocViagemLocalResultHandler(event:ResultEvent):void

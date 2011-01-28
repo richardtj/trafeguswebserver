@@ -1,5 +1,6 @@
 package br.com.chapecosolucoes.trafegusweb.client.vo
 {
+	import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.utils.MyDateFormatter;
 	
@@ -19,7 +20,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this._vlocCodigo = obj.vloc_codigo.toString();
 			this.vlocSequencia = obj.vloc_sequencia.toString();
 			this.vlocTparCodigo = obj.vloc_tpar_codigo.toString();
-			this.vlocRaio = obj.vloc_raio.toString();
+			this._vlocRaio = obj.vloc_raio.toString();
 			this._vlocDataCadastro = obj.vloc_data_cadastro.toString();
 			this._vlocUsuarioAdicionou = obj.vloc_usuario_adicionou.toString();
 			//this.vlocUsuarioAlterou = obj.vloc_usuario_alterou.toString();
@@ -32,6 +33,30 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.codigoGrupo = obj.cref_codigo.toString();
 			this.descricaoGrupo = obj.cref_descricao.toString();
 		}
+		public function set vlocSequencia(vlocSequencia:String):void
+		{
+			this._vlocSequencia = vlocSequencia;
+		}
+		public function get vlocSequencia():String
+		{
+			if(vlocTparCodigo != null && vlocTparCodigo == LocaisEnum.ORIGEM.toString())
+			{
+				return "1";
+			}
+			else if(vlocTparCodigo != null && vlocTparCodigo == LocaisEnum.DESTINO.toString())
+			{
+				return ObjectUtil.toString(MainModel.getInstance().smVO.paradas.length+1);
+			}
+			return "-1";
+		}
+		public function set vlocRaio(vlocRaio:String):void
+		{
+			this._vlocRaio = vlocRaio;
+		}
+		public function get vlocRaio():String
+		{
+			return this._vlocRaio==""?"NULL":this._vlocRaio;
+		}
 		public function set vlocCodigo(vlocCodigo:String):void
 		{
 			this._vlocCodigo = vlocCodigo;
@@ -40,13 +65,17 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		{
 			return this._vlocCodigo==""?"nextval('s_vloc_viagem_local')":this._vlocCodigo;
 		}
+		public function get vlocDescricao():String
+		{
+			return "'"+this.descricao+"'";
+		}
 		public function set vlocDataCadastro(vlocDataCadastro:String):void
 		{
 			this._vlocDataCadastro = vlocDataCadastro;
 		}
 		public function get vlocDataCadastro():String
 		{
-			return this._vlocDataCadastro==""?MyDateFormatter.getInstance().parseTime(new Date()):this._vlocDataCadastro;
+			return "'"+(this._vlocDataCadastro==""?MyDateFormatter.getInstance().parse(new Date()):this._vlocDataCadastro)+"'";
 		}
 		public function set vlocUsuarioAdicionou(vlocUsuarioAdicionou:String):void
 	    {
@@ -67,9 +96,9 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public var descricaoGrupo:String;
 		public var gpsLatitudeString:String;
 		public var gpsLongitudeString:String;
-		public var vlocSequencia:String;
+		private var _vlocSequencia:String;
 		public var vlocTparCodigo:String;
-		public var vlocRaio:String = "";
+		private var _vlocRaio:String = "";
 		private var _vlocCodigo:String;
 		private var _vlocDataCadastro:String = "";
 		private var _vlocUsuarioAdicionou:String = "";

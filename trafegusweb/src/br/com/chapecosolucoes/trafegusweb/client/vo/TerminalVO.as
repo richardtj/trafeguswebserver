@@ -13,17 +13,33 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public function setTerminalVO(obj:Object):void
 		{
-			this.precedencia = obj.orte_sequencia.toString();
+			this._precedencia = obj.orte_sequencia.toString();
 			this.codigo = obj.term_codigo.toString();
 			this.numero = obj.term_numero_terminal.toString();
 			this.ativo = obj.term_ativo.toString();
 			this.ativoWS = obj.term_ativo_ws.toString();
-			this.tempoSatelital = obj.term_tempo_satelital.toString();
-			this.tempoGPRS = obj.term_tempo_gprs.toString();
+			this._tempoSatelital = obj.term_tempo_satelital.toString();
+			this._tempoGPRS = obj.term_tempo_gprs.toString();
 			this._vtecCodigo = obj.term_vtec_codigo.toString();
 			this._vterUsuarioAdicionou = obj.term_usuario_adicionou.toString();
 			this._vterUsuarioAlterou = obj.term_usuario_alterou.toString();
 			this._vterDataCadastro = obj.term_data_cadastro.toString();
+		}
+		public function set precedencia(precedencia:String):void
+		{
+			this._precedencia = precedencia;
+		}
+		public function get precedencia():String
+		{
+			return "'"+this._precedencia+"'";
+		}
+		public function get tempoGPRS():String
+		{
+			return this._tempoGPRS==""?"NULL":this._tempoGPRS;
+		}
+		public function get tempoSatelital():String
+		{
+			return this._tempoSatelital==""?"NULL":this._tempoSatelital;
 		}
 		public function get vtecCodigo():String
 		{
@@ -31,7 +47,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public function get vterDataCadastro():String
 		{
-			return this._vterDataCadastro==""?MyDateFormatter.getInstance().parse(new Date()):this._vterDataCadastro;
+			return "'"+(this._vterDataCadastro==""?MyDateFormatter.getInstance().parse(new Date()):this._vterDataCadastro)+"'";
 		}
 		public function get vterUsuarioAdicionou():String
 		{
@@ -41,7 +57,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		{
 			return ObjectUtil.toString(MainModel.getInstance().codUsuario);
 		}
-		public var precedencia:String;
+		private var _precedencia:String;
 		public var codigo:String;
 		public var numero:String;
 		public var descricao:String;
@@ -49,8 +65,8 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public var tecnologia:String;
 		public var ativo:String;
 		public var ativoWS:String;
-		public var tempoSatelital:String;
-		public var tempoGPRS:String;
+		private var _tempoSatelital:String;
+		private var _tempoGPRS:String;
 		public var veiculo:String;
 		private var _vtecCodigo:String;
 		private var _vterUsuarioAdicionou:String;
