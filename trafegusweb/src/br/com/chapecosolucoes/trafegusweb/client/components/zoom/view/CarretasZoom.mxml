@@ -49,9 +49,10 @@
 				}
 			}
 
+			
 			private function creationComplete():void
 			{
-				inicializaListaCarretasDisponiveis();
+				this.inicializaListaCarretasDisponiveis();
 				MainModel.getInstance().carretasDisponiveisArray.filterFunction=this.controller.carretasFilterFunction;
 				MainModel.getInstance().carretasDisponiveisArray.refresh();
 			}
