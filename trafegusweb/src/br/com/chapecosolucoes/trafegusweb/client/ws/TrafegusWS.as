@@ -603,10 +603,10 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				);
 		}
 
-		public function procuraHistoricoPosicoes(handler:Function, historicoVO:AdvancedSearchHistoricoVO):void
+		public function procuraHistoricoPosicoes(handler:Function,placaVeiculo:String, historicoVO:AdvancedSearchHistoricoVO):void
 		{
 			var operation:Operation=createOperation("procuraHistoricoPosicoes", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao, historicoVO.dataInicial, historicoVO.dataFinal, historicoVO.gpsDescSis);
+			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,placaVeiculo, historicoVO.dataInicial, historicoVO.dataFinal, historicoVO.gpsDescSis);
 		}
 	}
 }
