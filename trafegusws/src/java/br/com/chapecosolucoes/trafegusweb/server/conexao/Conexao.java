@@ -9,7 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,11 +18,21 @@ import java.util.HashMap;
  */
 public class Conexao {
 
-    private static Conexao instance = null;
-    private HashMap<String, Connection> map = null;
+    private static ThreadLocal<Conexao> instance = new ThreadLocal<Conexao>() {
 
-    private Conexao() throws Exception {
-        this.map = new HashMap<String, Connection>();
+        @Override
+        protected Conexao initialValue() {
+            return new Conexao();
+        }
+    };
+    private Connection connection;
+
+    private Conexao() {
+        try {
+            this.connection = this.createConnection();
+        } catch (Exception ex) {
+            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private Connection createConnection() throws Exception {
@@ -41,11 +52,8 @@ public class Conexao {
         return DriverManager.getConnection(url, usuario, senha);
     }
 
-    public static Conexao getInstance() throws Exception {
-        if (instance == null) {
-            instance = new Conexao();
-        }
-        return instance;
+    public static Conexao getInstance() {
+        return instance.get();
     }
 
     public ResultSet executeQuery(String sql, String idSessao) throws Exception {
@@ -80,15 +88,7 @@ public class Conexao {
     }
 
     public Connection getConnection(String idSessao) throws Exception {
-        Connection con = null;
-        if (map.containsKey(idSessao)) {
-            con = map.get(idSessao);
-            con.close();
-            map.remove(idSessao);
-        }
-        con = this.createConnection();
-        this.map.put(idSessao, con);
-        return con;
+        return this.connection;
     }
 
     public String queryToXML(String sql, String codUsuario) throws Exception {
@@ -96,12 +96,15 @@ public class Conexao {
     }
 
     public void logout(String idSessao) throws Exception {
-        Connection con = null;
-        if (map.containsKey(idSessao)) {
-            con = map.get(idSessao);
-            map.remove(idSessao);
-            con.close();
-            con = null;
-        }
+        this.connection.close();
+        close();
+    }
+
+    private static void removeInstance() {
+        instance.remove();
+    }
+
+      public void close() {
+        removeInstance();
     }
 }
