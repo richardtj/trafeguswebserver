@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas 
-    creationComplete="creationComplete()"
-    initialize="init()"
-    xmlns:fx="http://ns.adobe.com/mxml/2009"
-    xmlns:s="library://ns.adobe.com/flex/spark"
-    xmlns:mx="library://ns.adobe.com/flex/mx"
-    xmlns:resize="flex.utils.ui.resize.*"
-    xmlns:view="br.com.chapecosolucoes.trafegusweb.client.view.*"
-    xmlns:objecthandles="com.roguedevelopment.objecthandles.*">
-    <fx:Metadata>
+<mx:Canvas creationComplete="creationComplete()"
+		   initialize="init()"
+		   xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:resize="flex.utils.ui.resize.*"
+		   xmlns:view="br.com.chapecosolucoes.trafegusweb.client.view.*"
+		   xmlns:objecthandles="com.roguedevelopment.objecthandles.*">
+	<fx:Metadata>
 		[Event(name="closeAppEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent")]
 	</fx:Metadata>
-    <fx:Declarations>
-        <!-- Place non-visual elements (e.g., services, value objects) here -->
-        <mx:Fade id="fadeOut"
-            duration="1000"
-            alphaFrom="1.0"
-            alphaTo="0.0"/>
-        <mx:Fade id="fadeIn"
-            duration="1000"
-            alphaFrom="0.0"
-            alphaTo="1.0"/>
-    </fx:Declarations>
-    <fx:Style>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Fade id="fadeOut"
+				 duration="1000"
+				 alphaFrom="1.0"
+				 alphaTo="0.0"/>
+		<mx:Fade id="fadeIn"
+				 duration="1000"
+				 alphaFrom="0.0"
+				 alphaTo="1.0"/>
+	</fx:Declarations>
+	<fx:Style>
 		/* Example of how to style the resize handle. */
 		@namespace resize "flex.utils.ui.resize.*";
 		resize|ResizableBox {
@@ -46,173 +45,190 @@
 		}
 		
 	</fx:Style>
-    <fx:Script>
-        <![CDATA[
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 			import br.com.chapecosolucoes.trafegusweb.client.controller.MainController;
 			import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
-			
+
 			import com.roguedevelopment.objecthandles.Flex4ChildManager;
 			import com.roguedevelopment.objecthandles.Flex4HandleFactory;
+			import com.roguedevelopment.objecthandles.HandleClickedEvent;
 			import com.roguedevelopment.objecthandles.HandleDefinitions;
 			import com.roguedevelopment.objecthandles.HandleDescription;
 			import com.roguedevelopment.objecthandles.HandleRoles;
 			import com.roguedevelopment.objecthandles.ObjectHandles;
-			
+
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
 			import mx.events.MenuEvent;
 			import mx.utils.ObjectUtil;
-			
+
 			import org.osmf.layout.AbsoluteLayoutFacet;
 
-            private var controller:MainController;
+			private var controller:MainController;
 
-            public var xml:XML;
+			public var xml:XML;
 
-            public var oh:ObjectHandles;
+			public var oh:ObjectHandles;
 
-            private function init():void
-            {
-                var handles:Array = HandleDefinitions.NO_ROTATE_DEFINITION;
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, -5), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 105), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(-2, 50), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(102, 50), new Point(0, 0)));
+			private function init():void
+			{
+				var handles:Array=HandleDefinitions.NO_ROTATE_DEFINITION;
+				handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, -5), new Point(0, 0)));
+				handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 105), new Point(0, 0)));
+				handles.push(new HandleDescription(HandleRoles.MOVE, new Point(-2, 50), new Point(0, 0)));
+				handles.push(new HandleDescription(HandleRoles.MOVE, new Point(102, 50), new Point(0, 0)));
 
-                controller = new MainController();
-                controller.view = this;
+				controller=new MainController();
+				controller.view=this;
 
-                oh = new ObjectHandles(this, null, new Flex4HandleFactory(), new Flex4ChildManager());
-                oh.defaultHandles = handles;
+				oh=new ObjectHandles(this, null, new Flex4HandleFactory(), new Flex4ChildManager());
+				oh.defaultHandles=handles;
+				oh.addEventListener(HandleClickedEvent.HANDLE_CLICKED, handlerClicked);
 
-                oh.registerComponent(veiculos, veiculos);
-                oh.registerComponent(detalhes, detalhes);
-                oh.registerComponent(mapa, mapa);
-            }
+				oh.registerComponent(veiculos, veiculos);
+				oh.registerComponent(detalhes, detalhes);
+				oh.registerComponent(mapa, mapa);
+			}
 
-            public function creationComplete():void
-            {
-                xml = <XMLList>
-                        <menuitem label="Arquivo">
-                            <menuitem label="Novo">
-                                <menuitem label="Solicitação de monitoramento"/>
-                            </menuitem>
-                            <menuitem label="Salvar"/>
-                            <menuitem label="Sair"/>
-                        </menuitem>
-                        <menuitem label="Exibir">
-                            <menuitem label="Veiculos" 
-                                type="check" toggled="true"/>
-                            <menuitem label="Detalhes" 
-                                type="check" toggled="true"/>
-                            <menuitem label="Mapa" 
-                                type="check" toggled="true"/>
-                            <menuitem label="Referências"/>
+
+			private function handlerClicked(evt:HandleClickedEvent):void
+			{
+				MessageBox.atencao(ObjectUtil.toString(evt));
+			}
+
+			public function creationComplete():void
+			{
+				xml=<XMLList>
+						<menuitem label="Arquivo">
+							<menuitem label="Novo">
+								<menuitem label="Solicitação de monitoramento"/>
+							</menuitem>
+							<menuitem label="Salvar"/>
+							<menuitem label="Sair"/>
+						</menuitem>
+						<menuitem label="Exibir">
+							<menuitem label="Veiculos" 
+								type="check" toggled="true"/>
+							<menuitem label="Detalhes" 
+								type="check" toggled="true"/>
+							<menuitem label="Mapa" 
+								type="check" toggled="true"/>
+							<menuitem label="Referências"/>
 							<menuitem label="Distâncias">
 								<menuitem label="Entre veículos"/>
 								<menuitem label="Entre referências"/>
 								<menuitem label="Entre veículo e referência"/>
 							</menuitem>
-                        </menuitem>
+						</menuitem>
 						<menuitem label="Configurações">
 							<menuitem label="Grids"/>
 						</menuitem>
-                    </XMLList>;
-                this.myMenuBar.dataProvider = xml;
+					</XMLList>;
+				this.myMenuBar.dataProvider=xml;
 
-                this.veiculos.percentHeight = UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosPercentHeight;
-                this.veiculos.percentWidth = UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosPercentWidth;
+				this.veiculos.percentHeight=UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosPercentHeight;
+				this.veiculos.percentWidth=UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosPercentWidth;
 
-                this.mapa.percentHeight = UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentHeight;
-                this.mapa.percentWidth = UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentWidth;
+				this.mapa.percentHeight=UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentHeight;
+				this.mapa.percentWidth=UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentWidth;
 
-                this.detalhes.percentHeight = UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentHeight;
-                this.detalhes.percentHeight = UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentWidth;
+				this.detalhes.percentHeight=UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentHeight;
+				this.detalhes.percentHeight=UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentWidth;
 
-            }
-        ]]>
-    </fx:Script>
-    <mx:MenuBar id="myMenuBar"
-        x="0" y="0" width="100%"
-        labelField="@label"
-        showRoot="false"
-        itemClick="this.controller.itemClickedHandler(event)"/>
-    <resize:ResizableWindow id="veiculos"
-        x="{UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosX}" y="{UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosY}"
-        verticalGap="2"
-        hideEffect="{fadeOut}"
-        showEffect="{fadeIn}"
-        horizontalScrollPolicy="off"
-        minHeight="200"
-        minWidth="200"
-        verticalScrollPolicy="off"
-        movable="false"
-        resizable="false"
-        close="this.controller.closeEventHandler(event)"
-        title="Veiculos"
-        status=""
-        showCloseButton="true"
-        bringToFrontOnMove="true"
-        bringToFrontOnResize="true"
-        titleIcon="@Embed(source='assets/cam(Teal).png')"
-        moveHandleColor="#ffffff"
-        resizeHandleColor="#ffffff">
-        <view:VehiclesView id="vehiclesView"
-            width="100%" height="100%"
-            vehiclesReceivedEvent="this.controller.vehiclesReceivedEventHandler(event)"
-            vehicleSelectedEvent="this.controller.vehicleSelectedEventHandler(event)"
-            pageChanged="this.controller.pageChangedEventHandler(event)"/>
-    </resize:ResizableWindow>
-    <resize:ResizableWindow id="mapa"
-        x="{UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleX}" y="{UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleY}"
-        verticalGap="2"
-        hideEffect="{fadeOut}"
-        showEffect="{fadeIn}"
-        horizontalScrollPolicy="off"
-        minHeight="272"
-        minWidth="300"
-        verticalScrollPolicy="off"
-        movable="false"
-        resizable="false"
-        close="this.controller.closeEventHandler(event)"
-        title="Mapa"
-        status=""
-        showCloseButton="true"
-        bringToFrontOnMove="true"
-        bringToFrontOnResize="true"
-        titleIcon="@Embed(source='assets/Map3.png')"
-        moveHandleColor="#ffffff"
-        resizeHandleColor="#ffffff">
-        <view:MapView id="map"
-            width="100%" height="100%"/>
-    </resize:ResizableWindow>
+			}
+		]]>
+	</fx:Script>
+	<mx:MenuBar id="myMenuBar"
+				x="0"
+				y="0"
+				width="100%"
+				labelField="@label"
+				showRoot="false"
+				itemClick="this.controller.itemClickedHandler(event)"/>
+	<resize:ResizableWindow id="veiculos"
+							x="{UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosX}"
+							y="{UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosY}"
+							verticalGap="2"
+							hideEffect="{fadeOut}"
+							showEffect="{fadeIn}"
+							horizontalScrollPolicy="off"
+							minHeight="200"
+							minWidth="200"
+							verticalScrollPolicy="off"
+							movable="false"
+							resizable="false"
+							close="this.controller.closeEventHandler(event)"
+							title="Veiculos"
+							status=""
+							showCloseButton="true"
+							bringToFrontOnMove="true"
+							bringToFrontOnResize="true"
+							titleIcon="@Embed(source='assets/cam(Teal).png')"
+							moveHandleColor="#ffffff"
+							resizeHandleColor="#ffffff">
+		<view:VehiclesView id="vehiclesView"
+						   width="100%"
+						   height="100%"
+						   vehiclesReceivedEvent="this.controller.vehiclesReceivedEventHandler(event)"
+						   vehicleSelectedEvent="this.controller.vehicleSelectedEventHandler(event)"
+						   pageChanged="this.controller.pageChangedEventHandler(event)"/>
+	</resize:ResizableWindow>
+	<resize:ResizableWindow id="mapa"
+							x="{UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleX}"
+							y="{UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleY}"
+							verticalGap="2"
+							hideEffect="{fadeOut}"
+							showEffect="{fadeIn}"
+							horizontalScrollPolicy="off"
+							minHeight="272"
+							minWidth="300"
+							verticalScrollPolicy="off"
+							movable="false"
+							resizable="false"
+							close="this.controller.closeEventHandler(event)"
+							title="Mapa"
+							status=""
+							showCloseButton="true"
+							bringToFrontOnMove="true"
+							bringToFrontOnResize="true"
+							titleIcon="@Embed(source='assets/Map3.png')"
+							moveHandleColor="#ffffff"
+							resizeHandleColor="#ffffff">
+		<view:MapView id="map"
+					  width="100%"
+					  height="100%"/>
+	</resize:ResizableWindow>
 
-    <resize:ResizableWindow id="detalhes"
-        x="{UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheX}" y="{UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheY}"
-        verticalGap="2"
-        hideEffect="{fadeOut}"
-        showEffect="{fadeIn}"
-        horizontalScrollPolicy="off"
-        minHeight="272"
-        minWidth="300"
-        verticalScrollPolicy="off"
-        movable="false"
-        resizable="false"
-        close="this.controller.closeEventHandler(event)"
-        title="Detalhes"
-        status=""
-        showCloseButton="true"
-        bringToFrontOnMove="true"
-        bringToFrontOnResize="true"
-        titleIcon="@Embed(source='assets/server-plus.png')"
-        moveHandleColor="#ffffff"
-        resizeHandleColor="#ffffff">
-        <view:DetailsView id="details"
-            width="100%" height="100%"
-            routeReceivedEvent="this.controller.routeReceivedEventHandler(event)"
-            vehicleSelectedEvent="this.controller.vehicleSelectedEventHandler(event)"
-            pageChanged="this.controller.pageChangedEventHandler(event)"/>
-    </resize:ResizableWindow>
+	<resize:ResizableWindow id="detalhes"
+							x="{UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheX}"
+							y="{UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheY}"
+							verticalGap="2"
+							hideEffect="{fadeOut}"
+							showEffect="{fadeIn}"
+							horizontalScrollPolicy="off"
+							minHeight="272"
+							minWidth="300"
+							verticalScrollPolicy="off"
+							movable="false"
+							resizable="false"
+							close="this.controller.closeEventHandler(event)"
+							title="Detalhes"
+							status=""
+							showCloseButton="true"
+							bringToFrontOnMove="true"
+							bringToFrontOnResize="true"
+							titleIcon="@Embed(source='assets/server-plus.png')"
+							moveHandleColor="#ffffff"
+							resizeHandleColor="#ffffff">
+		<view:DetailsView id="details"
+						  width="100%"
+						  height="100%"
+						  routeReceivedEvent="this.controller.routeReceivedEventHandler(event)"
+						  vehicleSelectedEvent="this.controller.vehicleSelectedEventHandler(event)"
+						  pageChanged="this.controller.pageChangedEventHandler(event)"/>
+	</resize:ResizableWindow>
 </mx:Canvas>
