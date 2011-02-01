@@ -6,7 +6,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.view
 	
 	import mx.containers.FormItem;
 	import mx.controls.TextInput;
-
+	
 	public class AdvancedSearchHistoricoImpl extends AdvancedSearch
 	{
 		public function AdvancedSearchHistoricoImpl()
@@ -29,7 +29,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.view
 			dfDataInicial.text = MyDateFormatter.getInstance().parse(new Date());
 			formItemDataInicial.addChild(dfDataInicial);
 			this.form.addChild(formItemDataInicial);
-
+			
 			var formItemDataFinal:FormItem = new FormItem();
 			formItemDataFinal.name = "formItemDataFinal";
 			formItemDataFinal.label = "Data final";
@@ -38,17 +38,6 @@ package br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.view
 			dfDataFinal.text = MyDateFormatter.getInstance().parse(new Date());
 			formItemDataFinal.addChild(dfDataFinal);
 			this.form.addChild(formItemDataFinal);
-<<<<<<< .mine
-			
-			var formItemDescricao:FormItem = new FormItem();
-			formItemDescricao.name = "formItemDescricao";
-			formItemDescricao.label = "Descrição";
-			var txtDescricao:TextInput = new TextInput();
-			txtDescricao.name = "txtDescricao";
-			formItemDescricao.addChild(txtDescricao);
-			this.form.addChild(formItemDescricao);
-			
-=======
 			
 			var formItemGPSDescSis:FormItem = new FormItem();
 			formItemGPSDescSis.name = "formItemGPSDescSis";
@@ -58,8 +47,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.view
 			formItemGPSDescSis.addChild(textInputGPSDescSis);
 			
 			this.form.addChild(formItemGPSDescSis);
->>>>>>> .r337
-
+			
 		}
 	}
 }
