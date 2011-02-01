@@ -331,7 +331,8 @@
 		]]>
 	</fx:Script>
 	<maps:Map id="map"
-			  key="ABQIAAAAzLOtdcPXfM2lE08HYYoOtBRjLyj5ojzoC0E4DRI1gCu_z1OhKRTdmypwjwm7FVWCeee1VpIL-w0z1A"
+			  url="http://187.55.209.16:8080/trafegusweb"
+			  key="ABQIAAAALUGRWwgiiMfMO3lqrOGxThQ0q8CD4c96zFCR7eSqtEhgqjkFIBS2SM_cLZ3RxTnjqscrlBA3z7HSlg"
 			  mapevent_mapready="controller.onMapReady(event)"
 			  width="100%"
 			  height="100%"/>
