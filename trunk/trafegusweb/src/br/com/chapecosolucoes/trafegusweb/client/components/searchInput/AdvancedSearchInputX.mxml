@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="100%"
+		 borderStyle="solid"
+		 verticalAlign="middle" 
+		 paddingRight="5" 
+		 xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*">
+	<fx:Metadata>
+		[Event(name="refreshEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.RefreshEvent")]
+		[Event(name="advancedSearchEvent", type="br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent")]
+	</fx:Metadata>
+	<fx:Binding source="searchInput.text" destination="text"/>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent;
+			import br.com.chapecosolucoes.trafegusweb.client.events.RefreshEvent;
+			
+			import mx.controls.DataGrid;
+			[Bindable]
+			public var text:String = "";
+			[Bindable]
+			public var dataGrid:DataGrid;
+			public function clickHandler():void
+			{
+				var event:RefreshEvent = new RefreshEvent(RefreshEvent.REFRESH_EVENT);
+				this.dispatchEvent(event);
+			}
+			private function advancedSearchEventHandler(event:AdvancedSearchEvent):void
+			{
+				/*var event:AdvancedSearchEvent = AdvancedSearchEvent(event.clone());
+				this.dispatchEvent(event);*/
+				
+			}
+		]]>
+	</fx:Script>
+	<searchInput:SearchInputFXBase 
+		id="searchInput"
+		width="100%" 
+		borderStyle="none"
+		text="{text}"
+		advancedSearchEvent="advancedSearchEventHandler(event)"/>
+	<mx:Image 
+		source="@Embed(source='assets/refresh16x16.png')" 
+		buttonMode="true" 
+		toolTip="Atualizar Grid"
+		click="clickHandler()"/>
+</mx:HBox>
