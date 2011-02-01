@@ -167,7 +167,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
                     this.view.oh.unregisterComponent(this.view.detalhes);
                 }
             }
-            if (event.label == "Salvar")
+            if (event.label == "Posições das telas")
             {
                 UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosX = this.view.veiculos.x;
                 UsuarioLogado.getInstance().posicaoTelasVO.gridVeiculosY = this.view.veiculos.y;
@@ -176,16 +176,16 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
                 UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleX = this.view.mapa.x;
                 UsuarioLogado.getInstance().posicaoTelasVO.mapaGoogleY = this.view.mapa.y;
                 UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentWidth = (100 * this.view.mapa.width) / FlexGlobals.topLevelApplication.width;
-                UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentHeight = (100 * this.view.mapa.height) / FlexGlobals.topLevelApplication.width;
-                ;
+                UsuarioLogado.getInstance().posicaoTelasVO.mapaGooglePercentHeight = (100 * this.view.mapa.height) / FlexGlobals.topLevelApplication.width;                
                 UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheX = this.view.detalhes.x;
                 UsuarioLogado.getInstance().posicaoTelasVO.gridDetalheY = this.view.detalhes.y;
-                UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentWidth = (100 * this.view.detalhes.width) / FlexGlobals.topLevelApplication.width;
-                ;
+                UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentWidth = (100 * this.view.detalhes.width) / FlexGlobals.topLevelApplication.width;             
                 UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentHeight = (100 * this.view.detalhes.height) / FlexGlobals.topLevelApplication.width;
 
                 TrafegusWS.getIntance().salvarPosicaoTelas(salvarPosicaoTelasResultHandler);
-				
+			}
+			if(event.label == "Itens por pagina")
+			{
 				TrafegusWS.getIntance().salvarItensPorPagina(salvarItensPorPaginaResultHandler);
             }
             if (event.label == "Sair")
