@@ -33,7 +33,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public function get precedencia():String
 		{
-			return "'"+this._precedencia+"'";
+			return "'"+(this._precedencia=="P"?"1":(this._precedencia=="S"?"2":"3"))+"'";
 		}
 		public function get tempoGPRS():String
 		{
