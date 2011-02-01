@@ -5,6 +5,8 @@
 						xmlns:mx="library://ns.adobe.com/flex/mx"
 						layout="vertical"
 						showCloseButton="true"
+						movable="true"
+						resizable="false"
 						creationCompleteEffect="{dissolve,iris}"
 						removedEffect="{dissolve,iris}"
 						initialize="init()"
@@ -29,9 +31,10 @@
 				destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.CarretasZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
-
+			
 			import mx.managers.PopUpManager;
 			private var controller:CarretasZoomController;
 
@@ -39,6 +42,8 @@
 			{
 				this.controller=new CarretasZoomController();
 				this.controller.view=this;
+				
+				ResizeManager.enableResize(this,50);
 			}
 
 			private function inicializaListaCarretasDisponiveis():void

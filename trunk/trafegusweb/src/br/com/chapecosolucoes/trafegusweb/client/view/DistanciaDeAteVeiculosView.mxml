@@ -4,9 +4,12 @@
 				xmlns:mx="library://ns.adobe.com/flex/mx"
 				layout="vertical"
 				showCloseButton="true"
+				movable="true"
+				resizable="false"
 				keyDown="this.controller.keyDownEventHandler(event)"
 				creationCompleteEffect="{dissolve,iris}"
 				removedEffect="{dissolve,iris}"
+				initialize="init()"
 				creationComplete="this.creationComplete()"
 				close="this.controller.closeHandler()"
 				title="Distancia entre veiculos"
@@ -26,6 +29,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			import br.com.chapecosolucoes.trafegusweb.client.controller.DistanciaDeAteVeiculosController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.DistanciaDeAteReferenciasVO;
@@ -39,6 +43,10 @@
 				this.controller.view = this;
 				
 				MainModel.getInstance().distanciaEntreVeiculos.filterFunction = this.controller.distanciaEntreVeiculosFilterFunction;
+			}
+			private function init():void
+			{
+				ResizeManager.enableResize(this,50);
 			}
 			private function labelFunction(item:Object,column:DataGridColumn):String
 			{

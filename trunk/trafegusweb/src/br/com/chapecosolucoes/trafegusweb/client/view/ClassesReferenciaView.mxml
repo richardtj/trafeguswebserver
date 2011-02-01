@@ -5,6 +5,8 @@
 				layout="vertical"
 				width="520" height="420"
 				showCloseButton="true"
+				movable="true"
+				resizable="false"
 				creationCompleteEffect="{dissolve,iris}"
 				removedEffect="{dissolve,iris}"
 				initialize="init()"
@@ -25,6 +27,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			import br.com.chapecosolucoes.trafegusweb.client.controller.ClassesReferenciaController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
@@ -35,6 +38,8 @@
 			{
 				this.controller = new ClassesReferenciaController();
 				this.controller.view = this;
+				
+				ResizeManager.enableResize(this,50);
 			}
 			private function creationComplete():void
 			{

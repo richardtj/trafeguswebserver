@@ -6,6 +6,8 @@
 						layout="vertical"
 						width="520"
 						height="420"
+						movable="true"
+						resizable="false"
 						showCloseButton="true"
 						creationCompleteEffect="{dissolve,iris}"
 						removedEffect="{dissolve,iris}"
@@ -31,10 +33,11 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.VeiculoZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.events.SelectedVehicleEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
-
+			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			private var controller:VeiculoZoomController;
@@ -45,6 +48,8 @@
 				this.controller.view=this;
 
 				this.controller.solicitaTotalListaVeiculos();
+				
+				ResizeManager.enableResize(this,50);
 			}
 
 			private function inicializaListaVeiculos():void

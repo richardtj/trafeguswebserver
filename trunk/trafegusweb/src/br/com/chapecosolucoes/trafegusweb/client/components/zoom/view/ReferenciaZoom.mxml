@@ -6,6 +6,8 @@
 						layout="vertical"
 						width="520"
 						height="420"
+						movable="true"
+						resizable="false"
 						showCloseButton="true"
 						creationCompleteEffect="{dissolve,iris}"
 						removedEffect="{dissolve,iris}"
@@ -31,11 +33,12 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.ReferenciaZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.model.ReferenciaZoomModel;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.ReferenciaVO;
-
+			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
@@ -52,6 +55,8 @@
 				this.controller.model=this.model;
 
 				this.controller.solicitaTotalRefencias();
+				
+				ResizeManager.enableResize(this,50);
 			}
 
 			private function inicializaReferenciasZoom():void
