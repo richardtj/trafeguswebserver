@@ -54,7 +54,7 @@
                 list.rowCount = DataGrid(this.owner).columnCount - 1;
                 list.dataProvider = this.dataProvider;
                 list.addEventListener(FlexMouseEvent.MOUSE_DOWN_OUTSIDE, this.mouseDownOutSideEventHandler);
-                list.addEventListener(CheckBoxItemRendererEvent.VISIBLE_CHANGED, this.visibleChangedEventHandler);
+                //list.addEventListener(CheckBoxItemRendererEvent.VISIBLE_CHANGED, this.visibleChangedEventHandler);
                 list.itemRenderer = new ClassFactory(CheckBoxItemRenderer);
                 MyPopUpManager.addPopUp(list, DisplayObject(this));
 				MyPopUpManager.centerPopUp(list);
