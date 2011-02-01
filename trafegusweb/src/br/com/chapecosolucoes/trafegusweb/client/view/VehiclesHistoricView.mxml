@@ -1,82 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group 
-    initialize="init()"
-    xmlns:fx="http://ns.adobe.com/mxml/2009"
-    xmlns:s="library://ns.adobe.com/flex/spark"
-    xmlns:mx="library://ns.adobe.com/flex/mx"
-    xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
-    xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
-    <fx:Binding 
-        source="this.textInputFiltro.text"
-        destination="MainModel.getInstance().historicoSelecionado"/>
-    <fx:Metadata>
+	initialize="init()"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
+	xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Binding 
+		source="this.textInputFiltro.text"
+		destination="MainModel.getInstance().historicoSelecionado"/>
+	<fx:Metadata>
 		[Event(name="routeReceivedEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.VehiclesHistoricEvent")]
 	</fx:Metadata>
-    <s:layout>
-        <s:VerticalLayout/>
-    </s:layout>
-    <fx:Declarations>
-        <!-- Place non-visual elements (e.g., services, value objects) here -->
-    </fx:Declarations>
-    <fx:Script>
-        <![CDATA[
-            import br.com.chapecosolucoes.trafegusweb.client.controller.VehiclesHistoricController;
-            import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
-            import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
-
-            private var controller:VehiclesHistoricController;
-
-            [Bindable]
-            public var param:PosicaoVeiculoVO;
-
-            private function init():void
-            {
-                this.controller = new VehiclesHistoricController();
-                this.controller.view = this;
-                MainModel.getInstance().historicoPosicoesVeiculosArray.filterFunction = this.controller.historicoFilterFunction;
-            }
-
-            public function posicaoVeiculoVO(value:PosicaoVeiculoVO):void
-            {
-                this.param = value;
-                this.controller.solicitaTotalHistoricoPosicoes();
-                this.controller.atualizaHistoricoPosicoes();
-            }
-        ]]>
-    </fx:Script>
-    <searchInput:SearchInputFX id="textInputFiltro"
-        width="100%"
-        text="{MainModel.getInstance().historicoSelecionado}"
-<<<<<<< .mine
-        keyUp="MainModel.getInstance().historicoPosicoesVeiculosArray.refresh()"
-		advancedSearchEvent="this.controller.advancedSearchEventHandler(event)" />
-=======
-        keyUp="MainModel.getInstance().historicoPosicoesVeiculosArray.refresh()"
-		advancedSearchEvent="this.controller.advancedSearchEventRandler(event)"/>
->>>>>>> .r338
-    <s:Group id="group1"
-        width="100%" height="100%">
-        <view:DataGridFX 
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.controller.VehiclesHistoricController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.PosicaoVeiculoVO;
+			
+			private var controller:VehiclesHistoricController;
+			
+			[Bindable]
+			public var param:PosicaoVeiculoVO;
+			
+			private function init():void
+			{
+				this.controller = new VehiclesHistoricController();
+				this.controller.view = this;
+				MainModel.getInstance().historicoPosicoesVeiculosArray.filterFunction = this.controller.historicoFilterFunction;
+			}
+			
+			public function posicaoVeiculoVO(value:PosicaoVeiculoVO):void
+			{
+				this.param = value;
+				this.controller.solicitaTotalHistoricoPosicoes();
+				this.controller.atualizaHistoricoPosicoes();
+			}
+		]]>
+	</fx:Script>
+	<searchInput:SearchInputFX id="textInputFiltro"
+							   width="100%"
+							   text="{MainModel.getInstance().historicoSelecionado}"
+							   keyUp="MainModel.getInstance().historicoPosicoesVeiculosArray.refresh()"
+							   advancedSearchEvent="this.controller.advancedSearchEventRandler(event)"/>
+	<s:Group id="group1"
+			 width="100%" height="100%">
+		<view:DataGridFX 
 			id="grid1"
-            width="100%" height="100%"
-            dataProvider="{MainModel.getInstance().historicoPosicoesVeiculosArray}">
-            <view:columns>
-                <mx:DataGridColumn 
-                    width="20"
-                    sortable="false"
-                    headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
-                <mx:DataGridColumn headerText="Data e hora"
-                    dataField="dataEHora"/>
-                <mx:DataGridColumn headerText="Posição"
-                    dataField="gpsDescSis"/>
-            </view:columns>
-        </view:DataGridFX>
-    </s:Group>
-    <view:PaginableComponent id="paginable"
-        totalRecords="{MainModel.getInstance().totalHistoricoPosicoes}"
-		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
-        first="this.controller.solicitaHistoricoPosicoes(event)"
-        last="this.controller.solicitaHistoricoPosicoes(event)"
-        next="this.controller.solicitaHistoricoPosicoes(event)"
-        prev="this.controller.solicitaHistoricoPosicoes(event)"/>
+			width="100%" height="100%"
+			dataProvider="{MainModel.getInstance().historicoPosicoesVeiculosArray}">
+			<view:columns>
+				<mx:DataGridColumn 
+					width="20"
+					sortable="false"
+					headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+				<mx:DataGridColumn headerText="Data e hora"
+								   dataField="dataEHora"/>
+				<mx:DataGridColumn headerText="Posição"
+								   dataField="gpsDescSis"/>
+			</view:columns>
+		</view:DataGridFX>
+	</s:Group>
+	<view:PaginableComponent id="paginable"
+							 totalRecords="{MainModel.getInstance().totalHistoricoPosicoes}"
+							 itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
+							 first="this.controller.solicitaHistoricoPosicoes(event)"
+							 last="this.controller.solicitaHistoricoPosicoes(event)"
+							 next="this.controller.solicitaHistoricoPosicoes(event)"
+							 prev="this.controller.solicitaHistoricoPosicoes(event)"/>
 </s:Group>
