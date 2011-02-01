@@ -112,21 +112,21 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
                 this.view.veiculos.visible = false;
                 this.view.myMenuBar.menuBarItems[1].data.menuitem[0].@toggled = "false";
 
-                this.view.oh.unregisterComponent(this.view.veiculos);
+                //this.view.oh.unregisterComponent(this.view.veiculos);
             }
             if (event.target.id.toString() == "mapa")
             {
                 this.view.mapa.visible = false;
                 this.view.myMenuBar.menuBarItems[1].data.menuitem[2].@toggled = "false";
-                this.view.oh.unregisterComponent(this.view.mapa);
+                //this.view.oh.unregisterComponent(this.view.mapa);
             }
             if (event.target.id.toString() == "detalhes")
             {
                 this.view.detalhes.visible = false;
                 this.view.myMenuBar.menuBarItems[1].data.menuitem[1].@toggled = "false";
-                this.view.oh.unregisterComponent(this.view.detalhes);
+                //this.view.oh.unregisterComponent(this.view.detalhes);
             }
-            this.view.oh.selectionManager.clearSelection();
+            //this.view.oh.selectionManager.clearSelection();
         }
 
         public function itemClickedHandler(event:MenuEvent):void
@@ -134,38 +134,38 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             if (event.label == "Veiculos")
             {
                 this.view.veiculos.visible = !this.view.veiculos.visible;
-                if (this.view.veiculos.visible)
+                /*if (this.view.veiculos.visible)
                 {
                     this.view.oh.registerComponent(this.view.veiculos, this.view.veiculos);
                 }
                 else
                 {
                     this.view.oh.unregisterComponent(this.view.veiculos);
-                }
+                }*/
             }
             if (event.label == "Mapa")
             {
                 this.view.mapa.visible = !this.view.mapa.visible;
-                if (this.view.mapa.visible)
+                /*if (this.view.mapa.visible)
                 {
                     this.view.oh.registerComponent(this.view.mapa, this.view.mapa);
                 }
                 else
                 {
                     this.view.oh.unregisterComponent(this.view.mapa);
-                }
+                }*/
             }
             if (event.label == "Detalhes")
             {
                 this.view.detalhes.visible = !this.view.detalhes.visible;
-                if (this.view.mapa.visible)
+                /*if (this.view.mapa.visible)
                 {
                     this.view.oh.registerComponent(this.view.detalhes, this.view.detalhes);
                 }
                 else
                 {
                     this.view.oh.unregisterComponent(this.view.detalhes);
-                }
+                }*/
             }
             if (event.label == "Posições das telas")
             {
