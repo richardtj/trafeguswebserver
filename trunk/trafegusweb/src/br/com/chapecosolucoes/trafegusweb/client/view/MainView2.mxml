@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas 
     creationComplete="creationComplete()"
+	creationCompleteEffect="{dissolve,iris}"
+	removedEffect="{dissolve,iris}"
     initialize="init()"
     xmlns:fx="http://ns.adobe.com/mxml/2009"
     xmlns:s="library://ns.adobe.com/flex/spark"
@@ -21,6 +23,10 @@
             duration="1000"
             alphaFrom="0.0"
             alphaTo="1.0"/>
+		<mx:Dissolve id="dissolve"
+					 duration="500"/>
+		<mx:Iris id="iris"
+				 duration="500"/>
     </fx:Declarations>
     <fx:Style>
 		/* Example of how to style the resize handle. */
@@ -48,6 +54,7 @@
 	</fx:Style>
     <fx:Script>
         <![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			import br.com.chapecosolucoes.trafegusweb.client.controller.MainController;
 			import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
@@ -71,25 +78,14 @@
 
             public var xml:XML;
 
-            public var oh:ObjectHandles;
-
             private function init():void
             {
-                var handles:Array = HandleDefinitions.NO_ROTATE_DEFINITION;
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, -5), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(50, 105), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(-2, 50), new Point(0, 0)));
-                handles.push(new HandleDescription(HandleRoles.MOVE, new Point(102, 50), new Point(0, 0)));
-
-                controller = new MainController();
-                controller.view = this;
-
-                oh = new ObjectHandles(this, null, new Flex4HandleFactory(), new Flex4ChildManager());
-                oh.defaultHandles = handles;
-
-                oh.registerComponent(veiculos, veiculos);
-                oh.registerComponent(detalhes, detalhes);
-                oh.registerComponent(mapa, mapa);
+				this.controller = new MainController();
+				this.controller.view = this;
+				
+				ResizeManager.enableResize(veiculos,50);
+				ResizeManager.enableResize(mapa,50);
+				ResizeManager.enableResize(detalhes,50);
             }
 
             public function creationComplete():void
@@ -151,7 +147,7 @@
         minHeight="200"
         minWidth="200"
         verticalScrollPolicy="off"
-        movable="false"
+        movable="true"
         resizable="false"
         close="this.controller.closeEventHandler(event)"
         title="Veiculos"
@@ -177,7 +173,7 @@
         minHeight="272"
         minWidth="300"
         verticalScrollPolicy="off"
-        movable="false"
+        movable="true"
         resizable="false"
         close="this.controller.closeEventHandler(event)"
         title="Mapa"
@@ -201,7 +197,7 @@
         minHeight="272"
         minWidth="300"
         verticalScrollPolicy="off"
-        movable="false"
+        movable="true"
         resizable="false"
         close="this.controller.closeEventHandler(event)"
         title="Detalhes"

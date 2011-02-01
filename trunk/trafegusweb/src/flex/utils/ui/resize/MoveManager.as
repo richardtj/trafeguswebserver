@@ -38,7 +38,7 @@ package flex.utils.ui.resize
 		private var _constrainToParentBounds:Boolean;
 		private var _constrainToBounds:Rectangle;
 		
-		[Embed(source="/assets/cursor_move.gif")]
+		[Embed(source="/assets/sjd/mouseMove.gif")]
 		public var moveIcon:Class;
 		private var moveCursorID:int;
 		

@@ -2,7 +2,7 @@
 <!-- http://187.55.209.16:8080/trafegusws/TrafegusWS?wsdl -->
 <config>
 	<wsdl>
-		http://187.55.209.16:8080/trafegusws/TrafegusWS?wsdl
+		http://localhost:8080/trafegusws/TrafegusWS?wsdl
 	</wsdl>
 </config>
 
