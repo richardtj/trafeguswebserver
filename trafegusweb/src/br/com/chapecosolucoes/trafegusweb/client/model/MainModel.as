@@ -253,6 +253,9 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		[Embed(source="assets/map/country.png")]
 		private var referenciasGerais:Class;
 		
+		[Embed(source="assets/sjd/mouseMove.gif")]
+		public var moveCursor:Class;
+		
 		public function getClassesReferenciaIcons(value:int):Class
 		{
 			switch(value)

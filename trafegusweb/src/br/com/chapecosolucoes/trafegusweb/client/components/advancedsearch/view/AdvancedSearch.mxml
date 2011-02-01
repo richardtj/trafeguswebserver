@@ -3,7 +3,10 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx"
 				layout="vertical"
+				movable="true"
+				resizable="false"
 				showCloseButton="true"
+				initialize="init()"
 				keyDown="this.controller.keyDownEventHandler(event)"
 				creationCompleteEffect="{dissolve,iris}"
 				removedEffect="{dissolve,iris}"
@@ -24,7 +27,12 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.controller.AdvancedSearchController;
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			public var controller:AdvancedSearchController;
+			private function init():void
+			{
+				ResizeManager.enableResize(this,50);
+			}
 
 		]]>
 	</fx:Script>

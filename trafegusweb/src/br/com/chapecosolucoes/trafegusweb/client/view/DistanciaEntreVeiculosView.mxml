@@ -4,6 +4,8 @@
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				layout="vertical"
 				showCloseButton="true"
+				movable="true"
+				resizable="false"
 				creationCompleteEffect="{dissolve,iris}"
 				removedEffect="{dissolve,iris}"
 				initialize="init()"
@@ -40,6 +42,7 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			import br.com.chapecosolucoes.trafegusweb.client.controller.DistanciaEntreVeiculosController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.DistanciaEntreVeiculosModel;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
@@ -56,6 +59,8 @@
 				this.model = new DistanciaEntreVeiculosModel();
 				this.controller.view = this;
 				this.controller.model = this.model;
+				
+				ResizeManager.enableResize(this,50);
 			}
 			private function creationComplete():void{
 				

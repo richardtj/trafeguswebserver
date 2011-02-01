@@ -4,6 +4,8 @@
 				xmlns:mx="library://ns.adobe.com/flex/mx"
 				layout="vertical"
 				showCloseButton="true"
+				movable="true"
+				resizable="false"
 				creationCompleteEffect="{dissolve,iris}"
 				removedEffect="{dissolve,iris}"
 				initialize="init()"
@@ -21,6 +23,7 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			import br.com.chapecosolucoes.trafegusweb.client.controller.RouteDetailsController;
 			import br.com.chapecosolucoes.trafegusweb.client.events.SelectedRouteEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
@@ -40,6 +43,8 @@
 			{
 				this.controller = new RouteDetailsController();
 				this.controller.view = this;
+				
+				ResizeManager.enableResize(this,50);
 			}
 			private function rotaSelecionada():void
 			{

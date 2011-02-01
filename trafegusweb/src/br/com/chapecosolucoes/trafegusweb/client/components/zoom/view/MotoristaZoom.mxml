@@ -5,6 +5,8 @@
 				layout="vertical"
 				width="720" height="420"
 				showCloseButton="true"
+				movable="true"
+				resizable="false"
 				creationCompleteEffect="{dissolve,iris}"
 				removedEffect="{dissolve,iris}"
 				initialize="init()"
@@ -26,6 +28,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.MotoristaZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
@@ -44,6 +47,7 @@
 				
 				this.controller.solicitaTotalListaMotoristas();
 				
+				ResizeManager.enableResize(this,50);
 			}
 			
 			private function inicializaTotalListaMotoristas():void {

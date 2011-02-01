@@ -6,6 +6,8 @@
                         layout="vertical"
                         width="720"
                         height="420"
+						movable="true"
+						resizable="false"
                         showCloseButton="true"
                         mouseOver="this.controller.mouseOverEventHandler()"
                         creationCompleteEffect="{dissolve,iris}"
@@ -29,6 +31,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.ViagemPaiZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.events.ViagemPaiSelecionadaEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
@@ -43,6 +46,8 @@
 				this.controller.view = this;
 				
 				this.controller.solicitaTotalListaViagemPai();
+				
+				ResizeManager.enableResize(this,50);
 			}
 			private function creationComplete():void
 			{

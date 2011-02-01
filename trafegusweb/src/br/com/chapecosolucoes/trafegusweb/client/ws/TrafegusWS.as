@@ -615,6 +615,21 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			var operation:Operation=createOperation("procuraHistoricoPosicoes", handler);
 			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,placaVeiculo, historicoVO.dataInicial, historicoVO.dataFinal, historicoVO.gpsDescSis);
 		}
+		public function beginTransaction(handler:Function):void
+		{
+			var operation:Operation=createOperation("beginTransaction", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao);
+		}
+		public function commitTransaction(handler:Function):void
+		{
+			var operation:Operation=createOperation("commitTransaction", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao);
+		}
+		public function rollBackTransaction(handler:Function):void
+		{
+			var operation:Operation=createOperation("rollBackTransaction", handler);
+			operation.send(UsuarioLogado.getInstance().IdSessao);
+		}
 	}
 }
 

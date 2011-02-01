@@ -6,6 +6,8 @@
 						layout="vertical"
 						width="720"
 						height="420"
+						movable="true"
+						resizable="false"
 						showCloseButton="true"
 						creationCompleteEffect="{dissolve,iris}"
 						removedEffect="{dissolve,iris}"
@@ -33,12 +35,13 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.RotaZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.events.SelectedRouteEvent;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.view.RouteDetails;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.RouteVO;
-
+			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			private var controller:RotaZoomController;
@@ -49,6 +52,8 @@
 				this.controller.view=this;
 
 				this.controller.solicitaTotalListaRotas();
+				
+				ResizeManager.enableResize(this,50);
 			}
 
 			private function inicializaListaRotas():void

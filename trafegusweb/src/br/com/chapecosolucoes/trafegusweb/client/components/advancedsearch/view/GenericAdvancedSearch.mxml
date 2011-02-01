@@ -4,6 +4,9 @@
 						xmlns:mx="library://ns.adobe.com/flex/mx"
 						layout="vertical"
 						showCloseButton="true"
+						movable="true"
+						resizable="false"
+						initialize="init()"
 						keyDown="this.controller.keyDownEventHandler(event)"
 						creationCompleteEffect="{dissolve,iris}"
 						removedEffect="{dissolve,iris}"
@@ -24,11 +27,16 @@
 	<fx:Script>
 		<![CDATA[
 			import br.com.chapecosolucoes.trafegusweb.client.components.advancedsearch.controller.AdvancedSearchController;
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			
 			import mx.controls.DataGrid;
 			[Bindable]
 			public var dataGrid:DataGrid;
 			public var controller:AdvancedSearchController;
+			private function init():void
+			{
+				ResizeManager.enableResize(this,50);
+			}
 			
 		]]>
 	</fx:Script>
