@@ -97,14 +97,10 @@ public class Conexao {
 
     public void logout(String idSessao) throws Exception {
         this.connection.close();
-        close();
+        removeInstance();
     }
 
     private static void removeInstance() {
         instance.remove();
-    }
-
-      public void close() {
-        removeInstance();
     }
 }
