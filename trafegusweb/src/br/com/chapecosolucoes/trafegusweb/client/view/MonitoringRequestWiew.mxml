@@ -30,7 +30,7 @@
 	<fx:Binding source="horaInicioPrev.text" destination="MainModel.getInstance().smVO.prevHoraInicio"/>
 	<fx:Binding source="dataFimPrev.text" destination="MainModel.getInstance().smVO.prevFim"/>
 	<fx:Binding source="horaFimPrev.text" destination="MainModel.getInstance().smVO.prevHoraFim"/>
-	<fx:Binding source="distanciaDaViagem.text" destination="MainModel.getInstance().smVO.distancia"/>
+	<fx:Binding source="distanciaDaViagem.text" destination="MainModel.getInstance().smVO.rota.distancia"/>
 	<fx:Binding source="valor.text" destination="MainModel.getInstance().smVO.valor"/>
 	<fx:Binding source="temperaturaMinima.text" destination="MainModel.getInstance().smVO.tempMin"/>
 	<fx:Binding source="temperaturaMaxima.text" destination="MainModel.getInstance().smVO.tempMax"/>
@@ -38,6 +38,13 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mx:Dissolve id="dissolve" duration="500"/>
 		<mx:Iris id="iris" duration="500"/>
+		<mx:StringValidator
+			id="tipoViagemZoomStringValidator"
+			source="{tipoViagemZoom}"
+			requiredFieldError="Favor preencher o tipo de viagem"
+			property="detail"
+			required="true"/>
+			
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
@@ -45,22 +52,36 @@
 			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
 			import br.com.chapecosolucoes.trafegusweb.client.controller.MonitoringRequestController;
 			import br.com.chapecosolucoes.trafegusweb.client.enum.LocaisEnum;
+			import br.com.chapecosolucoes.trafegusweb.client.enum.SMEnum;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			import br.com.chapecosolucoes.trafegusweb.client.vo.MonitoringRequestVO;
+			import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
+			import mx.utils.ObjectUtil;
+			import mx.validators.Validator;
 			private var controller:MonitoringRequestController;
+			private var validadores:Array;
 			public var smVO:MonitoringRequestVO;
+			public var enum:SMEnum;
 			private function init():void{
 				this.controller = new MonitoringRequestController();
 				this.controller.view = this;
+				this.validadores = [tipoViagemZoomStringValidator];
 				
 				ResizeManager.enableResize(this,50);
 			}
+			private function clickHandler():void {
+				var errors:Array = Validator.validateAll(validadores);
+				if (errors.length == 0) {
+					this.controller.salvarSM();
+				}
+			}
+
 			private function creationComplete():void
 			{
-				if(this.smVO != null)
+				if(this.enum == SMEnum.EDITAR)
 				{
 					MainModel.getInstance().smVO = this.smVO;
 					this.controller.solicitaParadasSM();
@@ -69,8 +90,19 @@
 				}
 				else
 				{
-					this.smVO = new MonitoringRequestVO();
 					MainModel.getInstance().smVO = this.smVO;
+					if(MainModel.getInstance().smVO.veiculoPrincipal.cod != "")
+					{
+						TrafegusWS.getIntance().solicitaDescricaoVeiculo(this.controller.solicitaDescricaoVeiculoResultHandler,MainModel.getInstance().smVO.veiculoPrincipal.cod);
+					}
+					if(MainModel.getInstance().codEmpresa != 0)
+					{
+						TrafegusWS.getIntance().solicitaDescricaoTransportador(this.controller.solicitaDescricaoTransportadorResultHandler,ObjectUtil.toString(MainModel.getInstance().codEmpresa));
+					}
+					if(MainModel.getInstance().smVO.codigoMotorista != "")
+					{
+						TrafegusWS.getIntance().solicitaDescricaoMotorista(this.controller.solicitaDescricaoMotoristaResultHandler,MainModel.getInstance().smVO.codigoMotorista);
+					}
 				}
 			}
 		]]>
@@ -235,7 +267,7 @@
 				<mx:HRule width="60%"/>
 				<mx:HBox>
 					<mx:FormItem label="Distância da viagem" required="true">
-						<s:TextInput id="distanciaDaViagem" text="{MainModel.getInstance().smVO.distancia}"/>
+						<s:TextInput id="distanciaDaViagem" text="{MainModel.getInstance().smVO.rota.distancia}"/>
 					</mx:FormItem>
 					<mx:FormItem label="Valor">
 						<s:TextInput id="valor" text="{MainModel.getInstance().smVO.valor}"/>
@@ -257,7 +289,7 @@
 		</s:NavigatorContent>
 	</mx:ViewStack>
 	<mx:ControlBar horizontalAlign="right">
-		<s:Button label="OK" click="this.controller.salvarSM()" enabled="{MainModel.getInstance().salvarSMEnabled}"/>
+		<s:Button label="OK" click="clickHandler()" enabled="{MainModel.getInstance().salvarSMEnabled}"/>
 		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
 	</mx:ControlBar>
 </resize:ResizableWindow>

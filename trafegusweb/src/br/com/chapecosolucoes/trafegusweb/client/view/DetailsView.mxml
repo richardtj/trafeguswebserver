@@ -31,7 +31,10 @@
             {
                 this.abstractView.selectedIndex = index;
             }
-
+			public function get selectedIndex():int
+			{
+				return this.abstractView.selectedIndex;
+			}
             public function set paginaAtual(paginaAtual:int):void
             {
                 this.abstractView.paginaAtual = paginaAtual;

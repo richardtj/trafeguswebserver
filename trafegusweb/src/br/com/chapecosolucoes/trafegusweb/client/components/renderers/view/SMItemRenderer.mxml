@@ -22,5 +22,5 @@
 			}
 		]]>
 	</fx:Script>
-	<mx:LinkButton id="linkButton" label="{data.statusViagem}" click="this.controller.popUp(data.vehiclePlate)"/>
+	<mx:LinkButton id="linkButton" label="{data.statusViagem}" click="this.controller.popUp(data.codVeic,data.vehiclePlate,data.codigoMotoristaPrincipal)"/>
 </mx:VBox>

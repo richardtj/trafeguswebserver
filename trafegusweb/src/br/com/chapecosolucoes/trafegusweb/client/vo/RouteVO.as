@@ -22,7 +22,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			
 			this.codigo = obj.rota_codigo.toString();
 			this.descricao = obj.rota_descricao.toString();
-			this.distancia = obj.rota_distancia.toString();
+			this.distancia = obj.distancia.toString();
 			this.coordenada = obj.rota_coordenada.toString();
 			this.dataCadastro = obj.rota_data_cadastro.toString();
 			this.coordenadasPipe = obj.rota_coordenadaspipe.toString();
@@ -86,6 +86,10 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public function get vrotUsuarioAlterou():String
 		{
 			return "'"+ObjectUtil.toString(MainModel.getInstance().codUsuario)+"'";
+		}
+		public function get viagDistancia():String
+		{
+			return this.distancia==""?"NULL":this.distancia;
 		}
 		public var codigo:String;
 		private var _vrotCodigo:String;

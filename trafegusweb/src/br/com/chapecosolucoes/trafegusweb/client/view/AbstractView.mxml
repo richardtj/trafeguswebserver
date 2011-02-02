@@ -27,6 +27,10 @@
 			public function set selectedIndex(index:int):void{
 				this.abstractDataGrid.selectedIndex = index;
 			}
+			public function get selectedIndex():int
+			{
+				return this.abstractDataGrid.selectedIndex==-1?0:this.abstractDataGrid.selectedIndex;
+			}
 			public function set paginaAtual(paginaAtual:int):void
 			{
 				this.paginable.paginaAtual = paginaAtual;

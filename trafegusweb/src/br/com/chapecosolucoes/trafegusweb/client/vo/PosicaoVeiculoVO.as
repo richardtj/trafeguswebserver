@@ -14,7 +14,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 				var gpsLongitude:Number = Number(gpsLongitudeString);
 				
 				this.codVeic = obj.veic_oras_codigo.toString();
-				this.vehiclePlate = obj.placa.toString();
+				this.vehiclePlate = obj.veic_placa.toString();
 				this.latLong = new LatLng(gpsLatitude, gpsLongitude);
 				this.gpsDescSis = obj.posicao;
 				this.ignition = int(obj.ignicao);
@@ -23,8 +23,9 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 				this.tipoVeiculo = obj.tipoveiculo.toString();
 				this.statusViagem = obj.statusviagem.toString();
 				this.statusAtraso = obj.statusatraso.toString();
-				this.motoristaPrincipal = obj.nomemotorista.toString();
-				this.cpfMotoristaPrincipal = obj.cpfmotorista.toString();
+				this.codigoMotoristaPrincipal = obj.codigo_motorista.toString();
+				this.motoristaPrincipal = obj.nome_motorista.toString();
+				this.cpfMotoristaPrincipal = obj.cpf_motorista.toString();
 				this.embarcador = obj.embarcador.toString();
 				this.dataEHora = obj.upos_data_comp_bordo.toString();
 			}
@@ -46,8 +47,9 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.tipoVeiculo = obj.tipoveiculo.toString();
 			this.statusViagem = obj.statusviagem.toString();
 			this.statusAtraso = obj.statusatraso.toString();
-			this.motoristaPrincipal = obj.nomemotorista.toString();
-			this.cpfMotoristaPrincipal = obj.cpfmotorista.toString();
+			this.codigoMotoristaPrincipal = obj.codigo_motorista.toString();
+			this.motoristaPrincipal = obj.nome_motorista.toString();
+			this.cpfMotoristaPrincipal = obj.cpf_motorista.toString();
 			this.embarcador = obj.embarcador.toString();
 			this.dataEHora = obj.upos_data_comp_bordo.toString();
 		}
@@ -61,6 +63,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public var tipoVeiculo:String;
 		public var statusViagem:String;
 		public var statusAtraso:String;
+		public var codigoMotoristaPrincipal:String;
 		public var motoristaPrincipal:String;
 		public var cpfMotoristaPrincipal:String;
 		public var embarcador:String;

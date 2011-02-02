@@ -1,12 +1,10 @@
 package br.com.chapecosolucoes.trafegusweb.client.vo
 {
-	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.utils.MyDateFormatter;
 	
 	import mx.collections.ArrayCollection;
 	import mx.collections.Sort;
 	import mx.collections.SortField;
-	import mx.utils.ObjectUtil;
 
 	[Bindable]
 	public class MonitoringRequestVO
@@ -46,7 +44,6 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.descricaoPGR = obj.pgpg_descricao.toString();
 			this.prevHoraInicio = obj.viag_previsao_hora_inicio.toString();
 			this.prevHoraFim = obj.viag_previsao_hora_fim.toString();
-			this.distancia = obj.viag_distancia.toString();
 			this.valor = obj.viag_valor_carga.toString();
 			this.inicio = obj.viag_data_inicio.toString();
 			this.horaInicio = obj.viag_hora_inicio.toString();
@@ -113,7 +110,14 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		{
 			return this._prevHoraFim==""?MyDateFormatter.getInstance().parseTime(new Date()):this._prevHoraFim;
 		}
-		
+		public function get viagEmbaPjurPessOrasCodigo():String
+		{
+			return this.codigoEmbarcador==""?"NULL":this.codigoEmbarcador;
+		}
+		public function get viagValorCarga():String
+		{
+			return this.valor==""?"0":this.valor;
+		}
 		public var codigoTipoViagem:String = "";
 		public var descricaoTipoViagem:String = "";
 		public var codigoViagemPai:String = "";
@@ -144,7 +148,6 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		public var valor:String = "";
 		public var tempMax:String = "";
 		public var tempMin:String = "";
-		public var distancia:String = "";
 		public var inicio:String = "";
 		private var _horaInicio:String = "";
 		public var codTerminais:String = "";

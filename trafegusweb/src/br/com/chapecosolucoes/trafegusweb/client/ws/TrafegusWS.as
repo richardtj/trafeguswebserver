@@ -57,7 +57,7 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			}
 		}
 
-		private function createOperation(operationName:String, result:Function=null):Operation
+		private function createOperation(operationName:String, result:Function=null,fault:Function=null):Operation
 		{
 			var operation:Operation=Operation(this.webservice.getOperation(operationName));
 			if (operation == null)
@@ -68,6 +68,10 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			if (result != null)
 			{
 				operation.addEventListener(ResultEvent.RESULT, result);
+			}
+			if(fault != null)
+			{
+				operation.addEventListener(FaultEvent.FAULT, fault);
 			}
 			operation.addEventListener(FaultEvent.FAULT, this.onFaultHandler);
 			operation.addEventListener(ResultEvent.RESULT, this.onResultHander);
@@ -302,9 +306,9 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa);
 		}
 
-		public function salvarPosicaoTelas(handler:Function):void
+		public function salvarPosicaoTelas(handler:Function,fault:Function):void
 		{
-			var operation:Operation=createOperation("salvarPosicaoTelas", handler);
+			var operation:Operation=createOperation("salvarPosicaoTelas", handler, fault);
 			with (UsuarioLogado.getInstance().posicaoTelasVO)
 			{
 				operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codUsuario, gridVeiculosX, gridVeiculosY, gridVeiculosPercentWidth, gridVeiculosPercentHeight, mapaGoogleX, mapaGoogleY, mapaGooglePercentWidth, mapaGooglePercentHeight, gridDetalheX, gridDetalheY, gridDetalhePercentWidth, gridDetalhePercentHeight);
@@ -470,9 +474,9 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.send(UsuarioLogado.getInstance().IdSessao, placaVeiculo);
 		}
 
-		public function salvarItensPorPagina(handler:Function):void
+		public function salvarItensPorPagina(handler:Function, fault:Function):void
 		{
-			var operation:Operation=createOperation("salvarItensPorPagina", handler);
+			var operation:Operation=createOperation("salvarItensPorPagina", handler, fault);
 			operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().codEmpresa, MainModel.getInstance().codUsuario, MainModel.getInstance().itensPorPaginaVO.itensPorPagina);
 		}
 
@@ -506,10 +510,26 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			operation.send(UsuarioLogado.getInstance().IdSessao, codVeiculo, codMotorista);
 		}
 
-		public function salvaViagViagem(handler:Function):void
+		public function salvaViagViagem(handler:Function,fault:Function):void
 		{
-			var operation:Operation=createOperation("salvaViagViagem", handler);
-			operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().smVO.numeroViagem, /*viag_codigo - auto-incremento da tabela, ou seja: nextval('s_viag_viagem');*/ MainModel.getInstance().smVO.viagDataCadastro, /*viag_data_cadastro - preencher com current_timestamp;*/ MainModel.getInstance().smVO.codigoTipoViagem, /*viag_ttra_codigo - código do tipo de transporte selecionado na interface de agendamento; */ MainModel.getInstance().codEmpresa, /*viag_tran_pess_oras_codigo - código do transportador selecionado para realizar o agendamento da viagem, */ MainModel.getInstance().smVO.codigoEmbarcador, /*viag_emba_pjur_pess_oras_codigo - código do embarcador selecionado para realizar o agendamento da viagem (pode ser null); */ MainModel.getInstance().smVO.codigoPGR, /*viag_pgpg_codigo - código do PGR selecionado na tela de agendamento para a viagem;*/ MainModel.getInstance().smVO.valor, /*viag_valor_carga - valor da carga informado na tela de agendamento (tem RNE envolvida neste item);*/ MainModel.getInstance().smVO.viagPrevisaoInicio, /*viag_previsao_inicio - data de previsão de inicio configurada para está viagem;*/ MainModel.getInstance().smVO.viagPrevisaoFim, /*viag_previsao_fim - data de previsão de fim configurada para está viagem;*/ "NULL", /*viag_data_inicio - preencher null no momento do agendamento (SM), somente será preenchida no momento da efetivação da viagem no trafegus;*/ "NULL", /*viag_data_fim - preencher null no momento do agendamento (SM);*/ MainModel.getInstance().smVO.distancia, /*viag_distancia - preencher com o valor da distância da rota quando a rota for selecionada (RNE);*/ "NULL", /*viag_hpmo_codigo - preencher com o código de pesquisa do motorista se a mesma foi realizada (RNE); */ "NULL", //viag_tempo_term_fora_area_risco
+			var operation:Operation=createOperation("salvaViagViagem", handler,fault);
+			operation.send
+			(
+				UsuarioLogado.getInstance().IdSessao, 
+				MainModel.getInstance().smVO.numeroViagem, /*viag_codigo - auto-incremento da tabela, ou seja: nextval('s_viag_viagem');*/ 
+				MainModel.getInstance().smVO.viagDataCadastro, /*viag_data_cadastro - preencher com current_timestamp;*/ 
+				MainModel.getInstance().smVO.codigoTipoViagem, /*viag_ttra_codigo - código do tipo de transporte selecionado na interface de agendamento; */ 
+				MainModel.getInstance().codEmpresa, /*viag_tran_pess_oras_codigo - código do transportador selecionado para realizar o agendamento da viagem, */ 
+				MainModel.getInstance().smVO.viagEmbaPjurPessOrasCodigo, /*viag_emba_pjur_pess_oras_codigo - código do embarcador selecionado para realizar o agendamento da viagem (pode ser null); */ 
+				MainModel.getInstance().smVO.codigoPGR, /*viag_pgpg_codigo - código do PGR selecionado na tela de agendamento para a viagem;*/ 
+				MainModel.getInstance().smVO.viagValorCarga, /*viag_valor_carga - valor da carga informado na tela de agendamento (tem RNE envolvida neste item);*/ 
+				MainModel.getInstance().smVO.viagPrevisaoInicio, /*viag_previsao_inicio - data de previsão de inicio configurada para está viagem;*/ 
+				MainModel.getInstance().smVO.viagPrevisaoFim, /*viag_previsao_fim - data de previsão de fim configurada para está viagem;*/ 
+				"NULL", /*viag_data_inicio - preencher null no momento do agendamento (SM), somente será preenchida no momento da efetivação da viagem no trafegus;*/ 
+				"NULL", /*viag_data_fim - preencher null no momento do agendamento (SM);*/ 
+				MainModel.getInstance().smVO.rota.viagDistancia, /*viag_distancia - preencher com o valor da distância da rota quando a rota for selecionada (RNE);*/ 
+				"NULL", /*viag_hpmo_codigo - preencher com o código de pesquisa do motorista se a mesma foi realizada (RNE); */ 
+				"NULL", //viag_tempo_term_fora_area_risco
 				"NULL", //viag_tempo_term_em_area_risco
 				"NULL", //viag_tempo_term_fim_viagem
 				MainModel.getInstance().smVO.viagCodigoPai, /*viag_codigo_pai - no caso de o agendamento ser um agendamento de retorno, chamar a consulta de viagens e preencher com o código da viagem de Ida;*/ "NULL", //viag_codigo_gr - preencher null;
@@ -517,9 +537,9 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				"NULL", /*viag_tope_codigo - preencher com o tipo de operação selecionada na tela de agendamento;*/ MainModel.getInstance().codUsuario, /*viag_usuario_adicionou - preencher com o código do usuário que está realizando o agendamento;*/ "NULL" /*viag_usuario_alterou - preencher somente quando for edição de agendamento, com o código do usuário que está editando a SM;*/);
 		}
 
-		public function salvaVveiViagemVeiculo(handler:Function, vvei_codigo:String, vvei_precedencia:String, vvei_veic_oras_codigo:String, vvei_moto_pfis_pess_oras_codigo:String, vvei_evca_codigo:String, vvei_sequencia:String, vvei_usuario_adicionou:String, vvei_usuario_alterou:String):void
+		public function salvaVveiViagemVeiculo(handler:Function,fault:Function, vvei_codigo:String, vvei_precedencia:String, vvei_veic_oras_codigo:String, vvei_moto_pfis_pess_oras_codigo:String, vvei_evca_codigo:String, vvei_sequencia:String, vvei_usuario_adicionou:String, vvei_usuario_alterou:String):void
 		{
-			var operation:Operation=createOperation("salvaVveiViagemVeiculo", handler);
+			var operation:Operation=createOperation("salvaVveiViagemVeiculo", handler, fault);
 			operation.send(UsuarioLogado.getInstance().IdSessao, vvei_codigo, //vvei_codigo - auto-incremento da tabela, ou seja: nextval('s_vvei_viagem_veiculo');
 				vvei_precedencia, //vvei_precedencia - (1 - veículo principal, 2 - veículo secundário (geralmente carreta), 3 - veículo terciário (geralmente carreta), 4 - veículo quartenário (geralmente carreta);
 				"currval('s_viag_viagem')", //vvei_viag_codigo - preencher com o código da viagem (SM) que está sendo criada;
@@ -539,9 +559,9 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				);
 		}
 
-		public function salvaVterViagemTerminal(handler:Function, vter_codigo:String, vter_term_codigo:String, vter_precedencia:String, vter_tempo_satelital:String, vter_tempo_gprs:String, vter_usuario_adicionou:String, vter_usuario_alterou:String, vter_data_cadastro:String):void
+		public function salvaVterViagemTerminal(handler:Function,fault:Function, vter_codigo:String, vter_term_codigo:String, vter_precedencia:String, vter_tempo_satelital:String, vter_tempo_gprs:String, vter_usuario_adicionou:String, vter_usuario_alterou:String, vter_data_cadastro:String):void
 		{
-			var operation:Operation=createOperation("salvaVterViagemTerminal", handler);
+			var operation:Operation=createOperation("salvaVterViagemTerminal", handler, fault);
 			operation.send(UsuarioLogado.getInstance().IdSessao, 
 				vter_codigo, //vter_codigo - auto-incremento da tabela, ou seja: nextval('s_vter_viagem_terminal');
 				"currval('s_viag_viagem')", //vter_viag_codigo - preencher com o código da viagem;
@@ -559,9 +579,9 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				);
 		}
 
-		public function salvaVrotViagemRota(handler:Function):void
+		public function salvaVrotViagemRota(handler:Function,fault:Function):void
 		{
-			var operation:Operation=createOperation("salvaVrotViagemRota", handler);
+			var operation:Operation=createOperation("salvaVrotViagemRota", handler, fault);
 			operation.send(UsuarioLogado.getInstance().IdSessao, MainModel.getInstance().smVO.rota.vrotCodigo, //vrot_codigo - auto-incremento da tabela, ou seja: nextval('s_vrot_viagem_rota');
 				"currval('s_viag_viagem')", //vrot_viag_codigo - preencher com o código da viagem;
 				MainModel.getInstance().smVO.rota.codigo, //vrot_rota_codigo - preencher com o código da rota selecionada / ou criada via site;
@@ -574,9 +594,9 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				);
 		}
 
-		public function salvaVlocViagemLocal(handler:Function, vloc_codigo:String, vloc_sequencia:String, vloc_refe_codigo:String, vloc_tpar_codigo:String, vloc_raio:String, vloc_descricao:String, vloc_usuario_adicionou:String, vloc_usuario_alterou:String, vloc_data_cadastro:String):void
+		public function salvaVlocViagemLocal(handler:Function,fault:Function, vloc_codigo:String, vloc_sequencia:String, vloc_refe_codigo:String, vloc_tpar_codigo:String, vloc_raio:String, vloc_descricao:String, vloc_usuario_adicionou:String, vloc_usuario_alterou:String, vloc_data_cadastro:String):void
 		{
-			var operation:Operation=createOperation("salvaVlocViagemLocal", handler);
+			var operation:Operation=createOperation("salvaVlocViagemLocal", handler, fault);
 			operation.send(UsuarioLogado.getInstance().IdSessao, vloc_codigo, //vloc_codigo - auto-incremento da tabela, ou seja: nextval('s_vloc_viagem_local');
 				vloc_sequencia, //vloc_sequencia - código de sequencia de passagem pelos locais no momento da viagem (1,2,3,4,5,6...);
 				"currval('s_viag_viagem')", //vloc_viag_codigo - preencher com o codigo da viagem;

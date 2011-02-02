@@ -3,7 +3,7 @@
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	cornerRadius="5"
 	creationCompleteEffect="{dissolve,iris}"
-	removedEffect="{dissolve,iris}"
+	hideEffect="{dissolve,iris}"
 	initialize="init()"
 	keyDown="this.controller.capslockHandler()"
 	creationComplete="this.controller.capslockHandler()" xmlns:controls="com.flexpernambuco.controls.*">
