@@ -3,7 +3,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
-	import br.com.chapecosolucoes.trafegusweb.client.vo.CarretaSelecionadaEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.CarretaSelecionadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	

@@ -61,6 +61,8 @@ package br.com.chapecosolucoes.trafegusweb.client.model
         public var codEmpresa:int = 0;
 		
 		public var codUsuario:int = 0;
+		
+		public var nomeUsuario:String = "";
 
         public var leftToRightEnabled:Boolean = true;
 
@@ -105,6 +107,12 @@ package br.com.chapecosolucoes.trafegusweb.client.model
 		public var pesquisaMotoristaVO:PesquisaMotoristaVO = new PesquisaMotoristaVO();
 		
 		public var salvarSMEnabled:Boolean = true;
+		
+		public var carretasSalvas:int = 0;
+		
+		public var terminaisSalvos:int = 0;
+		
+		public var paradasSalvas:int = 0;
 		
 		[ArrayElementType("br.com.chapecosolucoes.trafegusweb.client.vo.TipoParadaVO")]
 		public var tipoParadaArray:ArrayCollection = new ArrayCollection();

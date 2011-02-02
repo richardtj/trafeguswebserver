@@ -1,6 +1,7 @@
-package br.com.chapecosolucoes.trafegusweb.client.vo
+package br.com.chapecosolucoes.trafegusweb.client.events
 {
 	import flash.events.Event;
+	import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO;
 	
 	public class CarretaSelecionadaEvent extends Event
 	{

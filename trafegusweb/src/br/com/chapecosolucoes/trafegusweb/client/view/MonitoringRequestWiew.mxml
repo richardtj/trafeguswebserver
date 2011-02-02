@@ -75,7 +75,14 @@
 			private function clickHandler():void {
 				var errors:Array = Validator.validateAll(validadores);
 				if (errors.length == 0) {
-					this.controller.salvarSM();
+					if(enum == SMEnum.NOVA)
+					{
+						this.controller.salvarSM();
+					}
+					else
+					{
+						this.controller.atualizarSM();
+					}
 				}
 			}
 
