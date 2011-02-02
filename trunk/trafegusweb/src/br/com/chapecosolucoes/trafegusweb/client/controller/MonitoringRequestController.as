@@ -29,7 +29,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddCarretasView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.AddParadasView;
 	import br.com.chapecosolucoes.trafegusweb.client.view.MonitoringRequestWiew;
-	import br.com.chapecosolucoes.trafegusweb.client.vo.CarretaSelecionadaEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.CarretaSelecionadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.LocalVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.ParadaVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.PesquisaMotoristaVO;
@@ -464,14 +464,22 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		public function salvarSM():void
 		{
-			TrafegusWS.getIntance().beginTransaction(beginTransactionResultHandler);
+			TrafegusWS.getIntance().beginTransaction(beginTransactionResultHandler,beginTransactionFaultHandler);
+		}
+		public function atualizarSM():void
+		{
+			
+		}
+		private function beginTransactionResultHandler(event:ResultEvent):void
+		{
+			TrafegusWS.getIntance().removeEventListener("beginTransaction",this.beginTransactionResultHandler,this.beginTransactionFaultHandler);
 			MainModel.getInstance().smVO.veiculoPrincipal.vveiMotoPfisPessOrasCodigo = MainModel.getInstance().smVO.codigoMotorista;
 			TrafegusWS.getIntance().salvaViagViagem(salvaViagViagemResultHandler,salvaViagViagemFaultHandler);
 			this.closeHandler();
 		}
-		private function beginTransactionResultHandler(event:ResultEvent):void
+		private function beginTransactionFaultHandler(event:FaultEvent):void
 		{
-			
+			MessageBox.informacao("Problemas ai iniciar transação "+event.fault.message);
 		}
 		private function salvaViagViagemFaultHandler(event:FaultEvent):void
 		{
@@ -480,57 +488,81 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		private function rollBackTransactionResultHandler(event:ResultEvent):void
 		{
-			
+			MessageBox.informacao("Não foi possivel salvar a solicitação de monitoramento.");
+		}
+		private function rollBackTransactionFaultHandler(event:FaultEvent):void
+		{
+			MessageBox.informacao("Problemas ao desfazer transação "+event.fault.message);
 		}
 		private function salvaViagViagemResultHandler(event:ResultEvent):void
 		{
 			TrafegusWS.getIntance().salvaVrotViagemRota(salvaVrotViagemRotaResultHandler,salvaVrotViagemRotaFaultHandler);
-			with(MainModel.getInstance().smVO.veiculoPrincipal)
-			{
-				TrafegusWS.getIntance().salvaVveiViagemVeiculo(salvaVveiViagemVeiculoResultHandler,vveiCodigo,precedencia,cod,vveiMotoPfisPessOrasCodigo,vveiEvcaCodigo,vveiSequencia,vveiUsuarioAdicionou,vveiUsuarioAlterou);
-			}
-			for each(var veiculoVO:VeiculoVO in MainModel.getInstance().smVO.carretas)
-			{
-				with(veiculoVO)
-				{
-					TrafegusWS.getIntance().salvaVveiViagemVeiculo(salvaVveiViagemVeiculoResultHandler,salvaVveiViagemVeiculoFaultHandler,vveiCodigo,precedencia,cod,vveiMotoPfisPessOrasCodigo,vveiEvcaCodigo,vveiSequencia,vveiUsuarioAdicionou,vveiUsuarioAlterou);
-				}
-			}
-			for each(var terminalVO:TerminalVO in MainModel.getInstance().smVO.terminaisArray)
-			{
-				with(terminalVO)
-				{
-					TrafegusWS.getIntance().salvaVterViagemTerminal(salvaVterViagemTerminalResultHandler,salvaVterViagemTerminalFaultHandler,vterCodigo,codigo,precedencia,tempoSatelital,tempoGPRS,vterUsuarioAdicionou,vterUsuarioAlterou,vterDataCadastro);
-				}
-			}
-			with(MainModel.getInstance().smVO.rota.localOrigem)
-			{
-				TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,vlocCodigo,vlocSequencia,codigo,vlocTparCodigo,vlocRaio,vlocDescricao,vlocUsuarioAdicionou,vlocUsuarioAlterou,vlocDataCadastro);
-			}
-			with(MainModel.getInstance().smVO.rota.localDestino)
-			{
-				TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,vlocCodigo,vlocSequencia,codigo,vlocTparCodigo,vlocRaio,vlocDescricao,vlocUsuarioAdicionou,vlocUsuarioAlterou,vlocDataCadastro);
-			}
-			for each(var paradaVO:ParadaVO in MainModel.getInstance().smVO.paradas)
-			{
-				TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,salvaVlocViagemLocalFaultHandler,paradaVO.localVO.vlocCodigo,paradaVO.localVO.vlocSequencia,paradaVO.localVO.codigo,paradaVO.tipoParadaVO.codigo,paradaVO.localVO.vlocRaio,paradaVO.localVO.vlocDescricao,paradaVO.localVO.vlocUsuarioAdicionou,paradaVO.localVO.vlocUsuarioAlterou,paradaVO.localVO.vlocDataCadastro);
-			}
-			TrafegusWS.getIntance().commitTransaction(commitTransactionResultHandler);
 		}
-		private function commitTransactionResultHandler():void
+		private function commitTransactionResultHandler(event:ResultEvent):void
 		{
-			
+			TrafegusWS.getIntance().removeEventListener("commitTransaction",this.commitTransactionResultHandler,this.commitTransactionFaultHandler);
+			MessageBox.informacao("Solicitação de monitoramento salva com sucesso.");
+			//MainModel.getInstance().smVO.terminaisArray.removeAll();
+			//MainModel.getInstance().smVO.terminaisDefeituososArray.removeAll();
+		}
+		private function commitTransactionFaultHandler(event:FaultEvent):void
+		{
+			MessageBox.informacao("Problemas ao comitar transação " + event.fault.message);
 		}
 		private function salvaVlocViagemLocalResultHandler(event:ResultEvent):void
 		{
+			TrafegusWS.getIntance().removeEventListener("salvaVlocViagemLocal",this.salvaVlocViagemLocalResultHandler,this.salvaVlocViagemLocalFaultHandler);
+			MainModel.getInstance().paradasSalvas++;
+			if(MainModel.getInstance().paradasSalvas == MainModel.getInstance().smVO.paradas.length)
+			{
+				TrafegusWS.getIntance().commitTransaction(commitTransactionResultHandler,commitTransactionFaultHandler);
+			}
 		}
 		private function salvaVlocViagemLocalFaultHandler(event:FaultEvent):void
 		{
 			MessageBox.informacao("Erro ao salvar VlocViagemLocal "+event.fault.message);
 			TrafegusWS.getIntance().rollBackTransaction(this.rollBackTransactionResultHandler);
 		}
+		private function salvaVlocViagemLocalOrigemResultHandler(event:ResultEvent):void
+		{
+			TrafegusWS.getIntance().removeEventListener("salvaVlocViagemLocal",this.salvaVlocViagemLocalOrigemResultHandler,this.salvaVlocViagemLocalOrigemFaultHandler);
+			with(MainModel.getInstance().smVO.rota.localDestino)
+			{
+				TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalDestinoResultHandler,salvaVlocViagemLocalDestinoFaultHandler,vlocCodigo,vlocSequencia,codigo,vlocTparCodigo,vlocRaio,vlocDescricao,vlocUsuarioAdicionou,vlocUsuarioAlterou,vlocDataCadastro);
+			}
+		}
+		private function salvaVlocViagemLocalOrigemFaultHandler(event:FaultEvent):void
+		{
+			MessageBox.informacao("Erro ao salvar VlocViagemLocalOrigem "+event.fault.message);
+			TrafegusWS.getIntance().rollBackTransaction(this.rollBackTransactionResultHandler);
+		}
+		private function salvaVlocViagemLocalDestinoResultHandler(event:ResultEvent):void
+		{
+			TrafegusWS.getIntance().removeEventListener("salvaVlocViagemLocal",this.salvaVlocViagemLocalDestinoResultHandler,this.salvaVlocViagemLocalDestinoFaultHandler);
+			MainModel.getInstance().paradasSalvas = 0;
+			if(MainModel.getInstance().smVO.paradas.length > 0)
+			{
+				for each(var paradaVO:ParadaVO in MainModel.getInstance().smVO.paradas)
+				{
+					TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalResultHandler,salvaVlocViagemLocalFaultHandler,paradaVO.localVO.vlocCodigo,paradaVO.localVO.vlocSequencia,paradaVO.localVO.codigo,paradaVO.tipoParadaVO.codigo,paradaVO.localVO.vlocRaio,paradaVO.localVO.vlocDescricao,paradaVO.localVO.vlocUsuarioAdicionou,paradaVO.localVO.vlocUsuarioAlterou,paradaVO.localVO.vlocDataCadastro);
+				}
+			}
+			else
+			{
+				TrafegusWS.getIntance().commitTransaction(commitTransactionResultHandler,commitTransactionFaultHandler);
+			}
+		}
+		private function salvaVlocViagemLocalDestinoFaultHandler(event:FaultEvent):void
+		{
+			MessageBox.informacao("Erro ao salvar VlocViagemLocalDestino "+event.fault.message);
+			TrafegusWS.getIntance().rollBackTransaction(this.rollBackTransactionResultHandler);
+		}
 		private function salvaVrotViagemRotaResultHandler(event:ResultEvent):void
 		{
+			with(MainModel.getInstance().smVO.veiculoPrincipal)
+			{
+				TrafegusWS.getIntance().salvaVveiViagemVeiculo(salvaVveiViagemVeiculoPrincipalResultHandler,salvaVveiViagemVeiculoPrincipalFaultHandler,vveiCodigo,precedencia,cod,vveiMotoPfisPessOrasCodigo,vveiEvcaCodigo,vveiSequencia,vveiUsuarioAdicionou,vveiUsuarioAlterou);
+			}
 		}
 		private function salvaVrotViagemRotaFaultHandler(event:FaultEvent):void
 		{
@@ -539,6 +571,17 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		private function salvaVterViagemTerminalResultHandler(event:ResultEvent):void
 		{
+			TrafegusWS.getIntance().removeEventListener("salvaVterViagemTerminal",this.salvaVterViagemTerminalResultHandler,this.salvaVterViagemTerminalFaultHandler);
+			MainModel.getInstance().terminaisSalvos++;
+			var terminaisSalvos:int = MainModel.getInstance().terminaisSalvos;
+			var terminaisArrayLength:int = MainModel.getInstance().smVO.terminaisArray.length;
+			if(MainModel.getInstance().terminaisSalvos == MainModel.getInstance().smVO.terminaisArray.length)
+			{
+				with(MainModel.getInstance().smVO.rota.localOrigem)
+				{
+					TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalOrigemResultHandler,salvaVlocViagemLocalOrigemFaultHandler,vlocCodigo,vlocSequencia,codigo,vlocTparCodigo,vlocRaio,vlocDescricao,vlocUsuarioAdicionou,vlocUsuarioAlterou,vlocDataCadastro);
+				}
+			}
 		}
 		private function salvaVterViagemTerminalFaultHandler(event:FaultEvent):void
 		{
@@ -547,8 +590,62 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		}
 		private function salvaVveiViagemVeiculoResultHandler(event:ResultEvent):void
 		{
+			TrafegusWS.getIntance().removeEventListener("salvaVveiViagemVeiculo",this.salvaVveiViagemVeiculoResultHandler,this.salvaVveiViagemVeiculoFaultHandler);
+			MainModel.getInstance().carretasSalvas++;
+			if(MainModel.getInstance().carretasSalvas == MainModel.getInstance().smVO.carretas.length)
+			{
+				MainModel.getInstance().terminaisSalvos = 0;
+				for each(var terminalVO:TerminalVO in MainModel.getInstance().smVO.terminaisArray)
+				{
+					with(terminalVO)
+					{
+						TrafegusWS.getIntance().salvaVterViagemTerminal(salvaVterViagemTerminalResultHandler,salvaVterViagemTerminalFaultHandler,vterCodigo,codigo,precedencia,tempoSatelital,tempoGPRS,vterUsuarioAdicionou,vterUsuarioAlterou,vterDataCadastro);
+					}
+				}
+			}
 		}
 		private function salvaVveiViagemVeiculoFaultHandler(event:FaultEvent):void
+		{
+			MessageBox.informacao("Erro ao salvar VveiViagemVeiculoPrincipal "+event.fault.message);
+			TrafegusWS.getIntance().rollBackTransaction(this.rollBackTransactionResultHandler);
+		}
+		private function salvaVveiViagemVeiculoPrincipalResultHandler(event:ResultEvent):void
+		{
+			TrafegusWS.getIntance().removeEventListener("salvaVveiViagemVeiculo",this.salvaVveiViagemVeiculoPrincipalResultHandler,this.salvaVveiViagemVeiculoPrincipalFaultHandler);
+			MainModel.getInstance().carretasSalvas = 0;
+			if(MainModel.getInstance().smVO.carretas.length > 0)
+			{
+				for each(var veiculoVO:VeiculoVO in MainModel.getInstance().smVO.carretas)
+				{
+					with(veiculoVO)
+					{
+						TrafegusWS.getIntance().salvaVveiViagemVeiculo(salvaVveiViagemVeiculoResultHandler,salvaVveiViagemVeiculoFaultHandler,vveiCodigo,precedencia,cod,vveiMotoPfisPessOrasCodigo,vveiEvcaCodigo,vveiSequencia,vveiUsuarioAdicionou,vveiUsuarioAlterou);
+					}
+				}
+			}
+			else
+			{
+				MainModel.getInstance().terminaisSalvos = 0;
+				if(MainModel.getInstance().smVO.terminaisArray.length > 0)
+				{
+					for each(var terminalVO:TerminalVO in MainModel.getInstance().smVO.terminaisArray)
+					{
+						with(terminalVO)
+						{
+							TrafegusWS.getIntance().salvaVterViagemTerminal(salvaVterViagemTerminalResultHandler,salvaVterViagemTerminalFaultHandler,vterCodigo,codigo,precedencia,tempoSatelital,tempoGPRS,vterUsuarioAdicionou,vterUsuarioAlterou,vterDataCadastro);
+						}
+					}
+				}
+				else
+				{
+					with(MainModel.getInstance().smVO.rota.localOrigem)
+					{
+						TrafegusWS.getIntance().salvaVlocViagemLocal(salvaVlocViagemLocalOrigemResultHandler,salvaVlocViagemLocalOrigemFaultHandler,vlocCodigo,vlocSequencia,codigo,vlocTparCodigo,vlocRaio,vlocDescricao,vlocUsuarioAdicionou,vlocUsuarioAlterou,vlocDataCadastro);
+					}
+				}
+			}
+		}
+		private function salvaVveiViagemVeiculoPrincipalFaultHandler(event:FaultEvent):void
 		{
 			MessageBox.informacao("Erro ao salvar VveiViagemVeiculo "+event.fault.message);
 			TrafegusWS.getIntance().rollBackTransaction(this.rollBackTransactionResultHandler);

@@ -157,13 +157,11 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
                 UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentWidth = (100 * this.view.detalhes.width) / FlexGlobals.topLevelApplication.width;             
                 UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentHeight = (100 * this.view.detalhes.height) / FlexGlobals.topLevelApplication.width;
 
-				TrafegusWS.getIntance().beginTransaction(beginTransactionResultHandler);
-                TrafegusWS.getIntance().salvarPosicaoTelas(salvarPosicaoTelasResultHandler,salvarPosicaoTelasFaultHandler);
+				TrafegusWS.getIntance().beginTransaction(beginTransactionPosicaoTelasResultHandler);
 			}
 			if(event.label == "Itens por pagina")
 			{
-				TrafegusWS.getIntance().beginTransaction(beginTransactionResultHandler);
-				TrafegusWS.getIntance().salvarItensPorPagina(salvarItensPorPaginaResultHandler,salvarItensPorPaginaFaultHandler);
+				TrafegusWS.getIntance().beginTransaction(beginTransactionItensPorPaginaResultHandler);
             }
             if (event.label == "Sair")
             {
@@ -304,35 +302,78 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 
         private function salvarPosicaoTelasResultHandler(event:ResultEvent):void
         {
-			TrafegusWS.getIntance().commitTransaction(commitTransactionResultHandler);
-            MessageBox.informacao("As posições atuais, foram salvas");
+			TrafegusWS.getIntance().commitTransaction(commitTransactionPosicaoTelasResultHandler,commitTransactionPosicaoTelasFaultHandler);
         }
 		private function salvarPosicaoTelasFaultHandler(event:FaultEvent):void
 		{
-			TrafegusWS.getIntance().rollBackTransaction(this.rollBackTransactionResultHandler);
+			TrafegusWS.getIntance().rollBackTransaction(this.rollBackTransactionPosicaoTelasResultHandler,this.rollBackTransactionPosicaoTelasFaultHandler);
 			MessageBox.informacao("Erro ao salvar posições atuais " + event.fault.message);
 		}
-		private function rollBackTransactionResultHandler(event:ResultEvent):void
+		private function rollBackTransactionItensPorPaginaResultHandler(event:ResultEvent):void
 		{
-			
+			TrafegusWS.getIntance().removeEventListener("rollBackTransaction",this.rollBackTransactionItensPorPaginaResultHandler,this.rollBackTransactionItensPorPaginaFaultHandler);
+			MessageBox.informacao("Erro ao salvar itens por pagina ");
 		}
-		private function beginTransactionResultHandler(event:ResultEvent):void
+		private function rollBackTransactionItensPorPaginaFaultHandler(event:FaultEvent):void
 		{
-			
+			TrafegusWS.getIntance().removeEventListener("rollBackTransaction",this.rollBackTransactionItensPorPaginaResultHandler,this.rollBackTransactionItensPorPaginaFaultHandler);
 		}
-		private function commitTransactionResultHandler(event:ResultEvent):void
+		private function rollBackTransactionPosicaoTelasResultHandler(event:ResultEvent):void
 		{
-			
+			TrafegusWS.getIntance().removeEventListener("rollBackTransaction",this.rollBackTransactionPosicaoTelasResultHandler,this.rollBackTransactionPosicaoTelasFaultHandler);
+			MessageBox.informacao("Erro ao salvar posicao das telas ");
+		}
+		private function rollBackTransactionPosicaoTelasFaultHandler(event:FaultEvent):void
+		{
+			TrafegusWS.getIntance().removeEventListener("rollBackTransaction",this.rollBackTransactionPosicaoTelasResultHandler,this.rollBackTransactionPosicaoTelasFaultHandler);
+		}
+		private function beginTransactionItensPorPaginaResultHandler(event:ResultEvent):void
+		{
+			TrafegusWS.getIntance().removeEventListener("beginTransaction",this.beginTransactionItensPorPaginaResultHandler,this.beginTransactionItensPorPaginaFaultHandler);
+			TrafegusWS.getIntance().salvarItensPorPagina(salvarItensPorPaginaResultHandler,salvarItensPorPaginaFaultHandler);
+		}
+		private function beginTransactionItensPorPaginaFaultHandler(event:FaultEvent):void
+		{
+			TrafegusWS.getIntance().removeEventListener("beginTransaction",this.beginTransactionItensPorPaginaResultHandler,this.beginTransactionItensPorPaginaFaultHandler);
+			MessageBox.informacao("Problemas ao iniciar transacao itens por pagina " + event.fault.message);
+		}
+		private function beginTransactionPosicaoTelasResultHandler(event:ResultEvent):void
+		{
+			TrafegusWS.getIntance().removeEventListener("beginTransaction",this.beginTransactionPosicaoTelasResultHandler,this.beginTransactionPosicaoTelasFaultHandler);
+			TrafegusWS.getIntance().salvarPosicaoTelas(salvarPosicaoTelasResultHandler,salvarPosicaoTelasFaultHandler);
+		}
+		private function beginTransactionPosicaoTelasFaultHandler(event:FaultEvent):void
+		{
+			TrafegusWS.getIntance().removeEventListener("beginTransaction",this.beginTransactionPosicaoTelasResultHandler,this.beginTransactionPosicaoTelasFaultHandler);
+			MessageBox.informacao("Problemas ao iniciar transacao posicao telas " + event.fault.message);
+		}
+		private function commitTransactionItensPorPaginaResultHandler(event:ResultEvent):void
+		{
+			TrafegusWS.getIntance().removeEventListener("commitTransaction",this.commitTransactionItensPorPaginaResultHandler,this.commitTransactionItensPorPaginaFaultHandler);
+			MessageBox.informacao("Itens por pagina, foram salvas");
+		}
+		private function commitTransactionItensPorPaginaFaultHandler(event:FaultEvent):void
+		{
+			TrafegusWS.getIntance().removeEventListener("commitTransaction",this.commitTransactionItensPorPaginaResultHandler,this.commitTransactionItensPorPaginaFaultHandler);
+			TrafegusWS.getIntance().rollBackTransaction(this.rollBackTransactionItensPorPaginaResultHandler,this.rollBackTransactionItensPorPaginaFaultHandler);
+		}
+		private function commitTransactionPosicaoTelasResultHandler(event:ResultEvent):void
+		{
+			TrafegusWS.getIntance().removeEventListener("commitTransaction",this.commitTransactionPosicaoTelasResultHandler,this.commitTransactionPosicaoTelasFaultHandler);
+			MessageBox.informacao("As posições atuais, foram salvas");
+		}
+		private function commitTransactionPosicaoTelasFaultHandler(event:FaultEvent):void
+		{
+			TrafegusWS.getIntance().removeEventListener("commitTransaction",this.commitTransactionPosicaoTelasResultHandler,this.commitTransactionPosicaoTelasFaultHandler);
+			TrafegusWS.getIntance().rollBackTransaction(this.rollBackTransactionPosicaoTelasResultHandler,this.rollBackTransactionPosicaoTelasFaultHandler);
 		}
 		private function salvarItensPorPaginaResultHandler(event:ResultEvent):void
 		{
-			TrafegusWS.getIntance().commitTransaction(commitTransactionResultHandler);
-			MessageBox.informacao("Itens por pagina, foram salvas");
+			TrafegusWS.getIntance().commitTransaction(commitTransactionItensPorPaginaResultHandler,commitTransactionItensPorPaginaFaultHandler);
 		}
 		private function salvarItensPorPaginaFaultHandler(event:FaultEvent):void
 		{
-			TrafegusWS.getIntance().rollBackTransaction(this.rollBackTransactionResultHandler);
-			MessageBox.informacao("Erro ao salvar itens por pagina " + event.fault.message);
+			TrafegusWS.getIntance().rollBackTransaction(this.rollBackTransactionItensPorPaginaResultHandler);
 		}
     }
 }

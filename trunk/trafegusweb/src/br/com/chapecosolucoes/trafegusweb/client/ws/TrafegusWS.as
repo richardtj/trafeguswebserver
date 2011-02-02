@@ -43,26 +43,25 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			return instance;
 		}
 
-		public function removeEventListener(operationName:String, result:Function=null):void
+		public function removeEventListener(operationName:String, result:Function=null, fault:Function=null):void
 		{
 			var operation:Operation=Operation(this.webservice.getOperation(operationName));
-			if (operation == null)
-			{
-				operation=new Operation(this.webservice, operationName);
-				operation.showBusyCursor=true;
-			}
 			if (result != null)
 			{
 				operation.removeEventListener(ResultEvent.RESULT, result);
+			}
+			if(fault != null)
+			{
+				operation.removeEventListener(FaultEvent.FAULT, fault);
 			}
 		}
 
 		private function createOperation(operationName:String, result:Function=null,fault:Function=null):Operation
 		{
-			var operation:Operation=Operation(this.webservice.getOperation(operationName));
+			var operation:Operation = Operation(this.webservice.getOperation(operationName));
 			if (operation == null)
 			{
-				operation=new Operation(this.webservice, operationName);
+				operation = new Operation(this.webservice, operationName);
 				operation.showBusyCursor=true;
 			}
 			if (result != null)
@@ -534,13 +533,19 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				"NULL", //viag_tempo_term_fim_viagem
 				MainModel.getInstance().smVO.viagCodigoPai, /*viag_codigo_pai - no caso de o agendamento ser um agendamento de retorno, chamar a consulta de viagens e preencher com o código da viagem de Ida;*/ "NULL", //viag_codigo_gr - preencher null;
 				"'N'", //viag_importado - preencher 'N';
-				"NULL", /*viag_tope_codigo - preencher com o tipo de operação selecionada na tela de agendamento;*/ MainModel.getInstance().codUsuario, /*viag_usuario_adicionou - preencher com o código do usuário que está realizando o agendamento;*/ "NULL" /*viag_usuario_alterou - preencher somente quando for edição de agendamento, com o código do usuário que está editando a SM;*/);
+				"NULL"//, /*viag_tope_codigo - preencher com o tipo de operação selecionada na tela de agendamento;*/ 
+				//"'"+MainModel.getInstance().nomeUsuario+"'", /*viag_usuario_adicionou - preencher com o código do usuário que está realizando o agendamento;*/ 
+				//"NULL" /*viag_usuario_alterou - preencher somente quando for edição de agendamento, com o código do usuário que está editando a SM;*/
+			);
 		}
 
 		public function salvaVveiViagemVeiculo(handler:Function,fault:Function, vvei_codigo:String, vvei_precedencia:String, vvei_veic_oras_codigo:String, vvei_moto_pfis_pess_oras_codigo:String, vvei_evca_codigo:String, vvei_sequencia:String, vvei_usuario_adicionou:String, vvei_usuario_alterou:String):void
 		{
 			var operation:Operation=createOperation("salvaVveiViagemVeiculo", handler, fault);
-			operation.send(UsuarioLogado.getInstance().IdSessao, vvei_codigo, //vvei_codigo - auto-incremento da tabela, ou seja: nextval('s_vvei_viagem_veiculo');
+			operation.send
+			(
+				UsuarioLogado.getInstance().IdSessao, 
+				vvei_codigo, //vvei_codigo - auto-incremento da tabela, ou seja: nextval('s_vvei_viagem_veiculo');
 				vvei_precedencia, //vvei_precedencia - (1 - veículo principal, 2 - veículo secundário (geralmente carreta), 3 - veículo terciário (geralmente carreta), 4 - veículo quartenário (geralmente carreta);
 				"currval('s_viag_viagem')", //vvei_viag_codigo - preencher com o código da viagem (SM) que está sendo criada;
 				vvei_veic_oras_codigo, //vvei_veic_oras_codigo - código do veículo selecionado;
@@ -553,9 +558,9 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				vvei_sequencia, //vvei_sequencia - sequencia dos veículos na viagem (1,2,3,4,5,6...)
 				MainModel.getInstance().smVO.viagDataCadastro, //vvei_data_cadastro - preencher com current_timestamp;
 				"NULL", //vvei_codigo_gr - preencher com null;
-				"'N'", //vvei_importado - preencher com 'N';
-				vvei_usuario_adicionou, //vvei_usuario_adicionou - preencher com o código do usuário que está realizando o agendamento;
-				vvei_usuario_alterou //vvei_usuario_alterou - preencher somente quando for edição de agendamento, com o código do usuário que está editando a SM;
+				"'N'"//, //vvei_importado - preencher com 'N';
+				//vvei_usuario_adicionou, //vvei_usuario_adicionou - preencher com o código do usuário que está realizando o agendamento;
+				//vvei_usuario_alterou //vvei_usuario_alterou - preencher somente quando for edição de agendamento, com o código do usuário que está editando a SM;
 				);
 		}
 
@@ -573,9 +578,9 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				vter_data_cadastro, //vter_data_cadastro - preencher com current_timestamp;
 				"NULL", //vter_codigo_gr - preencher com null;
 				"'N'", //vter_importado - preencher com 'N';
-				"'S'", //vter_ativo - preencher com 'S';
-				vter_usuario_adicionou, //vter_usuario_adicionou - preencher com o código do usuário que está realizando o agendamento;
-				vter_usuario_alterou //vter_usuario_alterou - preencher somente quando for edição de agendamento, com o código do usuário que está editando a SM;
+				"'S'"//, //vter_ativo - preencher com 'S';
+				//vter_usuario_adicionou, //vter_usuario_adicionou - preencher com o código do usuário que está realizando o agendamento;
+				//vter_usuario_alterou //vter_usuario_alterou - preencher somente quando for edição de agendamento, com o código do usuário que está editando a SM;
 				);
 		}
 
@@ -588,9 +593,9 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				MainModel.getInstance().smVO.rota.vrotDataCadastro, //vrot_data_cadastro - preencher com current_timestamp;
 				"NULL", //vrot_codigo_gr - preencher com null;
 				"'N'", //vrot_importado - preencher com 'N';
-				"'S'", //vrot_ativo - preencher com 'S';
-				MainModel.getInstance().smVO.rota.vrotUsuarioAdicionou, //vrot_usuario_adicionou - preencher com o código do usuário que está realizando o agendamento;
-				MainModel.getInstance().smVO.rota.vrotUsuarioAlterou //vrot_usuario_alterou - preencher somente quando for edição de agendamento, com o código do usuário que está editando a SM;
+				"'S'"//, //vrot_ativo - preencher com 'S';
+				//MainModel.getInstance().smVO.rota.vrotUsuarioAdicionou, //vrot_usuario_adicionou - preencher com o código do usuário que está realizando o agendamento;
+				//MainModel.getInstance().smVO.rota.vrotUsuarioAlterou //vrot_usuario_alterou - preencher somente quando for edição de agendamento, com o código do usuário que está editando a SM;
 				);
 		}
 
@@ -606,9 +611,9 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				vloc_data_cadastro, //vloc_data_cadastro - preencher com current_timestamp;
 				"NULL", //vloc_codigo_gr - preencher com null;
 				"'N'", //vloc_importado - preencher com 'N';
-				vloc_descricao, //vloc_descricao - preencher com a descrição do local selecionado;
-				vloc_usuario_adicionou, //vloc_usuario_adicionou - preencher com o código do usuário que está realizando o agendamento;
-				vloc_usuario_alterou //vloc_usuario_alterou - preencher somente quando for edição de agendamento, com o código do usuário que está editando a SM;
+				vloc_descricao//vloc_descricao - preencher com a descrição do local selecionado;
+				//vloc_usuario_adicionou - preencher com o código do usuário que está realizando o agendamento;
+				//vloc_usuario_alterou - preencher somente quando for edição de agendamento, com o código do usuário que está editando a SM;
 				);
 		}
 
@@ -624,9 +629,9 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 				vlev_cpat_codigo, //vlev_cpat_codigo - nome da celula de pátio selecionada pelo usuário (local do pátio aonde o evento ocorre);
 				vlev_data_cadastro, //vlev_data_cadastro - preencher com current_timestamp; 
 				"NULL", //vlev_codigo_gr - preencher com null;
-				"'N'", //vlev_importado - preencher com 'N';
-				vlev_usuario_adicionou, //vlev_usuario_adicionou - preencher com o código do usuário que está realizando o agendamento;
-				vlev_usuario_alterou //vlev_usuario_alterou - preencher somente quando for edição de agendamento, com o código do usuário que está editando a SM;
+				"'N'"//vlev_importado - preencher com 'N';
+				//vlev_usuario_adicionou - preencher com o código do usuário que está realizando o agendamento;
+				//vlev_usuario_alterou - preencher somente quando for edição de agendamento, com o código do usuário que está editando a SM;
 				);
 		}
 
@@ -635,20 +640,25 @@ package br.com.chapecosolucoes.trafegusweb.client.ws
 			var operation:Operation=createOperation("procuraHistoricoPosicoes", handler);
 			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codEmpresa,placaVeiculo, historicoVO.dataInicial, historicoVO.dataFinal, historicoVO.gpsDescSis);
 		}
-		public function beginTransaction(handler:Function):void
+		public function beginTransaction(handler:Function,fault:Function=null):void
 		{
-			var operation:Operation=createOperation("beginTransaction", handler);
+			var operation:Operation=createOperation("beginTransaction", handler,fault);
 			operation.send(UsuarioLogado.getInstance().IdSessao);
 		}
-		public function commitTransaction(handler:Function):void
+		public function commitTransaction(handler:Function,fault:Function=null):void
 		{
-			var operation:Operation=createOperation("commitTransaction", handler);
+			var operation:Operation=createOperation("commitTransaction", handler, fault);
 			operation.send(UsuarioLogado.getInstance().IdSessao);
 		}
-		public function rollBackTransaction(handler:Function):void
+		public function rollBackTransaction(handler:Function,fault:Function=null):void
 		{
-			var operation:Operation=createOperation("rollBackTransaction", handler);
+			var operation:Operation=createOperation("rollBackTransaction", handler,fault);
 			operation.send(UsuarioLogado.getInstance().IdSessao);
+		}
+		public function trafegusSetUsuario(handler:Function,fault:Function=null):void
+		{
+			var operation:Operation=createOperation("trafegusSetUsuario", handler,fault);
+			operation.send(UsuarioLogado.getInstance().IdSessao,MainModel.getInstance().codUsuario);
 		}
 	}
 }

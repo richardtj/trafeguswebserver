@@ -16,6 +16,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
     import mx.controls.Alert;
     import mx.rpc.events.ResultEvent;
     import mx.utils.ObjectUtil;
+    
+    import org.flexunit.runner.Result;
 
     public class LoginComponentController
     {
@@ -37,17 +39,23 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
             {
                 MainModel.getInstance().codEmpresa = obj.usua_pess_oras_codigo.toString();
                 MainModel.getInstance().codUsuario = obj.usua_pfis_pess_oras_codigo.toString();
+				MainModel.getInstance().nomeUsuario = obj.usua_login.toString();
             }
             if (resultArray.length != 0)
             {
 				TrafegusWS.getIntance().lerPosicaoTelas(lerPosicaoTelasResultHandler);
 				TrafegusWS.getIntance().lerItensPorPagina(lerItensPorPaginaResultHandler);
+				TrafegusWS.getIntance().trafegusSetUsuario(trafegusSetUsuarioResultHandler);
             }
             else
             {
                 MessageBox.atencao("Usuario ou senha inválidos.");
             }
         }
+		private function trafegusSetUsuarioResultHandler(event:ResultEvent):void
+		{
+			
+		}
 		private function lerItensPorPaginaResultHandler(e:ResultEvent):void
 		{
 			var resultArray:Array = ParserResult.parserDefault(e);
