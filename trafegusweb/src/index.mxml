@@ -34,16 +34,6 @@
 		}
 		
 	</fx:Style>
-<<<<<<< .mine
-	<fx:Script>
-		<![CDATA[
-			import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
-			import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
-			import br.com.chapecosolucoes.trafegusweb.client.events.LoginEvent;
-			import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
-			import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
-			import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
-=======
     <fx:Script>
         <![CDATA[
             import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
@@ -52,16 +42,8 @@
             import br.com.chapecosolucoes.trafegusweb.client.model.UsuarioLogado;
             import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
             import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
->>>>>>> .r363
-<<<<<<< .mine
-
-			import mx.events.FlexEvent;
-			import mx.rpc.events.ResultEvent;
-=======
-            
             import mx.events.FlexEvent;
             import mx.rpc.events.ResultEvent;
->>>>>>> .r363
 
 			private var xml:XML;
 
