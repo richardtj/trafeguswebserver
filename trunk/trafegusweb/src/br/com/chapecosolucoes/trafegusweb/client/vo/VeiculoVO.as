@@ -16,7 +16,7 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 			this.cod = obj.veic_oras_codigo.toString();
 			this._vveiCodigo = obj.vvei_codigo.toString();
 			this._vveiEvcaCodigo = obj.vvei_evca_codigo.toString();
-			this._vveiMotoPfisPessOrasCodigo = obj.vvei_moto_pfis_pess_oras_codigo.toString();
+			this._vveiMotoPfisPessOrasCodigo = obj.codigo_motorista.toString();
 			this.vehiclePlate = obj.veic_placa.toString();
 			this.desc = obj.tvei_descricao.toString();
 			this.cor = obj.veic_cor.toString();

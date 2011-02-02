@@ -17,10 +17,12 @@ package br.com.chapecosolucoes.trafegusweb.client.components.renderers.controlle
 		{
 		}
 		public var view:SMItemRenderer;
-		public function popUp(placaVeiculo:String):void
+		public function popUp(codVeic:String,placaVeiculo:String,codigoMotoristaPrincipal:String):void
 		{
 			var smGrid:SMGrid = new SMGrid();
+			smGrid.codVeic = codVeic;
 			smGrid.placaVeiculo = placaVeiculo;
+			smGrid.codigoMotoristaPrincipal = codigoMotoristaPrincipal;
 			MyPopUpManager.addPopUp(smGrid,DisplayObject(FlexGlobals.topLevelApplication));
 			MyPopUpManager.centerPopUp(smGrid);
 		}

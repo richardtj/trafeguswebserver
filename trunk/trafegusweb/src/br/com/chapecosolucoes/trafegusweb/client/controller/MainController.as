@@ -3,6 +3,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
     import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
     import br.com.chapecosolucoes.trafegusweb.client.enum.LimparDistanciasEnum;
+    import br.com.chapecosolucoes.trafegusweb.client.enum.SMEnum;
     import br.com.chapecosolucoes.trafegusweb.client.enum.VehicleEnum;
     import br.com.chapecosolucoes.trafegusweb.client.events.CloseAppEvent;
     import br.com.chapecosolucoes.trafegusweb.client.events.DetailsEvent;
@@ -49,8 +50,11 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
     import mx.managers.PopUpManager;
     import mx.managers.PopUpManagerChildList;
     import mx.managers.SystemManager;
+    import mx.rpc.events.FaultEvent;
     import mx.rpc.events.ResultEvent;
     import mx.utils.ObjectUtil;
+    
+    import org.flexunit.runner.Result;
 
     public class MainController
     {
@@ -111,22 +115,17 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             {
                 this.view.veiculos.visible = false;
                 this.view.myMenuBar.menuBarItems[1].data.menuitem[0].@toggled = "false";
-
-                //this.view.oh.unregisterComponent(this.view.veiculos);
             }
             if (event.target.id.toString() == "mapa")
             {
                 this.view.mapa.visible = false;
                 this.view.myMenuBar.menuBarItems[1].data.menuitem[2].@toggled = "false";
-                //this.view.oh.unregisterComponent(this.view.mapa);
             }
             if (event.target.id.toString() == "detalhes")
             {
                 this.view.detalhes.visible = false;
                 this.view.myMenuBar.menuBarItems[1].data.menuitem[1].@toggled = "false";
-                //this.view.oh.unregisterComponent(this.view.detalhes);
             }
-            //this.view.oh.selectionManager.clearSelection();
         }
 
         public function itemClickedHandler(event:MenuEvent):void
@@ -134,38 +133,14 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             if (event.label == "Veiculos")
             {
                 this.view.veiculos.visible = !this.view.veiculos.visible;
-                /*if (this.view.veiculos.visible)
-                {
-                    this.view.oh.registerComponent(this.view.veiculos, this.view.veiculos);
-                }
-                else
-                {
-                    this.view.oh.unregisterComponent(this.view.veiculos);
-                }*/
             }
             if (event.label == "Mapa")
             {
                 this.view.mapa.visible = !this.view.mapa.visible;
-                /*if (this.view.mapa.visible)
-                {
-                    this.view.oh.registerComponent(this.view.mapa, this.view.mapa);
-                }
-                else
-                {
-                    this.view.oh.unregisterComponent(this.view.mapa);
-                }*/
             }
             if (event.label == "Detalhes")
             {
                 this.view.detalhes.visible = !this.view.detalhes.visible;
-                /*if (this.view.mapa.visible)
-                {
-                    this.view.oh.registerComponent(this.view.detalhes, this.view.detalhes);
-                }
-                else
-                {
-                    this.view.oh.unregisterComponent(this.view.detalhes);
-                }*/
             }
             if (event.label == "Posições das telas")
             {
@@ -182,11 +157,13 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
                 UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentWidth = (100 * this.view.detalhes.width) / FlexGlobals.topLevelApplication.width;             
                 UsuarioLogado.getInstance().posicaoTelasVO.gridDetalhePercentHeight = (100 * this.view.detalhes.height) / FlexGlobals.topLevelApplication.width;
 
-                TrafegusWS.getIntance().salvarPosicaoTelas(salvarPosicaoTelasResultHandler);
+				TrafegusWS.getIntance().beginTransaction(beginTransactionResultHandler);
+                TrafegusWS.getIntance().salvarPosicaoTelas(salvarPosicaoTelasResultHandler,salvarPosicaoTelasFaultHandler);
 			}
 			if(event.label == "Itens por pagina")
 			{
-				TrafegusWS.getIntance().salvarItensPorPagina(salvarItensPorPaginaResultHandler);
+				TrafegusWS.getIntance().beginTransaction(beginTransactionResultHandler);
+				TrafegusWS.getIntance().salvarItensPorPagina(salvarItensPorPaginaResultHandler,salvarItensPorPaginaFaultHandler);
             }
             if (event.label == "Sair")
             {
@@ -194,7 +171,14 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
             }
             if (event.label == "Solicitação de monitoramento")
             {
+				var posicaoVeiculoVO:PosicaoVeiculoVO = PosicaoVeiculoVO(MainModel.getInstance().posVeiculosArray.getItemAt(this.view.details.selectedIndex));				
                 var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
+				monitoringRequest.enum = SMEnum.NOVA;
+				monitoringRequest.smVO = new MonitoringRequestVO();
+				monitoringRequest.smVO.veiculoPrincipal.cod = posicaoVeiculoVO.codVeic;
+				monitoringRequest.smVO.codigoTransportador = ObjectUtil.toString(MainModel.getInstance().codEmpresa);
+				monitoringRequest.smVO.veiculoPrincipal.vehiclePlate = posicaoVeiculoVO.vehiclePlate;
+				monitoringRequest.smVO.codigoMotorista = posicaoVeiculoVO.codigoMotoristaPrincipal;
                 MyPopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication));
                 MyPopUpManager.centerPopUp(monitoringRequest);
             }
@@ -320,11 +304,35 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 
         private function salvarPosicaoTelasResultHandler(event:ResultEvent):void
         {
+			TrafegusWS.getIntance().commitTransaction(commitTransactionResultHandler);
             MessageBox.informacao("As posições atuais, foram salvas");
         }
+		private function salvarPosicaoTelasFaultHandler(event:FaultEvent):void
+		{
+			TrafegusWS.getIntance().rollBackTransaction(this.rollBackTransactionResultHandler);
+			MessageBox.informacao("Erro ao salvar posições atuais " + event.fault.message);
+		}
+		private function rollBackTransactionResultHandler(event:ResultEvent):void
+		{
+			
+		}
+		private function beginTransactionResultHandler(event:ResultEvent):void
+		{
+			
+		}
+		private function commitTransactionResultHandler(event:ResultEvent):void
+		{
+			
+		}
 		private function salvarItensPorPaginaResultHandler(event:ResultEvent):void
 		{
+			TrafegusWS.getIntance().commitTransaction(commitTransactionResultHandler);
 			MessageBox.informacao("Itens por pagina, foram salvas");
+		}
+		private function salvarItensPorPaginaFaultHandler(event:FaultEvent):void
+		{
+			TrafegusWS.getIntance().rollBackTransaction(this.rollBackTransactionResultHandler);
+			MessageBox.informacao("Erro ao salvar itens por pagina " + event.fault.message);
 		}
     }
 }

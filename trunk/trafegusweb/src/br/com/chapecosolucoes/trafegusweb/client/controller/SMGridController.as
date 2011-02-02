@@ -2,6 +2,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
+	import br.com.chapecosolucoes.trafegusweb.client.enum.SMEnum;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.model.SMGridModel;
@@ -24,6 +25,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 	import mx.managers.PopUpManager;
 	import mx.managers.PopUpManagerChildList;
 	import mx.rpc.events.ResultEvent;
+	import mx.utils.ObjectUtil;
 
 	public class SMGridController
 	{
@@ -68,6 +70,7 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 			else
 			{
 				var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
+				monitoringRequest.enum = SMEnum.EDITAR;
 				monitoringRequest.smVO = MonitoringRequestVO(this.view.grid.selectedItem);
 				MyPopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication));
 				MyPopUpManager.centerPopUp(monitoringRequest);
@@ -76,8 +79,14 @@ package br.com.chapecosolucoes.trafegusweb.client.controller
 		
 		public function novaSM():void
 		{
-			MainModel.getInstance().smVO = new MonitoringRequestVO();
+			
 			var monitoringRequest:MonitoringRequestWiew = new MonitoringRequestWiew();
+			monitoringRequest.enum = SMEnum.NOVA;
+			monitoringRequest.smVO = new MonitoringRequestVO();
+			monitoringRequest.smVO.veiculoPrincipal.cod = this.model.codVeic;
+			monitoringRequest.smVO.codigoTransportador = ObjectUtil.toString(MainModel.getInstance().codEmpresa);
+			monitoringRequest.smVO.veiculoPrincipal.vehiclePlate = this.model.placaVeiculo;
+			monitoringRequest.smVO.codigoMotorista = this.model.codigoMotoristaPrincipal;
 			MyPopUpManager.addPopUp(monitoringRequest, DisplayObject(FlexGlobals.topLevelApplication));
 			MyPopUpManager.centerPopUp(monitoringRequest);
 		}

@@ -11,11 +11,11 @@ package br.com.chapecosolucoes.trafegusweb.client.vo
 		}
 		public function setDadosMotoristaVO(obj:Object):void
 		{
-			this.codigo = obj.oras_codigo.toString();
+			this.codigo = obj.codigo_motorista.toString();
 			this.dataCadastro = obj.oras_data_cadastro.toString();
-			this.motoristaPrincipal = obj.pess_nome.toString();
+			this.motoristaPrincipal = obj.nome_motorista.toString();
 			this.rg = obj.pfis_rg.toString();
-			this.cpfMotoristaPrincipal = obj.pfis_cpf.toString();
+			this.cpfMotoristaPrincipal = obj.cpf_motorista.toString();
 			if(obj.pfis_sexo.toString().search("F")>=0)
 			{
 				this.sexo = SexoEnum.FEMININO.toString();
