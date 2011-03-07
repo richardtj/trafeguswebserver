@@ -4,20 +4,26 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.LocaisZoom;
 	import br.com.chapecosolucoes.trafegusweb.client.enum.PaginableEnum;
+	import br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedLocalEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
 	import br.com.chapecosolucoes.trafegusweb.client.view.LocalDetailsView;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.LocalVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
+	import com.google.maps.LatLng;
+	
 	import flash.events.MouseEvent;
+	import flash.net.registerClassAlias;
 	
 	import mx.collections.XMLListCollection;
 	import mx.controls.Alert;
 	import mx.managers.PopUpManager;
 	import mx.rpc.events.ResultEvent;
+	import mx.utils.ObjectUtil;
 
 	public class LocalZoomController
 	{
@@ -36,7 +42,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function solicitaListaLocais(event:PaginableEvent):void
 		{
-			TrafegusWS.getIntance().solicitaListaLocais(solicitaListaLocaisResultEvent,event.paginaAtual);
+			TrafegusWS.getInstance().solicitaListaLocais(solicitaListaLocaisResultEvent,event.paginaAtual);
 		}
 		public function inicializaListaLocais():void
 		{
@@ -48,7 +54,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public function atualizaListaLocais():void
 		{
 			this.view.paginable.paginaAtual=1;
-			TrafegusWS.getIntance().solicitaListaLocais(solicitaListaLocaisResultEvent,0);
+			this.solicitaTotalListaLocais();
+			TrafegusWS.getInstance().solicitaListaLocais(solicitaListaLocaisResultEvent,0);
 		}
 		private function solicitaListaLocaisResultEvent(event:ResultEvent):void
 		{
@@ -56,10 +63,12 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
 			var resultArray:Array = xmlListCollection.toArray();
 			MainModel.getInstance().locaisArray.removeAll();
+			var i:int = ((this.view.paginable.paginaAtual - 1) * MainModel.getInstance().itensPorPaginaVO.itensPorPagina) + 1;
 			for each (var obj:Object in resultArray)
 			{
 				var local:LocalVO = new LocalVO();
 				local.setLocalVO(obj);
+				local.count = i++
 				MainModel.getInstance().locaisArray.addItem(local);
 			}
 		}
@@ -67,7 +76,8 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		{
 			if(this.view.grid.selectedItem != null)
 			{
-				var localEvent:SelectedLocalEvent = new SelectedLocalEvent(SelectedLocalEvent.SELECTED_LOCAL_EVENT,LocalVO(this.view.grid.selectedItem));
+				registerClassAlias("br.com.chapecosolucoes.trafegusweb.client.vo.LocalVO",br.com.chapecosolucoes.trafegusweb.client.vo.LocalVO);
+				var localEvent:SelectedLocalEvent = new SelectedLocalEvent(SelectedLocalEvent.SELECTED_LOCAL_EVENT,LocalVO(ObjectUtil.clone(this.view.grid.selectedItem)));
 				this.view.dispatchEvent(localEvent);
 				this.closeHandler();
 			}
@@ -78,11 +88,15 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function closeHandler():void
 		{
+			if(this.view.paginable.paginaAtual != 1)
+			{
+				MainModel.getInstance().locaisArray.removeAll();
+			}
 			MyPopUpManager.removePopUp(this.view);
 		}
 		public function solicitaTotalListaLocais():void
 		{
-			TrafegusWS.getIntance().solicitaTotalListaLocais(solicitaTotalListaLocaisResultHandler);
+			TrafegusWS.getInstance().solicitaTotalListaLocais(solicitaTotalListaLocaisResultHandler);
 		}
 		private function solicitaTotalListaLocaisResultHandler(event:ResultEvent):void
 		{
@@ -102,6 +116,15 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public function mouseOverEventHandler():void
 		{
 			LocalDetailsView.SELECT_BUTTON_VISIBLE = true;
+		}
+		public function advancedSearchLocaisEventHandler(event:AdvancedSearchEvent):void
+		{
+			TrafegusWS.getInstance().procuraLocais(procuraLocaisResultHandler,event.genericVO);
+		}
+		private function procuraLocaisResultHandler(event:ResultEvent):void
+		{
+			MainModel.getInstance().totalListaLocais = 1;
+			this.solicitaListaLocaisResultEvent(event);
 		}
 	}
 }

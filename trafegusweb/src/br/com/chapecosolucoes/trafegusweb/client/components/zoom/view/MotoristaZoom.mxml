@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:resize="flex.utils.ui.resize.*" 
-				xmlns:s="library://ns.adobe.com/flex/spark" 
-				xmlns:mx="library://ns.adobe.com/flex/mx"
-				layout="vertical"
-				width="720" height="420"
-				showCloseButton="true"
-				movable="true"
-				resizable="false"
-				creationCompleteEffect="{dissolve,iris}"
-				removedEffect="{dissolve,iris}"
-				initialize="init()"
-				creationComplete="creationComplete()"
-				close="this.controller.closeHandler()"
-				title="Motoristas"
-				mouseOver="this.controller.mouseOverEventHandler()"
-				titleIcon="@Embed(source='assets/Motorista.png')"
-				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
-				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
-	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
+<resize:ResizableWindow 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:resize="flex.utils.ui.resize.*" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	layout="vertical"
+	width="720" height="420"
+	showCloseButton="true"
+	movable="true"
+	resizable="false"
+	creationCompleteEffect="{dissolve,iris}"
+	removedEffect="{dissolve,iris}"
+	initialize="init()"
+	creationComplete="creationComplete()"
+	close="this.controller.closeHandler()"
+	title="Motoristas"
+	mouseOver="this.controller.mouseOverEventHandler()"
+	titleIcon="@Embed(source='assets/Motorista.png')"
+	xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
+	xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Metadata>
 		[Event(name="selectedDriverEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent")]		
 	</fx:Metadata>
@@ -42,10 +43,8 @@
 			{
 				this.controller = new MotoristaZoomController();
 				this.controller.view = this;
-				MainModel.getInstance().motoristasArray.filterFunction = this.controller.motoristaFilterFunction;
+				//MainModel.getInstance().motoristasArray.filterFunction = this.controller.motoristaFilterFunction;
 				MainModel.getInstance().motoristasArray.refresh();
-				
-				this.controller.solicitaTotalListaMotoristas();
 				
 				ResizeManager.enableResize(this,50);
 			}
@@ -64,11 +63,11 @@
 			
 		]]>
 	</fx:Script>
-	<searchInput:SearchInputFX 
+	<searchInput:AdvancedSearchInputFX 
 		id="textInputFiltro"
 		width="100%" 
-		keyUp="MainModel.getInstance().motoristasArray.refresh()"
-		text="{MainModel.getInstance().zoomFilter}"
+		dataGrid="{this.grid}"
+		advancedSearchEvent="this.controller.advancedSearchMotoristasEventHandler(event)"
 		refreshEvent="this.controller.atualizaListaMotoristas()"/>
 	<view:DataGridFX 
 		id="grid" 
@@ -78,7 +77,11 @@
 		dataProvider="{MainModel.getInstance().motoristasArray}"
 		toolTip="Clique sobre o nome do motorista para exibir os detalhes.">
 		<view:columns>
-			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+			<mx:DataGridColumn 
+				sortable="false" 
+				dataField="count"
+				width="20" 
+				headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
 			<mx:DataGridColumn headerText="Código" dataField="codigo"/>
 			<mx:DataGridColumn headerText="Cadastramento" dataField="dataCadastramento"/>
 			<mx:DataGridColumn 

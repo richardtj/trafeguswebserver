@@ -17,7 +17,6 @@
 				titleIcon="@Embed(source='assets/Fisica.png')"
 				xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
 				xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
-	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
 		[Event(name="embarcadorSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.EmbarcadorSelecionadoEvent")]		
 	</fx:Metadata>
@@ -43,8 +42,6 @@
 				this.controller = new EmbarcadoresZoomController();
 				this.controller.view = this;
 				
-				this.controller.solicitaTotalListaEmbarcadores();
-				
 				ResizeManager.enableResize(this,50);
 			}
 			
@@ -57,18 +54,18 @@
 			private function creationComplete():void
 			{
 				inicializaListaEmbarcadores();
-				MainModel.getInstance().embarcadoresArray.filterFunction = this.controller.embarcadoresFilterFunction;
+				//MainModel.getInstance().embarcadoresArray.filterFunction = this.controller.embarcadoresFilterFunction;
 				MainModel.getInstance().embarcadoresArray.refresh();
 				
 				this.grid.addEventListener(EmbarcadorSelecionadoEvent.EMBARCADOR_SELECIONADO_EVENT,this.controller.embarcadorSelecionadoEventHandler);
 			}
 		]]>
 	</fx:Script>
-	<searchInput:SearchInputFX
+	<searchInput:AdvancedSearchInputFX
 		id="textInputFiltro"
 		width="100%" 
-		text="{MainModel.getInstance().zoomFilter}"
-		keyUp="MainModel.getInstance().embarcadoresArray.refresh()"
+		dataGrid="{this.grid}"
+		advancedSearchEvent="this.controller.advancedSearchEmbarcadoresEventHandler(event)"
 		refreshEvent="this.controller.atualizaListaEmbarcadores()"/>
 	<view:DataGridFX 
 		id="grid" 
@@ -79,7 +76,11 @@
 		dataProvider="{MainModel.getInstance().embarcadoresArray}"
 		toolTip="Clique sobre o codigo do embarcador para exibir os detalhes.">
 		<view:columns>
-			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+			<mx:DataGridColumn 
+				sortable="false" 
+				dataField="count"
+				width="20" 
+				headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
 			<mx:DataGridColumn headerText="Código" dataField="codigo" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.EmbarcadorItemRendererView"/>
 			<mx:DataGridColumn headerText="Nome" dataField="nome"/>
 			<mx:DataGridColumn headerText="CNPJ" dataField="cnpj"/>

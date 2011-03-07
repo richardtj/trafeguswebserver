@@ -38,11 +38,12 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public function solicitaDadosGridZoom(event:PaginableEvent):void
 		{
 			event.stopImmediatePropagation();
-			TrafegusWS.getIntance().solicitaDadosGridZoom(this.dadosGridZoomRecebidosHandler,event.paginaAtual);
+			TrafegusWS.getInstance().solicitaDadosGridZoom(this.dadosGridZoomRecebidosHandler,event.paginaAtual);
 		}
 		private function procuraDadosGridHandler(event:ResultEvent):void
 		{
-			MainModel.getInstance().totalDadosGridZoom = ParserResult.parserDefault(event).length;
+			TrafegusWS.getInstance().removeEventListener("procuraDadosGrid",this.procuraDadosGridHandler);
+			MainModel.getInstance().totalDadosGridZoom = 1;
 			this.dadosGridZoomRecebidosHandler(event);
 		}
 		private function dadosGridZoomRecebidosHandler(event:ResultEvent):void
@@ -50,9 +51,11 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			var resultArray:Array = ParserResult.parserDefault(event);
 			MainModel.getInstance().posVeiculosArrayZoom = new ArrayCollection();
 			MainModel.getInstance().posVeiculosArrayZoom.filterFunction = posicaoVeiculosFilterFunction;
+			var i:int = ((this.view.paginable.paginaAtual - 1) * MainModel.getInstance().itensPorPaginaVO.itensPorPagina) + 1;
 			for each (var obj:Object in resultArray)
 			{
 				var dataPos:PosicaoVeiculoVO = new PosicaoVeiculoVO(obj);
+				dataPos.count = i++;
 				if(dataPos.vehiclePlate != this.model.excluirVeiculoListaZoom)
 				{
 					MainModel.getInstance().posVeiculosArrayZoom.addItem(dataPos);
@@ -63,10 +66,18 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 				}
 			}
 		}
+		public function inicializaDadosGridZoom():void
+		{
+			//if(MainModel.getInstance().posVeiculosArrayZoom.length == 0)
+			//{
+				this.atualizaDadosGridZoom();
+			//}
+		}
 		public function atualizaDadosGridZoom():void
 		{
+			this.view.paginable.paginaAtual = 1;
 			this.solicitaTotalDadosGridZoom();
-			TrafegusWS.getIntance().solicitaDadosGridZoom(this.dadosGridZoomRecebidosHandler,0);
+			TrafegusWS.getInstance().solicitaDadosGridZoom(this.dadosGridZoomRecebidosHandler,0);
 		}
 		public function posicaoVeiculosFilterFunction(item:Object):Boolean
 		{
@@ -110,11 +121,11 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		private function advancedSearchEventHandler(event:AdvancedSearchEvent):void
 		{
 			var posicaoVeiculoVO:PosicaoVeiculoVO = PosicaoVeiculoVO(event.genericVO);
-			TrafegusWS.getIntance().procuraDadosGrid(procuraDadosGridHandler,posicaoVeiculoVO);
+			TrafegusWS.getInstance().procuraDadosGrid(procuraDadosGridHandler,posicaoVeiculoVO);
 		}
 		public function solicitaTotalDadosGridZoom():void
 		{
-			TrafegusWS.getIntance().solicitaTotalDadosGridZoom(solicitaTotalDadosGridResultHandler);
+			TrafegusWS.getInstance().solicitaTotalDadosGridZoom(solicitaTotalDadosGridResultHandler);
 		}
 		private function solicitaTotalDadosGridResultHandler(event:ResultEvent):void
 		{

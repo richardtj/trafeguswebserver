@@ -15,12 +15,12 @@
 	initialize="init()"
 	creationComplete="creationComplete()"
 	close="this.controller.closeHandler()"
-	title="Tipo Parada"
+	title="Tipo Operação"
 	titleIcon="@Embed(source='assets/Map3.png')"
 	xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
 	xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Metadata>
-		[Event(name="tipoParadaSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.TipoParadaSelecionadoEvent")]		
+		[Event(name="topeTipoOperacaoSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.TopeTipoOperacaoSelecionadoEvent")]
 	</fx:Metadata>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -31,72 +31,74 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.TopeTipoOperacaoZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
-			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.TipoParadaZoomController;
 			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 			
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
-			private var controller:TipoParadaZoomController;
-
+			private var controller:TopeTipoOperacaoZoomController;
+			
 			private function init():void
 			{
-				this.controller=new TipoParadaZoomController();
+				this.controller=new TopeTipoOperacaoZoomController();
 				this.controller.view=this;
-				//MainModel.getInstance().tipoParadaArray.filterFunction=this.controller.tipoParadaFilterFunction;
-				MainModel.getInstance().tipoParadaArray.refresh();
-
+				//MainModel.getInstance().topeTipoOperacaoArray.filterFunction=this.controller.topeTipoOperacaoFilterFunction;
+				MainModel.getInstance().topeTipoOperacaoArray.refresh();
+				
 				ResizeManager.enableResize(this,50);
 			}
-
+			
+			private function inicializaListaTipoTransporte():void
+			{
+				if (MainModel.getInstance().topeTipoOperacaoArray.length == 0)
+				{
+					this.controller.atualizaListaTopeTipoOperacao();
+				}
+			}
+			
 			private function creationComplete():void
 			{
-				this.inicializaListaTipoParada();
-			}
-
-			private function inicializaListaTipoParada():void
-			{
-				if (MainModel.getInstance().tipoParadaArray.length == 0)
-				{
-					this.controller.atualizaListaTipoParada();
-				}
+				this.inicializaListaTipoTransporte();
 			}
 		]]>
 	</fx:Script>
 	<searchInput:AdvancedSearchInputFX 
 		id="textInputFiltro"
-	   	dataGrid="{this.grid}"
-	   	width="100%"
-	   	advancedSearchEvent="this.controller.advancedSearchTipoParadaEventHandler(event)"
-	   	refreshEvent="this.controller.atualizaListaTipoParada()"/>
-	<view:DataGridFX id="grid"
-					 width="100%"
-					 height="100%"
-					 doubleClickEnabled="true"
-					 doubleClick="this.controller.tipoParadaSelecionado()"
-					 dataProvider="{MainModel.getInstance().tipoParadaArray}"
-					 toolTip="Clique sobre o codigo da parada para exibir os detalhes.">
+	    width="100%"
+	    dataGrid="{this.grid}"
+	   advancedSearchEvent="this.controller.advancedSearchEventHandler(event)"
+	   refreshEvent="this.controller.atualizaListaTopeTipoOperacao()"/>
+	<view:DataGridFX 
+		id="grid"
+		 width="100%"
+		 height="100%"
+		 doubleClickEnabled="true"
+		 doubleClick="this.controller.topeTipoOperacaoSelecionado()"
+		 dataProvider="{MainModel.getInstance().topeTipoOperacaoArray}"
+		 toolTip="Clique sobre o codigo do local para exibir os detalhes.">
 		<view:columns>
 			<mx:DataGridColumn sortable="false"
 							   width="20"
+							   dataField="count"
 							   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
 			<mx:DataGridColumn headerText="Código"
-							   dataField="codigo"/>
+							   dataField="topeCodigo"/>
 			<mx:DataGridColumn headerText="Descrição"
-							   dataField="descricao"/>
+							   dataField="topeDescricao"/>
 		</view:columns>
 	</view:DataGridFX>
 	<view:PaginableComponent id="paginable"
-							 totalRecords="{MainModel.getInstance().totalListaTipoParada}"
+							 totalRecords="{MainModel.getInstance().totalListaTopeTipoOperacao}"
 							 itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
-							 next="this.controller.solicitaListaTipoParada(event)"
-							 prev="this.controller.solicitaListaTipoParada(event)"
-							 first="this.controller.solicitaListaTipoParada(event)"
-							 last="this.controller.solicitaListaTipoParada(event)"/>
+							 next="this.controller.solicitaListaTopeTipoOperacao(event)"
+							 prev="this.controller.solicitaListaTopeTipoOperacao(event)"
+							 first="this.controller.solicitaListaTopeTipoOperacao(event)"
+							 last="this.controller.solicitaListaTopeTipoOperacao(event)"/>
 	<mx:ControlBar width="100%"
 				   horizontalAlign="right">
 		<s:Button label="Ok"
-				  click="this.controller.tipoParadaSelecionado()"/>
+				  click="this.controller.topeTipoOperacaoSelecionado()"/>
 		<s:Button label="Cancel"
 				  click="this.controller.closeHandler()"/>
 	</mx:ControlBar>

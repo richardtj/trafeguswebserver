@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resize:ResizableWindow 
+	xmlns:resize="flex.utils.ui.resize.*" 
+	width="720" height="420"
+	cornerRadius="5"
+	creationCompleteEffect="{dissolve,iris}"
+	removedEffect="{dissolve,iris}"
+	layout="vertical"
+	movable="true"
+	resizable="false"
+	creationComplete="creationComplete()"
+	initialize="init()"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	showCloseButton="true"
+	close="this.controller.closeHandler()"
+	title="Estação Rastreamento"
+	titleIcon="@Embed(source='assets/Map3.png')"
+	xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
+	xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Binding 
+		source="this.textInputFiltro.text"
+		destination="MainModel.getInstance().zoomFilter"/>
+	<fx:Metadata>
+		[Event(name="erasEstacaoRastreamentoSelecionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.ErasEstacaoRastreamentoSelecionadaEvent")]		
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.ErasEstacaoRastreamentoZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.enum.PaginableEnum;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			import br.com.chapecosolucoes.trafegusweb.client.vo.ErasEstacaoRastreamentoVO;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			private var controller:ErasEstacaoRastreamentoZoomController;
+			public static const NENHUMA_ESTACAO_RASTREAMENTO_SELECIONADA:String = "Nenhuma estacao rastreamento selecionada.";
+			private function init():void
+			{
+				this.controller = new ErasEstacaoRastreamentoZoomController();
+				this.controller.view = this;
+				MainModel.getInstance().erasEstacaoRastreamentoArray.filterFunction = this.controller.erasEstacaoRastreamentoFilterFunction;
+				MainModel.getInstance().erasEstacaoRastreamentoArray.refresh();
+				
+				ResizeManager.enableResize(this,50);
+			}
+			private function creationComplete():void
+			{
+				this.controller.inicializaListaErasEstacaoRastreamento();
+			}
+			private function labelFunction(item:Object,column:DataGridColumn):String
+			{
+				switch(column.headerText)
+				{
+					case "Código":
+						return ErasEstacaoRastreamentoVO(item).erasCodigo;
+					case "Descrição":
+						return ErasEstacaoRastreamentoVO(item).erasDescricao;
+					case "Gerenciadora":
+						return ErasEstacaoRastreamentoVO(item).erasGrisPjurPessOras.pjurRazaoSocial;
+					case "Separação":
+						return ErasEstacaoRastreamentoVO(item).erasSras.srasDescricao;
+					default:
+						return "";
+				}
+			}
+		]]>
+	</fx:Script>
+	<searchInput:AdvancedSearchInputFX 
+		id="textInputFiltro"
+		width="100%" 
+		createFilterFunction="false"
+		keyUp="MainModel.getInstance().erasEstacaoRastreamentoArray.refresh()"
+		dataGrid="{this.grid}"
+		advancedSearchEvent="this.controller.advancedSearchEventHandler()"
+		refreshEvent="this.controller.atualizaListaErasEstacaoRastreamento()"/>
+	<view:DataGridFX 
+		id="grid" 
+		width="100%" height="100%" 
+		doubleClickEnabled="true"
+		labelFunction="labelFunction"
+		doubleClick="this.controller.erasEstacaoRastreamentoSelecionado()"
+		dataProvider="{MainModel.getInstance().erasEstacaoRastreamentoArray}"
+		toolTip="Clique sobre o codigo da estacao para exibir os detalhes.">
+		<view:columns>
+			<mx:DataGridColumn 
+				sortable="false" 
+				dataField="count"
+				width="20" 
+				headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+			<mx:DataGridColumn headerText="Código"/>
+			<mx:DataGridColumn headerText="Descrição"/>
+			<mx:DataGridColumn headerText="Gerenciadora" />
+			<mx:DataGridColumn headerText="Separação"/>
+		</view:columns>
+	</view:DataGridFX>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalListaErasEstacaoRastreamento}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
+		first="this.controller.solicitaListaErasEstacaoRastreamento(event)" 
+		prev="this.controller.solicitaListaErasEstacaoRastreamento(event)" 
+		next="this.controller.solicitaListaErasEstacaoRastreamento(event)" 
+		last="this.controller.solicitaListaErasEstacaoRastreamento(event)"/>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Ok" click="this.controller.erasEstacaoRastreamentoSelecionado()"/>
+		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
+	</mx:ControlBar>
+</resize:ResizableWindow>

@@ -19,7 +19,6 @@
                         titleIcon="@Embed(source='assets/travel.png')"
                         xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
                         xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
-	<fx:Binding source="this.textInputFiltro.text" destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Binding source="ViagemPaiVO(this.grid.selectedItem)" destination="MainModel.getInstance().dadosViagemPaiVO"/>
 	<fx:Metadata>
 		[Event(name="viagemPaiSelecionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.ViagemPaiSelecionadaEvent")]		
@@ -45,25 +44,23 @@
 				this.controller = new ViagemPaiZoomController();
 				this.controller.view = this;
 				
-				this.controller.solicitaTotalListaViagemPai();
-				
 				ResizeManager.enableResize(this,50);
 			}
 			private function creationComplete():void
 			{
 				this.controller.inicializaListaViagemPai();
-				MainModel.getInstance().viagemPaiArray.filterFunction = this.controller.viagemPaiFilterFunction;
+				//MainModel.getInstance().viagemPaiArray.filterFunction = this.controller.viagemPaiFilterFunction;
 				MainModel.getInstance().viagemPaiArray.refresh();
 				
 				this.grid.addEventListener(ViagemPaiSelecionadaEvent.VIAGEM_PAI_SELECIONADA_EVENT,this.controller.viagemPaiSelecionadaEventHandler);
 			}
 		]]>
 	</fx:Script>
-	<searchInput:SearchInputFX 
+	<searchInput:AdvancedSearchInputFX 
 		id="textInputFiltro"
 		width="100%" 
-		keyUp="MainModel.getInstance().viagemPaiArray.refresh()"
-		text="{MainModel.getInstance().zoomFilter}"
+		dataGrid="{this.grid}"
+		advancedSearchEvent="this.controller.advancedSearchViagemPaiEventHandler(event)"
 		refreshEvent="this.controller.atualizaListaViagemPai()"/>
 	<view:DataGridFX 
 		id="grid" 
@@ -73,7 +70,11 @@
 		dataProvider="{MainModel.getInstance().viagemPaiArray}"
 		toolTip="Clique sobre o codigo da viagem para exibir os detalhes.">
 		<view:columns>
-			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+			<mx:DataGridColumn 
+				sortable="false" 
+				width="20"
+				dataField="count"
+				headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
 			<mx:DataGridColumn id="codigo" headerText="Código"  dataField="codigo"
 							   itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.ViagemPaiItemRendererView"/>
 			<mx:DataGridColumn headerText="Prev. Inicio"  dataField="previsaoInicio"/>

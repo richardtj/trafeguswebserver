@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+						xmlns:resize="flex.utils.ui.resize.*"
+						xmlns:s="library://ns.adobe.com/flex/spark"
+						xmlns:mx="library://ns.adobe.com/flex/mx"
+						layout="vertical"
+						width="720"
+						height="420"
+						movable="true"
+						resizable="false"
+						showCloseButton="true"
+						creationCompleteEffect="{dissolve,iris}"
+						removedEffect="{dissolve,iris}"
+						initialize="init()"
+						creationComplete="creationComplete()"
+						close="this.controller.closeHandler()"
+						title="Tipo Locais Eventos"
+						titleIcon="@Embed(source='assets/Map3.png')"
+						xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
+						xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Metadata>
+		[Event(name="tipoLocaisEventosSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.TipoLocaisEventosSelecionadoEvent")]		
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve"
+					 duration="500"/>
+		<mx:Iris id="iris"
+				 duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.TipoLocaisEventosZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			private var controller:TipoLocaisEventosZoomController;
+			
+			private function init():void
+			{
+				this.controller=new TipoLocaisEventosZoomController();
+				this.controller.view=this;
+				//MainModel.getInstance().tipoLocaisEventosArray.filterFunction=this.controller.tipoLocaisEventosFilterFunction;
+				MainModel.getInstance().tipoLocaisEventosArray.refresh();
+				
+				ResizeManager.enableResize(this,50);
+			}
+			
+			private function creationComplete():void
+			{
+				this.inicializaListaTipoLocaisEventos();
+			}
+			
+			private function inicializaListaTipoLocaisEventos():void
+			{
+				if (MainModel.getInstance().tipoLocaisEventosArray.length == 0)
+				{
+					this.controller.atualizaListaTipoLocaisEventos();
+				}
+			}
+		]]>
+	</fx:Script>
+	<searchInput:AdvancedSearchInputFX 
+		id="textInputFiltro"
+	   dataGrid="{this.grid}"
+	   width="100%"
+	   advancedSearchEvent="this.controller.advancedSearchLocaisEventosEventHandler(event)"
+	   refreshEvent="this.controller.atualizaListaTipoLocaisEventos()"/>
+	<view:DataGridFX id="grid"
+					 width="100%"
+					 height="100%"
+					 doubleClickEnabled="true"
+					 doubleClick="this.controller.tipoLocaisEventosSelecionado()"
+					 dataProvider="{MainModel.getInstance().tipoLocaisEventosArray}"
+					 toolTip="Clique sobre o codigo da parada para exibir os detalhes.">
+		<view:columns>
+			<mx:DataGridColumn sortable="false"
+							   width="20"
+							   dataField="count"
+							   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+			<mx:DataGridColumn headerText="Código"
+							   dataField="codigo"/>
+			<mx:DataGridColumn headerText="Descrição"
+							   dataField="tlevDescricao"/>
+		</view:columns>
+	</view:DataGridFX>
+	<view:PaginableComponent id="paginable"
+							 totalRecords="{MainModel.getInstance().totalListaTipoLocaisEventos}"
+							 itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
+							 next="this.controller.solicitaListaTipoLocaisEventos(event)"
+							 prev="this.controller.solicitaListaTipoLocaisEventos(event)"
+							 first="this.controller.solicitaListaTipoLocaisEventos(event)"
+							 last="this.controller.solicitaListaTipoLocaisEventos(event)"/>
+	<mx:ControlBar width="100%"
+				   horizontalAlign="right">
+		<s:Button label="Ok"
+				  click="this.controller.tipoLocaisEventosSelecionado()"/>
+		<s:Button label="Cancel"
+				  click="this.controller.closeHandler()"/>
+	</mx:ControlBar>
+</resize:ResizableWindow>
