@@ -3,9 +3,11 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.MotoristaZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
 	import br.com.chapecosolucoes.trafegusweb.client.view.DriverDetails;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.DadosMotoristaVO;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.MotoristaVO;
@@ -55,12 +57,13 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function solicitaListaMotoristas(event:PaginableEvent):void
 		{
-			TrafegusWS.getIntance().solicitaListaMotoristas(solicitaListaMotoristasResultHandler,event.paginaAtual);
+			TrafegusWS.getInstance().solicitaListaMotoristas(solicitaListaMotoristasResultHandler,event.paginaAtual);
 		}
 		public function atualizaListaMotoristas():void
 		{
 			this.view.paginable.paginaAtual = 1;
-			TrafegusWS.getIntance().solicitaListaMotoristas(solicitaListaMotoristasResultHandler,0);
+			this.solicitaTotalListaMotoristas();
+			TrafegusWS.getInstance().solicitaListaMotoristas(solicitaListaMotoristasResultHandler,0);
 		}
 		private function solicitaListaMotoristasResultHandler(event:ResultEvent):void
 		{
@@ -68,20 +71,26 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
 			var resultArray:Array = xmlListCollection.toArray();
 			MainModel.getInstance().motoristasArray.removeAll();
+			var i:int = ((this.view.paginable.paginaAtual - 1) * MainModel.getInstance().itensPorPaginaVO.itensPorPagina) + 1;
 			for each (var obj:Object in resultArray)
 			{
 				var motorista:DadosMotoristaVO = new DadosMotoristaVO();
 				motorista.setDadosMotoristaVO(obj);
+				motorista.count = i++;
 				MainModel.getInstance().motoristasArray.addItem(motorista);
 			}
 		}
 		public function closeHandler():void
 		{
+			if(this.view.paginable.paginaAtual != 1)
+			{
+				MainModel.getInstance().motoristasArray.removeAll();
+			}
 			MyPopUpManager.removePopUp(this.view);
 		}
 		public function solicitaTotalListaMotoristas():void
 		{
-			TrafegusWS.getIntance().solicitaTotalListaMotoristas(solicitaTotalListaMotoristasResultHandler);
+			TrafegusWS.getInstance().solicitaTotalListaMotoristas(solicitaTotalListaMotoristasResultHandler);
 		}
 		private function solicitaTotalListaMotoristasResultHandler(event:ResultEvent):void
 		{
@@ -101,6 +110,15 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public function mouseOverEventHandler():void
 		{
 			DriverDetails.SELECT_BUTTON_VISIBLE = true;
+		}
+		public function advancedSearchMotoristasEventHandler(event:AdvancedSearchEvent):void
+		{
+			TrafegusWS.getInstance().procuraMotoristas(procuraMotoristasResultHandler,event.genericVO);
+		}
+		private function procuraMotoristasResultHandler(event:ResultEvent):void
+		{
+			MainModel.getInstance().totalListaMotoristas = 1;
+			this.solicitaListaMotoristasResultHandler(event);
 		}
 	}
 }

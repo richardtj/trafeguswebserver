@@ -20,9 +20,6 @@
     titleIcon="@Embed(source='assets/Map3.png')"
     xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
     xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
-    <fx:Binding 
-        source="this.textInputFiltro.text"
-        destination="MainModel.getInstance().zoomFilter"/>
     <fx:Metadata>
 		[Event(name="selectedLocalEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.SelectedLocalEvent")]		
 	</fx:Metadata>
@@ -46,10 +43,8 @@
 			{
 				this.controller = new LocalZoomController();
 				this.controller.view = this;
-				MainModel.getInstance().locaisArray.filterFunction = this.controller.locaisFilterFunction;
+				//MainModel.getInstance().locaisArray.filterFunction = this.controller.locaisFilterFunction;
 				MainModel.getInstance().locaisArray.refresh();
-				
-				this.controller.solicitaTotalListaLocais();
 				
 				this.grid.addEventListener(SelectedLocalEvent.SELECTED_LOCAL_EVENT,this.controller.localSelecionadoEventHandler);
 				
@@ -57,15 +52,15 @@
 			}
 			private function creationComplete():void
 			{
-				this.controller.atualizaListaLocais();
+				this.controller.inicializaListaLocais();
 			}
 		]]>
 	</fx:Script>
-	<searchInput:SearchInputFX 
+	<searchInput:AdvancedSearchInputFX 
 		id="textInputFiltro"
 		width="100%" 
-		keyUp="MainModel.getInstance().locaisArray.refresh()"
-		text="{MainModel.getInstance().zoomFilter}"
+		dataGrid="{this.grid}"
+		advancedSearchEvent="this.controller.advancedSearchLocaisEventHandler(event)"
 		refreshEvent="this.controller.atualizaListaLocais()"/>
 	<view:DataGridFX 
 		id="grid" 
@@ -75,7 +70,11 @@
 		dataProvider="{MainModel.getInstance().locaisArray}"
 		toolTip="Clique sobre o codigo do local para exibir os detalhes.">
 		<view:columns>
-			<mx:DataGridColumn sortable="false" width="20" headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+			<mx:DataGridColumn 
+				sortable="false" 
+				dataField="count"
+				width="20" 
+				headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
 			<mx:DataGridColumn headerText="Código" dataField="codigo" itemRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.LocalItemRendererView"/>
 			<mx:DataGridColumn headerText="Descrição" dataField="descricao"/>
 			<mx:DataGridColumn headerText="Latitude" dataField="gpsLatitudeString"/>

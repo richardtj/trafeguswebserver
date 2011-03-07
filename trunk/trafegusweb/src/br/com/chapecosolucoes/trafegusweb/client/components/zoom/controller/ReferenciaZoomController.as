@@ -32,11 +32,11 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		{
 			this.view.paginable.paginaAtual = 1;
 			this.solicitaTotalRefencias();
-			TrafegusWS.getIntance().solicitaRefenciasZoom(solicitaReferenciasZoomResultHandler,0);
+			TrafegusWS.getInstance().solicitaRefenciasZoom(solicitaReferenciasZoomResultHandler,0);
 		}
 		public function solicitaTotalRefencias():void
 		{
-			TrafegusWS.getIntance().solicitaTotalRefencias(solicitaTotalRefenciasResultHandler);
+			TrafegusWS.getInstance().solicitaTotalRefencias(solicitaTotalRefenciasResultHandler);
 		}
 		private function solicitaTotalRefenciasResultHandler(event:ResultEvent):void
 		{
@@ -77,7 +77,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function solicitaReferenciasZoom(event:PaginableEvent):void
 		{
-			TrafegusWS.getIntance().solicitaRefenciasZoom(solicitaReferenciasZoomResultHandler,event.paginaAtual);
+			TrafegusWS.getInstance().solicitaRefenciasZoom(solicitaReferenciasZoomResultHandler,event.paginaAtual);
 		}
 		public function advancedSearchClickEventHandler(event:AdvancedSearchEvent):void
 		{
@@ -89,7 +89,7 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		private function advancedSearchEventHandler(event:AdvancedSearchEvent):void
 		{
 			var referenciaVO:ReferenciaVO = ReferenciaVO(event.genericVO);
-			TrafegusWS.getIntance().procuraRefenciasZoom(procuraRefenciasZoomResultHandler,referenciaVO);
+			TrafegusWS.getInstance().procuraRefenciasZoom(procuraRefenciasZoomResultHandler,referenciaVO);
 		}
 		private function procuraRefenciasZoomResultHandler(event:ResultEvent):void
 		{

@@ -19,8 +19,6 @@
 						titleIcon="@Embed(source='assets/transportador.png')"
 						xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
 						xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
-	<fx:Binding source="this.textInputFiltro.text"
-				destination="MainModel.getInstance().zoomFilter"/>
 	<fx:Metadata>
 		[Event(name="transportadorSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.TransportadorSelecionadoEvent")]		
 	</fx:Metadata>
@@ -47,8 +45,6 @@
 				this.controller=new TransportadorZoomController();
 				this.controller.view=this;
 
-				this.controller.solicitaTotalListaTransportadores();
-				
 				ResizeManager.enableResize(this,50);
 			}
 
@@ -63,18 +59,19 @@
 			private function creationComplete():void
 			{
 				this.inicializaListaTransportadores();
-				MainModel.getInstance().transportadoresArray.filterFunction=this.controller.transportadoresFilterFunction;
+				//MainModel.getInstance().transportadoresArray.filterFunction=this.controller.transportadoresFilterFunction;
 				MainModel.getInstance().transportadoresArray.refresh();
 
 				this.grid.addEventListener(TransportadorSelecionadoEvent.TRANSPORTADOR_SELECIONADO_EVENT, this.controller.transportadorSelecionadoEventHandler);
 			}
 		]]>
 	</fx:Script>
-	<searchInput:SearchInputFX id="textInputFiltro"
-							   width="100%"
-							   keyUp="MainModel.getInstance().transportadoresArray.refresh()"
-							   text="{MainModel.getInstance().zoomFilter}"
-							   refreshEvent="this.controller.atualizaListaTransportadores()"/>
+	<searchInput:AdvancedSearchInputFX 
+		id="textInputFiltro"
+	   width="100%"
+	   dataGrid="{this.grid}"
+	   advancedSearchEvent="this.controller.advancedSearchListaTransportadoresEventHandler(event)"
+	   refreshEvent="this.controller.atualizaListaTransportadores()"/>
 	<view:DataGridFX id="grid"
 					 doubleClickEnabled="true"
 					 doubleClick="this.controller.transportadorSelecionado()"
@@ -85,6 +82,7 @@
 		<view:columns>
 			<mx:DataGridColumn sortable="false"
 							   width="20"
+							   dataField="count"
 							   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
 			<mx:DataGridColumn headerText="Código"
 							   dataField="codigo"

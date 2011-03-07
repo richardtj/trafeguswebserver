@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resize:ResizableWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
-						xmlns:resize="flex.utils.ui.resize.*"
-						xmlns:s="library://ns.adobe.com/flex/spark"
-						xmlns:mx="library://ns.adobe.com/flex/mx"
-						layout="vertical"
-						width="720"
-						height="420"
-						movable="false"
-						resizable="false"
-						showCloseButton="true"
-						creationCompleteEffect="{dissolve,iris}"
-						removedEffect="{dissolve,iris}"
-						initialize="init()"
-						mouseOver="this.controller.mouseOverEventHandler()"
-						creationComplete="creationComplete()"
-						close="this.controller.closeHandler()"
-						title="PGR"
-						titleIcon="@Embed(source='assets/warning.png')"
-						xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
-						xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
-	<fx:Binding source="this.textInputFiltro.text"
-				destination="MainModel.getInstance().zoomFilter"/>
+<resize:ResizableWindow 
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:resize="flex.utils.ui.resize.*"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	layout="vertical"
+	width="720"
+	height="420"
+	movable="false"
+	resizable="false"
+	showCloseButton="true"
+	creationCompleteEffect="{dissolve,iris}"
+	removedEffect="{dissolve,iris}"
+	initialize="init()"
+	mouseOver="this.controller.mouseOverEventHandler()"
+	creationComplete="creationComplete()"
+	close="this.controller.closeHandler()"
+	title="PGR"
+	titleIcon="@Embed(source='assets/warning.png')"
+	xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
+	xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
 	<fx:Metadata>
 		[Event(name="PGRSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.PGRSelecionadoEvent")]		
 	</fx:Metadata>
@@ -46,11 +45,9 @@
 			{
 				this.controller=new PGRZoomController();
 				this.controller.view=this;
-				MainModel.getInstance().pgrArray.filterFunction=this.controller.pgrFilterFunction;
+				//MainModel.getInstance().pgrArray.filterFunction=this.controller.pgrFilterFunction;
 				MainModel.getInstance().pgrArray.refresh();
 
-				this.controller.solicitaTotalListaPGR();
-				
 				ResizeManager.enableResize(this,50);
 			}
 
@@ -69,11 +66,12 @@
 			}
 		]]>
 	</fx:Script>
-	<searchInput:SearchInputFX id="textInputFiltro"
-							   width="100%"
-							   keyUp="MainModel.getInstance().pgrArray.refresh()"
-							   text="{MainModel.getInstance().zoomFilter}"
-							   refreshEvent="this.controller.atualizaListaPGR()"/>
+	<searchInput:AdvancedSearchInputFX 
+			id="textInputFiltro"
+		   	width="100%"
+		   	dataGrid="{this.grid}"
+		   	advancedSearchEvent="this.controller.advancedSearchPGREventHandler(event)"
+		   	refreshEvent="this.controller.atualizaListaPGR()"/>
 	<view:DataGridFX id="grid"
 					 width="100%"
 					 height="100%"
@@ -84,6 +82,7 @@
 		<view:columns>
 			<mx:DataGridColumn sortable="false"
 							   width="20"
+							   dataField="count"
 							   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
 			<mx:DataGridColumn headerText="Código"
 							   dataField="codigo"

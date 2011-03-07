@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resize:ResizableWindow 
+	xmlns:resize="flex.utils.ui.resize.*" 
+	width="720" height="420"
+	cornerRadius="5"
+	creationCompleteEffect="{dissolve,iris}"
+	removedEffect="{dissolve,iris}"
+	layout="vertical"
+	movable="true"
+	resizable="false"
+	creationComplete="creationComplete()"
+	initialize="init()"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	showCloseButton="true"
+	close="this.controller.closeHandler()"
+	title="Motivos"
+	titleIcon="@Embed(source='assets/Map3.png')"
+	xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
+	xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Metadata>
+		[Event(name="motivoSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.MotivoSelecionadoEvent")]		
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.MotivoZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.enum.PaginableEnum;
+			import br.com.chapecosolucoes.trafegusweb.client.events.MotivoSelecionadoEvent;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			private var controller:MotivoZoomController;
+			public static const NENHUM_MOTIVO_SELECIONADO:String = "Nenhum motivo selecionado.";
+			private function init():void
+			{
+				this.controller = new MotivoZoomController();
+				this.controller.view = this;
+				//MainModel.getInstance().motivosArray.filterFunction = this.controller.motivosFilterFunction;
+				MainModel.getInstance().motivosArray.refresh();
+				
+				ResizeManager.enableResize(this,50);
+			}
+			private function creationComplete():void
+			{
+				this.controller.inicializaListaMotivos();
+			}
+		]]>
+	</fx:Script>
+	<searchInput:AdvancedSearchInputFX 
+		id="textInputFiltro"
+		width="100%" 
+		dataGrid="{this.grid}"
+		advancedSearchEvent="this.controller.advancedSearchMotivosEventHandler(event)"
+		refreshEvent="this.controller.atualizaListaMotivos()"/>
+	<view:DataGridFX 
+		id="grid" 
+		width="100%" height="100%" 
+		doubleClickEnabled="true"
+		doubleClick="this.controller.motivoSelecionado()"
+		dataProvider="{MainModel.getInstance().motivosArray}"
+		toolTip="Clique sobre o codigo do motivo para exibir os detalhes.">
+		<view:columns>
+			<mx:DataGridColumn 
+				sortable="false" 
+				dataField="count"
+				width="20" 
+				headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+			<mx:DataGridColumn headerText="Código" dataField="motiCodigo"/>
+			<mx:DataGridColumn headerText="Descrição" dataField="motiDescricao"/>
+			<mx:DataGridColumn headerText="Tipo motivo código" dataField="motiTmotCodigo"/>
+			<mx:DataGridColumn headerText="Tipo motivo descrição" dataField="tmotDescricao"/>
+		</view:columns>
+	</view:DataGridFX>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalListaMotivos}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
+		first="this.controller.solicitaListaMotivos(event)" 
+		prev="this.controller.solicitaListaMotivos(event)" 
+		next="this.controller.solicitaListaMotivos(event)" 
+		last="this.controller.solicitaListaMotivos(event)"/>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Ok" click="this.controller.motivoSelecionado()"/>
+		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
+	</mx:ControlBar>
+</resize:ResizableWindow>

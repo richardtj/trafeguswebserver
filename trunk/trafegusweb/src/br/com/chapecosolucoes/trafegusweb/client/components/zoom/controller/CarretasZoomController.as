@@ -1,9 +1,10 @@
 package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 {
 	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
+	import br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent;
+	import br.com.chapecosolucoes.trafegusweb.client.events.CarretaSelecionadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
 	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
-	import br.com.chapecosolucoes.trafegusweb.client.events.CarretaSelecionadaEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.VeiculoVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
@@ -18,23 +19,30 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function solicitaListaCarretasDisponiveis():void
 		{
-			if(MainModel.getInstance().carretasDisponiveisArray.length == 0 && MainModel.getInstance().smVO.carretas.length == 0)
-			{
-				TrafegusWS.getIntance().solicitaListaCarretasDisponiveis(solicitaListaCarretasDisponiveisResultHandler);
-			}
+			TrafegusWS.getInstance().solicitaListaCarretasDisponiveis(solicitaListaCarretasDisponiveisResultHandler);
 		}
 		public function atualizaListaCarretasDisponiveis():void
 		{
-			TrafegusWS.getIntance().solicitaListaCarretasDisponiveis(solicitaListaCarretasDisponiveisResultHandler);
+			TrafegusWS.getInstance().solicitaListaCarretasDisponiveis(solicitaListaCarretasDisponiveisResultHandler);
+		}
+		public function procuraCarretasDisponiveis(event:AdvancedSearchEvent):void
+		{
+			TrafegusWS.getInstance().procuraCarretasDisponiveis(procuraCarretasDisponiveisResultHandler,event.genericVO);
+		}
+		private function procuraCarretasDisponiveisResultHandler(event:ResultEvent):void
+		{
+			this.solicitaListaCarretasDisponiveisResultHandler(event);
 		}
 		private function solicitaListaCarretasDisponiveisResultHandler(event:ResultEvent):void
 		{
 			var resultArray:Array = ParserResult.parserDefault(event);
 			MainModel.getInstance().carretasDisponiveisArray.removeAll();
+			var i:int = 0;
 			for each (var obj:Object in resultArray)
 			{
 				var veiculo:VeiculoVO = new VeiculoVO();
 				veiculo.setVeiculoVO(obj);
+				veiculo.count = ++i;
 				MainModel.getInstance().carretasDisponiveisArray.addItem(veiculo);
 			}
 		}

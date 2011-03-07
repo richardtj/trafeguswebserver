@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resize:ResizableWindow 
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:resize="flex.utils.ui.resize.*"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	layout="vertical"
+	width="720"
+	height="420"
+	movable="true"
+	resizable="false"
+	showCloseButton="true"
+	creationCompleteEffect="{dissolve,iris}"
+	removedEffect="{dissolve,iris}"
+	initialize="init()"
+	creationComplete="creationComplete()"
+	close="this.controller.closeHandler()"
+	title="Terminais disponíveis"
+	titleIcon="@Embed(source='assets/Map3.png')"
+	xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*"
+	xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Metadata>
+		[Event(name="termTerminalSelecionadoEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.TermTerminalSelecionadoEvent")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve"
+					 duration="500"/>
+		<mx:Iris id="iris"
+				 duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.TermTerminalZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			private var controller:TermTerminalZoomController;
+			
+			private function init():void
+			{
+				this.controller=new TermTerminalZoomController();
+				this.controller.view=this;
+				//MainModel.getInstance().TermTerminalArray.filterFunction=this.controller.TermTerminalFilterFunction;
+				MainModel.getInstance().termTerminalArray.refresh();
+				
+				ResizeManager.enableResize(this,50);
+			}
+			
+			private function inicializaListaTipoTransporte():void
+			{
+				if(MainModel.getInstance().termTerminalArray.length == 0)
+				{
+					this.controller.atualizaListaTermTerminal();
+				}
+			}
+			
+			private function creationComplete():void
+			{
+				this.inicializaListaTipoTransporte();
+			}
+		]]>
+	</fx:Script>
+	<searchInput:AdvancedSearchInputFX 
+		id="textInputFiltro"
+		width="100%"
+		dataGrid="{this.grid}"
+		advancedSearchEvent="this.controller.advancedSearchEventHandler(event)"
+		refreshEvent="this.controller.atualizaListaTermTerminal()"/>
+	<view:DataGridFX 
+		id="grid"
+		width="100%"
+		height="100%"
+		doubleClickEnabled="true"
+		doubleClick="this.controller.termTerminalSelecionado()"
+		dataProvider="{MainModel.getInstance().termTerminalArray}"
+		toolTip="Clique sobre o codigo do local para exibir os detalhes.">
+		<view:columns>
+			<mx:DataGridColumn sortable="false" 
+							   width="20"
+							   headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+			<mx:DataGridColumn headerText="Prec." dataField="precedencia"/>
+			<mx:DataGridColumn headerText="Cod. Term." dataField="codigo"/>
+			<mx:DataGridColumn headerText="Num. Term." dataField="numero"/>
+			<!--mx:DataGridColumn headerText="Descrição"/-->
+			<mx:DataGridColumn headerText="Versão" dataField="vtecCodigo"/>
+			<!--mx:DataGridColumn headerText="Tipo Comunicação"/-->
+			<!--mx:DataGridColumn headerText="Tecnologia"/-->
+			<mx:DataGridColumn headerText="Ativo" dataField="ativo"/>
+			<mx:DataGridColumn headerText="Ativo WS" dataField="ativoWS"/>
+			<!--mx:DataGridColumn headerText="T.S." dataField="tempoSatelital"/>
+			<mx:DataGridColumn headerText="T.G." dataField="tempoGPRS"/>
+			<mx:DataGridColumn headerText="Veículo" dataField="veicPlaca"/-->
+		</view:columns>
+	</view:DataGridFX>
+	<view:PaginableComponent
+		id="paginable"
+		 totalRecords="{MainModel.getInstance().totalListaTermTerminal}"
+		 itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
+		 next="this.controller.solicitaListaTermTerminal(event)"
+		 prev="this.controller.solicitaListaTermTerminal(event)"
+		 first="this.controller.solicitaListaTermTerminal(event)"
+		 last="this.controller.solicitaListaTermTerminal(event)"/>
+	<mx:ControlBar width="100%"
+				   horizontalAlign="right">
+		<s:Button label="Ok"
+				  click="this.controller.termTerminalSelecionado()"/>
+		<s:Button label="Cancel"
+				  click="this.controller.closeHandler()"/>
+	</mx:ControlBar>
+</resize:ResizableWindow>

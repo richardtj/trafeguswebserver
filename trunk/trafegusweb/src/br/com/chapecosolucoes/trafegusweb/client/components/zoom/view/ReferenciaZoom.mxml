@@ -54,8 +54,6 @@
 				this.controller.view=this;
 				this.controller.model=this.model;
 
-				this.controller.solicitaTotalRefencias();
-				
 				ResizeManager.enableResize(this,50);
 			}
 

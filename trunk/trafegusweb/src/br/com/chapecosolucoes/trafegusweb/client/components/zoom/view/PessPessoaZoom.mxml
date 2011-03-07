@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resize:ResizableWindow 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:resize="flex.utils.ui.resize.*" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	layout="vertical"
+	width="720" height="420"
+	showCloseButton="true"
+	movable="true"
+	resizable="false"
+	creationCompleteEffect="{dissolve,iris}"
+	removedEffect="{dissolve,iris}"
+	initialize="init()"
+	creationComplete="creationComplete()"
+	close="this.controller.closeHandler()"
+	title="Pessoas"
+	titleIcon="@Embed(source='assets/Motorista.png')"
+	xmlns:searchInput="br.com.chapecosolucoes.trafegusweb.client.components.searchInput.*" 
+	xmlns:view="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.*">
+	<fx:Metadata>
+		[Event(name="pessPessoaSelecionadaEvent",type="br.com.chapecosolucoes.trafegusweb.client.events.PessPessoaSelecionadaEvent")]		
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Dissolve id="dissolve" duration="500"/>
+		<mx:Iris id="iris" duration="500"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import br.com.chapecosolucoes.trafegusweb.client.components.sjd.managers.ResizeManager;
+			import br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller.PessPessoaZoomController;
+			import br.com.chapecosolucoes.trafegusweb.client.events.SelectedDriverEvent;
+			import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+			import br.com.chapecosolucoes.trafegusweb.client.view.DriverDetails;
+			
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			private var controller:PessPessoaZoomController;
+			
+			private function init():void
+			{
+				this.controller = new PessPessoaZoomController();
+				this.controller.view = this;
+				//MainModel.getInstance().motoristasArray.filterFunction = this.controller.motoristaFilterFunction;
+				MainModel.getInstance().pessPessoaArray.refresh();
+				
+				ResizeManager.enableResize(this,50);
+			}
+			
+			private function inicializaTotalListaPessPessoas():void {
+				if (MainModel.getInstance().pessPessoaArray.length == 0) {
+					this.controller.atualizaListaPessPessoas();
+				}
+			}
+			
+			private function creationComplete():void
+			{
+				this.inicializaTotalListaPessPessoas();
+			}
+			
+		]]>
+	</fx:Script>
+	<searchInput:AdvancedSearchInputFX 
+		id="textInputFiltro"
+		width="100%" 
+		dataGrid="{this.grid}"
+		advancedSearchEvent="this.controller.advancedSearchEventHandler()"
+		refreshEvent="this.controller.atualizaListaPessPessoas()"/>
+	<view:DataGridFX 
+		id="grid" 
+		width="100%" height="100%" 
+		doubleClickEnabled="true"
+		doubleClick="this.controller.pessPessoaSelecionada()"
+		dataProvider="{MainModel.getInstance().pessPessoaArray}"
+		toolTip="Clique sobre o nome do motorista para exibir os detalhes.">
+		<view:columns>
+			<mx:DataGridColumn 
+				sortable="false" 
+				dataField="count"
+				width="20" 
+				headerRenderer="br.com.chapecosolucoes.trafegusweb.client.components.renderers.view.DataGridHeaderRenderer"/>
+			<mx:DataGridColumn headerText="Código" dataField="pessOrasCodigo"/>
+			<mx:DataGridColumn headerText="Nome" dataField="pessNome"/>
+			<mx:DataGridColumn headerText="Tipo" dataField="pessTipo"/>
+		</view:columns>
+	</view:DataGridFX>
+	<view:PaginableComponent 
+		id="paginable"
+		totalRecords="{MainModel.getInstance().totalListaPessPessoa}"
+		itensPorPagina="{MainModel.getInstance().itensPorPaginaVO.itensPorPagina}"
+		next="this.controller.solicitaListaPessPessoas(event)"
+		prev="this.controller.solicitaListaPessPessoas(event)"
+		first="this.controller.solicitaListaPessPessoas(event)"
+		last="this.controller.solicitaListaPessPessoas(event)"/>
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<s:Button label="Ok" click="this.controller.pessPessoaSelecionada()"/>
+		<s:Button label="Cancel" click="this.controller.closeHandler()"/>
+	</mx:ControlBar>
+</resize:ResizableWindow>

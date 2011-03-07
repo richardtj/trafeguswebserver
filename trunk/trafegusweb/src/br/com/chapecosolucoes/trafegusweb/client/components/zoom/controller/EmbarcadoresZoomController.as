@@ -3,14 +3,17 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 	import br.com.chapecosolucoes.trafegusweb.client.components.messagebox.MessageBox;
 	import br.com.chapecosolucoes.trafegusweb.client.components.mypopupmanager.MyPopUpManager;
 	import br.com.chapecosolucoes.trafegusweb.client.components.zoom.view.EmbarcadoresZoom;
+	import br.com.chapecosolucoes.trafegusweb.client.events.AdvancedSearchEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.EmbarcadorSelecionadoEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.events.PaginableEvent;
 	import br.com.chapecosolucoes.trafegusweb.client.model.MainModel;
+	import br.com.chapecosolucoes.trafegusweb.client.utils.ParserResult;
 	import br.com.chapecosolucoes.trafegusweb.client.view.EmbarcadorDetails;
 	import br.com.chapecosolucoes.trafegusweb.client.vo.EmbarcadorVO;
 	import br.com.chapecosolucoes.trafegusweb.client.ws.TrafegusWS;
 	
 	import flash.events.MouseEvent;
+	import flash.media.Video;
 	
 	import mx.collections.XMLListCollection;
 	import mx.controls.Alert;
@@ -35,12 +38,13 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function solicitaListaEmbarcadores(event:PaginableEvent):void
 		{
-			TrafegusWS.getIntance().solicitaListaEmbarcadores(solicitaListaEmbarcadoresResultEvent,event.paginaAtual);
+			TrafegusWS.getInstance().solicitaListaEmbarcadores(solicitaListaEmbarcadoresResultEvent,event.paginaAtual);
 		}
 		public function atualizaListaEmbarcadores():void
 		{
 			this.view.paginable.paginaAtual = 1;
-			TrafegusWS.getIntance().solicitaListaEmbarcadores(solicitaListaEmbarcadoresResultEvent,0);
+			this.solicitaTotalListaEmbarcadores();
+			TrafegusWS.getInstance().solicitaListaEmbarcadores(solicitaListaEmbarcadoresResultEvent,0);
 		}
 		private function solicitaListaEmbarcadoresResultEvent(event:ResultEvent):void
 		{
@@ -48,10 +52,12 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 			var xmlListCollection:XMLListCollection = new XMLListCollection(xml.row);
 			var resultArray:Array = xmlListCollection.toArray();
 			MainModel.getInstance().embarcadoresArray.removeAll();
+			var i:int = ((this.view.paginable.paginaAtual - 1) * MainModel.getInstance().itensPorPaginaVO.itensPorPagina) + 1;
 			for each (var obj:Object in resultArray)
 			{
 				var embarcador:EmbarcadorVO = new EmbarcadorVO();
 				embarcador.setEmbarcadorVO(obj);
+				embarcador.count = i++;
 				MainModel.getInstance().embarcadoresArray.addItem(embarcador);
 			}
 		}
@@ -70,11 +76,15 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		}
 		public function closeHandler():void
 		{
+			if(this.view.paginable.paginaAtual != 1)
+			{
+				MainModel.getInstance().embarcadoresArray.removeAll();
+			}
 			MyPopUpManager.removePopUp(this.view);
 		}
 		public function solicitaTotalListaEmbarcadores():void
 		{
-			TrafegusWS.getIntance().solicitaTotalListaEmbarcadores(solicitaTotalListaEmbarcadoresResultHandler);
+			TrafegusWS.getInstance().solicitaTotalListaEmbarcadores(solicitaTotalListaEmbarcadoresResultHandler);
 		}
 		private function solicitaTotalListaEmbarcadoresResultHandler(event:ResultEvent):void
 		{
@@ -94,6 +104,15 @@ package br.com.chapecosolucoes.trafegusweb.client.components.zoom.controller
 		public function mouseOverEventHandler():void
 		{
 			EmbarcadorDetails.SELECT_BUTTON_VISIBLE = true;
+		}
+		public function advancedSearchEmbarcadoresEventHandler(event:AdvancedSearchEvent):void
+		{
+			TrafegusWS.getInstance().procuraEmbarcadores(procuraEmbarcadoresResultHandler,event.genericVO);
+		}
+		private function procuraEmbarcadoresResultHandler(event:ResultEvent):void
+		{
+			MainModel.getInstance().totalListaEmbarcadores = 1;
+			this.solicitaListaEmbarcadoresResultEvent(event);
 		}
 	}
 }
